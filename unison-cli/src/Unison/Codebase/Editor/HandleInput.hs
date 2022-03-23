@@ -2191,6 +2191,53 @@ slurpToDeclUpserts SlurpResult2 {declRef0, slurp} =
                   }
         ]
 
+slurpToDeclUpserts' :: Ord v => SlurpResult v -> (v -> TypeReference) -> (v -> DeclrefId v a) -> [UpsertDecl v a]
+slurpToDeclUpserts' slurp declRef0 varToDeclref1 =
+  let after = varToDeclref1
+   in concat
+        [ slurp
+            & Slurp.adds
+            & SC.types
+            & Set.toList
+            & map \var -> Add AddDecl {declref = after var, var},
+          slurp
+            & Slurp.updates
+            & SC.types
+            & Set.toList
+            & map \var ->
+              Update
+                UpdateDecl
+                  { update =
+                      Explicit
+                        Upd1
+                          { before = declRef0 var,
+                            after = after var
+                          },
+                    var
+                  }
+        ]
+
+declSlurpToDeclUpserts :: Ord v => DeclSlurp v -> [UpsertDecl v Ann]
+declSlurpToDeclUpserts DeclSlurp {adds, updates} =
+  concat
+    [ adds
+        & Map.toList
+        & map (\(var, declref) -> Add AddDecl {declref, var}),
+      updates
+        & Map.toList
+        & map \(var, (ref0, ref1)) ->
+          Update
+            UpdateDecl
+              { update =
+                  Explicit
+                    Upd1
+                      { before = ref0,
+                        after = ref1
+                      },
+                var
+              }
+    ]
+
 data AddDecl v a = AddDecl
   { declref :: DeclrefId v a,
     var :: v
@@ -2326,6 +2373,40 @@ makeSlurp2 allNames selection unisonFile =
     termRef1 = Reference.unsafeId . Names.theRefTermNamed fileNames . Name.unsafeFromVar
     slurp = Slurp.slurpFile unisonFile selection Slurp.UpdateOp allNames
 
+data DeclSlurp v = DeclSlurp
+  { -- FIXME these maps are from the file, but varsBeingUpdates is from the slurp. seems like we could get confused in
+    -- some places and update more than necessary (by looking at these instead of varsBeingUpdated)
+    declsById1 :: Map TypeReferenceId (Decl v Ann),
+    varsById1 :: Map TypeReferenceId v,
+    --
+    adds :: Map v (DeclrefId v Ann),
+    updates :: Map v (TypeReference, DeclrefId v Ann)
+  }
+
+makeDeclSlurp :: Var v => Names -> SlurpResult v -> DeclSlurp v
+makeDeclSlurp allNames slurp =
+  DeclSlurp
+    { declsById1 = UF.tcDeclarationsById file,
+      varsById1 = UF.tcDeclarationVarsById file,
+      adds =
+        slurp
+          & Slurp.adds
+          & SC.types
+          & Set.toList
+          & map (\v -> (v, declsByVar1 Map.! v))
+          & Map.fromList,
+      updates =
+        slurp
+          & Slurp.updates
+          & SC.types
+          & Set.toList
+          & map (\v -> (v, (Names.theTypeNamed allNames (Name.unsafeFromVar v), declsByVar1 Map.! v)))
+          & Map.fromList
+    }
+  where
+    file = Slurp.originalFile slurp
+    declsByVar1 = Map.map (\(ref, decl) -> Declref {decl, ref}) (UF.tcDeclarationsByVar file)
+
 -- 22/03/16
 --
 -- Problem: when hydrating terms, if typechecking fails, we still do want to apply the constructor reference mapping to
@@ -2357,6 +2438,16 @@ makeSlurp2 allNames selection unisonFile =
 -- Remove fromJusts from some name->path functions.
 --
 -- Refactoring/cleanup in hydrating terms.
+--
+-- 22/03/22
+--
+
+-- * Problem: if hydrating terms fails due to typechecking (because a member of a component explicitly changed types),
+
+-- then we still do want to proceed with substituting decl/constructors (of implicit decls), if any.
+--
+
+-- * Observation: we shouldn't substitute explicitly updated decls in implicit terms.
 
 oink ::
   forall m v.
@@ -2412,57 +2503,45 @@ oink selection unisonFile0 = do
   --     termRef1 = Reference.unsafeId . Names.theRefTermNamed fileNames . Name.unsafeFromVar
   let makeMap k v = foldl' (\acc x -> Map.insert (k x) (v x) acc) Map.empty
   let declRef0 = Names.theTypeNamed allNames . Name.unsafeFromVar
-  let declRef1 v = fst (UF.tcDeclarationsByVar unisonFile0 Map.! v)
+  let varToDeclref1 v =
+        case UF.tcDeclarationsByVar unisonFile0 Map.! v of
+          (ref, decl) -> Declref {decl, ref}
   let termRef0 = Names.theRefTermNamed allNames . Name.unsafeFromVar
   -- FIXME rewrite like declRef1
   let termRef1 = Reference.unsafeId . Names.theRefTermNamed (UF.typecheckedToNames unisonFile0) . Name.unsafeFromVar
   let slurp00 = Slurp.slurpFile unisonFile0 selection Slurp.UpdateOp allNames
   let declVarsBeingUpdated = SC.types (Slurp.updates slurp00)
   let termVarsBeingUpdated = SC.terms (Slurp.updates slurp00)
-  let declMapping = makeMap declRef0 declRef1 declVarsBeingUpdated
+  let declMapping = makeMap declRef0 (\v -> varToDeclref1 v ^. #ref) declVarsBeingUpdated
   let termMapping = makeMap termRef0 termRef1 termVarsBeingUpdated
 
   let makeSlurp = makeSlurp2 allNames selection
-  let slurp0 = makeSlurp unisonFile0
+
   -- FIXME seems like declVarsBeingUpdated + declRef0 + declMapping would be cleaner as a single thing
-  maybeDeclUpserts <-
+  declUpserts <-
     hydrateUnisonFileDecls
       loadDeclComponent
       declNames
-      unisonFile0
-      declVarsBeingUpdated
-      declRef0
-      declMapping
+      (makeDeclSlurp allNames slurp00)
 
-  let slurp1 =
-        case maybeDeclUpserts of
-          Nothing -> slurp0
-          Just declUpserts ->
-            let (effects, datas) = declUpsertsToDeclsByVar declUpserts
-             in -- FIXME makeSlurp does a bit too much work - term stuff hasn't changed
-                makeSlurp
-                  unisonFile0
-                    { UF.dataDeclarationsId' = datas,
-                      UF.effectDeclarationsId' = effects
-                    }
+  -- FIXME slurp1 isn't right here, it includes explicit decls but we don't want to map those
+  let slurp1 = undefined
+  -- case maybeDeclUpserts of
+  --   Nothing -> slurp0
+  --   Just declUpserts ->
+  --     let (effects, datas) = declUpsertsToDeclsByVar declUpserts
+  --      in -- FIXME makeSlurp does a bit too much work - term stuff hasn't changed
+  --         makeSlurp
+  --           unisonFile0
+  --             { UF.dataDeclarationsId' = datas,
+  --               UF.effectDeclarationsId' = effects
+  --             }
 
   let constructorMapping :: Map ConstructorReferenceId ConstructorReferenceId
       constructorMapping =
-        case maybeDeclUpserts of
-          -- Currently, no hydrated decls = no constructor mappings, because we don't attempt to compute the mappings
-          -- induced/implied by explicit decl updates.
-          --
-          -- If the Explicit branch of declUpdateConstructorMapping doesn't always return the empty mapping, this
-          -- comment is out-of-date.
-          Nothing -> Map.empty
-          Just declUpserts -> foldMap declUpsertConstructorMapping declUpserts
+        foldMap declUpsertConstructorMapping declUpserts
 
   maybeTermUpserts <- hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest constructorMapping slurp1
-
-  let declUpserts =
-        case maybeDeclUpserts of
-          Nothing -> slurpToDeclUpserts slurp0
-          Just declUpserts -> declUpserts
 
   let termUpserts =
         case maybeTermUpserts of
@@ -2548,22 +2627,21 @@ oink selection unisonFile0 = do
 -- after being updated to refer to the new @Pong@. For this reason, we also return a constructor mapping alongside the
 -- new typechecked unison file. The mapping is total, and just maps a constructor reference to itself if it was not a
 -- constructor whose constructor id changed.
+--
+-- FIXME rewrite this comment, maybe delete it and point at the notes
 hydrateUnisonFileDecls ::
   forall m v.
   (Monad m, Var v) =>
   (Hash -> m [(TypeReferenceId, Decl v Ann)]) ->
   (TypeReferenceId -> Set Name) ->
-  TypecheckedUnisonFile v Ann ->
-  Set v ->
-  (v -> TypeReference) ->
-  Map TypeReference TypeReferenceId ->
-  m (Maybe [UpsertDecl v Ann])
-hydrateUnisonFileDecls loadDeclComponent declNames unisonFile declVarsBeingUpdated declRef0 declMapping = do
-  extraDecls <- loadExtraObjects loadDeclComponent declRef0 declNames declVarsBeingUpdated
-  pure
-    if Map.null extraDecls
-      then Nothing
-      else hydrateDecls extraDecls
+  DeclSlurp v ->
+  m [UpsertDecl v Ann]
+hydrateUnisonFileDecls loadDeclComponent declNames slurp@DeclSlurp {declsById1, updates, varsById1} = do
+  extraDecls <- loadExtraObjects loadDeclComponent declNames (Map.map fst updates)
+  pure $
+    fromMaybe (declSlurpToDeclUpserts slurp) do
+      guard (not (Map.null extraDecls))
+      hydrateDecls extraDecls
   where
     hydrateDecls ::
       Map TypeReferenceId (Decl v Ann) ->
@@ -2580,18 +2658,17 @@ hydrateUnisonFileDecls loadDeclComponent declNames unisonFile declVarsBeingUpdat
       where
         -- Classify this hashed decl as either an add, an explicit update, or an implicit update.
         classify :: (v, TypeReferenceId, Decl v Ann) -> UpsertDecl v Ann
-        classify (randomName, ref1, decl1) =
-          if
-              | isExtraDecl ->
-                let ref0 = randomNameToOldRef Map.! randomName
-                    before = Declref {decl = extraDecls Map.! ref0, ref = ref0}
-                 in Update UpdateDecl {update = Implicit Upd1 {before, after}, var}
-              | isExplicitUpdate -> Update UpdateDecl {update = Explicit Upd1 {before = declRef0 var, after}, var}
-              | otherwise -> Add AddDecl {declref = after, var}
+        classify (randomName, ref1, decl1)
+          | isExtraDecl =
+            let ref0 = randomNameToOldRef Map.! randomName
+                before = Declref {decl = extraDecls Map.! ref0, ref = ref0}
+             in Update UpdateDecl {update = Implicit Upd1 {before, after}, var}
+          | Just (ref0, _) <- asExplicitUpdate = Update UpdateDecl {update = Explicit Upd1 {before = ref0, after}, var}
+          | otherwise = Add AddDecl {declref = after, var}
           where
             maybeUserSuppliedName = Map.lookup randomName randomNameToUserSuppliedName
             isExtraDecl = isNothing maybeUserSuppliedName
-            isExplicitUpdate = Set.member var declVarsBeingUpdated
+            asExplicitUpdate = Map.lookup var updates
             var = fromMaybe randomName maybeUserSuppliedName
             after :: DeclrefId v Ann
             after =
@@ -2606,7 +2683,7 @@ hydrateUnisonFileDecls loadDeclComponent declNames unisonFile declVarsBeingUpdat
             & Map.map substituteDecl
             -- Even though Map.union is left-biased, the order isn't important here. All decls have different refs.
             -- Why? Because we threw away the refs that were being updated (see notBeingUpdated above).
-            & Map.union (UF.tcDeclarationsById unisonFile)
+            & Map.union declsById1
             & DD.unhashComponent
 
         randomNameToOldRef :: Map v TypeReferenceId
@@ -2615,7 +2692,7 @@ hydrateUnisonFileDecls loadDeclComponent declNames unisonFile declVarsBeingUpdat
 
         randomNameToUserSuppliedName :: Map v v
         randomNameToUserSuppliedName =
-          Map.compose (UF.tcDeclarationVarsById unisonFile) randomNameToOldRef
+          Map.compose varsById1 randomNameToOldRef
 
     substituteDecl :: Decl v a -> Decl v a
     substituteDecl =
@@ -2628,23 +2705,35 @@ hydrateUnisonFileDecls loadDeclComponent declNames unisonFile declVarsBeingUpdat
           Nothing -> Type.Ref ref0
           Just ref1 -> Type.Ref (Reference.fromId ref1)
       ty -> ty
+      where
+        declMapping :: Map TypeReference TypeReferenceId
+        declMapping =
+          updates
+            & Map.elems
+            & map (\(r0, Declref {ref = r1}) -> (r0, r1))
+            & Map.fromList
 
 -- FIXME document
 loadExtraObjects ::
   (Monad m, Var v) =>
   (Hash -> m [(Reference.Id, obj)]) ->
-  (v -> Reference) ->
   (Reference.Id -> Set Name) ->
-  Set v ->
+  Map v Reference ->
   m (Map Reference.Id obj)
-loadExtraObjects loadComponent varToRef objNames varsBeingUpdated =
+loadExtraObjects loadComponent objNames updates =
   -- FIXME pretty sure this could be Map.fromAscList
   fmap Map.fromList do
-    let notBeingUpdated (ref0, _) =
-          Set.disjoint varsBeingUpdated (Set.map Name.toVar (objNames ref0))
     foldMapM
       (\hash -> filter notBeingUpdated <$> loadComponent hash)
-      (Set.mapMaybe (Reference.toHash . varToRef) varsBeingUpdated)
+      hashes
+  where
+    vars = Map.keysSet updates
+    hashes =
+      updates
+        & Map.elems
+        & mapMaybe Reference.toHash
+        & Set.fromList
+    notBeingUpdated (ref0, _) = Set.disjoint vars (Set.map Name.toVar (objNames ref0))
 
 hydrateUnisonFileTerms ::
   forall m v.
@@ -2657,7 +2746,7 @@ hydrateUnisonFileTerms ::
   SlurpResult2 v ->
   m (Maybe [UpsertTerm v])
 hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest constructorMapping SlurpResult2 {declMapping, slurp, termMapping, termRef0} = do
-  extraTerms <- loadExtraObjects loadTermComponent termRef0 termNames (SC.terms (Slurp.updates slurp))
+  extraTerms <- undefined -- loadExtraObjects loadTermComponent termRef0 termNames (SC.terms (Slurp.updates slurp))
 
   -- If extra terms is null,
   --   if constructor mapping is null,
