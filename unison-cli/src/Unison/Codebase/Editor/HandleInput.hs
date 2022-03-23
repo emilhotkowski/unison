@@ -2680,11 +2680,18 @@ hydrateUnisonFileDecls loadDeclComponent declNames slurp@DeclSlurp {declsById1, 
         allUnhashedDecls :: Map TypeReferenceId (v, Decl v Ann)
         allUnhashedDecls =
           extraDecls
-            & Map.map substituteDecl
+            & Map.map (oingoDecl declMapping)
             -- Even though Map.union is left-biased, the order isn't important here. All decls have different refs.
             -- Why? Because we threw away the refs that were being updated (see notBeingUpdated above).
             & Map.union declsById1
             & DD.unhashComponent
+          where
+            declMapping :: Map TypeReference TypeReferenceId
+            declMapping =
+              updates
+                & Map.elems
+                & map (\(r0, Declref {ref = r1}) -> (r0, r1))
+                & Map.fromList
 
         randomNameToOldRef :: Map v TypeReferenceId
         randomNameToOldRef =
@@ -2693,25 +2700,6 @@ hydrateUnisonFileDecls loadDeclComponent declNames slurp@DeclSlurp {declsById1, 
         randomNameToUserSuppliedName :: Map v v
         randomNameToUserSuppliedName =
           Map.compose varsById1 randomNameToOldRef
-
-    substituteDecl :: Decl v a -> Decl v a
-    substituteDecl =
-      over DD.types_ (ABT.rebuildUp substituteType)
-
-    substituteType :: Type.F a -> Type.F a
-    substituteType = \case
-      Type.Ref ref0 ->
-        case Map.lookup ref0 declMapping of
-          Nothing -> Type.Ref ref0
-          Just ref1 -> Type.Ref (Reference.fromId ref1)
-      ty -> ty
-      where
-        declMapping :: Map TypeReference TypeReferenceId
-        declMapping =
-          updates
-            & Map.elems
-            & map (\(r0, Declref {ref = r1}) -> (r0, r1))
-            & Map.fromList
 
 -- FIXME document
 loadExtraObjects ::
@@ -2865,6 +2853,11 @@ hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest construc
         & Map.fromList
 
 -- FIXME rename
+oingoDecl :: Ord v => Map TypeReference TypeReferenceId -> Decl v a -> Decl v a
+oingoDecl declMapping =
+  over DD.types_ (oingoType declMapping)
+
+-- FIXME rename
 oingoTerm ::
   forall v.
   Ord v =>
@@ -2890,7 +2883,7 @@ oingoTerm declMapping constructorMapping termMapping =
           fromMaybe term do
             ref1 <- substituteConstructorReference ref0
             Just (Term.Request ref1)
-        Term.Ann ann ty -> Term.Ann ann (substituteType ty)
+        Term.Ann ann ty -> Term.Ann ann (oingoType declMapping ty)
         _ -> term
   where
     substituteConstructorReference :: ConstructorReference -> Maybe ConstructorReference
@@ -2899,14 +2892,14 @@ oingoTerm declMapping constructorMapping termMapping =
       ref2 <- Map.lookup ref1 constructorMapping
       Just (ConstructorReference.fromId ref2)
 
-    substituteType :: Type v Ann -> Type v Ann
-    substituteType =
-      ABT.rebuildUp \case
-        Type.Ref ref0 ->
-          case Map.lookup ref0 declMapping of
-            Nothing -> Type.Ref ref0
-            Just ref1 -> Type.Ref (Reference.fromId ref1)
-        ty -> ty
+oingoType :: Ord v => Map TypeReference TypeReferenceId -> Type v a -> Type v a
+oingoType declMapping =
+  ABT.rebuildUp \case
+    Type.Ref ref0 ->
+      case Map.lookup ref0 declMapping of
+        Nothing -> Type.Ref ref0
+        Just ref1 -> Type.Ref (Reference.fromId ref1)
+    ty -> ty
 
 -- Add default metadata to all added types and terms in a slurp component.
 --
