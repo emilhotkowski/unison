@@ -14,7 +14,7 @@
 </span><span id="line-14"></span><span>    </span><span id="OpenCodebaseDoesntExist"><span class="annot"><a href="Unison.Codebase.Init.OpenCodebaseError.html#OpenCodebaseDoesntExist"><span class="hs-identifier hs-var">OpenCodebaseDoesntExist</span></a></span></span><span>
 </span><span id="line-15"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span class="hs-comment">-- | The codebase exists, but its schema version is unknown to this application.</span><span>
 </span><span id="line-16"></span><span>    </span><span id="OpenCodebaseUnknownSchemaVersion"><span class="annot"><a href="Unison.Codebase.Init.OpenCodebaseError.html#OpenCodebaseUnknownSchemaVersion"><span class="hs-identifier hs-var">OpenCodebaseUnknownSchemaVersion</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Word64</span></span><span>
-</span><span id="line-17"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">stock</span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621680842761"><span id="local-6989586621680842763"><span id="local-6989586621680842765"><span class="annot"><span class="annottext">Int -&gt; OpenCodebaseError -&gt; ShowS
+</span><span id="line-17"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">stock</span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621680843036"><span id="local-6989586621680843038"><span id="local-6989586621680843040"><span class="annot"><span class="annottext">Int -&gt; OpenCodebaseError -&gt; ShowS
 [OpenCodebaseError] -&gt; ShowS
 OpenCodebaseError -&gt; String
 (Int -&gt; OpenCodebaseError -&gt; ShowS)
@@ -30,7 +30,7 @@ $cshow :: OpenCodebaseError -&gt; String
 showsPrec :: Int -&gt; OpenCodebaseError -&gt; ShowS
 $cshowsPrec :: Int -&gt; OpenCodebaseError -&gt; ShowS
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-18"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">anyclass</span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621680842752"><span id="local-6989586621680842754"><span id="local-6989586621680842756"><span class="annot"><span class="annottext">Show OpenCodebaseError
+</span><span id="line-18"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">anyclass</span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621680843027"><span id="local-6989586621680843029"><span id="local-6989586621680843031"><span class="annot"><span class="annottext">Show OpenCodebaseError
 Typeable OpenCodebaseError
 Typeable OpenCodebaseError
 -&gt; Show OpenCodebaseError

@@ -5454,6 +5454,7 @@ FContT :: FnTag
 FConT :: FnTag
 FReqT :: FnTag
 FPrimT :: FnTag
+FForeignT :: FnTag
 data MtTag
 MIntT :: MtTag
 MTextT :: MtTag
@@ -5486,6 +5487,7 @@ MarkT :: CoTag
 PushT :: CoTag
 index :: Eq v => [v] -> v -> Maybe Word64
 deindex :: HasCallStack => [v] -> Word64 -> v
+pushCtx :: [v] -> [v] -> [v]
 putIndex :: MonadPut m => Word64 -> m ()
 getIndex :: MonadGet m => m Word64
 putVar :: MonadPut m => Eq v => [v] -> v -> m ()
@@ -5494,14 +5496,14 @@ putArgs :: MonadPut m => Eq v => [v] -> [v] -> m ()
 getArgs :: MonadGet m => [v] -> m [v]
 putCCs :: MonadPut m => [Mem] -> m ()
 getCCs :: MonadGet m => m [Mem]
-putGroup :: MonadPut m => Var v => SuperGroup v -> m ()
+putGroup :: MonadPut m => Var v => EnumMap FOp Text -> SuperGroup v -> m ()
 getGroup :: MonadGet m => Var v => m (SuperGroup v)
-putComb :: MonadPut m => Var v => [v] -> SuperNormal v -> m ()
+putComb :: MonadPut m => Var v => EnumMap FOp Text -> [v] -> SuperNormal v -> m ()
 getFresh :: Var v => Word64 -> v
 getComb :: MonadGet m => Var v => [v] -> Word64 -> m (SuperNormal v)
-putNormal :: MonadPut m => Var v => [v] -> ANormal v -> m ()
+putNormal :: MonadPut m => Var v => EnumMap FOp Text -> [v] -> ANormal v -> m ()
 getNormal :: MonadGet m => Var v => [v] -> Word64 -> m (ANormal v)
-putFunc :: MonadPut m => Var v => [v] -> Func v -> m ()
+putFunc :: MonadPut m => Var v => EnumMap FOp Text -> [v] -> Func v -> m ()
 getFunc :: MonadGet m => Var v => [v] -> m (Func v)
 putPOp :: MonadPut m => POp -> m ()
 getPOp :: MonadGet m => m POp
@@ -5514,9 +5516,9 @@ putBLit :: MonadPut m => BLit -> m ()
 getBLit :: MonadGet m => m BLit
 putRefs :: MonadPut m => [Reference] -> m ()
 getRefs :: MonadGet m => m [Reference]
-putBranches :: MonadPut m => Var v => [v] -> Branched (ANormal v) -> m ()
+putBranches :: MonadPut m => Var v => EnumMap FOp Text -> [v] -> Branched (ANormal v) -> m ()
 getBranches :: MonadGet m => Var v => [v] -> Word64 -> m (Branched (ANormal v))
-putCase :: MonadPut m => Var v => [v] -> ([Mem], ANormal v) -> m ()
+putCase :: MonadPut m => Var v => EnumMap FOp Text -> [v] -> ([Mem], ANormal v) -> m ()
 getCase :: MonadGet m => Var v => [v] -> Word64 -> m ([Mem], ANormal v)
 putCTag :: MonadPut m => CTag -> m ()
 getCTag :: MonadGet m => m CTag
@@ -5527,7 +5529,7 @@ getValue :: MonadGet m => m Value
 putCont :: MonadPut m => Cont -> m ()
 getCont :: MonadGet m => m Cont
 deserializeGroup :: Var v => ByteString -> Either String (SuperGroup v)
-serializeGroup :: Var v => SuperGroup v -> ByteString
+serializeGroup :: Var v => EnumMap FOp Text -> SuperGroup v -> ByteString
 deserializeValue :: ByteString -> Either String Value
 serializeValue :: Value -> ByteString
 serializeValueLazy :: Value -> ByteString
