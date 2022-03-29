@@ -2419,28 +2419,29 @@ data TermSlurp v = TermSlurp
 
 makeTermSlurp :: Var v => Names -> SlurpResult v -> TermSlurp v
 makeTermSlurp allNames slurp =
- TermSlurp
-   { -- declsById1 = UF.tcDeclarationsById file,
-     -- varsById1 = UF.tcDeclarationVarsById file,
-     adds =
-       slurp
-         & Slurp.adds
-         & SC.terms
-         & Set.toList
-         & map undefined -- (\v -> (v, termsByVar1 Map.! v))
-         & Map.fromList,
-     updates =
-       slurp
-         & Slurp.updates
-         & SC.terms
-         & Set.toList
-         -- & map (\v -> (v, (Names.theTypeNamed allNames (Name.unsafeFromVar v), declsByVar1 Map.! v)))
-         & map (\v -> (v, undefined))
-         & Map.fromList
-   }
- where
-   file = Slurp.originalFile slurp
-   -- declsByVar1 = Map.map (\(ref, decl) -> Declref {decl, ref}) (UF.tcDeclarationsByVar file)
+  TermSlurp
+    { -- declsById1 = UF.tcDeclarationsById file,
+      -- varsById1 = UF.tcDeclarationVarsById file,
+      adds =
+        slurp
+          & Slurp.adds
+          & SC.terms
+          & Set.toList
+          & map (\v -> (v, termsByVar1 Map.! v))
+          & Map.fromList,
+      updates =
+        slurp
+          & Slurp.updates
+          & SC.terms
+          & Set.toList
+          & map (\v -> (v, (Names.theRefTermNamed allNames (Name.unsafeFromVar v), termsByVar1 Map.! v)))
+          & Map.fromList
+    }
+  where
+    file = Slurp.originalFile slurp
+    termsByVar1 = undefined
+
+-- declsByVar1 = Map.map (\(ref, decl) -> Declref {decl, ref}) (UF.tcDeclarationsByVar file)
 
 -- 22/03/16
 --
@@ -2545,18 +2546,15 @@ oink selection unisonFile0 = do
   --               UF.effectDeclarationsId' = effects
   --             }
 
-  maybeTermUpserts <-
+  termUpserts <-
     hydrateUnisonFileTerms
       loadTermComponent
       typecheck
       termNames
       termIsTest
       slurp1
-
-  let termUpserts =
-        case maybeTermUpserts of
-          Nothing -> undefined
-          Just termUpserts -> termUpserts
+      -- FIXME is slurp00 right?
+      (makeTermSlurp allNames slurp00)
 
   pure
     Structure
@@ -2647,90 +2645,157 @@ hydrateUnisonFileDecls ::
   DeclSlurp v ->
   m [UpsertDecl v Ann]
 hydrateUnisonFileDecls loadDeclComponent declNames slurp@DeclSlurp {declsById1, updates, varsById1} = do
-  extraDecls <- loadExtraObjects loadDeclComponent declNames (Map.map fst updates)
+  -- Running example:
+  --
+  --   In codebase:
+  --     unique type Ping = Ping (Maybe Pong)
+  --     unique type Pong = Pong (Maybe Ping)
+  --
+  --   In scratch.u:
+  --     -- An update to a member of a component
+  --     unique type Ping = Ping (Maybe Pong) Nat
+  --     -- A random addition
+  --     unique type Hi = Hi Nat
+  --
+  --   Rough representation of decl, for the purpose of this example:
+  --
+  --     #Ping1 = [[Maybe #Pong0, Nat]]
+  --     ^^^^^^   ^^^^^^^^^^^^^^^^^^^^^
+  --     hash     list of constructors, each of which is a list of types
+
+  -- Running example:
+  --
+  --   #Pong0 => [[Maybe #Ping0]]
+  implicitDecls <- loadExtraObjects loadDeclComponent declNames (Map.map fst updates)
+
   pure $
     fromMaybe (declSlurpToDeclUpserts slurp) do
-      guard (not (Map.null extraDecls))
-      hydrateDecls extraDecls
-  where
-    hydrateDecls :: Map TypeReferenceId (Decl v Ann) -> Maybe [UpsertDecl v Ann]
-    hydrateDecls extraDecls =
+      guard (not (Map.null implicitDecls))
+
+      let -- Running example:
+          --
+          --   #Hi0 => ("v0", [[Nat]])
+          --   #Ping1 => ("v1", [[Maybe "v2", Nat]])
+          --   #Pong0 => ("v2", [[Maybe "v1"]])
+          allUnhashedDecls :: Map TypeReferenceId (v, Decl v Ann)
+          allUnhashedDecls =
+            implicitDecls
+              & Map.map (oingoDecl declMapping)
+              -- Running example:
+              --
+              --   #Pong0 => [[Maybe #Ping1]]
+              & Map.union declsById1
+              -- Running example:
+              --
+              --   #Hi0 => [[Nat]]
+              --   #Pong0 => [[Maybe #Ping1]]
+              --   #Ping1 => [[Maybe #Pong0, Nat]]
+              & DD.unhashComponent
+              -- Running example:
+              --
+              --   #Hi0 => ("v0", [[Nat]])
+              --   #Ping1 => ("v1", [[Maybe "v2", Nat]])
+              --   #Pong0 => ("v2", [[Maybe "v1"]])
+            where
+              -- Running example:
+              --
+              --   #Ping0 => #Ping1
+              declMapping :: Map TypeReference TypeReferenceId
+              declMapping =
+                updates
+                  & Map.elems
+                  & map (\(r0, Declref {ref = r1}) -> (r0, r1))
+                  & Map.fromList
+
+      let -- Running example:
+          --
+          --   "v0" => #Hi0
+          --   "v1" => #Ping1
+          --   "v2" => #Pong0
+          randomNameToOldRef :: Map v TypeReferenceId
+          randomNameToOldRef =
+            Map.remap (\(r, (v, _)) -> (v, r)) allUnhashedDecls
+
+      let -- Running example:
+          --
+          --   "v0" => "Hi"
+          --   "v1" => "Ping"
+          randomNameToUserSuppliedName :: Map v v
+          randomNameToUserSuppliedName =
+            Map.compose varsById1 randomNameToOldRef
+
+      let -- Classify this hashed decl as either an add, an explicit update, or an implicit update.
+          --
+          -- Running example:
+          --
+          --   ("v0", #Hi0, [[Nat]]) ->
+          --     AddDecl
+          --       (Declref [[Nat]] #Hi0)
+          --       "Hi"
+          --
+          --   ("v1", #Ping2, [[Maybe #Pong1, Nat]]) ->
+          --     UpdateDecl
+          --       (Explicit
+          --         (Upd1
+          --           (Declref [[Maybe #Pong0]] #Ping0)
+          --           (Declref [[Maybe #Pong1, Nat]] #Ping2))
+          --       "Ping"
+          --
+          --   ("v2", #Pong1, [[Maybe #Ping2]]) ->
+          --     UpdateDecl
+          --       (Implicit
+          --         (Upd1
+          --           (Declref [[Maybe #Ping0]] #Pong0)
+          --           (Declref [[Maybe #Ping2]] #Pong1)))
+          --       "v2"
+          classify :: (v, TypeReferenceId, Decl v Ann) -> UpsertDecl v Ann
+          classify (randomName, ref1, decl1)
+            | isExtraDecl =
+              let ref0 = randomNameToOldRef Map.! randomName
+                  before = Declref {decl = implicitDecls Map.! ref0, ref = ref0}
+               in Update UpdateDecl {update = Implicit Upd1 {before, after}, var}
+            | Just (ref0, _) <- asExplicitUpdate = Update UpdateDecl {update = Explicit Upd1 {before = ref0, after}, var}
+            | otherwise = Add AddDecl {declref = after, var}
+            where
+              maybeUserSuppliedName = Map.lookup randomName randomNameToUserSuppliedName
+              isExtraDecl = isNothing maybeUserSuppliedName
+              asExplicitUpdate = Map.lookup var updates
+              var = fromMaybe randomName maybeUserSuppliedName
+              after :: DeclrefId v Ann
+              after =
+                Declref
+                  { decl = decl1,
+                    ref = ref1
+                  }
+
       allUnhashedDecls
+        -- Running example:
+        --
+        --   #Hi0 => ("v0", [[Nat]])
+        --   #Ping1 => ("v1", [[Maybe "v2", Nat]])
+        --   #Pong0 => ("v2", [[Maybe "v1"]])
         & Map.elems
+        -- Running example:
+        --
+        --   ("v0", [[Nat]])
+        --   ("v1", [[Maybe "v2", Nat]])
+        --   ("v2", [[Maybe "v1"]])
         & Map.fromList
+        -- Running example:
+        --
+        --   "v0" => [[Nat]]
+        --   "v1" => [[Maybe "v2", Nat]]
+        --   "v2" => [[Maybe "v1"]]
         & Hashing.hashDecls
+        -- Running example:
+        --
+        --   ("v0", #Hi0, [[Nat]])
+        --   ("v1", #Ping2, [[Maybe #Pong1, Nat]])
+        --   ("v2", #Pong1, [[Maybe #Ping2]])
         & \case
           -- FIXME determine what to do here
           Left _resolutionFailure -> Nothing
           Right decls -> Just (map classify decls)
-      where
-        -- Classify this hashed decl as either an add, an explicit update, or an implicit update.
-        classify :: (v, TypeReferenceId, Decl v Ann) -> UpsertDecl v Ann
-        classify (randomName, ref1, decl1)
-          | isExtraDecl =
-            let ref0 = randomNameToOldRef Map.! randomName
-                before = Declref {decl = extraDecls Map.! ref0, ref = ref0}
-             in Update UpdateDecl {update = Implicit Upd1 {before, after}, var}
-          | Just (ref0, _) <- asExplicitUpdate = Update UpdateDecl {update = Explicit Upd1 {before = ref0, after}, var}
-          | otherwise = Add AddDecl {declref = after, var}
-          where
-            maybeUserSuppliedName = Map.lookup randomName randomNameToUserSuppliedName
-            isExtraDecl = isNothing maybeUserSuppliedName
-            asExplicitUpdate = Map.lookup var updates
-            var = fromMaybe randomName maybeUserSuppliedName
-            after :: DeclrefId v Ann
-            after =
-              Declref
-                { decl = decl1,
-                  ref = ref1
-                }
-
-        allUnhashedDecls :: Map TypeReferenceId (v, Decl v Ann)
-        allUnhashedDecls =
-          extraDecls
-            & Map.map (oingoDecl declMapping)
-            -- Even though Map.union is left-biased, the order isn't important here. All decls have different refs.
-            -- Why? Because we threw away the refs that were being updated (see notBeingUpdated above).
-            & Map.union declsById1
-            & DD.unhashComponent
-          where
-            declMapping :: Map TypeReference TypeReferenceId
-            declMapping =
-              updates
-                & Map.elems
-                & map (\(r0, Declref {ref = r1}) -> (r0, r1))
-                & Map.fromList
-
-        randomNameToOldRef :: Map v TypeReferenceId
-        randomNameToOldRef =
-          Map.remap (\(r, (v, _)) -> (v, r)) allUnhashedDecls
-
-        randomNameToUserSuppliedName :: Map v v
-        randomNameToUserSuppliedName =
-          Map.compose varsById1 randomNameToOldRef
-
--- FIXME document
--- FIXME rename loadImplicitObjects
-loadExtraObjects ::
-  (Monad m, Var v) =>
-  (Hash -> m [(Reference.Id, obj)]) ->
-  (Reference.Id -> Set Name) ->
-  Map v Reference ->
-  m (Map Reference.Id obj)
-loadExtraObjects loadComponent objNames updates =
-  -- FIXME pretty sure this could be Map.fromAscList
-  fmap Map.fromList do
-    foldMapM
-      (\hash -> filter notBeingUpdated <$> loadComponent hash)
-      hashes
-  where
-    vars = Map.keysSet updates
-    hashes =
-      updates
-        & Map.elems
-        & mapMaybe Reference.toHash
-        & Set.fromList
-    notBeingUpdated (ref0, _) = Set.disjoint vars (Set.map Name.toVar (objNames ref0))
 
 hydrateUnisonFileTerms ::
   forall m v.
@@ -2740,68 +2805,75 @@ hydrateUnisonFileTerms ::
   (TermReferenceId -> Set Name) ->
   (TermReference -> Bool) ->
   SlurpResult2 v ->
-  m (Maybe [UpsertTerm v])
-hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest SlurpResult2 {slurp, termMapping, termRef0} = do
-  implicitTerms <- undefined -- loadExtraObjects loadTermComponent termNames (SC.terms (Slurp.updates slurp))
+  TermSlurp v ->
+  m [UpsertTerm v]
+hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest SlurpResult2 {slurp, termRef0} TermSlurp {updates} = do
+  implicitTerms <- loadExtraObjects loadTermComponent termNames (Map.map fst updates)
+  let termUpserts0 = undefined
+  fromMaybe termUpserts0 <$> do
+    if Map.null implicitTerms
+      then pure Nothing
+      else do
+        let -- in mates, perform ref->ref replacement, for all new ->ref that are being updated
+            -- FIXME what about old type? currently just passing it along...
+            allUnhashedTermsAndWatches :: Map TermReferenceId (v, Term v Ann)
+            allUnhashedTermsAndWatches =
+              implicitTerms
+                & Map.map (oingoTerm termMapping)
+                & Map.union fileTerms
+                & Term.unhashComponent
+              where
+                termMapping :: Map TermReference TermReferenceId
+                termMapping =
+                  updates
+                    & Map.elems
+                    & map (\(r0, Termref {ref = r1}) -> (r0, r1))
+                    & Map.fromList
 
-  if Map.null implicitTerms
-    then undefined
-    else do
-      let -- in mates, perform ref->ref replacement, for all new ->ref that are being updated
-          -- FIXME what about old type? currently just passing it along...
-          allUnhashedTermsAndWatches :: Map TermReferenceId (v, Term v Ann)
-          allUnhashedTermsAndWatches =
-            implicitTerms
-              & Map.map (oingoTerm termMapping)
-              & Map.union fileTerms
-              & Term.unhashComponent
+        let -- FIXME "old ref" might be a bad name - it's the "original" / "pre-hash" ref
+            randomNameToOldRef :: Map v TermReferenceId
+            randomNameToOldRef =
+              Map.remap (\(r, (v, _)) -> (v, r)) allUnhashedTermsAndWatches
 
-      let -- FIXME "old ref" might be a bad name - it's the "original" / "pre-hash" ref
-          randomNameToOldRef :: Map v TermReferenceId
-          randomNameToOldRef =
-            Map.remap (\(r, (v, _)) -> (v, r)) allUnhashedTermsAndWatches
+        let randomNameToUserSuppliedName :: Map v v
+            randomNameToUserSuppliedName =
+              Map.compose (UF.tcTermVarsById unisonFile) randomNameToOldRef
 
-      let randomNameToUserSuppliedName :: Map v v
-          randomNameToUserSuppliedName =
-            Map.compose (UF.tcTermVarsById unisonFile) randomNameToOldRef
+        let partitionUnhashedTermsAndWatches ::
+              Map TermReferenceId (v, Term v Ann) ->
+              ([(v, Term v Ann)], Map WK.WatchKind [(v, Term v Ann)])
+            partitionUnhashedTermsAndWatches =
+              List.foldl'
+                ( \(terms, !watches) term@(randomName, _) ->
+                    case Map.lookup randomName randomNameToUserSuppliedName of
+                      -- A Nothing here means this was an extra term, I guess just assume it's not a watch.
+                      -- FIXME this is somewhat suspicious. Currently a watch can't be a member of a cycle because we only
+                      -- store test watches as terms, which aren't lambdas. But still, it seems like we could pull out
+                      -- such a watch as a dependency of the updated term, which refers to the original in some way. What
+                      -- to do in that case?
+                      Nothing -> (term : terms, watches)
+                      Just userSuppliedName ->
+                        case UF.hashTermsId unisonFile Map.! userSuppliedName of
+                          (_, Just watchKind, _, _) -> (terms, Map.insertWith (++) watchKind [term] watches)
+                          _ -> (term : terms, watches)
+                )
+                ([], Map.empty)
 
-      let partitionUnhashedTermsAndWatches ::
-            Map TermReferenceId (v, Term v Ann) ->
-            ([(v, Term v Ann)], Map WK.WatchKind [(v, Term v Ann)])
-          partitionUnhashedTermsAndWatches =
-            List.foldl'
-              ( \(terms, !watches) term@(randomName, _) ->
-                  case Map.lookup randomName randomNameToUserSuppliedName of
-                    -- A Nothing here means this was an extra term, I guess just assume it's not a watch.
-                    -- FIXME this is somewhat suspicious. Currently a watch can't be a member of a cycle because we only
-                    -- store test watches as terms, which aren't lambdas. But still, it seems like we could pull out
-                    -- such a watch as a dependency of the updated term, which refers to the original in some way. What
-                    -- to do in that case?
-                    Nothing -> (term : terms, watches)
-                    Just userSuppliedName ->
-                      case UF.hashTermsId unisonFile Map.! userSuppliedName of
-                        (_, Just watchKind, _, _) -> (terms, Map.insertWith (++) watchKind [term] watches)
-                        _ -> (term : terms, watches)
-              )
-              ([], Map.empty)
+        let allUnhashedTerms :: [(v, Term v Ann)]
+            allUnhashedWatches :: Map WK.WatchKind [(v, Term v Ann)]
+            (allUnhashedTerms, allUnhashedWatches) =
+              partitionUnhashedTermsAndWatches allUnhashedTermsAndWatches
 
-      let allUnhashedTerms :: [(v, Term v Ann)]
-          allUnhashedWatches :: Map WK.WatchKind [(v, Term v Ann)]
-          (allUnhashedTerms, allUnhashedWatches) =
-            partitionUnhashedTermsAndWatches allUnhashedTermsAndWatches
+        -- FIXME can skip typechecking if types don't change
+        let fileToTypecheck =
+              UF.UnisonFileId
+                { UF.dataDeclarationsId = UF.dataDeclarationsId' unisonFile,
+                  UF.effectDeclarationsId = UF.effectDeclarationsId' unisonFile,
+                  UF.terms = allUnhashedTerms,
+                  UF.watches = allUnhashedWatches
+                }
 
-      -- FIXME can skip typechecking if types don't change
-      let fileToTypecheck =
-            UF.UnisonFileId
-              { UF.dataDeclarationsId = UF.dataDeclarationsId' unisonFile,
-                UF.effectDeclarationsId = UF.effectDeclarationsId' unisonFile,
-                UF.terms = allUnhashedTerms,
-                UF.watches = allUnhashedWatches
-              }
-
-      typecheck fileToTypecheck <&> \case
-        Nothing -> Nothing
-        Just unisonFile1 ->
+        typecheck fileToTypecheck <&> fmap \unisonFile1 ->
           let classify :: (v, (TermReferenceId, Maybe WK.WatchKind, Term v Ann, Type v Ann)) -> Maybe (UpsertTerm v)
               classify (randomName, (ref1, watchKind, term1, _typ1)) = do
                 after <- tagStoredTerm Termref {term = term1, ref = ref1} watchKind
@@ -2831,7 +2903,7 @@ hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest SlurpRes
                   maybeUserSuppliedName = Map.lookup randomName randomNameToUserSuppliedName
                   isExplicitUpdate = Set.member var (SC.terms (Slurp.updates slurp))
                   var = fromMaybe randomName maybeUserSuppliedName
-           in Just (mapMaybe classify (Map.toList (UF.hashTermsId unisonFile1)))
+           in mapMaybe classify (Map.toList (UF.hashTermsId unisonFile1))
   where
     unisonFile = Slurp.originalFile slurp
 
@@ -2844,6 +2916,29 @@ hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest SlurpRes
         -- because decls have already been applied, and term mappings would all miss.
         & map (\(ref, _wk, term, _typ) -> (ref, oingoTerm Map.empty term))
         & Map.fromList
+
+-- FIXME document
+-- FIXME rename loadImplicitObjects
+loadExtraObjects ::
+  (Monad m, Var v) =>
+  (Hash -> m [(Reference.Id, obj)]) ->
+  (Reference.Id -> Set Name) ->
+  Map v Reference ->
+  m (Map Reference.Id obj)
+loadExtraObjects loadComponent objNames updates =
+  -- FIXME pretty sure this could be Map.fromAscList
+  fmap Map.fromList do
+    foldMapM
+      (\hash -> filter notBeingUpdated <$> loadComponent hash)
+      hashes
+  where
+    vars = Map.keysSet updates
+    hashes =
+      updates
+        & Map.elems
+        & mapMaybe Reference.toHash
+        & Set.fromList
+    notBeingUpdated (ref0, _) = Set.disjoint vars (Set.map Name.toVar (objNames ref0))
 
 -- FIXME rename
 oingoDecl :: Ord v => Map TypeReference TypeReferenceId -> Decl v a -> Decl v a
