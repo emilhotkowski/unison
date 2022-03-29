@@ -722,7 +722,13 @@ instance Unison.ABT.Var v => GHC.Classes.Eq (Unison.Codebase.Editor.Propagate.Ed
 
 module Unison.Codebase.Editor.HandleInput.LoopState
 type F m i v = Free (Command m i v)
-type Action m i v = MaybeT (StateT (LoopState m v) (F m i v))
+data Env
+Env :: Env
+newtype Action m i v a
+Action :: MaybeT (ReaderT Env (StateT (LoopState m v) (F m i v))) a -> Action m i v a
+[unAction] :: Action m i v a -> MaybeT (ReaderT Env (StateT (LoopState m v) (F m i v))) a
+runAction :: Env -> LoopState m v -> Action m i v a -> F m i v (Maybe a, LoopState m v)
+liftF :: F m i v a -> Action m i v a
 
 -- | A typeclass representing monads which can evaluate <a>Command</a>s.
 class Monad n => MonadCommand n m v i | n -> m v i
@@ -740,19 +746,29 @@ LoopState :: Branch m -> Branch m -> NonEmpty Absolute -> Maybe (FilePath, SkipN
 type Action' m v = Action m (Either Event Input) v
 type SkipNextUpdate = Bool
 type InputDescription = Text
-root :: forall m_a1Cur v_a1Cus. Lens' (LoopState m_a1Cur v_a1Cus) (Branch m_a1Cur)
-numberedArgs :: forall m_a1Cur v_a1Cus. Lens' (LoopState m_a1Cur v_a1Cus) NumberedArgs
-latestTypecheckedFile :: forall m_a1Cur v_a1Cus v_a1CGc. Lens (LoopState m_a1Cur v_a1Cus) (LoopState m_a1Cur v_a1CGc) (Maybe (TypecheckedUnisonFile v_a1Cus Ann)) (Maybe (TypecheckedUnisonFile v_a1CGc Ann))
-latestFile :: forall m_a1Cur v_a1Cus. Lens' (LoopState m_a1Cur v_a1Cus) (Maybe (FilePath, SkipNextUpdate))
-lastSavedRoot :: forall m_a1Cur v_a1Cus. Lens' (LoopState m_a1Cur v_a1Cus) (Branch m_a1Cur)
-lastInput :: forall m_a1Cur v_a1Cus. Lens' (LoopState m_a1Cur v_a1Cus) (Maybe Input)
-currentPathStack :: forall m_a1Cur v_a1Cus. Lens' (LoopState m_a1Cur v_a1Cus) (NonEmpty Absolute)
+root :: forall m_a1CuC v_a1CuD. Lens' (LoopState m_a1CuC v_a1CuD) (Branch m_a1CuC)
+numberedArgs :: forall m_a1CuC v_a1CuD. Lens' (LoopState m_a1CuC v_a1CuD) NumberedArgs
+latestTypecheckedFile :: forall m_a1CuC v_a1CuD v_a1Ded. Lens (LoopState m_a1CuC v_a1CuD) (LoopState m_a1CuC v_a1Ded) (Maybe (TypecheckedUnisonFile v_a1CuD Ann)) (Maybe (TypecheckedUnisonFile v_a1Ded Ann))
+latestFile :: forall m_a1CuC v_a1CuD. Lens' (LoopState m_a1CuC v_a1CuD) (Maybe (FilePath, SkipNextUpdate))
+lastSavedRoot :: forall m_a1CuC v_a1CuD. Lens' (LoopState m_a1CuC v_a1CuD) (Branch m_a1CuC)
+lastInput :: forall m_a1CuC v_a1CuD. Lens' (LoopState m_a1CuC v_a1CuD) (Maybe Input)
+currentPathStack :: forall m_a1CuC v_a1CuD. Lens' (LoopState m_a1CuC v_a1CuD) (NonEmpty Absolute)
 currentPath :: Getter (LoopState m v) Absolute
 loopState0 :: Branch m -> Absolute -> LoopState m v
+instance Control.Monad.Fail.MonadFail (Unison.Codebase.Editor.HandleInput.LoopState.Action m i v)
+instance Control.Monad.Reader.Class.MonadReader Unison.Codebase.Editor.HandleInput.LoopState.Env (Unison.Codebase.Editor.HandleInput.LoopState.Action m i v)
+instance Control.Monad.State.Class.MonadState (Unison.Codebase.Editor.HandleInput.LoopState.LoopState m v) (Unison.Codebase.Editor.HandleInput.LoopState.Action m i v)
+instance Control.Monad.IO.Class.MonadIO m => Control.Monad.IO.Class.MonadIO (Unison.Codebase.Editor.HandleInput.LoopState.Action m i v)
+instance GHC.Base.Monad (Unison.Codebase.Editor.HandleInput.LoopState.Action m i v)
+instance GHC.Base.Alternative (Unison.Codebase.Editor.HandleInput.LoopState.Action m i v)
+instance GHC.Base.Applicative (Unison.Codebase.Editor.HandleInput.LoopState.Action m i v)
+instance GHC.Base.Functor (Unison.Codebase.Editor.HandleInput.LoopState.Action m i v)
+instance Unison.Codebase.Editor.HandleInput.LoopState.MonadCommand (Unison.Codebase.Editor.HandleInput.LoopState.Action m i v) m i v
 instance Unison.Codebase.Editor.HandleInput.LoopState.MonadCommand (Unison.Util.Free.Free (Unison.Codebase.Editor.Command.Command m i v)) m i v
 instance Unison.Codebase.Editor.HandleInput.LoopState.MonadCommand n m i v => Unison.Codebase.Editor.HandleInput.LoopState.MonadCommand (Control.Monad.Trans.State.Lazy.StateT s n) m i v
 instance Unison.Codebase.Editor.HandleInput.LoopState.MonadCommand n m i v => Unison.Codebase.Editor.HandleInput.LoopState.MonadCommand (Control.Monad.Trans.Maybe.MaybeT n) m i v
 instance Unison.Codebase.Editor.HandleInput.LoopState.MonadCommand n m i v => Unison.Codebase.Editor.HandleInput.LoopState.MonadCommand (Control.Monad.Trans.Except.ExceptT e n) m i v
+instance Unison.Codebase.Editor.HandleInput.LoopState.MonadCommand n m i v => Unison.Codebase.Editor.HandleInput.LoopState.MonadCommand (Control.Monad.Trans.Reader.ReaderT r n) m i v
 
 module Unison.Codebase.Editor.HandleInput.NamespaceDependencies
 
