@@ -2409,6 +2409,39 @@ makeDeclSlurp allNames slurp =
     file = Slurp.originalFile slurp
     declsByVar1 = Map.map (\(ref, decl) -> Declref {decl, ref}) (UF.tcDeclarationsByVar file)
 
+data TermSlurp v = TermSlurp
+  { -- declsById1 :: Map TypeReferenceId (Decl v Ann),
+    -- varsById1 :: Map TypeReferenceId v,
+    --
+    adds :: Map v (TermrefId v Ann),
+    updates :: Map v (TermReference, TermrefId v Ann)
+  }
+
+makeTermSlurp :: Var v => Names -> SlurpResult v -> TermSlurp v
+makeTermSlurp allNames slurp =
+ TermSlurp
+   { -- declsById1 = UF.tcDeclarationsById file,
+     -- varsById1 = UF.tcDeclarationVarsById file,
+     adds =
+       slurp
+         & Slurp.adds
+         & SC.terms
+         & Set.toList
+         & map undefined -- (\v -> (v, termsByVar1 Map.! v))
+         & Map.fromList,
+     updates =
+       slurp
+         & Slurp.updates
+         & SC.terms
+         & Set.toList
+         -- & map (\v -> (v, (Names.theTypeNamed allNames (Name.unsafeFromVar v), declsByVar1 Map.! v)))
+         & map (\v -> (v, undefined))
+         & Map.fromList
+   }
+ where
+   file = Slurp.originalFile slurp
+   -- declsByVar1 = Map.map (\(ref, decl) -> Declref {decl, ref}) (UF.tcDeclarationsByVar file)
+
 -- 22/03/16
 --
 -- Problem: when hydrating terms, if typechecking fails, we still do want to apply the constructor reference mapping to
@@ -2443,13 +2476,11 @@ makeDeclSlurp allNames slurp =
 --
 -- 22/03/22
 --
-
--- * Problem: if hydrating terms fails due to typechecking (because a member of a component explicitly changed types),
-
+-- - Problem: if hydrating terms fails due to typechecking (because a member of a component explicitly changed types),
 -- then we still do want to proceed with substituting decl/constructors (of implicit decls), if any.
+-- - Observation: we shouldn't substitute explicitly updated decls in implicit terms.
 --
-
--- * Observation: we shouldn't substitute explicitly updated decls in implicit terms.
+-- Next up: Make TermSlurp, similar to DeclSlurp, and pass into hydrateTerms
 
 oink ::
   forall m v.
@@ -2477,32 +2508,9 @@ oink selection unisonFile0 = do
               (Branch.deepTermMetadata currentBranch0)
 
   -- FIXME:
-  -- What does hydrateUnisonFileDecls need from slurp0?
-  -- - type updates (Set v)
-  -- - unison file
-  --   - tcDeclarationsById
-  --   - tcDeclarationVarsById
-  -- - decl mapping
-  -- - declRef0
   -- What does hydrateUnisonFileTerms need from slurp1?
   -- Suspicion: SlurpResult2 can disappear, we only need to pass in certain things
 
-  -- makeSlurp2 :: Var v => Names -> Set v -> TypecheckedUnisonFile v Ann -> SlurpResult2 v
-  -- makeSlurp2 allNames selection unisonFile =
-  --   SlurpResult2
-  --     { slurp,
-  --       declMapping = makeMap declRef0 declRef1 (SC.types (Slurp.updates slurp)),
-  --       declRef0,
-  --       termMapping = makeMap termRef0 termRef1 (SC.terms (Slurp.updates slurp)),
-  --       termRef0
-  --     }
-  --   where
-  --     makeMap k v = foldl' (\acc x -> Map.insert (k x) (v x) acc) Map.empty
-  --     declRef0 = Names.theTypeNamed allNames . Name.unsafeFromVar
-  --     declRef1 v = fst (UF.tcDeclarationsByVar unisonFile Map.! v)
-  --     fileNames = UF.typecheckedToNames unisonFile
-  --     termRef0 = Names.theRefTermNamed allNames . Name.unsafeFromVar
-  --     termRef1 = Reference.unsafeId . Names.theRefTermNamed fileNames . Name.unsafeFromVar
   let makeMap k v = foldl' (\acc x -> Map.insert (k x) (v x) acc) Map.empty
   let declRef0 = Names.theTypeNamed allNames . Name.unsafeFromVar
   let varToDeclref1 v =
@@ -2516,8 +2524,6 @@ oink selection unisonFile0 = do
   let termVarsBeingUpdated = SC.terms (Slurp.updates slurp00)
   let declMapping = makeMap declRef0 (\v -> varToDeclref1 v ^. #ref) declVarsBeingUpdated
   let termMapping = makeMap termRef0 termRef1 termVarsBeingUpdated
-
-  let makeSlurp = makeSlurp2 allNames selection
 
   -- FIXME seems like declVarsBeingUpdated + declRef0 + declMapping would be cleaner as a single thing
   declUpserts <-
@@ -2539,12 +2545,30 @@ oink selection unisonFile0 = do
   --               UF.effectDeclarationsId' = effects
   --             }
 
+<<<<<<< Updated upstream
   -- TODO delete
   let constructorMapping :: Map ConstructorReferenceId ConstructorReferenceId
       constructorMapping =
         foldMap declUpsertConstructorMapping declUpserts
 
   maybeTermUpserts <- hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest slurp1
+||||||| constructed merge base
+  let constructorMapping :: Map ConstructorReferenceId ConstructorReferenceId
+      constructorMapping =
+        foldMap declUpsertConstructorMapping declUpserts
+
+  maybeTermUpserts <- hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest constructorMapping slurp1
+=======
+  maybeTermUpserts <-
+    hydrateUnisonFileTerms
+      loadTermComponent
+      typecheck
+      termNames
+      termIsTest
+      undefined
+      (foldMap declUpsertConstructorMapping declUpserts)
+      slurp1
+>>>>>>> Stashed changes
 
   let termUpserts =
         case maybeTermUpserts of
@@ -2703,6 +2727,7 @@ hydrateUnisonFileDecls loadDeclComponent declNames slurp@DeclSlurp {declsById1, 
           Map.compose varsById1 randomNameToOldRef
 
 -- FIXME document
+-- FIXME rename loadImplicitObjects
 loadExtraObjects ::
   (Monad m, Var v) =>
   (Hash -> m [(Reference.Id, obj)]) ->
@@ -2731,20 +2756,81 @@ hydrateUnisonFileTerms ::
   (UF.UnisonFile v Ann -> m (Maybe (TypecheckedUnisonFile v Ann))) ->
   (TermReferenceId -> Set Name) ->
   (TermReference -> Bool) ->
+<<<<<<< Updated upstream
+||||||| constructed merge base
+  Map ConstructorReferenceId ConstructorReferenceId ->
+=======
+  Map TypeReference TypeReferenceId ->
+  Map ConstructorReferenceId ConstructorReferenceId ->
+>>>>>>> Stashed changes
   SlurpResult2 v ->
   m (Maybe [UpsertTerm v])
+<<<<<<< Updated upstream
 hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest SlurpResult2 {slurp, termMapping, termRef0} = do
   extraTerms <- undefined -- loadExtraObjects loadTermComponent termRef0 termNames (SC.terms (Slurp.updates slurp))
+||||||| constructed merge base
+hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest constructorMapping SlurpResult2 {declMapping, slurp, termMapping, termRef0} = do
+  extraTerms <- undefined -- loadExtraObjects loadTermComponent termRef0 termNames (SC.terms (Slurp.updates slurp))
+=======
+hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest declMapping constructorMapping SlurpResult2 {slurp, termMapping, termRef0} = do
+  implicitTerms <- loadExtraObjects loadTermComponent termNames undefined
+>>>>>>> Stashed changes
 
+<<<<<<< Updated upstream
   if Map.null extraTerms
     then undefined
+||||||| constructed merge base
+  -- If extra terms is null,
+  --   if constructor mapping is null,
+  --     no work to do.
+  --   else, apply constructor mapping.
+  -- Else, if typechecking fails,
+  --   if constructor mapping is null,
+  --     no work to do.
+  --   else,
+  --     apply constructor mapping to original terms (without extras) and... typecheck again? (I think this must
+  --     succeed).
+  -- Else, we did the thing!
+
+  if Map.null extraTerms
+    then
+      if Map.null constructorMapping
+        then pure Nothing
+        else undefined
+=======
+  -- If extra terms is null,
+  --   if constructor mapping is null,
+  --     no work to do.
+  --   else, apply constructor mapping.
+  -- Else, if typechecking fails,
+  --   if constructor mapping is null,
+  --     no work to do.
+  --   else,
+  --     apply constructor mapping to original terms (without extras) and... typecheck again? (I think this must
+  --     succeed).
+  -- Else, we did the thing!
+
+  if Map.null implicitTerms
+    then
+      if Map.null constructorMapping
+        then pure Nothing
+        else undefined
+>>>>>>> Stashed changes
     else do
       let -- in mates, perform ref->ref replacement, for all new ->ref that are being updated
           -- FIXME what about old type? currently just passing it along...
           allUnhashedTermsAndWatches :: Map TermReferenceId (v, Term v Ann)
           allUnhashedTermsAndWatches =
+<<<<<<< Updated upstream
             extraTerms
               & Map.map (oingoTerm termMapping)
+||||||| constructed merge base
+            extraTerms
+              & Map.map (oingoTerm declMapping constructorMapping termMapping)
+=======
+            implicitTerms
+              & Map.map (oingoTerm declMapping constructorMapping termMapping)
+>>>>>>> Stashed changes
               & Map.union fileTerms
               & Term.unhashComponent
 
@@ -2801,7 +2887,7 @@ hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest SlurpRes
                   ( if
                         | isExtraTerm ->
                           let ref0 = randomNameToOldRef Map.! randomName
-                              termref0 = Termref {term = extraTerms Map.! ref0, ref = ref0}
+                              termref0 = Termref {term = implicitTerms Map.! ref0, ref = ref0}
                               before = if termIsTest (Reference.fromId ref0) then TestWatch termref0 else NormalTerm termref0
                            in Update UpdateTerm {update = Implicit Upd1 {before, after}, var}
                         | isExplicitUpdate ->
