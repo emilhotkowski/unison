@@ -2117,6 +2117,7 @@ declUpsertUpdate = \case
 -- For an implicit update, there is a mapping (because all we did was unhash and rehash this thing - it has the same
 -- constructors, and they all have the same types, but they may be in a different canonical ordering per the new
 -- hashes).
+-- TODO delete
 declUpsertConstructorMapping :: Ord v => UpsertDecl v a -> Map ConstructorReferenceId ConstructorReferenceId
 declUpsertConstructorMapping = \case
   Add _ -> Map.empty
@@ -2125,6 +2126,7 @@ declUpsertConstructorMapping = \case
 -- | Construct a mapping of old-to-new constructor references from a decl update.
 --
 -- See 'declUpsertConstructorMapping'.
+-- TODO delete
 declUpdateConstructorMapping :: Ord v => UpdateDecl v a -> Map ConstructorReferenceId ConstructorReferenceId
 declUpdateConstructorMapping UpdateDecl {update} =
   case update of
@@ -2537,11 +2539,12 @@ oink selection unisonFile0 = do
   --               UF.effectDeclarationsId' = effects
   --             }
 
+  -- TODO delete
   let constructorMapping :: Map ConstructorReferenceId ConstructorReferenceId
       constructorMapping =
         foldMap declUpsertConstructorMapping declUpserts
 
-  maybeTermUpserts <- hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest constructorMapping slurp1
+  maybeTermUpserts <- hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest slurp1
 
   let termUpserts =
         case maybeTermUpserts of
@@ -2643,9 +2646,7 @@ hydrateUnisonFileDecls loadDeclComponent declNames slurp@DeclSlurp {declsById1, 
       guard (not (Map.null extraDecls))
       hydrateDecls extraDecls
   where
-    hydrateDecls ::
-      Map TypeReferenceId (Decl v Ann) ->
-      Maybe [UpsertDecl v Ann]
+    hydrateDecls :: Map TypeReferenceId (Decl v Ann) -> Maybe [UpsertDecl v Ann]
     hydrateDecls extraDecls =
       allUnhashedDecls
         & Map.elems
@@ -2730,36 +2731,20 @@ hydrateUnisonFileTerms ::
   (UF.UnisonFile v Ann -> m (Maybe (TypecheckedUnisonFile v Ann))) ->
   (TermReferenceId -> Set Name) ->
   (TermReference -> Bool) ->
-  Map ConstructorReferenceId ConstructorReferenceId ->
   SlurpResult2 v ->
   m (Maybe [UpsertTerm v])
-hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest constructorMapping SlurpResult2 {declMapping, slurp, termMapping, termRef0} = do
+hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest SlurpResult2 {slurp, termMapping, termRef0} = do
   extraTerms <- undefined -- loadExtraObjects loadTermComponent termRef0 termNames (SC.terms (Slurp.updates slurp))
 
-  -- If extra terms is null,
-  --   if constructor mapping is null,
-  --     no work to do.
-  --   else, apply constructor mapping.
-  -- Else, if typechecking fails,
-  --   if constructor mapping is null,
-  --     no work to do.
-  --   else,
-  --     apply constructor mapping to original terms (without extras) and... typecheck again? (I think this must
-  --     succeed).
-  -- Else, we did the thing!
-
   if Map.null extraTerms
-    then
-      if Map.null constructorMapping
-        then pure Nothing
-        else undefined
+    then undefined
     else do
       let -- in mates, perform ref->ref replacement, for all new ->ref that are being updated
           -- FIXME what about old type? currently just passing it along...
           allUnhashedTermsAndWatches :: Map TermReferenceId (v, Term v Ann)
           allUnhashedTermsAndWatches =
             extraTerms
-              & Map.map (oingoTerm declMapping constructorMapping termMapping)
+              & Map.map (oingoTerm termMapping)
               & Map.union fileTerms
               & Term.unhashComponent
 
@@ -2849,7 +2834,7 @@ hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest construc
         & Map.elems
         -- Apply the constructor mapping to each term in the original unison file; decl and term mappings are empty,
         -- because decls have already been applied, and term mappings would all miss.
-        & map (\(ref, _wk, term, _typ) -> (ref, oingoTerm Map.empty constructorMapping Map.empty term))
+        & map (\(ref, _wk, term, _typ) -> (ref, oingoTerm Map.empty term))
         & Map.fromList
 
 -- FIXME rename
@@ -2861,36 +2846,19 @@ oingoDecl declMapping =
 oingoTerm ::
   forall v.
   Ord v =>
-  Map TypeReference TypeReferenceId ->
-  Map ConstructorReferenceId ConstructorReferenceId ->
   Map TermReference TermReferenceId ->
   Term v Ann ->
   Term v Ann
-oingoTerm declMapping constructorMapping termMapping =
-  if Map.null declMapping && Map.null constructorMapping && Map.null termMapping
+oingoTerm termMapping =
+  if Map.null termMapping
     then id
     else ABT.rebuildUp \term ->
       case term of
-        Term.Constructor ref0 ->
-          fromMaybe term do
-            ref1 <- substituteConstructorReference ref0
-            Just (Term.Constructor ref1)
         Term.Ref ref0 ->
           case Map.lookup ref0 termMapping of
             Nothing -> term
             Just ref1 -> Term.Ref (Reference.fromId ref1)
-        Term.Request ref0 ->
-          fromMaybe term do
-            ref1 <- substituteConstructorReference ref0
-            Just (Term.Request ref1)
-        Term.Ann ann ty -> Term.Ann ann (oingoType declMapping ty)
         _ -> term
-  where
-    substituteConstructorReference :: ConstructorReference -> Maybe ConstructorReference
-    substituteConstructorReference ref0 = do
-      ref1 <- ConstructorReference.toId ref0
-      ref2 <- Map.lookup ref1 constructorMapping
-      Just (ConstructorReference.fromId ref2)
 
 oingoType :: Ord v => Map TypeReference TypeReferenceId -> Type v a -> Type v a
 oingoType declMapping =
