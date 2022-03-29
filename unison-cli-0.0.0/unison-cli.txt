@@ -389,10 +389,14 @@ Required :: IsOptional
 Optional :: IsOptional
 ZeroPlus :: IsOptional
 OnePlus :: IsOptional
+data Visibility
+Hidden :: Visibility
+Visible :: Visibility
 data InputPattern
-InputPattern :: String -> [String] -> [(IsOptional, ArgumentType)] -> Pretty ColorText -> ([String] -> Either (Pretty ColorText) Input) -> InputPattern
+InputPattern :: String -> [String] -> Visibility -> [(IsOptional, ArgumentType)] -> Pretty ColorText -> ([String] -> Either (Pretty ColorText) Input) -> InputPattern
 [patternName] :: InputPattern -> String
 [aliases] :: InputPattern -> [String]
+[visibility] :: InputPattern -> Visibility
 [argTypes] :: InputPattern -> [(IsOptional, ArgumentType)]
 [help] :: InputPattern -> Pretty ColorText
 [parse] :: InputPattern -> [String] -> Either (Pretty ColorText) Input
@@ -412,6 +416,9 @@ maxArgs :: InputPattern -> Maybe Int
 noSuggestions :: Monad m => String -> Codebase m v a -> Branch m -> Absolute -> m [Completion]
 instance GHC.Classes.Eq Unison.CommandLine.InputPattern.IsOptional
 instance GHC.Show.Show Unison.CommandLine.InputPattern.IsOptional
+instance GHC.Classes.Ord Unison.CommandLine.InputPattern.Visibility
+instance GHC.Classes.Eq Unison.CommandLine.InputPattern.Visibility
+instance GHC.Show.Show Unison.CommandLine.InputPattern.Visibility
 instance GHC.Show.Show Unison.CommandLine.InputPattern.ArgumentType
 
 module Unison.CommandLine
@@ -733,13 +740,13 @@ LoopState :: Branch m -> Branch m -> NonEmpty Absolute -> Maybe (FilePath, SkipN
 type Action' m v = Action m (Either Event Input) v
 type SkipNextUpdate = Bool
 type InputDescription = Text
-root :: forall m_a1CbZ v_a1Cc0. Lens' (LoopState m_a1CbZ v_a1Cc0) (Branch m_a1CbZ)
-numberedArgs :: forall m_a1CbZ v_a1Cc0. Lens' (LoopState m_a1CbZ v_a1Cc0) NumberedArgs
-latestTypecheckedFile :: forall m_a1CbZ v_a1Cc0 v_a1CnK. Lens (LoopState m_a1CbZ v_a1Cc0) (LoopState m_a1CbZ v_a1CnK) (Maybe (TypecheckedUnisonFile v_a1Cc0 Ann)) (Maybe (TypecheckedUnisonFile v_a1CnK Ann))
-latestFile :: forall m_a1CbZ v_a1Cc0. Lens' (LoopState m_a1CbZ v_a1Cc0) (Maybe (FilePath, SkipNextUpdate))
-lastSavedRoot :: forall m_a1CbZ v_a1Cc0. Lens' (LoopState m_a1CbZ v_a1Cc0) (Branch m_a1CbZ)
-lastInput :: forall m_a1CbZ v_a1Cc0. Lens' (LoopState m_a1CbZ v_a1Cc0) (Maybe Input)
-currentPathStack :: forall m_a1CbZ v_a1Cc0. Lens' (LoopState m_a1CbZ v_a1Cc0) (NonEmpty Absolute)
+root :: forall m_a1Cur v_a1Cus. Lens' (LoopState m_a1Cur v_a1Cus) (Branch m_a1Cur)
+numberedArgs :: forall m_a1Cur v_a1Cus. Lens' (LoopState m_a1Cur v_a1Cus) NumberedArgs
+latestTypecheckedFile :: forall m_a1Cur v_a1Cus v_a1CGc. Lens (LoopState m_a1Cur v_a1Cus) (LoopState m_a1Cur v_a1CGc) (Maybe (TypecheckedUnisonFile v_a1Cus Ann)) (Maybe (TypecheckedUnisonFile v_a1CGc Ann))
+latestFile :: forall m_a1Cur v_a1Cus. Lens' (LoopState m_a1Cur v_a1Cus) (Maybe (FilePath, SkipNextUpdate))
+lastSavedRoot :: forall m_a1Cur v_a1Cus. Lens' (LoopState m_a1Cur v_a1Cus) (Branch m_a1Cur)
+lastInput :: forall m_a1Cur v_a1Cus. Lens' (LoopState m_a1Cur v_a1Cus) (Maybe Input)
+currentPathStack :: forall m_a1Cur v_a1Cus. Lens' (LoopState m_a1Cur v_a1Cus) (NonEmpty Absolute)
 currentPath :: Getter (LoopState m v) Absolute
 loopState0 :: Branch m -> Absolute -> LoopState m v
 instance Unison.Codebase.Editor.HandleInput.LoopState.MonadCommand (Unison.Util.Free.Free (Unison.Codebase.Editor.Command.Command m i v)) m i v
@@ -879,6 +886,7 @@ makeStandalone :: InputPattern
 createAuthor :: InputPattern
 gist :: InputPattern
 validInputs :: [InputPattern]
+visibleInputs :: [InputPattern]
 commandNames :: [String]
 commandNameArg :: ArgumentType
 exactDefinitionOrPathArg :: ArgumentType
