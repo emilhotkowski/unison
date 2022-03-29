@@ -2545,30 +2545,13 @@ oink selection unisonFile0 = do
   --               UF.effectDeclarationsId' = effects
   --             }
 
-<<<<<<< Updated upstream
-  -- TODO delete
-  let constructorMapping :: Map ConstructorReferenceId ConstructorReferenceId
-      constructorMapping =
-        foldMap declUpsertConstructorMapping declUpserts
-
-  maybeTermUpserts <- hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest slurp1
-||||||| constructed merge base
-  let constructorMapping :: Map ConstructorReferenceId ConstructorReferenceId
-      constructorMapping =
-        foldMap declUpsertConstructorMapping declUpserts
-
-  maybeTermUpserts <- hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest constructorMapping slurp1
-=======
   maybeTermUpserts <-
     hydrateUnisonFileTerms
       loadTermComponent
       typecheck
       termNames
       termIsTest
-      undefined
-      (foldMap declUpsertConstructorMapping declUpserts)
       slurp1
->>>>>>> Stashed changes
 
   let termUpserts =
         case maybeTermUpserts of
@@ -2756,81 +2739,20 @@ hydrateUnisonFileTerms ::
   (UF.UnisonFile v Ann -> m (Maybe (TypecheckedUnisonFile v Ann))) ->
   (TermReferenceId -> Set Name) ->
   (TermReference -> Bool) ->
-<<<<<<< Updated upstream
-||||||| constructed merge base
-  Map ConstructorReferenceId ConstructorReferenceId ->
-=======
-  Map TypeReference TypeReferenceId ->
-  Map ConstructorReferenceId ConstructorReferenceId ->
->>>>>>> Stashed changes
   SlurpResult2 v ->
   m (Maybe [UpsertTerm v])
-<<<<<<< Updated upstream
 hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest SlurpResult2 {slurp, termMapping, termRef0} = do
-  extraTerms <- undefined -- loadExtraObjects loadTermComponent termRef0 termNames (SC.terms (Slurp.updates slurp))
-||||||| constructed merge base
-hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest constructorMapping SlurpResult2 {declMapping, slurp, termMapping, termRef0} = do
-  extraTerms <- undefined -- loadExtraObjects loadTermComponent termRef0 termNames (SC.terms (Slurp.updates slurp))
-=======
-hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest declMapping constructorMapping SlurpResult2 {slurp, termMapping, termRef0} = do
-  implicitTerms <- loadExtraObjects loadTermComponent termNames undefined
->>>>>>> Stashed changes
-
-<<<<<<< Updated upstream
-  if Map.null extraTerms
-    then undefined
-||||||| constructed merge base
-  -- If extra terms is null,
-  --   if constructor mapping is null,
-  --     no work to do.
-  --   else, apply constructor mapping.
-  -- Else, if typechecking fails,
-  --   if constructor mapping is null,
-  --     no work to do.
-  --   else,
-  --     apply constructor mapping to original terms (without extras) and... typecheck again? (I think this must
-  --     succeed).
-  -- Else, we did the thing!
-
-  if Map.null extraTerms
-    then
-      if Map.null constructorMapping
-        then pure Nothing
-        else undefined
-=======
-  -- If extra terms is null,
-  --   if constructor mapping is null,
-  --     no work to do.
-  --   else, apply constructor mapping.
-  -- Else, if typechecking fails,
-  --   if constructor mapping is null,
-  --     no work to do.
-  --   else,
-  --     apply constructor mapping to original terms (without extras) and... typecheck again? (I think this must
-  --     succeed).
-  -- Else, we did the thing!
+  implicitTerms <- undefined -- loadExtraObjects loadTermComponent termNames (SC.terms (Slurp.updates slurp))
 
   if Map.null implicitTerms
-    then
-      if Map.null constructorMapping
-        then pure Nothing
-        else undefined
->>>>>>> Stashed changes
+    then undefined
     else do
       let -- in mates, perform ref->ref replacement, for all new ->ref that are being updated
           -- FIXME what about old type? currently just passing it along...
           allUnhashedTermsAndWatches :: Map TermReferenceId (v, Term v Ann)
           allUnhashedTermsAndWatches =
-<<<<<<< Updated upstream
-            extraTerms
-              & Map.map (oingoTerm termMapping)
-||||||| constructed merge base
-            extraTerms
-              & Map.map (oingoTerm declMapping constructorMapping termMapping)
-=======
             implicitTerms
-              & Map.map (oingoTerm declMapping constructorMapping termMapping)
->>>>>>> Stashed changes
+              & Map.map (oingoTerm termMapping)
               & Map.union fileTerms
               & Term.unhashComponent
 
