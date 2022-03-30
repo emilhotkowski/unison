@@ -17,6 +17,100 @@ defaultInterruptHandler :: IO (IO ())
 --   afterwards.
 withInterruptHandler :: IO () -> IO a -> IO a
 
+module Unison.Auth.Types
+data DiscoveryDoc
+DiscoveryDoc :: URI -> URI -> URI -> URI -> DiscoveryDoc
+[issuer] :: DiscoveryDoc -> URI
+[authorizationEndpoint] :: DiscoveryDoc -> URI
+[tokenEndpoint] :: DiscoveryDoc -> URI
+[userInfoEndpoint] :: DiscoveryDoc -> URI
+data Tokens
+Tokens :: AccessToken -> Maybe IDToken -> Maybe RefreshToken -> TokenType -> NominalDiffTime -> Scopes -> Tokens
+[accessToken] :: Tokens -> AccessToken
+[idToken] :: Tokens -> Maybe IDToken
+[refreshToken] :: Tokens -> Maybe RefreshToken
+[tokenType] :: Tokens -> TokenType
+[expiresIn] :: Tokens -> NominalDiffTime
+[scopes] :: Tokens -> Scopes
+data Credentials
+Credentials :: Map ProfileName (Map Host Tokens) -> ProfileName -> Credentials
+[credentials] :: Credentials -> Map ProfileName (Map Host Tokens)
+[activeProfile] :: Credentials -> ProfileName
+type Code = Text
+type AccessToken = Text
+type RefreshToken = Text
+type IDToken = Text
+type OAuthState = ByteString
+type PKCEVerifier = ByteString
+type PKCEChallenge = ByteString
+type ProfileName = Text
+data CredentialFailure
+ReauthRequired :: Host -> CredentialFailure
+CredentialParseFailure :: FilePath -> Text -> CredentialFailure
+InvalidDiscoveryDocument :: URI -> Text -> CredentialFailure
+InvalidJWT :: Text -> CredentialFailure
+RefreshFailure :: Text -> CredentialFailure
+InvalidTokenResponse :: URI -> Text -> CredentialFailure
+InvalidHost :: Host -> CredentialFailure
+
+-- | The hostname of a server we may authenticate with, e.g. <tt>Host
+--   "enlil.unison-lang.org"</tt>
+newtype Host
+Host :: Text -> Host
+getActiveTokens :: Host -> Credentials -> Either CredentialFailure Tokens
+setActiveTokens :: Host -> Tokens -> Credentials -> Credentials
+emptyCredentials :: Credentials
+instance GHC.Classes.Ord Unison.Auth.Types.Scopes
+instance GHC.Classes.Eq Unison.Auth.Types.Scopes
+instance GHC.Show.Show Unison.Auth.Types.Scopes
+instance GHC.Show.Show Unison.Auth.Types.DiscoveryDoc
+instance GHC.Show.Show Unison.Auth.Types.Tokens
+instance GHC.Classes.Eq Unison.Auth.Types.Tokens
+instance Data.Aeson.Types.FromJSON.FromJSONKey Unison.Auth.Types.Host
+instance Data.Aeson.Types.ToJSON.ToJSONKey Unison.Auth.Types.Host
+instance Data.Aeson.Types.FromJSON.FromJSON Unison.Auth.Types.Host
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Auth.Types.Host
+instance GHC.Show.Show Unison.Auth.Types.Host
+instance GHC.Classes.Ord Unison.Auth.Types.Host
+instance GHC.Classes.Eq Unison.Auth.Types.Host
+instance GHC.Exception.Type.Exception Unison.Auth.Types.CredentialFailure
+instance GHC.Classes.Eq Unison.Auth.Types.CredentialFailure
+instance GHC.Show.Show Unison.Auth.Types.CredentialFailure
+instance GHC.Classes.Eq Unison.Auth.Types.Credentials
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Auth.Types.Credentials
+instance Data.Aeson.Types.FromJSON.FromJSON Unison.Auth.Types.Credentials
+instance Data.Aeson.Types.FromJSON.FromJSON Unison.Auth.Types.URIParam
+instance Data.Aeson.Types.FromJSON.FromJSON Unison.Auth.Types.DiscoveryDoc
+instance Data.Aeson.Types.FromJSON.FromJSON Unison.Auth.Types.Tokens
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Auth.Types.Tokens
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Auth.Types.Scopes
+instance Data.Aeson.Types.FromJSON.FromJSON Unison.Auth.Types.Scopes
+
+module Unison.Auth.Discovery
+discoveryURI :: Host -> Either CredentialFailure URI
+discoveryForHost :: MonadIO m => Manager -> Host -> m (Either CredentialFailure DiscoveryDoc)
+
+module Unison.Auth.CredentialFile
+
+-- | Atomically update the credential storage file. Creates an empty file
+--   automatically if one doesn't exist.
+atomicallyModifyCredentialsFile :: MonadIO m => (Credentials -> Credentials) -> m Credentials
+
+module Unison.Auth.CredentialManager
+
+-- | Saves credentials to the active profile.
+saveTokens :: MonadUnliftIO m => CredentialManager -> Host -> Tokens -> m ()
+
+-- | A <a>CredentialManager</a> knows how to load, save, and cache
+--   credentials. It's thread-safe and safe for use across multiple UCM
+--   clients. Note: Currently the in-memory cache is _not_ updated if a
+--   different UCM updates the credentials file, however this shouldn't
+--   pose any problems, since auth will still be refreshed if we encounter
+--   any auth failures on requests.
+data CredentialManager
+newCredentialManager :: MonadIO m => m CredentialManager
+getTokens :: MonadIO m => CredentialManager -> Host -> m (Either CredentialFailure Tokens)
+
 module Unison.Codebase.Editor.AuthorInfo
 data AuthorInfo v a
 AuthorInfo :: (Id, Term v a, Type v a) -> AuthorInfo v a
@@ -104,6 +198,7 @@ ApiI :: Input
 UiI :: Input
 DocsToHtmlI :: Path' -> FilePath -> Input
 GistI :: GistInput -> Input
+AuthLoginI :: Maybe CodebaseServerName -> Input
 
 -- | <tt>"gist repo"</tt> pushes the contents of the current namespace to
 --   <tt>repo</tt>.
@@ -568,6 +663,11 @@ RefusedToPush :: PushBehavior -> Output v
 -- | <tt>GistCreated repo hash</tt> means causal <tt>hash</tt> was just
 --   published to <tt>repo</tt>.
 GistCreated :: Int -> WriteRepo -> Hash -> Output v
+
+-- | Directs the user to URI to begin an authorization flow.
+InitiateAuthFlow :: URI -> Output v
+UnknownCodeServer :: Text -> Output v
+CredentialFailureMsg :: CredentialFailure -> Output v
 data NumberedOutput v
 ShowDiffNamespace :: AbsBranchId -> AbsBranchId -> PrettyPrintEnv -> BranchDiffOutput v Ann -> NumberedOutput v
 ShowDiffAfterUndo :: PrettyPrintEnv -> BranchDiffOutput v Ann -> NumberedOutput v
@@ -698,6 +798,7 @@ data Command m i v a
 --   Ideally we will eventually remove the Command type entirely and won't
 --   need this anymore.
 [CmdUnliftIO] :: Command m i v (UnliftIO (Free (Command m i v)))
+[UCMVersion] :: Command m i v UCMVersion
 type AmbientAbilities v = [Type v Ann]
 type LexedSource = (Text, [Token Lexeme])
 type Source = Text
@@ -711,6 +812,7 @@ type UseCache = Bool
 type EvalResult v = ([(v, Term v ())], Map v (Ann, WatchKind, Id, Term v (), Term v (), IsCacheHit))
 commandName :: Command m i v a -> String
 lookupEvalResult :: Ord v => v -> EvalResult v -> Maybe (Term v ())
+type UCMVersion = Text
 instance Control.Monad.IO.Class.MonadIO m => Control.Monad.IO.Class.MonadIO (Unison.Util.Free.Free (Unison.Codebase.Editor.Command.Command m i v))
 instance Control.Monad.IO.Class.MonadIO m => Control.Monad.IO.Unlift.MonadUnliftIO (Unison.Util.Free.Free (Unison.Codebase.Editor.Command.Command m i v))
 
@@ -723,7 +825,9 @@ instance Unison.ABT.Var v => GHC.Classes.Eq (Unison.Codebase.Editor.Propagate.Ed
 module Unison.Codebase.Editor.HandleInput.LoopState
 type F m i v = Free (Command m i v)
 data Env
-Env :: Env
+Env :: Manager -> CredentialManager -> Env
+[authHTTPClient] :: Env -> Manager
+[credentialManager] :: Env -> CredentialManager
 newtype Action m i v a
 Action :: MaybeT (ReaderT Env (StateT (LoopState m v) (F m i v))) a -> Action m i v a
 [unAction] :: Action m i v a -> MaybeT (ReaderT Env (StateT (LoopState m v) (F m i v))) a
@@ -733,7 +837,6 @@ liftF :: F m i v a -> Action m i v a
 -- | A typeclass representing monads which can evaluate <a>Command</a>s.
 class Monad n => MonadCommand n m v i | n -> m v i
 eval :: MonadCommand n m v i => Command m v i a -> n a
-type NumberedArgs = [String]
 data LoopState m v
 LoopState :: Branch m -> Branch m -> NonEmpty Absolute -> Maybe (FilePath, SkipNextUpdate) -> Maybe (TypecheckedUnisonFile v Ann) -> Maybe Input -> NumberedArgs -> LoopState m v
 [_root] :: LoopState m v -> Branch m
@@ -746,15 +849,17 @@ LoopState :: Branch m -> Branch m -> NonEmpty Absolute -> Maybe (FilePath, SkipN
 type Action' m v = Action m (Either Event Input) v
 type SkipNextUpdate = Bool
 type InputDescription = Text
-root :: forall m_a1CuC v_a1CuD. Lens' (LoopState m_a1CuC v_a1CuD) (Branch m_a1CuC)
-numberedArgs :: forall m_a1CuC v_a1CuD. Lens' (LoopState m_a1CuC v_a1CuD) NumberedArgs
-latestTypecheckedFile :: forall m_a1CuC v_a1CuD v_a1Ded. Lens (LoopState m_a1CuC v_a1CuD) (LoopState m_a1CuC v_a1Ded) (Maybe (TypecheckedUnisonFile v_a1CuD Ann)) (Maybe (TypecheckedUnisonFile v_a1Ded Ann))
-latestFile :: forall m_a1CuC v_a1CuD. Lens' (LoopState m_a1CuC v_a1CuD) (Maybe (FilePath, SkipNextUpdate))
-lastSavedRoot :: forall m_a1CuC v_a1CuD. Lens' (LoopState m_a1CuC v_a1CuD) (Branch m_a1CuC)
-lastInput :: forall m_a1CuC v_a1CuD. Lens' (LoopState m_a1CuC v_a1CuD) (Maybe Input)
-currentPathStack :: forall m_a1CuC v_a1CuD. Lens' (LoopState m_a1CuC v_a1CuD) (NonEmpty Absolute)
+root :: forall m_a1Kho v_a1Khp. Lens' (LoopState m_a1Kho v_a1Khp) (Branch m_a1Kho)
+numberedArgs :: forall m_a1Kho v_a1Khp. Lens' (LoopState m_a1Kho v_a1Khp) NumberedArgs
+latestTypecheckedFile :: forall m_a1Kho v_a1Khp v_a1L2H. Lens (LoopState m_a1Kho v_a1Khp) (LoopState m_a1Kho v_a1L2H) (Maybe (TypecheckedUnisonFile v_a1Khp Ann)) (Maybe (TypecheckedUnisonFile v_a1L2H Ann))
+latestFile :: forall m_a1Kho v_a1Khp. Lens' (LoopState m_a1Kho v_a1Khp) (Maybe (FilePath, SkipNextUpdate))
+lastSavedRoot :: forall m_a1Kho v_a1Khp. Lens' (LoopState m_a1Kho v_a1Khp) (Branch m_a1Kho)
+lastInput :: forall m_a1Kho v_a1Khp. Lens' (LoopState m_a1Kho v_a1Khp) (Maybe Input)
+currentPathStack :: forall m_a1Kho v_a1Khp. Lens' (LoopState m_a1Kho v_a1Khp) (NonEmpty Absolute)
 currentPath :: Getter (LoopState m v) Absolute
 loopState0 :: Branch m -> Absolute -> LoopState m v
+respond :: MonadCommand n m i v => Output v -> n ()
+respondNumbered :: NumberedOutput v -> Action m i v ()
 instance Control.Monad.Fail.MonadFail (Unison.Codebase.Editor.HandleInput.LoopState.Action m i v)
 instance Control.Monad.Reader.Class.MonadReader Unison.Codebase.Editor.HandleInput.LoopState.Env (Unison.Codebase.Editor.HandleInput.LoopState.Action m i v)
 instance Control.Monad.State.Class.MonadState (Unison.Codebase.Editor.HandleInput.LoopState.LoopState m v) (Unison.Codebase.Editor.HandleInput.LoopState.Action m i v)
@@ -792,7 +897,16 @@ namespaceDependencies :: forall m i v. Ord v => Branch0 m -> Action m i v (Map L
 module Unison.Codebase.Editor.HandleCommand
 typecheck :: Monad m => [Type Symbol Ann] -> Codebase m Symbol Ann -> ParsingEnv -> SourceName -> LexedSource -> m (TypecheckingResult Symbol)
 typecheck' :: Monad m => [Type Symbol Ann] -> Codebase m Symbol Ann -> UnisonFile Symbol Ann -> m (TypecheckingResult Symbol)
-commandLine :: forall i a gen. DRG gen => Config -> IO i -> (Branch IO -> IO ()) -> Runtime Symbol -> (Output Symbol -> IO ()) -> (NumberedOutput Symbol -> IO NumberedArgs) -> (SourceName -> IO LoadSourceResult) -> Codebase IO Symbol Ann -> Maybe BaseUrl -> (Int -> IO gen) -> Free (Command IO i Symbol) a -> IO a
+commandLine :: forall i a gen. DRG gen => Config -> IO i -> (Branch IO -> IO ()) -> Runtime Symbol -> (Output Symbol -> IO ()) -> (NumberedOutput Symbol -> IO NumberedArgs) -> (SourceName -> IO LoadSourceResult) -> Codebase IO Symbol Ann -> Maybe BaseUrl -> UCMVersion -> (Int -> IO gen) -> Free (Command IO i Symbol) a -> IO a
+
+module Unison.Auth.OAuth
+
+-- | Direct the user through an authentication flow with the given server
+--   and store the credentials in the provided credential manager.
+authenticateHost :: forall m n i v. (MonadUnliftIO m, MonadCommand m n i v) => CredentialManager -> Host -> m (Either CredentialFailure ())
+
+module Unison.Codebase.Editor.HandleInput.AuthLogin
+authLogin :: MonadUnliftIO m => Maybe Host -> Action m i v ()
 
 module Unison.CommandLine.InputPatterns
 showPatternHelp :: InputPattern -> Pretty ColorText
@@ -877,6 +991,7 @@ replace :: InputPattern
 viewReflog :: InputPattern
 edit :: InputPattern
 topicNameArg :: ArgumentType
+codebaseServerNameArg :: ArgumentType
 helpTopics :: InputPattern
 helpTopicsMap :: Map String (Pretty ColorText)
 help :: InputPattern
@@ -901,6 +1016,7 @@ ioTest :: InputPattern
 makeStandalone :: InputPattern
 createAuthor :: InputPattern
 gist :: InputPattern
+authLogin :: InputPattern
 validInputs :: [InputPattern]
 visibleInputs :: [InputPattern]
 commandNames :: [String]
@@ -929,14 +1045,33 @@ gitUrlArg :: ArgumentType
 collectNothings :: (a -> Maybe b) -> [a] -> [a]
 explainRemote :: Pretty ColorText
 
+module Unison.Auth.Tokens
+
+-- | Checks whether a JWT access token is expired.
+isExpired :: MonadIO m => AccessToken -> m Bool
+
+-- | Given a <a>Host</a>, provide a valid <a>AccessToken</a> for the
+--   associated host. The TokenProvider may automatically refresh access
+--   tokens if we have a refresh token.
+type TokenProvider = Host -> IO (Either CredentialFailure AccessToken)
+
+-- | Creates a <a>TokenProvider</a> using the given
+--   <a>CredentialManager</a>
+newTokenProvider :: CredentialManager -> TokenProvider
+
+-- | Don't yet support automatically refreshing tokens.
+refreshTokens :: MonadIO m => CredentialManager -> Host -> Tokens -> m (Either CredentialFailure Tokens)
+
 module Unison.CommandLine.OutputMessages
 type Pretty = Pretty ColorText
 shortenDirectory :: FilePath -> IO FilePath
 renderFileName :: FilePath -> IO Pretty
 notifyNumbered :: Var v => NumberedOutput v -> (Pretty, NumberedArgs)
 showListEdits :: Patch -> PrettyPrintEnv -> (Pretty ColorText, NumberedArgs)
+prettyURI :: URI -> Pretty
 prettyRemoteNamespace :: ReadRemoteNamespace -> Pretty
 notifyUser :: forall v. Var v => FilePath -> Output v -> IO Pretty
+prettyFilePath :: FilePath -> Pretty
 prettyPath' :: Path' -> Pretty
 prettyBranchId :: AbsBranchId -> Pretty
 prettyRelative :: Relative -> Pretty
@@ -1007,11 +1142,11 @@ parseSearchType :: (Monad m, Var v) => SrcLoc -> String -> Action' m v (Either (
 
 module Unison.CommandLine.Welcome
 data Welcome
-Welcome :: Onboarding -> DownloadBase -> FilePath -> String -> Welcome
+Welcome :: Onboarding -> DownloadBase -> FilePath -> Text -> Welcome
 [onboarding] :: Welcome -> Onboarding
 [downloadBase] :: Welcome -> DownloadBase
 [watchDir] :: Welcome -> FilePath
-[unisonVersion] :: Welcome -> String
+[unisonVersion] :: Welcome -> Text
 data DownloadBase
 DownloadBase :: ReadRemoteNamespace -> DownloadBase
 DontDownloadBase :: DownloadBase
@@ -1024,19 +1159,16 @@ DownloadingBase :: ReadRemoteNamespace -> Onboarding
 Author :: Onboarding
 Finished :: Onboarding
 PreviouslyOnboarded :: Onboarding
-welcome :: CodebaseInitStatus -> DownloadBase -> FilePath -> String -> Welcome
+welcome :: CodebaseInitStatus -> DownloadBase -> FilePath -> Text -> Welcome
 pullBase :: ReadRemoteNamespace -> Either Event Input
 run :: Codebase IO v a -> Welcome -> IO [Either Event Input]
 toInput :: Pretty ColorText -> Either Event Input
 determineFirstStep :: DownloadBase -> Codebase IO v a -> IO Onboarding
 asciiartUnison :: Pretty ColorText
 downloading :: Path -> Pretty ColorText
-header :: String -> Pretty ColorText
+header :: Text -> Pretty ColorText
 authorSuggestion :: Pretty ColorText
 getStarted :: FilePath -> IO (Pretty ColorText)
-
-module Unison.CommandLine.Main
-main :: FilePath -> Welcome -> Absolute -> (Config, IO ()) -> [Either Event Input] -> Runtime Symbol -> Codebase IO Symbol Ann -> Maybe BaseUrl -> IO ()
 
 module Unison.Codebase.TranscriptParser
 data Stanza
@@ -1053,7 +1185,7 @@ TranscriptParseError :: Text -> TranscriptError
 data UcmLine
 UcmCommand :: Absolute -> Text -> UcmLine
 UcmComment :: Text -> UcmLine
-withTranscriptRunner :: forall m r. MonadUnliftIO m => String -> Maybe FilePath -> (TranscriptRunner -> m r) -> m r
+withTranscriptRunner :: forall m r. MonadUnliftIO m => UCMVersion -> Maybe FilePath -> (TranscriptRunner -> m r) -> m r
 parse :: String -> Text -> Either TranscriptError [Stanza]
 parseFile :: FilePath -> IO (Either TranscriptError [Stanza])
 instance GHC.Show.Show Unison.Codebase.TranscriptParser.Hidden
@@ -1062,3 +1194,25 @@ instance GHC.Exception.Type.Exception Unison.Codebase.TranscriptParser.Transcrip
 instance GHC.Show.Show Unison.Codebase.TranscriptParser.TranscriptError
 instance GHC.Show.Show Unison.Codebase.TranscriptParser.Stanza
 instance GHC.Show.Show Unison.Codebase.TranscriptParser.UcmLine
+
+module Unison.Util.HTTP
+addRequestMiddleware :: (Request -> IO Request) -> ManagerSettings -> ManagerSettings
+setUserAgent :: Text -> ManagerSettings -> ManagerSettings
+ucmUserAgent :: UCMVersion -> Text
+
+module Unison.Auth.HTTPClient
+
+-- | Returns a new http manager which applies the appropriate Authorization
+--   header to any hosts our UCM is authenticated with.
+newAuthorizedHTTPClient :: MonadIO m => CredentialManager -> UCMVersion -> m Manager
+
+-- | Adds Bearer tokens to requests according to their host. If a
+--   CredentialFailure occurs (failure to refresh a token), auth is simply
+--   omitted, and the request is likely to trigger a 401 response which the
+--   caller can detect and initiate a re-auth.
+--   
+--   If a host isn't associated with any credentials auth is omitted.
+authMiddleware :: TokenProvider -> Request -> IO Request
+
+module Unison.CommandLine.Main
+main :: FilePath -> Welcome -> Absolute -> (Config, IO ()) -> [Either Event Input] -> Runtime Symbol -> Codebase IO Symbol Ann -> Maybe BaseUrl -> UCMVersion -> IO ()

@@ -27,6 +27,7 @@ data DebugFlag
 Git :: DebugFlag
 Sqlite :: DebugFlag
 Codebase :: DebugFlag
+Auth :: DebugFlag
 instance GHC.Enum.Enum Unison.Debug.DebugFlag
 instance GHC.Enum.Bounded Unison.Debug.DebugFlag
 instance GHC.Show.Show Unison.Debug.DebugFlag
@@ -2172,10 +2173,35 @@ writeUtf8 :: FilePath -> Text -> IO ()
 uncurry4 :: (a -> b -> c -> d -> e) -> (a, b, c, d) -> e
 reportBug :: String -> String -> String
 tShow :: Show a => a -> Text
+
+-- | E.g.
+--   
+--   @<tt> onNothing (throwIO MissingPerson) $ mayThing </tt>@
 onNothing :: Applicative m => m a -> Maybe a -> m a
+
+-- | E.g. <tt>maybePerson <a>whenNothing</a> throwIO MissingPerson</tt>
+whenNothing :: Applicative m => Maybe a -> m a -> m a
+
+-- | Given an <a>Either</a>, convert it to a <a>Maybe</a>, where
+--   <a>Left</a> becomes <a>Nothing</a>.
+--   
+--   <pre>
+--   \x -&gt; eitherToMaybe (Left x) == Nothing
+--   \x -&gt; eitherToMaybe (Right x) == Just x
+--   </pre>
+eitherToMaybe :: Either a b -> Maybe b
+
+-- | Given a <a>Maybe</a>, convert it to an <a>Either</a>, providing a
+--   suitable value for the <a>Left</a> should the value be <a>Nothing</a>.
+--   
+--   <pre>
+--   \a b -&gt; maybeToEither a (Just b) == Right b
+--   \a -&gt; maybeToEither a Nothing == Left a
+--   </pre>
+maybeToEither :: a -> Maybe b -> Either a b
 whenLeft :: Applicative m => Either a b -> (a -> m b) -> m b
-throwEitherM :: (MonadIO m, Exception e) => m (Either e a) -> m a
-throwEitherMWith :: (MonadIO m, Exception e') => (e -> e') -> m (Either e a) -> m a
+throwEitherM :: forall e m a. (MonadIO m, Exception e) => m (Either e a) -> m a
+throwEitherMWith :: forall e e' m a. (MonadIO m, Exception e') => (e -> e') -> m (Either e a) -> m a
 throwExceptT :: (MonadIO m, Exception e) => ExceptT e m a -> m a
 throwExceptTWith :: (MonadIO m, Exception e') => (e -> e') -> ExceptT e m a -> m a
 

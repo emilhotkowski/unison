@@ -2425,9 +2425,9 @@ Env :: [Type v loc] -> TypeLookup v loc -> Map Name [NamedReference v loc] -> En
 [_ambientAbilities] :: Env v loc -> [Type v loc]
 [_typeLookup] :: Env v loc -> TypeLookup v loc
 [_termsByShortname] :: Env v loc -> Map Name [NamedReference v loc]
-typeLookup :: forall v_a3JPg loc_a3JPh. Lens' (Env v_a3JPg loc_a3JPh) (TypeLookup v_a3JPg loc_a3JPh)
-termsByShortname :: forall v_a3JPg loc_a3JPh. Lens' (Env v_a3JPg loc_a3JPh) (Map Name [NamedReference v_a3JPg loc_a3JPh])
-ambientAbilities :: forall v_a3JPg loc_a3JPh. Lens' (Env v_a3JPg loc_a3JPh) [Type v_a3JPg loc_a3JPh]
+typeLookup :: forall v_a3JPi loc_a3JPj. Lens' (Env v_a3JPi loc_a3JPj) (TypeLookup v_a3JPi loc_a3JPj)
+termsByShortname :: forall v_a3JPi loc_a3JPj. Lens' (Env v_a3JPi loc_a3JPj) (Map Name [NamedReference v_a3JPi loc_a3JPj])
+ambientAbilities :: forall v_a3JPi loc_a3JPj. Lens' (Env v_a3JPi loc_a3JPj) [Type v_a3JPi loc_a3JPj]
 
 -- | Infer the type of a <a>Term</a>, using a function to resolve the type
 --   of <tt>Ref</tt> constructors contained in that term.
@@ -5649,7 +5649,7 @@ unitTag :: Word64
 universalCompare :: (Foreign -> Foreign -> Ordering) -> Closure -> Closure -> Ordering
 
 module Unison.Runtime.Interface
-startRuntime :: RuntimeHost -> String -> IO (Runtime Symbol)
+startRuntime :: RuntimeHost -> Text -> IO (Runtime Symbol)
 standalone :: CCache -> Word64 -> IO StoredCache
 runStandalone :: StoredCache -> Word64 -> IO ()
 data StoredCache

@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Unison.Auth.HTTPClient</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-2"></span><span>
+</span><span id="line-3"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Text.Encoding</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Text</span></span><span>
+</span><span id="line-4"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Network.HTTP.Client</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Request</span></span><span class="hs-special">)</span><span>
+</span><span id="line-5"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Network.HTTP.Client</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">HTTP</span></span><span>
+</span><span id="line-6"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Network.HTTP.Client.TLS</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">HTTP</span></span><span>
+</span><span id="line-7"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Unison.Auth.CredentialManager.html"><span class="hs-identifier">Unison.Auth.CredentialManager</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Auth.CredentialManager.html#CredentialManager"><span class="hs-identifier">CredentialManager</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-8"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Unison.Auth.Tokens.html"><span class="hs-identifier">Unison.Auth.Tokens</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Auth.Tokens.html#TokenProvider"><span class="hs-identifier">TokenProvider</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Unison.Auth.Tokens.html#newTokenProvider"><span class="hs-identifier">newTokenProvider</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-9"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Unison.Auth.Types.html"><span class="hs-identifier">Unison.Auth.Types</span></a></span><span>
+</span><span id="line-10"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.Command.html"><span class="hs-identifier">Unison.Codebase.Editor.Command</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Codebase.Editor.Command.html#UCMVersion"><span class="hs-identifier">UCMVersion</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-11"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Prelude</span></span><span>
+</span><span id="line-12"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Util.HTTP.html"><span class="hs-identifier">Unison.Util.HTTP</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">HTTP</span></span><span>
+</span><span id="line-13"></span><span>
+</span><span id="line-14"></span><span class="hs-comment">-- | Returns a new http manager which applies the appropriate Authorization header to</span><span>
+</span><span id="line-15"></span><span class="hs-comment">-- any hosts our UCM is authenticated with.</span><span>
+</span><span id="line-16"></span><span id="local-6989586621679962932"><span class="annot"><a href="Unison.Auth.HTTPClient.html#newAuthorizedHTTPClient"><span class="hs-identifier hs-type">newAuthorizedHTTPClient</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">MonadIO</span></span><span> </span><span class="annot"><a href="#local-6989586621679962932"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Unison.Auth.CredentialManager.html#CredentialManager"><span class="hs-identifier hs-type">CredentialManager</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.Command.html#UCMVersion"><span class="hs-identifier hs-type">UCMVersion</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679962932"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">HTTP.Manager</span></span></span><span>
+</span><span id="line-17"></span><span id="newAuthorizedHTTPClient"><span class="annot"><span class="annottext">newAuthorizedHTTPClient :: CredentialManager -&gt; UCMVersion -&gt; m Manager
+</span><a href="Unison.Auth.HTTPClient.html#newAuthorizedHTTPClient"><span class="hs-identifier hs-var hs-var">newAuthorizedHTTPClient</span></a></span></span><span> </span><span id="local-6989586621679962930"><span class="annot"><span class="annottext">CredentialManager
+</span><a href="#local-6989586621679962930"><span class="hs-identifier hs-var">credsMan</span></a></span></span><span> </span><span id="local-6989586621679962929"><span class="annot"><span class="annottext">UCMVersion
+</span><a href="#local-6989586621679962929"><span class="hs-identifier hs-var">ucmVersion</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">IO Manager -&gt; m Manager
+forall (m :: * -&gt; *) a. MonadIO m =&gt; IO a -&gt; m a
+</span><span class="hs-identifier hs-var">liftIO</span></span><span> </span><span class="annot"><span class="annottext">(IO Manager -&gt; m Manager) -&gt; IO Manager -&gt; m Manager
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-18"></span><span>  </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679962927"><span class="annot"><span class="annottext">tokenProvider :: TokenProvider
+</span><a href="#local-6989586621679962927"><span class="hs-identifier hs-var hs-var">tokenProvider</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">CredentialManager -&gt; TokenProvider
+</span><a href="Unison.Auth.Tokens.html#newTokenProvider"><span class="hs-identifier hs-var">newTokenProvider</span></a></span><span> </span><span class="annot"><span class="annottext">CredentialManager
+</span><a href="#local-6989586621679962930"><span class="hs-identifier hs-var">credsMan</span></a></span><span>
+</span><span id="line-19"></span><span>  </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679962926"><span class="annot"><span class="annottext">managerSettings :: ManagerSettings
+</span><a href="#local-6989586621679962926"><span class="hs-identifier hs-var hs-var">managerSettings</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-20"></span><span>        </span><span class="annot"><span class="annottext">ManagerSettings
+</span><span class="hs-identifier hs-var">HTTP.tlsManagerSettings</span></span><span>
+</span><span id="line-21"></span><span>          </span><span class="annot"><span class="annottext">ManagerSettings
+-&gt; (ManagerSettings -&gt; ManagerSettings) -&gt; ManagerSettings
+forall a b. a -&gt; (a -&gt; b) -&gt; b
+</span><span class="hs-operator hs-var">&amp;</span></span><span> </span><span class="annot"><span class="annottext">(Request -&gt; IO Request) -&gt; ManagerSettings -&gt; ManagerSettings
+</span><a href="Unison.Util.HTTP.html#addRequestMiddleware"><span class="hs-identifier hs-var">HTTP.addRequestMiddleware</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">TokenProvider -&gt; Request -&gt; IO Request
+</span><a href="Unison.Auth.HTTPClient.html#authMiddleware"><span class="hs-identifier hs-var">authMiddleware</span></a></span><span> </span><span class="annot"><span class="annottext">TokenProvider
+</span><a href="#local-6989586621679962927"><span class="hs-identifier hs-var">tokenProvider</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-22"></span><span>          </span><span class="annot"><span class="annottext">ManagerSettings
+-&gt; (ManagerSettings -&gt; ManagerSettings) -&gt; ManagerSettings
+forall a b. a -&gt; (a -&gt; b) -&gt; b
+</span><span class="hs-operator hs-var">&amp;</span></span><span> </span><span class="annot"><span class="annottext">UCMVersion -&gt; ManagerSettings -&gt; ManagerSettings
+</span><a href="Unison.Util.HTTP.html#setUserAgent"><span class="hs-identifier hs-var">HTTP.setUserAgent</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">UCMVersion -&gt; UCMVersion
+</span><a href="Unison.Util.HTTP.html#ucmUserAgent"><span class="hs-identifier hs-var">HTTP.ucmUserAgent</span></a></span><span> </span><span class="annot"><span class="annottext">UCMVersion
+</span><a href="#local-6989586621679962929"><span class="hs-identifier hs-var">ucmVersion</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-23"></span><span>  </span><span class="annot"><span class="annottext">ManagerSettings -&gt; IO Manager
+forall (m :: * -&gt; *). MonadIO m =&gt; ManagerSettings -&gt; m Manager
+</span><span class="hs-identifier hs-var">HTTP.newTlsManagerWith</span></span><span> </span><span class="annot"><span class="annottext">ManagerSettings
+</span><a href="#local-6989586621679962926"><span class="hs-identifier hs-var">managerSettings</span></a></span><span>
+</span><span id="line-24"></span><span>
+</span><span id="line-25"></span><span class="hs-comment">-- | Adds Bearer tokens to requests according to their host.</span><span>
+</span><span id="line-26"></span><span class="hs-comment">-- If a CredentialFailure occurs (failure to refresh a token), auth is simply omitted,</span><span>
+</span><span id="line-27"></span><span class="hs-comment">-- and the request is likely to trigger a 401 response which the caller can detect and initiate a re-auth.</span><span>
+</span><span id="line-28"></span><span class="hs-comment">--</span><span>
+</span><span id="line-29"></span><span class="hs-comment">-- If a host isn't associated with any credentials auth is omitted.</span><span>
+</span><span id="line-30"></span><span class="annot"><a href="Unison.Auth.HTTPClient.html#authMiddleware"><span class="hs-identifier hs-type">authMiddleware</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Auth.Tokens.html#TokenProvider"><span class="hs-identifier hs-type">TokenProvider</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Request</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Request</span></span><span class="hs-special">)</span><span>
+</span><span id="line-31"></span><span id="authMiddleware"><span class="annot"><span class="annottext">authMiddleware :: TokenProvider -&gt; Request -&gt; IO Request
+</span><a href="Unison.Auth.HTTPClient.html#authMiddleware"><span class="hs-identifier hs-var hs-var">authMiddleware</span></a></span></span><span> </span><span id="local-6989586621679962918"><span class="annot"><span class="annottext">TokenProvider
+</span><a href="#local-6989586621679962918"><span class="hs-identifier hs-var">tokenProvider</span></a></span></span><span> </span><span id="local-6989586621679962917"><span class="annot"><span class="annottext">Request
+</span><a href="#local-6989586621679962917"><span class="hs-identifier hs-var">req</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-32"></span><span>  </span><span id="local-6989586621679962916"><span class="annot"><span class="annottext">Either CredentialFailure UCMVersion
+</span><a href="#local-6989586621679962916"><span class="hs-identifier hs-var">result</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">TokenProvider
+</span><a href="#local-6989586621679962918"><span class="hs-identifier hs-var">tokenProvider</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">UCMVersion -&gt; Host
+</span><a href="Unison.Auth.Types.html#Host"><span class="hs-identifier hs-var">Host</span></a></span><span> </span><span class="annot"><span class="annottext">(UCMVersion -&gt; Host)
+-&gt; (ByteString -&gt; UCMVersion) -&gt; ByteString -&gt; Host
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">ByteString -&gt; UCMVersion
+</span><span class="hs-identifier hs-var">Text.decodeUtf8</span></span><span> </span><span class="annot"><span class="annottext">(ByteString -&gt; Host) -&gt; ByteString -&gt; Host
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Request -&gt; ByteString
+</span><span class="hs-identifier hs-var hs-var">HTTP.host</span></span><span> </span><span class="annot"><span class="annottext">Request
+</span><a href="#local-6989586621679962917"><span class="hs-identifier hs-var">req</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-33"></span><span>  </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">Either CredentialFailure UCMVersion
+</span><a href="#local-6989586621679962916"><span class="hs-identifier hs-var">result</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-34"></span><span>    </span><span class="annot"><span class="hs-identifier hs-type">Right</span></span><span> </span><span id="local-6989586621679962911"><span class="annot"><span class="annottext">UCMVersion
+</span><a href="#local-6989586621679962911"><span class="hs-identifier hs-var">token</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Request -&gt; IO Request
+forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Request -&gt; IO Request) -&gt; Request -&gt; IO Request
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">ByteString -&gt; Request -&gt; Request
+</span><span class="hs-identifier hs-var">HTTP.applyBearerAuth</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">UCMVersion -&gt; ByteString
+</span><span class="hs-identifier hs-var">Text.encodeUtf8</span></span><span> </span><span class="annot"><span class="annottext">UCMVersion
+</span><a href="#local-6989586621679962911"><span class="hs-identifier hs-var">token</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Request
+</span><a href="#local-6989586621679962917"><span class="hs-identifier hs-var">req</span></a></span><span>
+</span><span id="line-35"></span><span>    </span><span class="annot"><span class="hs-identifier hs-type">Left</span></span><span> </span><span class="annot"><span class="annottext">CredentialFailure
+</span><span class="hs-identifier">_</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Request -&gt; IO Request
+forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">Request
+</span><a href="#local-6989586621679962917"><span class="hs-identifier hs-var">req</span></a></span><span>
+</span><span id="line-36"></span></pre></body></html>

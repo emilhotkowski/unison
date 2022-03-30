@@ -19,15 +19,15 @@
 </span><span id="line-19"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="U.Util.Base32Hex.html"><span class="hs-identifier">U.Util.Base32Hex</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Base32Hex</span></span><span>
 </span><span id="line-20"></span><span>
 </span><span id="line-21"></span><span class="hs-comment">-- | Hash which uniquely identifies a Unison type or term</span><span>
-</span><span id="line-22"></span><span id="local-6989586621679081117"><span id="local-6989586621679081118"></span></span><span class="hs-keyword">newtype</span><span> </span><span id="Hash"><span class="annot"><a href="U.Util.Hash.html#Hash"><span class="hs-identifier hs-var">Hash</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Hash"><span class="annot"><a href="U.Util.Hash.html#Hash"><span class="hs-identifier hs-var">Hash</span></a></span></span><span> </span><span class="hs-special">{</span><span id="toShort"><span class="annot"><span class="annottext">Hash -&gt; ShortByteString
-</span><a href="U.Util.Hash.html#toShort"><span class="hs-identifier hs-var hs-var">toShort</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ShortByteString</span></span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679081113"><span id="local-6989586621679081115"><span class="annot"><span class="annottext">Hash -&gt; Hash -&gt; Bool
+</span><span id="line-22"></span><span id="local-6989586621679081119"><span id="local-6989586621679081120"></span></span><span class="hs-keyword">newtype</span><span> </span><span id="Hash"><span class="annot"><a href="U.Util.Hash.html#Hash"><span class="hs-identifier hs-var">Hash</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Hash"><span class="annot"><a href="U.Util.Hash.html#Hash"><span class="hs-identifier hs-var">Hash</span></a></span></span><span> </span><span class="hs-special">{</span><span id="toShort"><span class="annot"><span class="annottext">Hash -&gt; ShortByteString
+</span><a href="U.Util.Hash.html#toShort"><span class="hs-identifier hs-var hs-var">toShort</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ShortByteString</span></span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679081115"><span id="local-6989586621679081117"><span class="annot"><span class="annottext">Hash -&gt; Hash -&gt; Bool
 (Hash -&gt; Hash -&gt; Bool) -&gt; (Hash -&gt; Hash -&gt; Bool) -&gt; Eq Hash
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 /= :: Hash -&gt; Hash -&gt; Bool
 $c/= :: Hash -&gt; Hash -&gt; Bool
 == :: Hash -&gt; Hash -&gt; Bool
 $c== :: Hash -&gt; Hash -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679081097"><span id="local-6989586621679081099"><span id="local-6989586621679081101"><span id="local-6989586621679081103"><span id="local-6989586621679081105"><span id="local-6989586621679081107"><span id="local-6989586621679081109"><span class="annot"><span class="annottext">Eq Hash
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679081099"><span id="local-6989586621679081101"><span id="local-6989586621679081103"><span id="local-6989586621679081105"><span id="local-6989586621679081107"><span id="local-6989586621679081109"><span id="local-6989586621679081111"><span class="annot"><span class="annottext">Eq Hash
 Eq Hash
 -&gt; (Hash -&gt; Hash -&gt; Ordering)
 -&gt; (Hash -&gt; Hash -&gt; Bool)
@@ -123,14 +123,14 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">ByteString -&gt; ShortByteString
 </span><span class="hs-identifier hs-var">B.Short.toShort</span></span><span>
 </span><span id="line-38"></span><span>
-</span><span id="line-39"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679081082"><span id="local-6989586621679081085"><span class="annot"><span class="hs-identifier hs-type">Show</span></span><span> </span><span class="annot"><a href="U.Util.Hash.html#Hash"><span class="hs-identifier hs-type">Hash</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-40"></span><span>  </span><span id="local-6989586621679081080"><span class="annot"><span class="annottext">show :: Hash -&gt; String
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var">show</span></span></span><span> </span><span id="local-6989586621679081078"><span class="annot"><span class="annottext">Hash
-</span><a href="#local-6989586621679081078"><span class="hs-identifier hs-var">h</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Text -&gt; String
+</span><span id="line-39"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679081084"><span id="local-6989586621679081087"><span class="annot"><span class="hs-identifier hs-type">Show</span></span><span> </span><span class="annot"><a href="U.Util.Hash.html#Hash"><span class="hs-identifier hs-type">Hash</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-40"></span><span>  </span><span id="local-6989586621679081082"><span class="annot"><span class="annottext">show :: Hash -&gt; String
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">show</span></span></span><span> </span><span id="local-6989586621679081080"><span class="annot"><span class="annottext">Hash
+</span><a href="#local-6989586621679081080"><span class="hs-identifier hs-var">h</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Text -&gt; String
 forall a. Show a =&gt; a -&gt; String
 </span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="annot"><span class="annottext">(Text -&gt; String) -&gt; (Hash -&gt; Text) -&gt; Hash -&gt; String
 forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">Hash -&gt; Text
 </span><a href="U.Util.Hash.html#toBase32HexText"><span class="hs-identifier hs-var">toBase32HexText</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Hash
-</span><a href="#local-6989586621679081078"><span class="hs-identifier hs-var">h</span></a></span><span>
+</span><a href="#local-6989586621679081080"><span class="hs-identifier hs-var">h</span></a></span><span>
 </span><span id="line-41"></span></pre></body></html>
