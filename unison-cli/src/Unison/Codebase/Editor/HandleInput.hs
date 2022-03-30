@@ -2359,12 +2359,12 @@ data TermSlurp v = TermSlurp
   { -- declsById1 :: Map TypeReferenceId (Decl v Ann),
     -- varsById1 :: Map TypeReferenceId v,
     --
-    adds :: Map v (TermrefId v Ann),
-    updates :: Map v (TermReference, TermrefId v Ann)
+    adds :: Map v (StoredTerm (TermrefId v Ann)),
+    updates :: Map v (StoredTerm TermReference, StoredTerm (TermrefId v Ann))
   }
 
-makeTermSlurp :: Var v => Names -> SlurpResult v -> TermSlurp v
-makeTermSlurp allNames slurp =
+makeTermSlurp :: Var v => Names -> (Reference -> Bool) -> SlurpResult v -> TermSlurp v
+makeTermSlurp allNames termIsTest slurp =
   TermSlurp
     { -- declsById1 = UF.tcDeclarationsById file,
       -- varsById1 = UF.tcDeclarationVarsById file,
@@ -2380,7 +2380,8 @@ makeTermSlurp allNames slurp =
           & Slurp.updates
           & SC.terms
           & Set.toList
-          & map (\v -> (v, (Names.theRefTermNamed allNames (Name.unsafeFromVar v), termsByVar1 Map.! v)))
+          & undefined
+          -- & map (\v -> (v, (Names.theRefTermNamed allNames (Name.unsafeFromVar v), termsByVar1 Map.! v)))
           & Map.fromList
     }
   where
@@ -2392,22 +2393,20 @@ termSlurpToTermUpserts TermSlurp {adds, updates} =
   concat
     [ adds
         & Map.toList
-        & undefined,
-        -- & map (\(var, termref) -> Add AddTerm {termref, var}),
+        & map (\(var, termref) -> Add AddTerm {termref, var}),
       updates
         & Map.toList
-        & undefined
-        -- & map \(var, (ref0, ref1)) ->
-        --   Update
-        --     UpdateTerm
-        --       { update =
-        --           Explicit
-        --             Upd1
-        --               { before = ref0,
-        --                 after = ref1
-        --               },
-        --         var
-        --       }
+        & map \(var, (ref0, ref1)) ->
+          Update
+            UpdateTerm
+              { update =
+                  Explicit
+                    Upd1
+                      { before = ref0,
+                        after = ref1
+                      },
+                var
+              }
     ]
 
 -- declsByVar1 = Map.map (\(ref, decl) -> Declref {decl, ref}) (UF.tcDeclarationsByVar file)
@@ -2523,7 +2522,7 @@ oink selection unisonFile0 = do
       termIsTest
       slurp1
       -- FIXME is slurp00 right?
-      (makeTermSlurp allNames slurp00)
+      (makeTermSlurp allNames termIsTest slurp00)
 
   pure
     Structure
@@ -2795,7 +2794,7 @@ hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest SlurpRes
   -- FIXME: pulling out any terms for an update that has undergone a type change is pointless. We only want to bother
   -- for same types (for which typchecking after substituting will always succeed) and subtypes (which we need to
   -- typecheck again).
-  implicitTerms <- loadExtraObjects loadTermComponent termNames (Map.map fst updates)
+  implicitTerms <- loadExtraObjects loadTermComponent termNames (Map.map (untagStoredTerm . fst) updates)
   let termUpserts0 = undefined
   fromMaybe termUpserts0 <$> do
     if Map.null implicitTerms
@@ -2831,7 +2830,7 @@ hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest SlurpRes
                 termMapping =
                   updates
                     & Map.elems
-                    & map (\(r0, Termref {ref = r1}) -> (r0, r1))
+                    & map (\(r0, r1) -> (untagStoredTerm r0, untagStoredTerm r1 ^. #ref))
                     & Map.fromList
 
         let -- FIXME "old ref" might be a bad name - it's the "original" / "pre-hash" ref
