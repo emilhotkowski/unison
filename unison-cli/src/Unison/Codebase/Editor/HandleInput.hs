@@ -2189,6 +2189,7 @@ data Upd1 a b = Upd1
   { before :: a,
     after :: b
   }
+  deriving stock (Generic)
 
 -- FIXME move to DataDeclaration.hs
 type DeclrefId v a =
@@ -2307,6 +2308,7 @@ data DeclSlurp v = DeclSlurp
     --
     adds :: Map v (DeclrefId v Ann),
     updates :: Map v (TypeReference, DeclrefId v Ann)
+    -- FIXME Upd TypeReference (DeclrefId v Ann)
   }
 
 makeDeclSlurp :: Var v => Names -> SlurpResult v -> DeclSlurp v
@@ -2354,13 +2356,12 @@ declSlurpToDeclUpserts DeclSlurp {adds, updates} =
               }
     ]
 
-
 data TermSlurp v = TermSlurp
   { -- declsById1 :: Map TypeReferenceId (Decl v Ann),
     -- varsById1 :: Map TypeReferenceId v,
     --
     adds :: Map v (StoredTerm (TermrefId v Ann)),
-    updates :: Map v (StoredTerm TermReference, StoredTerm (TermrefId v Ann))
+    updates :: Map v (Upd1 (StoredTerm TermReference) (StoredTerm (TermrefId v Ann)))
   }
 
 makeTermSlurp :: Var v => Names -> (Reference -> Bool) -> SlurpResult v -> TermSlurp v
@@ -2396,15 +2397,10 @@ termSlurpToTermUpserts TermSlurp {adds, updates} =
         & map (\(var, termref) -> Add AddTerm {termref, var}),
       updates
         & Map.toList
-        & map \(var, (ref0, ref1)) ->
+        & map \(var, upd) ->
           Update
             UpdateTerm
-              { update =
-                  Explicit
-                    Upd1
-                      { before = ref0,
-                        after = ref1
-                      },
+              { update = Explicit upd,
                 var
               }
     ]
@@ -2776,7 +2772,7 @@ hydrateUnisonFileTerms ::
   SlurpResult2 v ->
   TermSlurp v ->
   m [UpsertTerm v]
-hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest SlurpResult2 {slurp, termRef0} TermSlurp {updates} = do
+hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest SlurpResult2 {slurp} TermSlurp {updates} = do
   -- Running example:
   --
   --   In codebase:
@@ -2794,7 +2790,7 @@ hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest SlurpRes
   -- FIXME: pulling out any terms for an update that has undergone a type change is pointless. We only want to bother
   -- for same types (for which typchecking after substituting will always succeed) and subtypes (which we need to
   -- typecheck again).
-  implicitTerms <- loadExtraObjects loadTermComponent termNames (Map.map (untagStoredTerm . fst) updates)
+  implicitTerms <- loadExtraObjects loadTermComponent termNames (Map.map (untagStoredTerm . view #before) updates)
   let termUpserts0 = undefined
   fromMaybe termUpserts0 <$> do
     if Map.null implicitTerms
@@ -2830,7 +2826,7 @@ hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest SlurpRes
                 termMapping =
                   updates
                     & Map.elems
-                    & map (\(r0, r1) -> (untagStoredTerm r0, untagStoredTerm r1 ^. #ref))
+                    & map (\Upd1 {before, after} -> (untagStoredTerm before, untagStoredTerm after ^. #ref))
                     & Map.fromList
 
         let -- FIXME "old ref" might be a bad name - it's the "original" / "pre-hash" ref
@@ -2894,7 +2890,7 @@ hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest SlurpRes
         typecheck fileToTypecheck <&> fmap \unisonFile1 ->
           let -- Running example:
               --
-              --   (#bar1, Nothing, !#foo2 + 10, () -> Nat) ->
+              --   classify ("v0", (#bar1, Nothing, !#foo2 + 10, () -> Nat)) =
               --     UpdateTerm
               --       (Implicit
               --         (Upd1
@@ -2902,7 +2898,7 @@ hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest SlurpRes
               --           (Termref (!#foo2 + 10) #bar1)))
               --       "v0"
               --
-              --   (#foo2, Nothing, !#bar1 + 2, () -> Nat)
+              --   classify ("v1", (#foo2, Nothing, !#bar1 + 2, () -> Nat)) =
               --     UpdateTerm
               --       (Explicit
               --         (Upd1
@@ -2919,36 +2915,31 @@ hydrateUnisonFileTerms loadTermComponent typecheck termNames termIsTest SlurpRes
                               termref0 = Termref {term = implicitTerms Map.! ref0, ref = ref0}
                               before = if termIsTest (Reference.fromId ref0) then TestWatch termref0 else NormalTerm termref0
                            in Update UpdateTerm {update = Implicit Upd1 {before, after}, var}
-                        | isExplicitUpdate ->
-                          let ref0 = termRef0 var
-                           in Update
-                                UpdateTerm
-                                  { update =
-                                      Explicit
-                                        Upd1
-                                          { before = if termIsTest ref0 then TestWatch ref0 else NormalTerm ref0,
-                                            after
-                                          },
-                                    var
-                                  }
+                        | Just Upd1 {before} <- asExplicitUpdate ->
+                          Update
+                            UpdateTerm
+                              { update =
+                                  Explicit
+                                    Upd1
+                                      { before,
+                                        after
+                                      },
+                                var
+                              }
                         | otherwise -> Add AddTerm {termref = after, var}
                   )
                 where
                   isExtraTerm = isNothing maybeUserSuppliedName
                   maybeUserSuppliedName = Map.lookup randomName randomNameToUserSuppliedName
-                  isExplicitUpdate = Set.member var (SC.terms (Slurp.updates slurp))
+                  asExplicitUpdate = Map.lookup var updates
                   var = fromMaybe randomName maybeUserSuppliedName
            in unisonFile1
                 & UF.hashTermsId
-                -- Running example:
-                --
-                --   "v0" => (#bar1, Nothing, !#foo2 + 10, () -> Nat)
-                --   "v1" => (#foo2, Nothing, !#bar1 + 2, () -> Nat)
                 & Map.toList
                 -- Running example:
                 --
-                --   (#bar1, Nothing, !#foo2 + 10, () -> Nat)
-                --   (#foo2, Nothing, !#bar1 + 2, () -> Nat)
+                --   ("v0", (#bar1, Nothing, !#foo2 + 10, () -> Nat))
+                --   ("v1", (#foo2, Nothing, !#bar1 + 2, () -> Nat))
                 & mapMaybe classify
   where
     unisonFile = Slurp.originalFile slurp
