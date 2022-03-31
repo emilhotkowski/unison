@@ -28,18 +28,18 @@ forall t h. (Tokenizable t, Accumulate h) =&gt; t -&gt; h
 </span><span id="line-23"></span><span>  </span><span class="hs-special">}</span><span>
 </span><span id="line-24"></span><span>
 </span><span id="line-25"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Tokenizable.html#Tokenizable"><span class="hs-identifier hs-type">Tokenizable</span></a></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Patch.html#Patch"><span class="hs-identifier hs-type">Patch</span></a></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-26"></span><span>  </span><span id="local-6989586621680847744"><span class="annot"><span class="annottext">tokens :: Patch -&gt; [Token h]
-</span><a href="Unison.Hashing.V2.Tokenizable.html#tokens"><span class="hs-identifier hs-var hs-var hs-var hs-var">tokens</span></a></span></span><span> </span><span id="local-6989586621680847742"><span class="annot"><span class="annottext">Patch
-</span><a href="#local-6989586621680847742"><span class="hs-identifier hs-var">p</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-26"></span><span>  </span><span id="local-6989586621680847844"><span class="annot"><span class="annottext">tokens :: Patch -&gt; [Token h]
+</span><a href="Unison.Hashing.V2.Tokenizable.html#tokens"><span class="hs-identifier hs-var hs-var hs-var hs-var">tokens</span></a></span></span><span> </span><span id="local-6989586621680847842"><span class="annot"><span class="annottext">Patch
+</span><a href="#local-6989586621680847842"><span class="hs-identifier hs-var">p</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-27"></span><span>    </span><span class="hs-special">[</span><span> </span><span class="annot"><span class="annottext">Map Referent (Set TermEdit) -&gt; Token h
 forall h t. (Accumulate h, Tokenizable t) =&gt; t -&gt; Token h
 </span><a href="Unison.Hashing.V2.Tokenizable.html#accumulateToken"><span class="hs-identifier hs-var">H.accumulateToken</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Patch -&gt; Map Referent (Set TermEdit)
 </span><a href="Unison.Hashing.V2.Patch.html#termEdits"><span class="hs-identifier hs-var hs-var">termEdits</span></a></span><span> </span><span class="annot"><span class="annottext">Patch
-</span><a href="#local-6989586621680847742"><span class="hs-identifier hs-var">p</span></a></span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><a href="#local-6989586621680847842"><span class="hs-identifier hs-var">p</span></a></span><span class="hs-special">)</span><span class="hs-special">,</span><span>
 </span><span id="line-28"></span><span>      </span><span class="annot"><span class="annottext">Map Reference (Set TypeEdit) -&gt; Token h
 forall h t. (Accumulate h, Tokenizable t) =&gt; t -&gt; Token h
 </span><a href="Unison.Hashing.V2.Tokenizable.html#accumulateToken"><span class="hs-identifier hs-var">H.accumulateToken</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Patch -&gt; Map Reference (Set TypeEdit)
 </span><a href="Unison.Hashing.V2.Patch.html#typeEdits"><span class="hs-identifier hs-var hs-var">typeEdits</span></a></span><span> </span><span class="annot"><span class="annottext">Patch
-</span><a href="#local-6989586621680847742"><span class="hs-identifier hs-var">p</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621680847842"><span class="hs-identifier hs-var">p</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-29"></span><span>    </span><span class="hs-special">]</span><span>
 </span><span id="line-30"></span></pre></body></html>
