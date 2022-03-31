@@ -17,7 +17,7 @@
 </span><span id="line-17"></span><span class="hs-keyword">type</span><span> </span><span id="MetadataValue"><span class="annot"><a href="Unison.Hashing.V2.Branch.html#MetadataValue"><span class="hs-identifier hs-var">MetadataValue</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Reference.html#Reference"><span class="hs-identifier hs-type">Reference</span></a></span><span>
 </span><span id="line-18"></span><span>
 </span><span id="line-19"></span><span class="hs-keyword">newtype</span><span> </span><span id="MdValues"><span class="annot"><a href="Unison.Hashing.V2.Branch.html#MdValues"><span class="hs-identifier hs-var">MdValues</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="MdValues"><span class="annot"><a href="Unison.Hashing.V2.Branch.html#MdValues"><span class="hs-identifier hs-var">MdValues</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Set</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Branch.html#MetadataValue"><span class="hs-identifier hs-type">MetadataValue</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-20"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621680845377"><span id="local-6989586621680845379"><span class="annot"><span class="annottext">MdValues -&gt; MdValues -&gt; Bool
+</span><span id="line-20"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621680845594"><span id="local-6989586621680845596"><span class="annot"><span class="annottext">MdValues -&gt; MdValues -&gt; Bool
 (MdValues -&gt; MdValues -&gt; Bool)
 -&gt; (MdValues -&gt; MdValues -&gt; Bool) -&gt; Eq MdValues
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -25,7 +25,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: MdValues -&gt; MdValues -&gt; Bool
 == :: MdValues -&gt; MdValues -&gt; Bool
 $c== :: MdValues -&gt; MdValues -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680845361"><span id="local-6989586621680845363"><span id="local-6989586621680845365"><span id="local-6989586621680845367"><span id="local-6989586621680845369"><span id="local-6989586621680845371"><span id="local-6989586621680845373"><span class="annot"><span class="annottext">Eq MdValues
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680845578"><span id="local-6989586621680845580"><span id="local-6989586621680845582"><span id="local-6989586621680845584"><span id="local-6989586621680845586"><span id="local-6989586621680845588"><span id="local-6989586621680845590"><span class="annot"><span class="annottext">Eq MdValues
 Eq MdValues
 -&gt; (MdValues -&gt; MdValues -&gt; Ordering)
 -&gt; (MdValues -&gt; MdValues -&gt; Bool)
@@ -63,7 +63,7 @@ $c&lt; :: MdValues -&gt; MdValues -&gt; Bool
 compare :: MdValues -&gt; MdValues -&gt; Ordering
 $ccompare :: MdValues -&gt; MdValues -&gt; Ordering
 $cp1Ord :: Eq MdValues
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680845354"><span id="local-6989586621680845356"><span id="local-6989586621680845358"><span class="annot"><span class="annottext">Int -&gt; MdValues -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680845571"><span id="local-6989586621680845573"><span id="local-6989586621680845575"><span class="annot"><span class="annottext">Int -&gt; MdValues -&gt; ShowS
 [MdValues] -&gt; ShowS
 MdValues -&gt; String
 (Int -&gt; MdValues -&gt; ShowS)
@@ -77,7 +77,7 @@ $cshow :: MdValues -&gt; String
 showsPrec :: Int -&gt; MdValues -&gt; ShowS
 $cshowsPrec :: Int -&gt; MdValues -&gt; ShowS
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-21"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621680845351"><span class="annot"><span class="annottext">MdValues -&gt; [Token h]
+</span><span id="line-21"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621680845568"><span class="annot"><span class="annottext">MdValues -&gt; [Token h]
 (forall h. Accumulate h =&gt; MdValues -&gt; [Token h])
 -&gt; Tokenizable MdValues
 forall h. Accumulate h =&gt; MdValues -&gt; [Token h]
@@ -87,7 +87,7 @@ tokens :: MdValues -&gt; [Token h]
 $ctokens :: forall h. Accumulate h =&gt; MdValues -&gt; [Token h]
 </span><a href="Unison.Hashing.V2.Tokenizable.html#C%3ATokenizable"><span class="hs-identifier hs-var hs-var hs-var hs-var">Tokenizable</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">via</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Set</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Branch.html#MetadataValue"><span class="hs-identifier hs-type">MetadataValue</span></a></span><span>
 </span><span id="line-22"></span><span>
-</span><span id="line-23"></span><span class="hs-keyword">newtype</span><span> </span><span id="NameSegment"><span class="annot"><a href="Unison.Hashing.V2.Branch.html#NameSegment"><span class="hs-identifier hs-var">NameSegment</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="NameSegment"><span class="annot"><a href="Unison.Hashing.V2.Branch.html#NameSegment"><span class="hs-identifier hs-var">NameSegment</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621680845345"><span id="local-6989586621680845347"><span class="annot"><span class="annottext">NameSegment -&gt; NameSegment -&gt; Bool
+</span><span id="line-23"></span><span class="hs-keyword">newtype</span><span> </span><span id="NameSegment"><span class="annot"><a href="Unison.Hashing.V2.Branch.html#NameSegment"><span class="hs-identifier hs-var">NameSegment</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="NameSegment"><span class="annot"><a href="Unison.Hashing.V2.Branch.html#NameSegment"><span class="hs-identifier hs-var">NameSegment</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621680845562"><span id="local-6989586621680845564"><span class="annot"><span class="annottext">NameSegment -&gt; NameSegment -&gt; Bool
 (NameSegment -&gt; NameSegment -&gt; Bool)
 -&gt; (NameSegment -&gt; NameSegment -&gt; Bool) -&gt; Eq NameSegment
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -95,7 +95,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: NameSegment -&gt; NameSegment -&gt; Bool
 == :: NameSegment -&gt; NameSegment -&gt; Bool
 $c== :: NameSegment -&gt; NameSegment -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680845330"><span id="local-6989586621680845332"><span id="local-6989586621680845334"><span id="local-6989586621680845336"><span id="local-6989586621680845338"><span id="local-6989586621680845340"><span id="local-6989586621680845342"><span class="annot"><span class="annottext">Eq NameSegment
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680845547"><span id="local-6989586621680845549"><span id="local-6989586621680845551"><span id="local-6989586621680845553"><span id="local-6989586621680845555"><span id="local-6989586621680845557"><span id="local-6989586621680845559"><span class="annot"><span class="annottext">Eq NameSegment
 Eq NameSegment
 -&gt; (NameSegment -&gt; NameSegment -&gt; Ordering)
 -&gt; (NameSegment -&gt; NameSegment -&gt; Bool)
@@ -133,7 +133,7 @@ $c&lt; :: NameSegment -&gt; NameSegment -&gt; Bool
 compare :: NameSegment -&gt; NameSegment -&gt; Ordering
 $ccompare :: NameSegment -&gt; NameSegment -&gt; Ordering
 $cp1Ord :: Eq NameSegment
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680845324"><span id="local-6989586621680845326"><span id="local-6989586621680845328"><span class="annot"><span class="annottext">Int -&gt; NameSegment -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680845541"><span id="local-6989586621680845543"><span id="local-6989586621680845545"><span class="annot"><span class="annottext">Int -&gt; NameSegment -&gt; ShowS
 [NameSegment] -&gt; ShowS
 NameSegment -&gt; String
 (Int -&gt; NameSegment -&gt; ShowS)
@@ -168,36 +168,36 @@ forall t h. (Tokenizable t, Accumulate h) =&gt; t -&gt; h
 </span><span id="line-33"></span><span>  </span><span class="hs-special">}</span><span>
 </span><span id="line-34"></span><span>
 </span><span id="line-35"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Tokenizable.html#Tokenizable"><span class="hs-identifier hs-type">Tokenizable</span></a></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Branch.html#Raw"><span class="hs-identifier hs-type">Raw</span></a></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-36"></span><span>  </span><span id="local-6989586621680845316"><span class="annot"><span class="annottext">tokens :: Raw -&gt; [Token h]
-</span><a href="Unison.Hashing.V2.Tokenizable.html#tokens"><span class="hs-identifier hs-var hs-var hs-var hs-var">tokens</span></a></span></span><span> </span><span id="local-6989586621680845314"><span class="annot"><span class="annottext">Raw
-</span><a href="#local-6989586621680845314"><span class="hs-identifier hs-var">b</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-36"></span><span>  </span><span id="local-6989586621680845533"><span class="annot"><span class="annottext">tokens :: Raw -&gt; [Token h]
+</span><a href="Unison.Hashing.V2.Tokenizable.html#tokens"><span class="hs-identifier hs-var hs-var hs-var hs-var">tokens</span></a></span></span><span> </span><span id="local-6989586621680845531"><span class="annot"><span class="annottext">Raw
+</span><a href="#local-6989586621680845531"><span class="hs-identifier hs-var">b</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-37"></span><span>    </span><span class="hs-special">[</span><span> </span><span class="annot"><span class="annottext">Map NameSegment (Map Referent MdValues) -&gt; Token h
 forall h t. (Accumulate h, Tokenizable t) =&gt; t -&gt; Token h
 </span><a href="Unison.Hashing.V2.Tokenizable.html#accumulateToken"><span class="hs-identifier hs-var">H.accumulateToken</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Raw -&gt; Map NameSegment (Map Referent MdValues)
 </span><a href="Unison.Hashing.V2.Branch.html#terms"><span class="hs-identifier hs-var hs-var">terms</span></a></span><span> </span><span class="annot"><span class="annottext">Raw
-</span><a href="#local-6989586621680845314"><span class="hs-identifier hs-var">b</span></a></span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><a href="#local-6989586621680845531"><span class="hs-identifier hs-var">b</span></a></span><span class="hs-special">)</span><span class="hs-special">,</span><span>
 </span><span id="line-38"></span><span>      </span><span class="annot"><span class="annottext">Map NameSegment (Map Reference MdValues) -&gt; Token h
 forall h t. (Accumulate h, Tokenizable t) =&gt; t -&gt; Token h
 </span><a href="Unison.Hashing.V2.Tokenizable.html#accumulateToken"><span class="hs-identifier hs-var">H.accumulateToken</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Raw -&gt; Map NameSegment (Map Reference MdValues)
 </span><a href="Unison.Hashing.V2.Branch.html#types"><span class="hs-identifier hs-var hs-var">types</span></a></span><span> </span><span class="annot"><span class="annottext">Raw
-</span><a href="#local-6989586621680845314"><span class="hs-identifier hs-var">b</span></a></span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><a href="#local-6989586621680845531"><span class="hs-identifier hs-var">b</span></a></span><span class="hs-special">)</span><span class="hs-special">,</span><span>
 </span><span id="line-39"></span><span>      </span><span class="annot"><span class="annottext">Map NameSegment Hash -&gt; Token h
 forall h t. (Accumulate h, Tokenizable t) =&gt; t -&gt; Token h
 </span><a href="Unison.Hashing.V2.Tokenizable.html#accumulateToken"><span class="hs-identifier hs-var">H.accumulateToken</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Raw -&gt; Map NameSegment Hash
 </span><a href="Unison.Hashing.V2.Branch.html#children"><span class="hs-identifier hs-var hs-var">children</span></a></span><span> </span><span class="annot"><span class="annottext">Raw
-</span><a href="#local-6989586621680845314"><span class="hs-identifier hs-var">b</span></a></span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><a href="#local-6989586621680845531"><span class="hs-identifier hs-var">b</span></a></span><span class="hs-special">)</span><span class="hs-special">,</span><span>
 </span><span id="line-40"></span><span>      </span><span class="annot"><span class="annottext">Map NameSegment Hash -&gt; Token h
 forall h t. (Accumulate h, Tokenizable t) =&gt; t -&gt; Token h
 </span><a href="Unison.Hashing.V2.Tokenizable.html#accumulateToken"><span class="hs-identifier hs-var">H.accumulateToken</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Raw -&gt; Map NameSegment Hash
 </span><a href="Unison.Hashing.V2.Branch.html#patches"><span class="hs-identifier hs-var hs-var">patches</span></a></span><span> </span><span class="annot"><span class="annottext">Raw
-</span><a href="#local-6989586621680845314"><span class="hs-identifier hs-var">b</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621680845531"><span class="hs-identifier hs-var">b</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-41"></span><span>    </span><span class="hs-special">]</span><span>
 </span><span id="line-42"></span><span>
 </span><span id="line-43"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Tokenizable.html#Tokenizable"><span class="hs-identifier hs-type">H.Tokenizable</span></a></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Branch.html#NameSegment"><span class="hs-identifier hs-type">NameSegment</span></a></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-44"></span><span>  </span><span id="local-6989586621680845311"><span class="annot"><span class="annottext">tokens :: NameSegment -&gt; [Token h]
-</span><a href="#local-6989586621680845311"><span class="hs-identifier hs-var hs-var hs-var hs-var">tokens</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Hashing.V2.Branch.html#NameSegment"><span class="hs-identifier hs-type">NameSegment</span></a></span><span> </span><span id="local-6989586621680845310"><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621680845310"><span class="hs-identifier hs-var">t</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Text -&gt; Token h
+</span><span id="line-44"></span><span>  </span><span id="local-6989586621680845528"><span class="annot"><span class="annottext">tokens :: NameSegment -&gt; [Token h]
+</span><a href="#local-6989586621680845528"><span class="hs-identifier hs-var hs-var hs-var hs-var">tokens</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Hashing.V2.Branch.html#NameSegment"><span class="hs-identifier hs-type">NameSegment</span></a></span><span> </span><span id="local-6989586621680845527"><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621680845527"><span class="hs-identifier hs-var">t</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Text -&gt; Token h
 forall h. Text -&gt; Token h
 </span><a href="Unison.Hashing.V2.Tokenizable.html#Text"><span class="hs-identifier hs-var">H.Text</span></a></span><span> </span><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621680845310"><span class="hs-identifier hs-var">t</span></a></span><span class="hs-special">]</span><span>
+</span><a href="#local-6989586621680845527"><span class="hs-identifier hs-var">t</span></a></span><span class="hs-special">]</span><span>
 </span><span id="line-45"></span></pre></body></html>
