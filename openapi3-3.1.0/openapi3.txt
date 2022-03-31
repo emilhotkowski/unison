@@ -1750,8 +1750,8 @@ _SecuritySchemeOpenIdConnect :: Prism' SecuritySchemeType URL
 _SecuritySchemeOAuth2 :: Prism' SecuritySchemeType OAuth2Flows
 _SecuritySchemeApiKey :: Prism' SecuritySchemeType ApiKeyParams
 _SecuritySchemeHttp :: Prism' SecuritySchemeType HttpSchemeType
-_Inline :: forall a_au9r a_a2mc7. Prism (Referenced a_a2mc7) (Referenced a_au9r) a_a2mc7 a_au9r
-_Ref :: forall a_au9r. Prism' (Referenced a_au9r) Reference
+_Inline :: forall a_aubx a_a2med. Prism (Referenced a_a2med) (Referenced a_aubx) a_a2med a_aubx
+_Ref :: forall a_aubx. Prism' (Referenced a_aubx) Reference
 _OpenApiItemsArray :: Review OpenApiItems [Referenced Schema]
 _OpenApiItemsObject :: Review OpenApiItems (Referenced Schema)
 instance Control.Lens.At.Ixed Data.OpenApi.Internal.Responses

@@ -2018,10 +2018,10 @@ class Monad m => MonadIO (m :: Type -> Type)
 -- | Lift a computation from the <a>IO</a> monad.
 liftIO :: MonadIO m => IO a -> m a
 
--- | Class of monads which can perform primitive state-transformer actions
+-- | Class of monads which can perform primitive state-transformer actions.
 class Monad m => PrimMonad (m :: Type -> Type) where {
     
-    -- | State token type
+    -- | State token type.
     type family PrimState (m :: Type -> Type);
 }
 

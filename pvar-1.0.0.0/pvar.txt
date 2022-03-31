@@ -314,10 +314,10 @@ class Prim a
 --   <a>PrimState</a> m</tt>.
 class (PrimMonad m, s ~ PrimState m) => MonadPrim s (m :: Type -> Type)
 
--- | Class of monads which can perform primitive state-transformer actions
+-- | Class of monads which can perform primitive state-transformer actions.
 class Monad m => PrimMonad (m :: Type -> Type) where {
     
-    -- | State token type
+    -- | State token type.
     type family PrimState (m :: Type -> Type);
 }
 
@@ -330,13 +330,13 @@ data RealWorld
 -- | Size of values of type <tt>a</tt>. The argument is not used.
 --   
 --   This function has existed since 0.1, but was moved from
---   <a>Primitive</a> to <a>Types</a> in version 0.6.3.0
+--   <a>Primitive</a> to <a>Types</a> in version 0.6.3.0.
 sizeOf :: Prim a => a -> Int
 
 -- | Alignment of values of type <tt>a</tt>. The argument is not used.
 --   
 --   This function has existed since 0.1, but was moved from
---   <a>Primitive</a> to <a>Types</a> in version 0.6.3.0
+--   <a>Primitive</a> to <a>Types</a> in version 0.6.3.0.
 alignment :: Prim a => a -> Int
 
 -- | The strict <a>ST</a> monad. The <a>ST</a> monad allows for destructive

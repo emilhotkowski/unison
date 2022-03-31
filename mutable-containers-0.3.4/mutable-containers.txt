@@ -273,10 +273,10 @@ type MutableStack c = (MutablePopFront c, MutablePushFront c)
 --   Since 0.2.0
 type MutableDeque c = (MutableQueue c, MutablePushFront c, MutablePopBack c)
 
--- | Class of monads which can perform primitive state-transformer actions
+-- | Class of monads which can perform primitive state-transformer actions.
 class Monad m => PrimMonad (m :: Type -> Type)
 
--- | State token type
+-- | State token type.
 type family PrimState (m :: Type -> Type)
 
 -- | <tt>RealWorld</tt> is deeply magical. It is <i>primitive</i>, but it
