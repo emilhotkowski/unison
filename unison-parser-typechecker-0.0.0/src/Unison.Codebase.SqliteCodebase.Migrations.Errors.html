@@ -7,7 +7,7 @@
 </span><span id="line-7"></span><span>
 </span><span id="line-8"></span><span class="hs-keyword">data</span><span> </span><span id="MigrationError"><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.Errors.html#MigrationError"><span class="hs-identifier hs-var">MigrationError</span></a></span></span><span>
 </span><span id="line-9"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="IncorrectStartingSchemaVersion"><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.Errors.html#IncorrectStartingSchemaVersion"><span class="hs-identifier hs-var">IncorrectStartingSchemaVersion</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">SchemaVersion</span></span><span>
-</span><span id="line-10"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621680845281"><span id="local-6989586621680845283"><span id="local-6989586621680845285"><span class="annot"><span class="annottext">Int -&gt; MigrationError -&gt; ShowS
+</span><span id="line-10"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621680841755"><span id="local-6989586621680841757"><span id="local-6989586621680841759"><span class="annot"><span class="annottext">Int -&gt; MigrationError -&gt; ShowS
 [MigrationError] -&gt; ShowS
 MigrationError -&gt; String
 (Int -&gt; MigrationError -&gt; ShowS)
@@ -22,7 +22,7 @@ show :: MigrationError -&gt; String
 $cshow :: MigrationError -&gt; String
 showsPrec :: Int -&gt; MigrationError -&gt; ShowS
 $cshowsPrec :: Int -&gt; MigrationError -&gt; ShowS
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680845276"><span id="local-6989586621680845278"><span class="annot"><span class="annottext">MigrationError -&gt; MigrationError -&gt; Bool
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680841750"><span id="local-6989586621680841752"><span class="annot"><span class="annottext">MigrationError -&gt; MigrationError -&gt; Bool
 (MigrationError -&gt; MigrationError -&gt; Bool)
 -&gt; (MigrationError -&gt; MigrationError -&gt; Bool) -&gt; Eq MigrationError
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -30,7 +30,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: MigrationError -&gt; MigrationError -&gt; Bool
 == :: MigrationError -&gt; MigrationError -&gt; Bool
 $c== :: MigrationError -&gt; MigrationError -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680845260"><span id="local-6989586621680845262"><span id="local-6989586621680845264"><span id="local-6989586621680845266"><span id="local-6989586621680845268"><span id="local-6989586621680845270"><span id="local-6989586621680845272"><span class="annot"><span class="annottext">Eq MigrationError
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680841734"><span id="local-6989586621680841736"><span id="local-6989586621680841738"><span id="local-6989586621680841740"><span id="local-6989586621680841742"><span id="local-6989586621680841744"><span id="local-6989586621680841746"><span class="annot"><span class="annottext">Eq MigrationError
 Eq MigrationError
 -&gt; (MigrationError -&gt; MigrationError -&gt; Ordering)
 -&gt; (MigrationError -&gt; MigrationError -&gt; Bool)
@@ -69,7 +69,7 @@ compare :: MigrationError -&gt; MigrationError -&gt; Ordering
 $ccompare :: MigrationError -&gt; MigrationError -&gt; Ordering
 $cp1Ord :: Eq MigrationError
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-11"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">anyclass</span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621680845251"><span id="local-6989586621680845253"><span id="local-6989586621680845255"><span class="annot"><span class="annottext">Show MigrationError
+</span><span id="line-11"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">anyclass</span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621680841725"><span id="local-6989586621680841727"><span id="local-6989586621680841729"><span class="annot"><span class="annottext">Show MigrationError
 Typeable MigrationError
 Typeable MigrationError
 -&gt; Show MigrationError

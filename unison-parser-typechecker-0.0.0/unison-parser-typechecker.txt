@@ -1233,19 +1233,19 @@ mapToList :: EnumKey k => EnumMap k a -> [(k, a)]
 findMin :: EnumKey k => EnumSet k -> k
 traverseSet_ :: Applicative f => EnumKey k => (k -> f ()) -> EnumSet k -> f ()
 setSize :: EnumSet k -> Int
+instance GHC.Base.Semigroup (Unison.Util.EnumContainers.EnumMap k a)
+instance GHC.Base.Monoid (Unison.Util.EnumContainers.EnumMap k a)
 instance GHC.Classes.Ord a => GHC.Classes.Ord (Unison.Util.EnumContainers.EnumMap k a)
 instance GHC.Classes.Eq a => GHC.Classes.Eq (Unison.Util.EnumContainers.EnumMap k a)
 instance GHC.Show.Show a => GHC.Show.Show (Unison.Util.EnumContainers.EnumMap k a)
 instance Data.Traversable.Traversable (Unison.Util.EnumContainers.EnumMap k)
 instance Data.Foldable.Foldable (Unison.Util.EnumContainers.EnumMap k)
 instance GHC.Base.Functor (Unison.Util.EnumContainers.EnumMap k)
-instance GHC.Base.Semigroup (Unison.Util.EnumContainers.EnumMap k a)
-instance GHC.Base.Monoid (Unison.Util.EnumContainers.EnumMap k a)
+instance GHC.Base.Semigroup (Unison.Util.EnumContainers.EnumSet k)
+instance GHC.Base.Monoid (Unison.Util.EnumContainers.EnumSet k)
 instance GHC.Classes.Ord (Unison.Util.EnumContainers.EnumSet k)
 instance GHC.Classes.Eq (Unison.Util.EnumContainers.EnumSet k)
 instance GHC.Show.Show (Unison.Util.EnumContainers.EnumSet k)
-instance GHC.Base.Semigroup (Unison.Util.EnumContainers.EnumSet k)
-instance GHC.Base.Monoid (Unison.Util.EnumContainers.EnumSet k)
 instance Unison.Util.EnumContainers.EnumKey GHC.Word.Word64
 instance Unison.Util.EnumContainers.EnumKey GHC.Word.Word16
 
@@ -1478,10 +1478,10 @@ zlibCompress :: Bytes -> Bytes
 zlibDecompress :: Bytes -> Bytes
 gzipCompress :: Bytes -> Bytes
 gzipDecompress :: Bytes -> Bytes
-instance GHC.Classes.Ord Unison.Util.Bytes.Bytes
-instance GHC.Classes.Eq Unison.Util.Bytes.Bytes
 instance GHC.Base.Monoid Unison.Util.Bytes.Bytes
 instance GHC.Base.Semigroup Unison.Util.Bytes.Bytes
+instance GHC.Classes.Ord Unison.Util.Bytes.Bytes
+instance GHC.Classes.Eq Unison.Util.Bytes.Bytes
 instance Control.DeepSeq.NFData Unison.Util.Bytes.Bytes
 instance GHC.Show.Show Unison.Util.Bytes.Bytes
 instance Unison.Util.Rope.Sized Unison.Util.Bytes.Chunk
@@ -2425,9 +2425,9 @@ Env :: [Type v loc] -> TypeLookup v loc -> Map Name [NamedReference v loc] -> En
 [_ambientAbilities] :: Env v loc -> [Type v loc]
 [_typeLookup] :: Env v loc -> TypeLookup v loc
 [_termsByShortname] :: Env v loc -> Map Name [NamedReference v loc]
-typeLookup :: forall v_a3JYp loc_a3JYq. Lens' (Env v_a3JYp loc_a3JYq) (TypeLookup v_a3JYp loc_a3JYq)
-termsByShortname :: forall v_a3JYp loc_a3JYq. Lens' (Env v_a3JYp loc_a3JYq) (Map Name [NamedReference v_a3JYp loc_a3JYq])
-ambientAbilities :: forall v_a3JYp loc_a3JYq. Lens' (Env v_a3JYp loc_a3JYq) [Type v_a3JYp loc_a3JYq]
+typeLookup :: forall v_a3Jhd loc_a3Jhe. Lens' (Env v_a3Jhd loc_a3Jhe) (TypeLookup v_a3Jhd loc_a3Jhe)
+termsByShortname :: forall v_a3Jhd loc_a3Jhe. Lens' (Env v_a3Jhd loc_a3Jhe) (Map Name [NamedReference v_a3Jhd loc_a3Jhe])
+ambientAbilities :: forall v_a3Jhd loc_a3Jhe. Lens' (Env v_a3Jhd loc_a3Jhe) [Type v_a3Jhd loc_a3Jhe]
 
 -- | Infer the type of a <a>Term</a>, using a function to resolve the type
 --   of <tt>Ref</tt> constructors contained in that term.

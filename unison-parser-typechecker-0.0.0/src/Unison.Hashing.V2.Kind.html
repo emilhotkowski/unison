@@ -6,14 +6,14 @@
 </span><span id="line-6"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Tokenizable.html"><span class="hs-identifier">Unison.Hashing.V2.Tokenizable</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Hashable</span></span><span>
 </span><span id="line-7"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Prelude</span></span><span>
 </span><span id="line-8"></span><span>
-</span><span id="line-9"></span><span id="local-6989586621680846279"><span id="local-6989586621680846280"></span></span><span class="hs-keyword">data</span><span> </span><span id="Kind"><span class="annot"><a href="Unison.Hashing.V2.Kind.html#Kind"><span class="hs-identifier hs-var">Kind</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Star"><span class="annot"><a href="Unison.Hashing.V2.Kind.html#Star"><span class="hs-identifier hs-var">Star</span></a></span></span><span> </span><span class="hs-glyph">|</span><span> </span><span id="Arrow"><span class="annot"><a href="Unison.Hashing.V2.Kind.html#Arrow"><span class="hs-identifier hs-var">Arrow</span></a></span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Kind.html#Kind"><span class="hs-identifier hs-type">Kind</span></a></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Kind.html#Kind"><span class="hs-identifier hs-type">Kind</span></a></span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621680846273"><span id="local-6989586621680846275"><span class="annot"><span class="annottext">Kind -&gt; Kind -&gt; Bool
+</span><span id="line-9"></span><span id="local-6989586621680842753"><span id="local-6989586621680842754"></span></span><span class="hs-keyword">data</span><span> </span><span id="Kind"><span class="annot"><a href="Unison.Hashing.V2.Kind.html#Kind"><span class="hs-identifier hs-var">Kind</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Star"><span class="annot"><a href="Unison.Hashing.V2.Kind.html#Star"><span class="hs-identifier hs-var">Star</span></a></span></span><span> </span><span class="hs-glyph">|</span><span> </span><span id="Arrow"><span class="annot"><a href="Unison.Hashing.V2.Kind.html#Arrow"><span class="hs-identifier hs-var">Arrow</span></a></span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Kind.html#Kind"><span class="hs-identifier hs-type">Kind</span></a></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Kind.html#Kind"><span class="hs-identifier hs-type">Kind</span></a></span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621680842747"><span id="local-6989586621680842749"><span class="annot"><span class="annottext">Kind -&gt; Kind -&gt; Bool
 (Kind -&gt; Kind -&gt; Bool) -&gt; (Kind -&gt; Kind -&gt; Bool) -&gt; Eq Kind
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 /= :: Kind -&gt; Kind -&gt; Bool
 $c/= :: Kind -&gt; Kind -&gt; Bool
 == :: Kind -&gt; Kind -&gt; Bool
 $c== :: Kind -&gt; Kind -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680846257"><span id="local-6989586621680846259"><span id="local-6989586621680846261"><span id="local-6989586621680846263"><span id="local-6989586621680846265"><span id="local-6989586621680846267"><span id="local-6989586621680846269"><span class="annot"><span class="annottext">Eq Kind
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680842731"><span id="local-6989586621680842733"><span id="local-6989586621680842735"><span id="local-6989586621680842737"><span id="local-6989586621680842739"><span id="local-6989586621680842741"><span id="local-6989586621680842743"><span class="annot"><span class="annottext">Eq Kind
 Eq Kind
 -&gt; (Kind -&gt; Kind -&gt; Ordering)
 -&gt; (Kind -&gt; Kind -&gt; Bool)
@@ -51,7 +51,7 @@ $c&lt; :: Kind -&gt; Kind -&gt; Bool
 compare :: Kind -&gt; Kind -&gt; Ordering
 $ccompare :: Kind -&gt; Kind -&gt; Ordering
 $cp1Ord :: Eq Kind
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680846248"><span id="local-6989586621680846250"><span id="local-6989586621680846252"><span id="local-6989586621680846254"><span class="annot"><span class="annottext">ReadPrec [Kind]
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680842722"><span id="local-6989586621680842724"><span id="local-6989586621680842726"><span id="local-6989586621680842728"><span class="annot"><span class="annottext">ReadPrec [Kind]
 ReadPrec Kind
 Int -&gt; ReadS Kind
 ReadS [Kind]
@@ -68,7 +68,7 @@ readList :: ReadS [Kind]
 $creadList :: ReadS [Kind]
 readsPrec :: Int -&gt; ReadS Kind
 $creadsPrec :: Int -&gt; ReadS Kind
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Read</span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680846241"><span id="local-6989586621680846243"><span id="local-6989586621680846245"><span class="annot"><span class="annottext">Int -&gt; Kind -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Read</span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680842715"><span id="local-6989586621680842717"><span id="local-6989586621680842719"><span class="annot"><span class="annottext">Int -&gt; Kind -&gt; ShowS
 [Kind] -&gt; ShowS
 Kind -&gt; String
 (Int -&gt; Kind -&gt; ShowS)
@@ -92,18 +92,18 @@ $cfrom :: forall x. Kind -&gt; Rep Kind x
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var">Generic</span></span><span class="hs-special">)</span><span>
 </span><span id="line-10"></span><span>
 </span><span id="line-11"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Tokenizable.html#Tokenizable"><span class="hs-identifier hs-type">Tokenizable</span></a></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Kind.html#Kind"><span class="hs-identifier hs-type">Kind</span></a></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-12"></span><span>  </span><span id="local-6989586621680846234"><span class="annot"><span class="annottext">tokens :: Kind -&gt; [Token h]
-</span><a href="Unison.Hashing.V2.Tokenizable.html#tokens"><span class="hs-identifier hs-var hs-var hs-var hs-var">tokens</span></a></span></span><span> </span><span id="local-6989586621680846232"><span class="annot"><span class="annottext">Kind
-</span><a href="#local-6989586621680846232"><span class="hs-identifier hs-var">k</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">Kind
-</span><a href="#local-6989586621680846232"><span class="hs-identifier hs-var">k</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-12"></span><span>  </span><span id="local-6989586621680842708"><span class="annot"><span class="annottext">tokens :: Kind -&gt; [Token h]
+</span><a href="Unison.Hashing.V2.Tokenizable.html#tokens"><span class="hs-identifier hs-var hs-var hs-var hs-var">tokens</span></a></span></span><span> </span><span id="local-6989586621680842706"><span class="annot"><span class="annottext">Kind
+</span><a href="#local-6989586621680842706"><span class="hs-identifier hs-var">k</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">Kind
+</span><a href="#local-6989586621680842706"><span class="hs-identifier hs-var">k</span></a></span><span> </span><span class="hs-keyword">of</span><span>
 </span><span id="line-13"></span><span>    </span><span class="annot"><span class="annottext">Kind
 </span><a href="Unison.Hashing.V2.Kind.html#Star"><span class="hs-identifier hs-var">Star</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Word8 -&gt; Token h
 forall h. Word8 -&gt; Token h
 </span><a href="Unison.Hashing.V2.Tokenizable.html#Tag"><span class="hs-identifier hs-var">Hashable.Tag</span></a></span><span> </span><span class="annot"><span class="annottext">Word8
 </span><span class="hs-number">0</span></span><span class="hs-special">]</span><span>
-</span><span id="line-14"></span><span>    </span><span class="annot"><a href="Unison.Hashing.V2.Kind.html#Arrow"><span class="hs-identifier hs-type">Arrow</span></a></span><span> </span><span id="local-6989586621680846230"><span class="annot"><span class="annottext">Kind
-</span><a href="#local-6989586621680846230"><span class="hs-identifier hs-var">k1</span></a></span></span><span> </span><span id="local-6989586621680846229"><span class="annot"><span class="annottext">Kind
-</span><a href="#local-6989586621680846229"><span class="hs-identifier hs-var">k2</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Word8 -&gt; Token h
+</span><span id="line-14"></span><span>    </span><span class="annot"><a href="Unison.Hashing.V2.Kind.html#Arrow"><span class="hs-identifier hs-type">Arrow</span></a></span><span> </span><span id="local-6989586621680842704"><span class="annot"><span class="annottext">Kind
+</span><a href="#local-6989586621680842704"><span class="hs-identifier hs-var">k1</span></a></span></span><span> </span><span id="local-6989586621680842703"><span class="annot"><span class="annottext">Kind
+</span><a href="#local-6989586621680842703"><span class="hs-identifier hs-var">k2</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Word8 -&gt; Token h
 forall h. Word8 -&gt; Token h
 </span><a href="Unison.Hashing.V2.Tokenizable.html#Tag"><span class="hs-identifier hs-var">Hashable.Tag</span></a></span><span> </span><span class="annot"><span class="annottext">Word8
 </span><span class="hs-number">1</span></span><span> </span><span class="annot"><span class="annottext">Token h -&gt; [Token h] -&gt; [Token h]
@@ -111,10 +111,10 @@ forall a. a -&gt; [a] -&gt; [a]
 </span><span class="hs-glyph hs-var">:</span></span><span> </span><span class="annot"><span class="annottext">Kind -&gt; [Token h]
 forall t h. (Tokenizable t, Accumulate h) =&gt; t -&gt; [Token h]
 </span><a href="Unison.Hashing.V2.Tokenizable.html#tokens"><span class="hs-identifier hs-var">Hashable.tokens</span></a></span><span> </span><span class="annot"><span class="annottext">Kind
-</span><a href="#local-6989586621680846230"><span class="hs-identifier hs-var">k1</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">[Token h] -&gt; [Token h] -&gt; [Token h]
+</span><a href="#local-6989586621680842704"><span class="hs-identifier hs-var">k1</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">[Token h] -&gt; [Token h] -&gt; [Token h]
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">Kind -&gt; [Token h]
 forall t h. (Tokenizable t, Accumulate h) =&gt; t -&gt; [Token h]
 </span><a href="Unison.Hashing.V2.Tokenizable.html#tokens"><span class="hs-identifier hs-var">Hashable.tokens</span></a></span><span> </span><span class="annot"><span class="annottext">Kind
-</span><a href="#local-6989586621680846229"><span class="hs-identifier hs-var">k2</span></a></span><span>
+</span><a href="#local-6989586621680842703"><span class="hs-identifier hs-var">k2</span></a></span><span>
 </span><span id="line-15"></span></pre></body></html>
