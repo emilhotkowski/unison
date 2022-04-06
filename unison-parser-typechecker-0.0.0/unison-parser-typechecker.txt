@@ -4899,6 +4899,8 @@ instance Data.Foldable.Foldable Unison.Runtime.ANF.Branched
 instance GHC.Base.Functor Unison.Runtime.ANF.Branched
 instance GHC.Show.Show e => GHC.Show.Show (Unison.Runtime.ANF.Branched e)
 instance GHC.Show.Show Unison.Runtime.ANF.Lit
+instance GHC.Enum.Bounded Unison.Runtime.ANF.POp
+instance GHC.Enum.Enum Unison.Runtime.ANF.POp
 instance GHC.Classes.Ord Unison.Runtime.ANF.POp
 instance GHC.Classes.Eq Unison.Runtime.ANF.POp
 instance GHC.Show.Show Unison.Runtime.ANF.POp
@@ -5507,6 +5509,7 @@ putFunc :: MonadPut m => Var v => EnumMap FOp Text -> [v] -> Func v -> m ()
 getFunc :: MonadGet m => Var v => [v] -> m (Func v)
 putPOp :: MonadPut m => POp -> m ()
 getPOp :: MonadGet m => m POp
+pOpCode :: POp -> Word16
 pOpAssoc :: [(POp, Word16)]
 pop2word :: Map POp Word16
 word2pop :: Map Word16 POp
