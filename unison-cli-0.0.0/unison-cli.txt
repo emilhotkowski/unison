@@ -132,7 +132,7 @@ CreateMessage :: Pretty ColorText -> Input
 SwitchBranchI :: Maybe Path' -> Input
 UpI :: Input
 PopBranchI :: Input
-NamesI :: HashQualified Name -> Input
+NamesI :: IsGlobal -> HashQualified Name -> Input
 AliasTermI :: HashOrHQSplit' -> Split' -> Input
 AliasTypeI :: HashOrHQSplit' -> Split' -> Input
 AliasManyI :: [HQSplit] -> Path' -> Input
@@ -173,7 +173,7 @@ LinksI :: HQSplit' -> Maybe String -> Input
 CreateAuthorI :: NameSegment -> Text -> Input
 DisplayI :: OutputLocation -> [HashQualified Name] -> Input
 DocsI :: [HQSplit'] -> Input
-SearchByNameI :: Bool -> Bool -> [String] -> Input
+FindI :: Bool -> IsGlobal -> [String] -> Input
 FindShallowI :: Path' -> Input
 FindPatchI :: Input
 ShowDefinitionI :: OutputLocation -> [HashQualified Name] -> Input
@@ -229,6 +229,7 @@ data OptionalPatch
 NoPatch :: OptionalPatch
 DefaultPatch :: OptionalPatch
 UsePatch :: PatchPath -> OptionalPatch
+type IsGlobal = Bool
 instance GHC.Show.Show Unison.Codebase.Editor.Input.OptionalPatch
 instance GHC.Classes.Ord Unison.Codebase.Editor.Input.OptionalPatch
 instance GHC.Classes.Eq Unison.Codebase.Editor.Input.OptionalPatch
@@ -594,7 +595,7 @@ SearchTermsNotFound :: [HashQualified Name] -> Output v
 DeleteBranchConfirmation :: [(Path', (Names, [SearchResult' v Ann]))] -> Output v
 DeleteEverythingConfirmation :: Output v
 DeletedEverything :: Output v
-ListNames :: Int -> [(Reference, Set (HashQualified Name))] -> [(Referent, Set (HashQualified Name))] -> Output v
+ListNames :: IsGlobal -> Int -> [(Reference, Set (HashQualified Name))] -> [(Referent, Set (HashQualified Name))] -> Output v
 ListOfDefinitions :: PrettyPrintEnv -> ListDetailed -> [SearchResult' v Ann] -> Output v
 ListOfLinks :: PrettyPrintEnv -> [(HashQualified Name, Reference, Maybe (Type v Ann))] -> Output v
 ListShallow :: PrettyPrintEnv -> [ShallowListEntry v Ann] -> Output v
@@ -849,13 +850,13 @@ LoopState :: Branch m -> Branch m -> NonEmpty Absolute -> Maybe (FilePath, SkipN
 type Action' m v = Action m (Either Event Input) v
 type SkipNextUpdate = Bool
 type InputDescription = Text
-root :: forall m_a1Kpu v_a1Kpv. Lens' (LoopState m_a1Kpu v_a1Kpv) (Branch m_a1Kpu)
-numberedArgs :: forall m_a1Kpu v_a1Kpv. Lens' (LoopState m_a1Kpu v_a1Kpv) NumberedArgs
-latestTypecheckedFile :: forall m_a1Kpu v_a1Kpv v_a1LaN. Lens (LoopState m_a1Kpu v_a1Kpv) (LoopState m_a1Kpu v_a1LaN) (Maybe (TypecheckedUnisonFile v_a1Kpv Ann)) (Maybe (TypecheckedUnisonFile v_a1LaN Ann))
-latestFile :: forall m_a1Kpu v_a1Kpv. Lens' (LoopState m_a1Kpu v_a1Kpv) (Maybe (FilePath, SkipNextUpdate))
-lastSavedRoot :: forall m_a1Kpu v_a1Kpv. Lens' (LoopState m_a1Kpu v_a1Kpv) (Branch m_a1Kpu)
-lastInput :: forall m_a1Kpu v_a1Kpv. Lens' (LoopState m_a1Kpu v_a1Kpv) (Maybe Input)
-currentPathStack :: forall m_a1Kpu v_a1Kpv. Lens' (LoopState m_a1Kpu v_a1Kpv) (NonEmpty Absolute)
+root :: forall m_a1KsB v_a1KsC. Lens' (LoopState m_a1KsB v_a1KsC) (Branch m_a1KsB)
+numberedArgs :: forall m_a1KsB v_a1KsC. Lens' (LoopState m_a1KsB v_a1KsC) NumberedArgs
+latestTypecheckedFile :: forall m_a1KsB v_a1KsC v_a1LdU. Lens (LoopState m_a1KsB v_a1KsC) (LoopState m_a1KsB v_a1LdU) (Maybe (TypecheckedUnisonFile v_a1KsC Ann)) (Maybe (TypecheckedUnisonFile v_a1LdU Ann))
+latestFile :: forall m_a1KsB v_a1KsC. Lens' (LoopState m_a1KsB v_a1KsC) (Maybe (FilePath, SkipNextUpdate))
+lastSavedRoot :: forall m_a1KsB v_a1KsC. Lens' (LoopState m_a1KsB v_a1KsC) (Branch m_a1KsB)
+lastInput :: forall m_a1KsB v_a1KsC. Lens' (LoopState m_a1KsB v_a1KsC) (Maybe Input)
+currentPathStack :: forall m_a1KsB v_a1KsC. Lens' (LoopState m_a1KsB v_a1KsC) (NonEmpty Absolute)
 currentPath :: Getter (LoopState m v) Absolute
 loopState0 :: Branch m -> Absolute -> LoopState m v
 respond :: MonadCommand n m i v => Output v -> n ()
@@ -936,6 +937,8 @@ ui :: InputPattern
 undo :: InputPattern
 viewByPrefix :: InputPattern
 find :: InputPattern
+findGlobal :: InputPattern
+find' :: String -> Bool -> InputPattern
 findShallow :: InputPattern
 findVerbose :: InputPattern
 findPatch :: InputPattern
@@ -1000,7 +1003,7 @@ viewPatch :: InputPattern
 link :: InputPattern
 links :: InputPattern
 unlink :: InputPattern
-names :: InputPattern
+names :: IsGlobal -> InputPattern
 dependents :: InputPattern
 dependencies :: InputPattern
 namespaceDependencies :: InputPattern

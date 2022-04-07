@@ -857,6 +857,7 @@ sortNames :: [Name] -> [Name]
 sortNamed :: (a -> Name) -> [a] -> [a]
 sortByText :: (a -> Text) -> [a] -> [a]
 searchBySuffix :: Ord r => Name -> Relation Name r -> Set r
+searchByRankedSuffix :: Ord r => Name -> Relation Name r -> Set r
 suffixFrom :: Name -> Name -> Maybe Name
 shortestUniqueSuffix :: forall r. Ord r => Name -> r -> Relation Name r -> Name
 
