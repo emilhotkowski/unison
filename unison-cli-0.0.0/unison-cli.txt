@@ -850,13 +850,13 @@ LoopState :: Branch m -> Branch m -> NonEmpty Absolute -> Maybe (FilePath, SkipN
 type Action' m v = Action m (Either Event Input) v
 type SkipNextUpdate = Bool
 type InputDescription = Text
-root :: forall m_a1KsB v_a1KsC. Lens' (LoopState m_a1KsB v_a1KsC) (Branch m_a1KsB)
-numberedArgs :: forall m_a1KsB v_a1KsC. Lens' (LoopState m_a1KsB v_a1KsC) NumberedArgs
-latestTypecheckedFile :: forall m_a1KsB v_a1KsC v_a1LdU. Lens (LoopState m_a1KsB v_a1KsC) (LoopState m_a1KsB v_a1LdU) (Maybe (TypecheckedUnisonFile v_a1KsC Ann)) (Maybe (TypecheckedUnisonFile v_a1LdU Ann))
-latestFile :: forall m_a1KsB v_a1KsC. Lens' (LoopState m_a1KsB v_a1KsC) (Maybe (FilePath, SkipNextUpdate))
-lastSavedRoot :: forall m_a1KsB v_a1KsC. Lens' (LoopState m_a1KsB v_a1KsC) (Branch m_a1KsB)
-lastInput :: forall m_a1KsB v_a1KsC. Lens' (LoopState m_a1KsB v_a1KsC) (Maybe Input)
-currentPathStack :: forall m_a1KsB v_a1KsC. Lens' (LoopState m_a1KsB v_a1KsC) (NonEmpty Absolute)
+root :: forall m_a1KzW v_a1KzX. Lens' (LoopState m_a1KzW v_a1KzX) (Branch m_a1KzW)
+numberedArgs :: forall m_a1KzW v_a1KzX. Lens' (LoopState m_a1KzW v_a1KzX) NumberedArgs
+latestTypecheckedFile :: forall m_a1KzW v_a1KzX v_a1Llf. Lens (LoopState m_a1KzW v_a1KzX) (LoopState m_a1KzW v_a1Llf) (Maybe (TypecheckedUnisonFile v_a1KzX Ann)) (Maybe (TypecheckedUnisonFile v_a1Llf Ann))
+latestFile :: forall m_a1KzW v_a1KzX. Lens' (LoopState m_a1KzW v_a1KzX) (Maybe (FilePath, SkipNextUpdate))
+lastSavedRoot :: forall m_a1KzW v_a1KzX. Lens' (LoopState m_a1KzW v_a1KzX) (Branch m_a1KzW)
+lastInput :: forall m_a1KzW v_a1KzX. Lens' (LoopState m_a1KzW v_a1KzX) (Maybe Input)
+currentPathStack :: forall m_a1KzW v_a1KzX. Lens' (LoopState m_a1KzW v_a1KzX) (NonEmpty Absolute)
 currentPath :: Getter (LoopState m v) Absolute
 loopState0 :: Branch m -> Absolute -> LoopState m v
 respond :: MonadCommand n m i v => Output v -> n ()
@@ -1209,13 +1209,17 @@ module Unison.Auth.HTTPClient
 --   header to any hosts our UCM is authenticated with.
 newAuthorizedHTTPClient :: MonadIO m => CredentialManager -> UCMVersion -> m Manager
 
--- | Adds Bearer tokens to requests according to their host. If a
---   CredentialFailure occurs (failure to refresh a token), auth is simply
---   omitted, and the request is likely to trigger a 401 response which the
---   caller can detect and initiate a re-auth.
---   
---   If a host isn't associated with any credentials auth is omitted.
-authMiddleware :: TokenProvider -> Request -> IO Request
+-- | Newtype to delineate HTTP Managers with access-token logic.
+newtype AuthorizedHttpClient
+AuthorizedHttpClient :: Manager -> AuthorizedHttpClient
+
+module Unison.Sync.HTTP
+getPathHandler :: AuthorizedHttpClient -> BaseUrl -> GetCausalHashByPathRequest -> IO GetCausalHashByPathResponse
+updatePathHandler :: AuthorizedHttpClient -> BaseUrl -> UpdatePathRequest -> IO UpdatePathResponse
+downloadEntitiesHandler :: AuthorizedHttpClient -> BaseUrl -> DownloadEntitiesRequest -> IO DownloadEntitiesResponse
+uploadEntitiesHandler :: AuthorizedHttpClient -> BaseUrl -> UploadEntitiesRequest -> IO UploadEntitiesResponse
+instance GHC.Exception.Type.Exception Unison.Sync.HTTP.SyncError
+instance GHC.Show.Show Unison.Sync.HTTP.SyncError
 
 module Unison.CommandLine.Main
 main :: FilePath -> Welcome -> Absolute -> (Config, IO ()) -> [Either Event Input] -> Runtime Symbol -> Codebase IO Symbol Ann -> Maybe BaseUrl -> UCMVersion -> IO ()

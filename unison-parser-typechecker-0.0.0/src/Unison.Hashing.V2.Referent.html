@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span id="%24con2tag_RE6yErTUvcBvR5iDXOk8g"></span><span class="hs-pragma">{-# LANGUAGE OverloadedStrings #-}</span><span>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span id="%24con2tag_HcWSDD9QlFX1RERC7OdJae"></span><span class="hs-pragma">{-# LANGUAGE OverloadedStrings #-}</span><span>
 </span><span id="line-2"></span><span class="hs-pragma">{-# LANGUAGE PatternSynonyms #-}</span><span>
 </span><span id="line-3"></span><span>
 </span><span id="line-4"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Unison.Hashing.V2.Referent</span><span>
@@ -15,7 +15,7 @@
 </span><span id="line-15"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Tokenizable.html"><span class="hs-identifier">Unison.Hashing.V2.Tokenizable</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">H</span></span><span>
 </span><span id="line-16"></span><span>
 </span><span id="line-17"></span><span class="hs-keyword">data</span><span> </span><span id="Referent"><span class="annot"><a href="Unison.Hashing.V2.Referent.html#Referent"><span class="hs-identifier hs-var">Referent</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Ref"><span class="annot"><a href="Unison.Hashing.V2.Referent.html#Ref"><span class="hs-identifier hs-var">Ref</span></a></span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Reference.html#Reference"><span class="hs-identifier hs-type">Reference</span></a></span><span> </span><span class="hs-glyph">|</span><span> </span><span id="Con"><span class="annot"><a href="Unison.Hashing.V2.Referent.html#Con"><span class="hs-identifier hs-var">Con</span></a></span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Reference.html#Reference"><span class="hs-identifier hs-type">Reference</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">ConstructorId</span></span><span>
-</span><span id="line-18"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621680843048"><span id="local-6989586621680843050"><span id="local-6989586621680843052"><span class="annot"><span class="annottext">Int -&gt; Referent -&gt; ShowS
+</span><span id="line-18"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621680843386"><span id="local-6989586621680843388"><span id="local-6989586621680843390"><span class="annot"><span class="annottext">Int -&gt; Referent -&gt; ShowS
 [Referent] -&gt; ShowS
 Referent -&gt; String
 (Int -&gt; Referent -&gt; ShowS)
@@ -28,7 +28,7 @@ show :: Referent -&gt; String
 $cshow :: Referent -&gt; String
 showsPrec :: Int -&gt; Referent -&gt; ShowS
 $cshowsPrec :: Int -&gt; Referent -&gt; ShowS
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680843032"><span id="local-6989586621680843034"><span id="local-6989586621680843036"><span id="local-6989586621680843038"><span id="local-6989586621680843040"><span id="local-6989586621680843042"><span id="local-6989586621680843044"><span class="annot"><span class="annottext">Eq Referent
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680843370"><span id="local-6989586621680843372"><span id="local-6989586621680843374"><span id="local-6989586621680843376"><span id="local-6989586621680843378"><span id="local-6989586621680843380"><span id="local-6989586621680843382"><span class="annot"><span class="annottext">Eq Referent
 Eq Referent
 -&gt; (Referent -&gt; Referent -&gt; Ordering)
 -&gt; (Referent -&gt; Referent -&gt; Bool)
@@ -66,7 +66,7 @@ $c&lt; :: Referent -&gt; Referent -&gt; Bool
 compare :: Referent -&gt; Referent -&gt; Ordering
 $ccompare :: Referent -&gt; Referent -&gt; Ordering
 $cp1Ord :: Eq Referent
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680843027"><span id="local-6989586621680843029"><span class="annot"><span class="annottext">Referent -&gt; Referent -&gt; Bool
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680843365"><span id="local-6989586621680843367"><span class="annot"><span class="annottext">Referent -&gt; Referent -&gt; Bool
 (Referent -&gt; Referent -&gt; Bool)
 -&gt; (Referent -&gt; Referent -&gt; Bool) -&gt; Eq Referent
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -77,9 +77,9 @@ $c== :: Referent -&gt; Referent -&gt; Bool
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">)</span><span>
 </span><span id="line-19"></span><span>
 </span><span id="line-20"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Tokenizable.html#Tokenizable"><span class="hs-identifier hs-type">Tokenizable</span></a></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Referent.html#Referent"><span class="hs-identifier hs-type">Referent</span></a></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-21"></span><span>  </span><span id="local-6989586621680843023"><span class="annot"><span class="annottext">tokens :: Referent -&gt; [Token h]
-</span><a href="Unison.Hashing.V2.Tokenizable.html#tokens"><span class="hs-identifier hs-var hs-var hs-var hs-var">tokens</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Hashing.V2.Referent.html#Ref"><span class="hs-identifier hs-type">Ref</span></a></span><span> </span><span id="local-6989586621680843021"><span class="annot"><span class="annottext">Reference
-</span><a href="#local-6989586621680843021"><span class="hs-identifier hs-var">r</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Word8 -&gt; Token h
+</span><span id="line-21"></span><span>  </span><span id="local-6989586621680843361"><span class="annot"><span class="annottext">tokens :: Referent -&gt; [Token h]
+</span><a href="Unison.Hashing.V2.Tokenizable.html#tokens"><span class="hs-identifier hs-var hs-var hs-var hs-var">tokens</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Hashing.V2.Referent.html#Ref"><span class="hs-identifier hs-type">Ref</span></a></span><span> </span><span id="local-6989586621680843359"><span class="annot"><span class="annottext">Reference
+</span><a href="#local-6989586621680843359"><span class="hs-identifier hs-var">r</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Word8 -&gt; Token h
 forall h. Word8 -&gt; Token h
 </span><a href="Unison.Hashing.V2.Tokenizable.html#Tag"><span class="hs-identifier hs-var">H.Tag</span></a></span><span> </span><span class="annot"><span class="annottext">Word8
 </span><span class="hs-number">0</span></span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">[Token h] -&gt; [Token h] -&gt; [Token h]
@@ -87,10 +87,10 @@ forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">Reference -&gt; [Token h]
 forall t h. (Tokenizable t, Accumulate h) =&gt; t -&gt; [Token h]
 </span><a href="Unison.Hashing.V2.Tokenizable.html#tokens"><span class="hs-identifier hs-var">H.tokens</span></a></span><span> </span><span class="annot"><span class="annottext">Reference
-</span><a href="#local-6989586621680843021"><span class="hs-identifier hs-var">r</span></a></span><span>
-</span><span id="line-22"></span><span>  </span><span class="annot"><a href="Unison.Hashing.V2.Tokenizable.html#tokens"><span class="hs-identifier hs-var">tokens</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Hashing.V2.Referent.html#Con"><span class="hs-identifier hs-type">Con</span></a></span><span> </span><span id="local-6989586621680843019"><span class="annot"><span class="annottext">Reference
-</span><a href="#local-6989586621680843019"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span id="local-6989586621680843018"><span class="annot"><span class="annottext">ConstructorId
-</span><a href="#local-6989586621680843018"><span class="hs-identifier hs-var">i</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Word8 -&gt; Token h
+</span><a href="#local-6989586621680843359"><span class="hs-identifier hs-var">r</span></a></span><span>
+</span><span id="line-22"></span><span>  </span><span class="annot"><a href="Unison.Hashing.V2.Tokenizable.html#tokens"><span class="hs-identifier hs-var">tokens</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Hashing.V2.Referent.html#Con"><span class="hs-identifier hs-type">Con</span></a></span><span> </span><span id="local-6989586621680843357"><span class="annot"><span class="annottext">Reference
+</span><a href="#local-6989586621680843357"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span id="local-6989586621680843356"><span class="annot"><span class="annottext">ConstructorId
+</span><a href="#local-6989586621680843356"><span class="hs-identifier hs-var">i</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Word8 -&gt; Token h
 forall h. Word8 -&gt; Token h
 </span><a href="Unison.Hashing.V2.Tokenizable.html#Tag"><span class="hs-identifier hs-var">H.Tag</span></a></span><span> </span><span class="annot"><span class="annottext">Word8
 </span><span class="hs-number">2</span></span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">[Token h] -&gt; [Token h] -&gt; [Token h]
@@ -98,10 +98,10 @@ forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">Reference -&gt; [Token h]
 forall t h. (Tokenizable t, Accumulate h) =&gt; t -&gt; [Token h]
 </span><a href="Unison.Hashing.V2.Tokenizable.html#tokens"><span class="hs-identifier hs-var">H.tokens</span></a></span><span> </span><span class="annot"><span class="annottext">Reference
-</span><a href="#local-6989586621680843019"><span class="hs-identifier hs-var">r</span></a></span><span> </span><span class="annot"><span class="annottext">[Token h] -&gt; [Token h] -&gt; [Token h]
+</span><a href="#local-6989586621680843357"><span class="hs-identifier hs-var">r</span></a></span><span> </span><span class="annot"><span class="annottext">[Token h] -&gt; [Token h] -&gt; [Token h]
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">ConstructorId -&gt; [Token h]
 forall t h. (Tokenizable t, Accumulate h) =&gt; t -&gt; [Token h]
 </span><a href="Unison.Hashing.V2.Tokenizable.html#tokens"><span class="hs-identifier hs-var">H.tokens</span></a></span><span> </span><span class="annot"><span class="annottext">ConstructorId
-</span><a href="#local-6989586621680843018"><span class="hs-identifier hs-var">i</span></a></span><span>
+</span><a href="#local-6989586621680843356"><span class="hs-identifier hs-var">i</span></a></span><span>
 </span><span id="line-23"></span></pre></body></html>

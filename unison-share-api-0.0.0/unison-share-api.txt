@@ -47,12 +47,11 @@ UpdatePathRequest :: RepoPath -> Maybe TypedHash -> TypedHash -> UpdatePathReque
 [$sel:path:UpdatePathRequest] :: UpdatePathRequest -> RepoPath
 [$sel:expectedHash:UpdatePathRequest] :: UpdatePathRequest -> Maybe TypedHash
 [$sel:newHash:UpdatePathRequest] :: UpdatePathRequest -> TypedHash
-
--- | Not used in the servant API, but is a useful return type for clients
---   to use.
 data UpdatePathResponse
+UpdatePathSuccess :: UpdatePathResponse
 UpdatePathHashMismatch :: HashMismatch -> UpdatePathResponse
 UpdatePathMissingDependencies :: NeedDependencies Hash -> UpdatePathResponse
+jsonUnion :: ToJSON a => Text -> a -> Value
 data NeedDependencies hash
 NeedDependencies :: NESet hash -> NeedDependencies hash
 [$sel:missingDependencies:NeedDependencies] :: NeedDependencies hash -> NESet hash
@@ -65,6 +64,9 @@ data UploadEntitiesRequest
 UploadEntitiesRequest :: RepoName -> NEMap Hash (Entity TypedHash TypedHash Text) -> UploadEntitiesRequest
 [$sel:repoName:UploadEntitiesRequest] :: UploadEntitiesRequest -> RepoName
 [$sel:entities:UploadEntitiesRequest] :: UploadEntitiesRequest -> NEMap Hash (Entity TypedHash TypedHash Text)
+data UploadEntitiesResponse
+UploadEntitiesSuccess :: UploadEntitiesResponse
+UploadEntitiesNeedDependencies :: NeedDependencies Hash -> UploadEntitiesResponse
 data Entity hash replacementHash text
 TC :: TermComponent hash text -> Entity hash replacementHash text
 DC :: DeclComponent hash text -> Entity hash replacementHash text
@@ -137,6 +139,9 @@ instance GHC.Show.Show Unison.Sync.Types.DownloadEntitiesRequest
 instance GHC.Classes.Ord hash => GHC.Classes.Ord (Unison.Sync.Types.NeedDependencies hash)
 instance GHC.Classes.Eq hash => GHC.Classes.Eq (Unison.Sync.Types.NeedDependencies hash)
 instance GHC.Show.Show hash => GHC.Show.Show (Unison.Sync.Types.NeedDependencies hash)
+instance GHC.Classes.Ord Unison.Sync.Types.UploadEntitiesResponse
+instance GHC.Classes.Eq Unison.Sync.Types.UploadEntitiesResponse
+instance GHC.Show.Show Unison.Sync.Types.UploadEntitiesResponse
 instance (GHC.Classes.Ord hash, GHC.Classes.Ord text) => GHC.Classes.Ord (Unison.Sync.Types.LocalIds hash text)
 instance (GHC.Classes.Eq hash, GHC.Classes.Eq text) => GHC.Classes.Eq (Unison.Sync.Types.LocalIds hash text)
 instance (GHC.Show.Show hash, GHC.Show.Show text) => GHC.Show.Show (Unison.Sync.Types.LocalIds hash text)
@@ -186,6 +191,8 @@ instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.HashJWTClaims
 instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.HashJWTClaims
 instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.UpdatePathRequest
 instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.UpdatePathRequest
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.UpdatePathResponse
+instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.UpdatePathResponse
 instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.HashMismatch
 instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.HashMismatch
 instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.UploadEntitiesRequest
@@ -197,6 +204,7 @@ instance (Data.Aeson.Types.FromJSON.FromJSON hash, Data.Aeson.Types.FromJSON.Fro
 instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.EntityType
 instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.EntityType
 instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.DownloadEntitiesResponse
+instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.DownloadEntitiesResponse
 instance Data.Aeson.Types.ToJSON.ToJSON hash => Data.Aeson.Types.ToJSON.ToJSON (Unison.Sync.Types.Causal hash)
 instance (Data.Aeson.Types.FromJSON.FromJSON hash, GHC.Classes.Ord hash) => Data.Aeson.Types.FromJSON.FromJSON (Unison.Sync.Types.Causal hash)
 instance Data.Bifoldable.Bifoldable Unison.Sync.Types.Namespace
@@ -221,6 +229,8 @@ instance Data.Bifunctor.Bifunctor Unison.Sync.Types.LocalIds
 instance Data.Bitraversable.Bitraversable Unison.Sync.Types.LocalIds
 instance (Data.Aeson.Types.ToJSON.ToJSON hash, Data.Aeson.Types.ToJSON.ToJSON text) => Data.Aeson.Types.ToJSON.ToJSON (Unison.Sync.Types.LocalIds hash text)
 instance (Data.Aeson.Types.FromJSON.FromJSON hash, Data.Aeson.Types.FromJSON.FromJSON text) => Data.Aeson.Types.FromJSON.FromJSON (Unison.Sync.Types.LocalIds hash text)
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.UploadEntitiesResponse
+instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.UploadEntitiesResponse
 instance Data.Aeson.Types.ToJSON.ToJSON hash => Data.Aeson.Types.ToJSON.ToJSON (Unison.Sync.Types.NeedDependencies hash)
 instance (Data.Aeson.Types.FromJSON.FromJSON hash, GHC.Classes.Ord hash) => Data.Aeson.Types.FromJSON.FromJSON (Unison.Sync.Types.NeedDependencies hash)
 instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.DownloadEntitiesRequest
@@ -236,3 +246,4 @@ instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.Base64Bytes
 
 module Unison.Sync.API
 type API = "path" :> "get" :> GetCausalHashByPathEndpoint :<|> "path" :> "update" :> UpdatePathEndpoint :<|> "entities" :> "download" :> DownloadEntitiesEndpoint :<|> "entities" :> "upload" :> UploadEntitiesEndpoint
+api :: Proxy API

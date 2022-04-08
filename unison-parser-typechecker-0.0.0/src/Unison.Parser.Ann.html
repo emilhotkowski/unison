@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span id="%24con2tag_6A0qrEoP20T0jZepjartBJ"></span><span class="hs-pragma">{-# LANGUAGE OverloadedStrings #-}</span><span>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span id="%24con2tag_5V3TizYYyLC5ykpX1VMfxB"></span><span class="hs-pragma">{-# LANGUAGE OverloadedStrings #-}</span><span>
 </span><span id="line-2"></span><span class="hs-pragma">{-# LANGUAGE TypeFamilies #-}</span><span>
 </span><span id="line-3"></span><span class="hs-pragma">{-# LANGUAGE ViewPatterns #-}</span><span>
 </span><span id="line-4"></span><span>
@@ -12,14 +12,14 @@
 </span><span id="line-12"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="Ann"><span class="annot"><a href="Unison.Parser.Ann.html#Ann"><span class="hs-identifier hs-var">Ann</span></a></span></span><span> </span><span class="hs-special">{</span><span id="start"><span class="annot"><span class="annottext">Ann -&gt; Pos
 </span><a href="Unison.Parser.Ann.html#start"><span class="hs-identifier hs-var hs-var">start</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">L.Pos</span></span><span class="hs-special">,</span><span> </span><span id="end"><span class="annot"><span class="annottext">Ann -&gt; Pos
 </span><a href="Unison.Parser.Ann.html#end"><span class="hs-identifier hs-var hs-var">end</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">L.Pos</span></span><span class="hs-special">}</span><span>
-</span><span id="line-13"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621680845636"><span id="local-6989586621680845638"><span class="annot"><span class="annottext">Ann -&gt; Ann -&gt; Bool
+</span><span id="line-13"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621680845974"><span id="local-6989586621680845976"><span class="annot"><span class="annottext">Ann -&gt; Ann -&gt; Bool
 (Ann -&gt; Ann -&gt; Bool) -&gt; (Ann -&gt; Ann -&gt; Bool) -&gt; Eq Ann
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 /= :: Ann -&gt; Ann -&gt; Bool
 $c/= :: Ann -&gt; Ann -&gt; Bool
 == :: Ann -&gt; Ann -&gt; Bool
 $c== :: Ann -&gt; Ann -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680845620"><span id="local-6989586621680845622"><span id="local-6989586621680845624"><span id="local-6989586621680845626"><span id="local-6989586621680845628"><span id="local-6989586621680845630"><span id="local-6989586621680845632"><span class="annot"><span class="annottext">Eq Ann
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680845958"><span id="local-6989586621680845960"><span id="local-6989586621680845962"><span id="local-6989586621680845964"><span id="local-6989586621680845966"><span id="local-6989586621680845968"><span id="local-6989586621680845970"><span class="annot"><span class="annottext">Eq Ann
 Eq Ann
 -&gt; (Ann -&gt; Ann -&gt; Ordering)
 -&gt; (Ann -&gt; Ann -&gt; Bool)
@@ -57,7 +57,7 @@ $c&lt; :: Ann -&gt; Ann -&gt; Bool
 compare :: Ann -&gt; Ann -&gt; Ordering
 $ccompare :: Ann -&gt; Ann -&gt; Ordering
 $cp1Ord :: Eq Ann
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680845613"><span id="local-6989586621680845615"><span id="local-6989586621680845617"><span class="annot"><span class="annottext">Int -&gt; Ann -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680845951"><span id="local-6989586621680845953"><span id="local-6989586621680845955"><span class="annot"><span class="annottext">Int -&gt; Ann -&gt; ShowS
 [Ann] -&gt; ShowS
 Ann -&gt; String
 (Int -&gt; Ann -&gt; ShowS)
@@ -75,51 +75,51 @@ $cshowsPrec :: Int -&gt; Ann -&gt; ShowS
 </span><span id="line-15"></span><span class="annot"><a href="Unison.Parser.Ann.html#startingLine"><span class="hs-identifier hs-type">startingLine</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Parser.Ann.html#Ann"><span class="hs-identifier hs-type">Ann</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">L.Line</span></span><span>
 </span><span id="line-16"></span><span id="startingLine"><span class="annot"><span class="annottext">startingLine :: Ann -&gt; Maybe Int
 </span><a href="Unison.Parser.Ann.html#startingLine"><span class="hs-identifier hs-var hs-var">startingLine</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Parser.Ann.html#Ann"><span class="hs-identifier hs-type">Ann</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Pos -&gt; Int
-</span><span class="hs-identifier hs-var">L.line</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span id="local-6989586621680845608"><span class="annot"><span class="annottext">Int
-</span><a href="#local-6989586621680845608"><span class="hs-identifier hs-var">line</span></a></span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Pos
+</span><span class="hs-identifier hs-var">L.line</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span id="local-6989586621680845946"><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621680845946"><span class="hs-identifier hs-var">line</span></a></span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Pos
 </span><span class="hs-identifier">_</span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Int -&gt; Maybe Int
 forall a. a -&gt; Maybe a
 </span><span class="hs-identifier hs-var">Just</span></span><span> </span><span class="annot"><span class="annottext">Int
-</span><a href="#local-6989586621680845608"><span class="hs-identifier hs-var">line</span></a></span><span>
+</span><a href="#local-6989586621680845946"><span class="hs-identifier hs-var">line</span></a></span><span>
 </span><span id="line-17"></span><span class="annot"><a href="Unison.Parser.Ann.html#startingLine"><span class="hs-identifier hs-var">startingLine</span></a></span><span> </span><span class="annot"><span class="annottext">Ann
 </span><span class="hs-identifier">_</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Maybe Int
 forall a. Maybe a
 </span><span class="hs-identifier hs-var">Nothing</span></span><span>
 </span><span id="line-18"></span><span>
-</span><span id="line-19"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621680845603"><span class="annot"><span class="hs-identifier hs-type">Monoid</span></span><span> </span><span class="annot"><a href="Unison.Parser.Ann.html#Ann"><span class="hs-identifier hs-type">Ann</span></a></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-20"></span><span>  </span><span id="local-6989586621680845601"><span class="annot"><span class="annottext">mempty :: Ann
+</span><span id="line-19"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621680845941"><span class="annot"><span class="hs-identifier hs-type">Monoid</span></span><span> </span><span class="annot"><a href="Unison.Parser.Ann.html#Ann"><span class="hs-identifier hs-type">Ann</span></a></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-20"></span><span>  </span><span id="local-6989586621680845939"><span class="annot"><span class="annottext">mempty :: Ann
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var">mempty</span></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Ann
 </span><a href="Unison.Parser.Ann.html#External"><span class="hs-identifier hs-var">External</span></a></span><span>
-</span><span id="line-21"></span><span>  </span><span id="local-6989586621680845600"><span class="annot"><span class="annottext">mappend :: Ann -&gt; Ann -&gt; Ann
+</span><span id="line-21"></span><span>  </span><span id="local-6989586621680845938"><span class="annot"><span class="annottext">mappend :: Ann -&gt; Ann -&gt; Ann
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var">mappend</span></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Ann -&gt; Ann -&gt; Ann
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">(&lt;&gt;)</span></span><span>
 </span><span id="line-22"></span><span>
-</span><span id="line-23"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621680845595"><span id="local-6989586621680845597"><span class="annot"><span class="hs-identifier hs-type">Semigroup</span></span><span> </span><span class="annot"><a href="Unison.Parser.Ann.html#Ann"><span class="hs-identifier hs-type">Ann</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-24"></span><span>  </span><span class="annot"><a href="Unison.Parser.Ann.html#Ann"><span class="hs-identifier hs-type">Ann</span></a></span><span> </span><span id="local-6989586621680845593"><span class="annot"><span class="annottext">Pos
-</span><a href="#local-6989586621680845593"><span class="hs-identifier hs-var">s1</span></a></span></span><span> </span><span class="annot"><span class="annottext">Pos
-</span><span class="hs-identifier">_</span></span><span> </span><span id="local-6989586621680845592"><span class="annot"><span class="annottext">&lt;&gt; :: Ann -&gt; Ann -&gt; Ann
+</span><span id="line-23"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621680845933"><span id="local-6989586621680845935"><span class="annot"><span class="hs-identifier hs-type">Semigroup</span></span><span> </span><span class="annot"><a href="Unison.Parser.Ann.html#Ann"><span class="hs-identifier hs-type">Ann</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-24"></span><span>  </span><span class="annot"><a href="Unison.Parser.Ann.html#Ann"><span class="hs-identifier hs-type">Ann</span></a></span><span> </span><span id="local-6989586621680845931"><span class="annot"><span class="annottext">Pos
+</span><a href="#local-6989586621680845931"><span class="hs-identifier hs-var">s1</span></a></span></span><span> </span><span class="annot"><span class="annottext">Pos
+</span><span class="hs-identifier">_</span></span><span> </span><span id="local-6989586621680845930"><span class="annot"><span class="annottext">&lt;&gt; :: Ann -&gt; Ann -&gt; Ann
 </span><span class="hs-operator hs-var hs-var hs-var hs-var">&lt;&gt;</span></span></span><span> </span><span class="annot"><a href="Unison.Parser.Ann.html#Ann"><span class="hs-identifier hs-type">Ann</span></a></span><span> </span><span class="annot"><span class="annottext">Pos
-</span><span class="hs-identifier">_</span></span><span> </span><span id="local-6989586621680845591"><span class="annot"><span class="annottext">Pos
-</span><a href="#local-6989586621680845591"><span class="hs-identifier hs-var">e2</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Pos -&gt; Pos -&gt; Ann
+</span><span class="hs-identifier">_</span></span><span> </span><span id="local-6989586621680845929"><span class="annot"><span class="annottext">Pos
+</span><a href="#local-6989586621680845929"><span class="hs-identifier hs-var">e2</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Pos -&gt; Pos -&gt; Ann
 </span><a href="Unison.Parser.Ann.html#Ann"><span class="hs-identifier hs-var">Ann</span></a></span><span> </span><span class="annot"><span class="annottext">Pos
-</span><a href="#local-6989586621680845593"><span class="hs-identifier hs-var">s1</span></a></span><span> </span><span class="annot"><span class="annottext">Pos
-</span><a href="#local-6989586621680845591"><span class="hs-identifier hs-var">e2</span></a></span><span>
+</span><a href="#local-6989586621680845931"><span class="hs-identifier hs-var">s1</span></a></span><span> </span><span class="annot"><span class="annottext">Pos
+</span><a href="#local-6989586621680845929"><span class="hs-identifier hs-var">e2</span></a></span><span>
 </span><span id="line-25"></span><span>  </span><span class="hs-comment">-- If we have a concrete location from a file, use it</span><span>
 </span><span id="line-26"></span><span>  </span><span class="annot"><span class="annottext">Ann
-</span><a href="Unison.Parser.Ann.html#External"><span class="hs-identifier hs-var">External</span></a></span><span> </span><span class="annot"><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span id="local-6989586621680845590"><span class="annot"><span class="annottext">Ann
-</span><a href="#local-6989586621680845590"><span class="hs-identifier hs-var">a</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Ann
-</span><a href="#local-6989586621680845590"><span class="hs-identifier hs-var">a</span></a></span><span>
-</span><span id="line-27"></span><span>  </span><span id="local-6989586621680845589"><span class="annot"><span class="annottext">Ann
-</span><a href="#local-6989586621680845589"><span class="hs-identifier hs-var">a</span></a></span></span><span> </span><span class="annot"><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Ann
+</span><a href="Unison.Parser.Ann.html#External"><span class="hs-identifier hs-var">External</span></a></span><span> </span><span class="annot"><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span id="local-6989586621680845928"><span class="annot"><span class="annottext">Ann
+</span><a href="#local-6989586621680845928"><span class="hs-identifier hs-var">a</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Ann
+</span><a href="#local-6989586621680845928"><span class="hs-identifier hs-var">a</span></a></span><span>
+</span><span id="line-27"></span><span>  </span><span id="local-6989586621680845927"><span class="annot"><span class="annottext">Ann
+</span><a href="#local-6989586621680845927"><span class="hs-identifier hs-var">a</span></a></span></span><span> </span><span class="annot"><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Ann
 </span><a href="Unison.Parser.Ann.html#External"><span class="hs-identifier hs-var">External</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Ann
-</span><a href="#local-6989586621680845589"><span class="hs-identifier hs-var">a</span></a></span><span>
+</span><a href="#local-6989586621680845927"><span class="hs-identifier hs-var">a</span></a></span><span>
 </span><span id="line-28"></span><span>  </span><span class="annot"><span class="annottext">Ann
-</span><a href="Unison.Parser.Ann.html#Intrinsic"><span class="hs-identifier hs-var">Intrinsic</span></a></span><span> </span><span class="annot"><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span id="local-6989586621680845588"><span class="annot"><span class="annottext">Ann
-</span><a href="#local-6989586621680845588"><span class="hs-identifier hs-var">a</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Ann
-</span><a href="#local-6989586621680845588"><span class="hs-identifier hs-var">a</span></a></span><span>
-</span><span id="line-29"></span><span>  </span><span id="local-6989586621680845587"><span class="annot"><span class="annottext">Ann
-</span><a href="#local-6989586621680845587"><span class="hs-identifier hs-var">a</span></a></span></span><span> </span><span class="annot"><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Ann
+</span><a href="Unison.Parser.Ann.html#Intrinsic"><span class="hs-identifier hs-var">Intrinsic</span></a></span><span> </span><span class="annot"><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span id="local-6989586621680845926"><span class="annot"><span class="annottext">Ann
+</span><a href="#local-6989586621680845926"><span class="hs-identifier hs-var">a</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Ann
+</span><a href="#local-6989586621680845926"><span class="hs-identifier hs-var">a</span></a></span><span>
+</span><span id="line-29"></span><span>  </span><span id="local-6989586621680845925"><span class="annot"><span class="annottext">Ann
+</span><a href="#local-6989586621680845925"><span class="hs-identifier hs-var">a</span></a></span></span><span> </span><span class="annot"><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Ann
 </span><a href="Unison.Parser.Ann.html#Intrinsic"><span class="hs-identifier hs-var">Intrinsic</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Ann
-</span><a href="#local-6989586621680845587"><span class="hs-identifier hs-var">a</span></a></span><span>
+</span><a href="#local-6989586621680845925"><span class="hs-identifier hs-var">a</span></a></span><span>
 </span><span id="line-30"></span></pre></body></html>
