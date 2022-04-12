@@ -5,6 +5,753 @@
 @package unison-share-api
 @version 0.0.0
 
+module Unison.Server.SearchResult
+data SearchResult
+Tp :: TypeResult -> SearchResult
+Tm :: TermResult -> SearchResult
+data TermResult
+TermResult :: HashQualified Name -> Referent -> Set (HashQualified Name) -> TermResult
+[$sel:termName:TermResult] :: TermResult -> HashQualified Name
+[$sel:referent:TermResult] :: TermResult -> Referent
+[$sel:termAliases:TermResult] :: TermResult -> Set (HashQualified Name)
+data TypeResult
+TypeResult :: HashQualified Name -> Reference -> Set (HashQualified Name) -> TypeResult
+[$sel:typeName:TypeResult] :: TypeResult -> HashQualified Name
+[$sel:reference:TypeResult] :: TypeResult -> Reference
+[$sel:typeAliases:TypeResult] :: TypeResult -> Set (HashQualified Name)
+pattern Tm' :: HashQualified Name -> Referent -> Set (HashQualified Name) -> SearchResult
+pattern Tp' :: HashQualified Name -> Reference -> Set (HashQualified Name) -> SearchResult
+
+-- | Construct a term search result from a primary name, referent, and set
+--   of aliases.
+termResult :: HashQualified Name -> Referent -> Set (HashQualified Name) -> SearchResult
+termSearchResult :: Names -> Name -> Referent -> SearchResult
+
+-- | Construct a type search result from a primary name, reference, and set
+--   of aliases.
+typeResult :: HashQualified Name -> Reference -> Set (HashQualified Name) -> SearchResult
+typeSearchResult :: Names -> Name -> Reference -> SearchResult
+name :: SearchResult -> HashQualified Name
+aliases :: SearchResult -> Set (HashQualified Name)
+
+-- | TypeResults yield a <a>Ref</a>
+toReferent :: SearchResult -> Referent
+truncateAliases :: Int -> SearchResult -> SearchResult
+
+-- | You may want to sort this list differently afterward.
+fromNames :: Names -> [SearchResult]
+_fromNames :: Names -> [SearchResult]
+instance GHC.Show.Show Unison.Server.SearchResult.TermResult
+instance GHC.Classes.Ord Unison.Server.SearchResult.TermResult
+instance GHC.Classes.Eq Unison.Server.SearchResult.TermResult
+instance GHC.Show.Show Unison.Server.SearchResult.TypeResult
+instance GHC.Classes.Ord Unison.Server.SearchResult.TypeResult
+instance GHC.Classes.Eq Unison.Server.SearchResult.TypeResult
+instance GHC.Show.Show Unison.Server.SearchResult.SearchResult
+instance GHC.Classes.Ord Unison.Server.SearchResult.SearchResult
+instance GHC.Classes.Eq Unison.Server.SearchResult.SearchResult
+
+module Unison.Server.QueryResult
+data QueryResult
+QueryResult :: [HashQualified Name] -> [SearchResult] -> QueryResult
+[$sel:misses:QueryResult] :: QueryResult -> [HashQualified Name]
+[$sel:hits:QueryResult] :: QueryResult -> [SearchResult]
+
+module Unison.Server.SearchResult'
+data SearchResult' v a
+Tm' :: TermResult' v a -> SearchResult' v a
+Tp' :: TypeResult' v a -> SearchResult' v a
+data TermResult' v a
+TermResult' :: HashQualified Name -> Maybe (Type v a) -> Referent -> Set (HashQualified Name) -> TermResult' v a
+data TypeResult' v a
+TypeResult' :: HashQualified Name -> DisplayObject () (Decl v a) -> Reference -> Set (HashQualified Name) -> TypeResult' v a
+pattern Tm :: HashQualified Name -> Maybe (Type v a) -> Referent -> Set (HashQualified Name) -> SearchResult' v a
+pattern Tp :: HashQualified Name -> DisplayObject () (Decl v a) -> Reference -> Set (HashQualified Name) -> SearchResult' v a
+tmReferent :: SearchResult' v a -> Maybe Referent
+tpReference :: SearchResult' v a -> Maybe Reference
+foldResult' :: (TermResult' v a -> b) -> (TypeResult' v a -> b) -> SearchResult' v a -> b
+labeledDependencies :: Ord v => SearchResult' v a -> Set LabeledDependency
+instance GHC.Show.Show v => GHC.Show.Show (Unison.Server.SearchResult'.TermResult' v a)
+instance Unison.ABT.Var v => GHC.Classes.Eq (Unison.Server.SearchResult'.TermResult' v a)
+instance (GHC.Show.Show a, GHC.Show.Show v) => GHC.Show.Show (Unison.Server.SearchResult'.TypeResult' v a)
+instance (Unison.ABT.Var v, GHC.Classes.Eq a) => GHC.Classes.Eq (Unison.Server.SearchResult'.TypeResult' v a)
+instance (GHC.Show.Show v, GHC.Show.Show a) => GHC.Show.Show (Unison.Server.SearchResult'.SearchResult' v a)
+instance (Unison.ABT.Var v, GHC.Classes.Eq a) => GHC.Classes.Eq (Unison.Server.SearchResult'.SearchResult' v a)
+
+
+-- | Duplicate of the Unison.Util.SyntaxText module, but we expect these to
+--   evolve separately. This is the version which is outward facing to the
+--   server frontend.
+module Unison.Server.Syntax
+type SyntaxText = AnnotatedText Element
+type SyntaxSegment = Segment Element
+convertElement :: Element Reference -> Element
+type UnisonHash = Text
+type HashQualifiedName = Text
+
+-- | The elements of the Unison grammar, for syntax highlighting purposes
+data Element
+NumericLiteral :: Element
+TextLiteral :: Element
+BytesLiteral :: Element
+CharLiteral :: Element
+BooleanLiteral :: Element
+Blank :: Element
+Var :: Element
+TypeReference :: UnisonHash -> Element
+DataConstructorReference :: UnisonHash -> Element
+AbilityConstructorReference :: UnisonHash -> Element
+TermReference :: UnisonHash -> Element
+Op :: SeqOp -> Element
+
+-- | Constructor Are these even used? | Request
+AbilityBraces :: Element
+ControlKeyword :: Element
+TypeOperator :: Element
+BindingEquals :: Element
+TypeAscriptionColon :: Element
+DataTypeKeyword :: Element
+DataTypeParams :: Element
+Unit :: Element
+DataTypeModifier :: Element
+UseKeyword :: Element
+UsePrefix :: Element
+UseSuffix :: Element
+HashQualifier :: HashQualifiedName -> Element
+DelayForceChar :: Element
+DelimiterChar :: Element
+Parenthesis :: Element
+LinkKeyword :: Element
+DocDelimiter :: Element
+DocKeyword :: Element
+syntax :: Element -> SyntaxText -> SyntaxText
+firstReference :: SyntaxText -> Maybe UnisonHash
+reference :: SyntaxSegment -> Maybe UnisonHash
+
+-- | Convert a <a>SyntaxText</a> to a <a>String</a>, ignoring syntax markup
+toPlain :: SyntaxText -> String
+toHtml :: SyntaxText -> Html ()
+nameToHtml :: Name -> Html ()
+segmentToHtml :: SyntaxSegment -> Html ()
+elementToClassName :: Element -> Text
+instance GHC.Generics.Generic Unison.Server.Syntax.Element
+instance GHC.Show.Show Unison.Server.Syntax.Element
+instance GHC.Classes.Ord Unison.Server.Syntax.Element
+instance GHC.Classes.Eq Unison.Server.Syntax.Element
+instance Data.OpenApi.Internal.Schema.ToSchema Unison.Server.Syntax.Element
+instance Data.OpenApi.Internal.Schema.ToSchema a => Data.OpenApi.Internal.Schema.ToSchema (Unison.Util.AnnotatedText.Segment a)
+instance Data.OpenApi.Internal.Schema.ToSchema Unison.Pattern.SeqOp
+instance Data.OpenApi.Internal.Schema.ToSchema Unison.Server.Syntax.SyntaxText
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Server.Syntax.SyntaxText
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Server.Syntax.Element
+instance Data.Aeson.Types.ToJSON.ToJSON a => Data.Aeson.Types.ToJSON.ToJSON (Unison.Util.AnnotatedText.Segment a)
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Pattern.SeqOp
+instance Data.OpenApi.Internal.Schema.ToSchema r => Data.OpenApi.Internal.Schema.ToSchema (Data.Sequence.Internal.Seq r)
+
+module Unison.Server.Doc
+type Nat = Word64
+type SSyntaxText = SyntaxText' Reference
+data Doc
+Word :: Text -> Doc
+Code :: Doc -> Doc
+CodeBlock :: Text -> Doc -> Doc
+Bold :: Doc -> Doc
+Italic :: Doc -> Doc
+Strikethrough :: Doc -> Doc
+Style :: Text -> Doc -> Doc
+Anchor :: Text -> Doc -> Doc
+Blockquote :: Doc -> Doc
+Blankline :: Doc
+Linebreak :: Doc
+SectionBreak :: Doc
+Tooltip :: Doc -> Doc -> Doc
+Aside :: Doc -> Doc
+Callout :: Maybe Doc -> Doc -> Doc
+Table :: [[Doc]] -> Doc
+Folded :: Bool -> Doc -> Doc -> Doc
+Paragraph :: [Doc] -> Doc
+BulletedList :: [Doc] -> Doc
+NumberedList :: Nat -> [Doc] -> Doc
+Section :: Doc -> [Doc] -> Doc
+NamedLink :: Doc -> Doc -> Doc
+Image :: Doc -> Doc -> Maybe Doc -> Doc
+Special :: SpecialForm -> Doc
+Join :: [Doc] -> Doc
+UntitledSection :: [Doc] -> Doc
+Column :: [Doc] -> Doc
+Group :: Doc -> Doc
+type UnisonHash = Text
+data Ref a
+Term :: a -> Ref a
+Type :: a -> Ref a
+data MediaSource
+MediaSource :: Text -> Maybe Text -> MediaSource
+[$sel:mediaSourceUrl:MediaSource] :: MediaSource -> Text
+[$sel:mediaSourceMimeType:MediaSource] :: MediaSource -> Maybe Text
+data SpecialForm
+Source :: [Ref (UnisonHash, DisplayObject SyntaxText Src)] -> SpecialForm
+FoldedSource :: [Ref (UnisonHash, DisplayObject SyntaxText Src)] -> SpecialForm
+Example :: SyntaxText -> SpecialForm
+ExampleBlock :: SyntaxText -> SpecialForm
+Link :: SyntaxText -> SpecialForm
+Signature :: [SyntaxText] -> SpecialForm
+SignatureInline :: SyntaxText -> SpecialForm
+Eval :: SyntaxText -> SyntaxText -> SpecialForm
+EvalInline :: SyntaxText -> SyntaxText -> SpecialForm
+Embed :: SyntaxText -> SpecialForm
+EmbedInline :: SyntaxText -> SpecialForm
+Video :: [MediaSource] -> Map Text Text -> SpecialForm
+FrontMatter :: Map Text [Text] -> SpecialForm
+data Src
+Src :: SyntaxText -> SyntaxText -> Src
+renderDoc :: forall v m. (Var v, Monad m) => PrettyPrintEnvDecl -> (Reference -> m (Maybe (Term v ()))) -> (Referent -> m (Maybe (Type v ()))) -> (Term v () -> m (Maybe (Term v ()))) -> (Reference -> m (Maybe (Decl v ()))) -> Term v () -> m Doc
+instance Data.Traversable.Traversable Unison.Server.Doc.Ref
+instance Data.Foldable.Foldable Unison.Server.Doc.Ref
+instance GHC.Base.Functor Unison.Server.Doc.Ref
+instance GHC.Generics.Generic (Unison.Server.Doc.Ref a)
+instance GHC.Show.Show a => GHC.Show.Show (Unison.Server.Doc.Ref a)
+instance GHC.Classes.Eq a => GHC.Classes.Eq (Unison.Server.Doc.Ref a)
+instance GHC.Generics.Generic Unison.Server.Doc.MediaSource
+instance GHC.Show.Show Unison.Server.Doc.MediaSource
+instance GHC.Classes.Eq Unison.Server.Doc.MediaSource
+instance GHC.Generics.Generic Unison.Server.Doc.Src
+instance GHC.Show.Show Unison.Server.Doc.Src
+instance GHC.Classes.Eq Unison.Server.Doc.Src
+instance GHC.Generics.Generic Unison.Server.Doc.SpecialForm
+instance GHC.Show.Show Unison.Server.Doc.SpecialForm
+instance GHC.Classes.Eq Unison.Server.Doc.SpecialForm
+instance GHC.Generics.Generic Unison.Server.Doc.Doc
+instance GHC.Show.Show Unison.Server.Doc.Doc
+instance GHC.Classes.Eq Unison.Server.Doc.Doc
+
+
+-- | Render Unison.Server.Doc and embedded source to Html
+module Unison.Server.Doc.AsHtml
+data NamedLinkHref
+Href :: Text -> NamedLinkHref
+DocLinkHref :: Name -> NamedLinkHref
+ReferenceHref :: Text -> NamedLinkHref
+InvalidHref :: NamedLinkHref
+data EmbeddedSource
+EmbeddedSource :: SyntaxText -> SyntaxText -> EmbeddedSource
+Builtin :: SyntaxText -> EmbeddedSource
+embeddedSource :: Ref (UnisonHash, DisplayObject SyntaxText Src) -> Maybe EmbeddedSource
+inlineCode :: [Text] -> Html () -> Html ()
+codeBlock :: [Attribute] -> Html () -> Html ()
+normalizeHref :: Map Referent Name -> Doc -> NamedLinkHref
+data IsFolded
+IsFolded :: Bool -> [Html ()] -> [Html ()] -> IsFolded
+Disabled :: Html () -> IsFolded
+foldedToHtml :: [Attribute] -> IsFolded -> Html ()
+foldedToHtmlSource :: Bool -> EmbeddedSource -> Html ()
+
+-- | Merge adjacent Word elements in a list to 1 element with a string of
+--   words separated by space— useful for rendering to the dom without
+--   creating dom elements for each and every word in the doc, but instead
+--   rely on textNodes
+mergeWords :: Text -> [Doc] -> [Doc]
+
+-- | Merge down Doc to Text by merging Paragraphs and Words. Used for
+--   things like extract an src of an image. I.e something that has to be a
+--   Text and not a Doc
+toText :: Text -> Doc -> Text
+data SideContent
+FrontMatterContent :: Map Text [Text] -> SideContent
+TooltipContent :: Html () -> SideContent
+newtype FrontMatterData
+FrontMatterData :: Map Text [Text] -> FrontMatterData
+toHtml :: Map Referent Name -> Doc -> (FrontMatterData, Html ())
+
+-- | Unison Doc allows endlessly deep section nesting with titles, but HTML
+--   only supports to h1-h6, so we clamp the sectionLevel when converting
+h :: Nat -> Text -> Html () -> Html ()
+badge :: Html () -> Html ()
+textToClass :: Text -> Text
+
+module Unison.Server.Types
+type APIHeaders x = Headers '[Header "Cache-Control" String] x
+type APIGet c = Get '[JSON] (APIHeaders c)
+type HashQualifiedName = Text
+type NamespaceFQN = Text
+type Size = Int
+type UnisonName = Text
+type UnisonHash = Text
+newtype Suffixify
+Suffixify :: Bool -> Suffixify
+[$sel:suffixified:Suffixify] :: Suffixify -> Bool
+data TermDefinition
+TermDefinition :: [HashQualifiedName] -> HashQualifiedName -> Maybe TermTag -> DisplayObject SyntaxText SyntaxText -> SyntaxText -> [(HashQualifiedName, UnisonHash, Doc)] -> TermDefinition
+[$sel:termNames:TermDefinition] :: TermDefinition -> [HashQualifiedName]
+[$sel:bestTermName:TermDefinition] :: TermDefinition -> HashQualifiedName
+[$sel:defnTermTag:TermDefinition] :: TermDefinition -> Maybe TermTag
+[$sel:termDefinition:TermDefinition] :: TermDefinition -> DisplayObject SyntaxText SyntaxText
+[$sel:signature:TermDefinition] :: TermDefinition -> SyntaxText
+[$sel:termDocs:TermDefinition] :: TermDefinition -> [(HashQualifiedName, UnisonHash, Doc)]
+data TypeDefinition
+TypeDefinition :: [HashQualifiedName] -> HashQualifiedName -> Maybe TypeTag -> DisplayObject SyntaxText SyntaxText -> [(HashQualifiedName, UnisonHash, Doc)] -> TypeDefinition
+[$sel:typeNames:TypeDefinition] :: TypeDefinition -> [HashQualifiedName]
+[$sel:bestTypeName:TypeDefinition] :: TypeDefinition -> HashQualifiedName
+[$sel:defnTypeTag:TypeDefinition] :: TypeDefinition -> Maybe TypeTag
+[$sel:typeDefinition:TypeDefinition] :: TypeDefinition -> DisplayObject SyntaxText SyntaxText
+[$sel:typeDocs:TypeDefinition] :: TypeDefinition -> [(HashQualifiedName, UnisonHash, Doc)]
+data DefinitionDisplayResults
+DefinitionDisplayResults :: Map UnisonHash TermDefinition -> Map UnisonHash TypeDefinition -> [HashQualifiedName] -> DefinitionDisplayResults
+[$sel:termDefinitions:DefinitionDisplayResults] :: DefinitionDisplayResults -> Map UnisonHash TermDefinition
+[$sel:typeDefinitions:DefinitionDisplayResults] :: DefinitionDisplayResults -> Map UnisonHash TypeDefinition
+[$sel:missingDefinitions:DefinitionDisplayResults] :: DefinitionDisplayResults -> [HashQualifiedName]
+data TermTag
+Doc :: TermTag
+Test :: TermTag
+data TypeTag
+Ability :: TypeTag
+Data :: TypeTag
+data UnisonRef
+TypeRef :: UnisonHash -> UnisonRef
+TermRef :: UnisonHash -> UnisonRef
+data FoundEntry
+FoundTerm :: NamedTerm -> FoundEntry
+FoundType :: NamedType -> FoundEntry
+unisonRefToText :: UnisonRef -> Text
+data NamedTerm
+NamedTerm :: HashQualifiedName -> UnisonHash -> Maybe SyntaxText -> Maybe TermTag -> NamedTerm
+[$sel:termName:NamedTerm] :: NamedTerm -> HashQualifiedName
+[$sel:termHash:NamedTerm] :: NamedTerm -> UnisonHash
+[$sel:termType:NamedTerm] :: NamedTerm -> Maybe SyntaxText
+[$sel:termTag:NamedTerm] :: NamedTerm -> Maybe TermTag
+data NamedType
+NamedType :: HashQualifiedName -> UnisonHash -> TypeTag -> NamedType
+[$sel:typeName:NamedType] :: NamedType -> HashQualifiedName
+[$sel:typeHash:NamedType] :: NamedType -> UnisonHash
+[$sel:typeTag:NamedType] :: NamedType -> TypeTag
+munge :: Text -> ByteString
+mungeShow :: Show s => s -> ByteString
+mungeString :: String -> ByteString
+defaultWidth :: Width
+discard :: Applicative m => a -> m ()
+mayDefaultWidth :: Maybe Width -> Width
+addHeaders :: v -> APIHeaders v
+branchToUnisonHash :: Branch m -> UnisonHash
+instance GHC.Generics.Generic Unison.Server.Types.Suffixify
+instance GHC.Show.Show Unison.Server.Types.Suffixify
+instance GHC.Classes.Ord Unison.Server.Types.Suffixify
+instance GHC.Classes.Eq Unison.Server.Types.Suffixify
+instance GHC.Generics.Generic Unison.Server.Types.TermTag
+instance GHC.Show.Show Unison.Server.Types.TermTag
+instance GHC.Classes.Ord Unison.Server.Types.TermTag
+instance GHC.Classes.Eq Unison.Server.Types.TermTag
+instance GHC.Generics.Generic Unison.Server.Types.TermDefinition
+instance GHC.Show.Show Unison.Server.Types.TermDefinition
+instance GHC.Classes.Eq Unison.Server.Types.TermDefinition
+instance GHC.Generics.Generic Unison.Server.Types.TypeTag
+instance GHC.Show.Show Unison.Server.Types.TypeTag
+instance GHC.Classes.Ord Unison.Server.Types.TypeTag
+instance GHC.Classes.Eq Unison.Server.Types.TypeTag
+instance GHC.Generics.Generic Unison.Server.Types.TypeDefinition
+instance GHC.Show.Show Unison.Server.Types.TypeDefinition
+instance GHC.Classes.Eq Unison.Server.Types.TypeDefinition
+instance GHC.Generics.Generic Unison.Server.Types.DefinitionDisplayResults
+instance GHC.Show.Show Unison.Server.Types.DefinitionDisplayResults
+instance GHC.Classes.Eq Unison.Server.Types.DefinitionDisplayResults
+instance GHC.Generics.Generic Unison.Server.Types.UnisonRef
+instance GHC.Show.Show Unison.Server.Types.UnisonRef
+instance GHC.Classes.Ord Unison.Server.Types.UnisonRef
+instance GHC.Classes.Eq Unison.Server.Types.UnisonRef
+instance GHC.Show.Show Unison.Server.Types.NamedTerm
+instance GHC.Generics.Generic Unison.Server.Types.NamedTerm
+instance GHC.Classes.Eq Unison.Server.Types.NamedTerm
+instance GHC.Show.Show Unison.Server.Types.NamedType
+instance GHC.Generics.Generic Unison.Server.Types.NamedType
+instance GHC.Classes.Eq Unison.Server.Types.NamedType
+instance GHC.Generics.Generic Unison.Server.Types.FoundEntry
+instance GHC.Show.Show Unison.Server.Types.FoundEntry
+instance GHC.Classes.Eq Unison.Server.Types.FoundEntry
+instance Web.Internal.HttpApiData.FromHttpApiData Unison.Server.Types.Suffixify
+instance Data.OpenApi.Internal.ParamSchema.ToParamSchema Unison.Server.Types.Suffixify
+instance Data.OpenApi.Internal.ParamSchema.ToParamSchema Unison.Codebase.ShortBranchHash.ShortBranchHash
+instance Web.Internal.HttpApiData.FromHttpApiData Unison.Util.Pretty.Width
+instance Data.OpenApi.Internal.ParamSchema.ToParamSchema Unison.Util.Pretty.Width
+instance (Data.OpenApi.Internal.Schema.ToSchema b, Data.OpenApi.Internal.Schema.ToSchema a) => Data.OpenApi.Internal.Schema.ToSchema (Unison.Codebase.Editor.DisplayObject.DisplayObject b a)
+instance Data.OpenApi.Internal.Schema.ToSchema Unison.ShortHash.ShortHash
+instance Data.OpenApi.Internal.Schema.ToSchema n => Data.OpenApi.Internal.Schema.ToSchema (Unison.HashQualified.HashQualified n)
+instance Data.OpenApi.Internal.Schema.ToSchema Unison.ConstructorType.ConstructorType
+instance Data.OpenApi.Internal.Schema.ToSchema Unison.Server.Types.TypeDefinition
+instance Data.OpenApi.Internal.Schema.ToSchema Unison.Server.Types.TermDefinition
+instance Data.OpenApi.Internal.Schema.ToSchema Unison.Server.Types.DefinitionDisplayResults
+instance Data.OpenApi.Internal.Schema.ToSchema Unison.Server.Types.FoundEntry
+instance Data.OpenApi.Internal.Schema.ToSchema Unison.Server.Types.NamedTerm
+instance Data.OpenApi.Internal.Schema.ToSchema Unison.Server.Types.NamedType
+instance Data.OpenApi.Internal.Schema.ToSchema Unison.Server.Types.TermTag
+instance Data.OpenApi.Internal.Schema.ToSchema Unison.Server.Types.TypeTag
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Server.Types.FoundEntry
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Server.Types.NamedType
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Server.Types.NamedTerm
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Server.Types.DefinitionDisplayResults
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Server.Types.TypeDefinition
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Server.Types.TypeTag
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Server.Types.TermDefinition
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Server.Types.TermTag
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Name.Name
+instance Data.OpenApi.Internal.Schema.ToSchema Unison.Name.Name
+instance Web.Internal.HttpApiData.FromHttpApiData Unison.Codebase.ShortBranchHash.ShortBranchHash
+instance (Data.Aeson.Types.ToJSON.ToJSON b, Data.Aeson.Types.ToJSON.ToJSON a) => Data.Aeson.Types.ToJSON.ToJSON (Unison.Codebase.Editor.DisplayObject.DisplayObject b a)
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.ShortHash.ShortHash
+instance Data.Aeson.Types.ToJSON.ToJSONKey Unison.ShortHash.ShortHash
+instance Data.Aeson.Types.ToJSON.ToJSON n => Data.Aeson.Types.ToJSON.ToJSON (Unison.HashQualified.HashQualified n)
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.ConstructorType.ConstructorType
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Server.Doc.Doc
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Server.Doc.MediaSource
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Server.Doc.SpecialForm
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Server.Doc.Src
+instance Data.Aeson.Types.ToJSON.ToJSON a => Data.Aeson.Types.ToJSON.ToJSON (Unison.Server.Doc.Ref a)
+instance Data.OpenApi.Internal.Schema.ToSchema Unison.Server.Doc.Doc
+instance Data.OpenApi.Internal.Schema.ToSchema Unison.Server.Doc.MediaSource
+instance Data.OpenApi.Internal.Schema.ToSchema Unison.Server.Doc.SpecialForm
+instance Data.OpenApi.Internal.Schema.ToSchema Unison.Server.Doc.Src
+instance Data.OpenApi.Internal.Schema.ToSchema a => Data.OpenApi.Internal.Schema.ToSchema (Unison.Server.Doc.Ref a)
+
+module Unison.Server.Backend
+type SyntaxText = SyntaxText' Reference
+data ShallowListEntry v a
+ShallowTermEntry :: TermEntry v a -> ShallowListEntry v a
+ShallowTypeEntry :: TypeEntry -> ShallowListEntry v a
+ShallowBranchEntry :: NameSegment -> ShortBranchHash -> Int -> ShallowListEntry v a
+ShallowPatchEntry :: NameSegment -> ShallowListEntry v a
+listEntryName :: ShallowListEntry v a -> Text
+data BackendError
+NoSuchNamespace :: Absolute -> BackendError
+BadRootBranch :: GetRootBranchError -> BackendError
+CouldntExpandBranchHash :: ShortBranchHash -> BackendError
+AmbiguousBranchHash :: ShortBranchHash -> Set ShortBranchHash -> BackendError
+NoBranchForHash :: Hash -> BackendError
+CouldntLoadBranch :: Hash -> BackendError
+MissingSignatureForTerm :: Reference -> BackendError
+type Backend m a = ExceptT BackendError m a
+basicNames' :: Branch m -> NameScoping -> (Names, Names)
+basicSuffixifiedNames :: Int -> Branch m -> NameScoping -> PrettyPrintEnv
+basicPrettyPrintNames :: Branch m -> NameScoping -> Names
+basicParseNames :: Branch m -> NameScoping -> Names
+loadReferentType :: Applicative m => Codebase m Symbol Ann -> Referent -> m (Maybe (Type Symbol Ann))
+getRootBranch :: Functor m => Codebase m v Ann -> Backend m (Branch m)
+data TermEntry v a
+TermEntry :: Referent -> HQSegment -> Maybe (Type v a) -> Maybe TermTag -> TermEntry v a
+[$sel:termEntryReferent:TermEntry] :: TermEntry v a -> Referent
+[$sel:termEntryName:TermEntry] :: TermEntry v a -> HQSegment
+[$sel:termEntryType:TermEntry] :: TermEntry v a -> Maybe (Type v a)
+[$sel:termEntryTag:TermEntry] :: TermEntry v a -> Maybe TermTag
+data TypeEntry
+TypeEntry :: Reference -> HQSegment -> TypeTag -> TypeEntry
+[$sel:typeEntryReference:TypeEntry] :: TypeEntry -> Reference
+[$sel:typeEntryName:TypeEntry] :: TypeEntry -> HQSegment
+[$sel:typeEntryTag:TypeEntry] :: TypeEntry -> TypeTag
+data FoundRef
+FoundTermRef :: Referent -> FoundRef
+FoundTypeRef :: Reference -> FoundRef
+fuzzyFind :: Monad m => Path -> Branch m -> String -> [(Alignment, UnisonName, [FoundRef])]
+findShallow :: Monad m => Codebase m Symbol Ann -> Absolute -> Backend m [ShallowListEntry Symbol Ann]
+findShallowReadmeInBranchAndRender :: Width -> Runtime Symbol -> Codebase IO Symbol Ann -> NamesWithHistory -> Branch IO -> Backend IO (Maybe Doc)
+isDoc :: Monad m => Codebase m Symbol Ann -> Referent -> m Bool
+isDoc' :: (Var v, Monoid loc) => Maybe (Type v loc) -> Bool
+termListEntry :: Monad m => Codebase m Symbol Ann -> Branch0 m -> Referent -> HQSegment -> Backend m (TermEntry Symbol Ann)
+typeListEntry :: Monad m => Var v => Codebase m v Ann -> Reference -> HQSegment -> Backend m TypeEntry
+typeDeclHeader :: forall v m. Monad m => Var v => Codebase m v Ann -> PrettyPrintEnv -> Reference -> Backend m (DisplayObject SyntaxText SyntaxText)
+formatTypeName :: PrettyPrintEnv -> Reference -> SyntaxText
+formatTypeName' :: PrettyPrintEnv -> Reference -> SyntaxText
+termEntryToNamedTerm :: Var v => PrettyPrintEnv -> Maybe Width -> TermEntry v a -> NamedTerm
+typeEntryToNamedType :: TypeEntry -> NamedType
+findShallowInBranch :: Monad m => Codebase m Symbol Ann -> Branch m -> Backend m [ShallowListEntry Symbol Ann]
+termReferencesByShortHash :: Monad m => Codebase m v a -> ShortHash -> m (Set Reference)
+
+-- | Look up types in the codebase by short hash, and include builtins.
+typeReferencesByShortHash :: Monad m => Codebase m v a -> ShortHash -> m (Set Reference)
+
+-- | Look up terms in the codebase by short hash, and include builtins.
+termReferentsByShortHash :: Monad m => Codebase m v a -> ShortHash -> m (Set Referent)
+
+-- | Configure how names will be constructed and filtered. this is
+--   typically used when fetching names for printing source code or when
+--   finding definitions by name.
+data NameScoping
+
+-- | Find all names, making any names which are children of this path,
+--   otherwise leave them absolute.
+AllNames :: Path -> NameScoping
+
+-- | Filter returned names to only include names within this path.
+Within :: Path -> NameScoping
+toAllNames :: NameScoping -> NameScoping
+getCurrentPrettyNames :: NameScoping -> Branch m -> NamesWithHistory
+getCurrentParseNames :: NameScoping -> Branch m -> NamesWithHistory
+fixupNamesRelative :: Absolute -> Names -> Names
+
+-- | A <tt>Search r</tt> is a small bag of functions that is used to power
+--   a search for <tt>r</tt>s.
+--   
+--   Construct a <a>Search</a> with <a>makeTypeSearch</a> or
+--   <a>makeTermSearch</a>, and eliminate it with <a>applySearch</a>.
+data Search r
+Search :: (r -> Set (HashQualified Name)) -> (HashQualified Name -> Set r) -> (HashQualified Name -> r -> Set (HashQualified Name) -> SearchResult) -> (Name -> r -> HashQualified Name -> Bool) -> Search r
+[$sel:lookupNames:Search] :: Search r -> r -> Set (HashQualified Name)
+[$sel:lookupRelativeHQRefs':Search] :: Search r -> HashQualified Name -> Set r
+[$sel:makeResult:Search] :: Search r -> HashQualified Name -> r -> Set (HashQualified Name) -> SearchResult
+[$sel:matchesNamedRef:Search] :: Search r -> Name -> r -> HashQualified Name -> Bool
+
+-- | Make a type search, given a short hash length and names to search in.
+makeTypeSearch :: Int -> NamesWithHistory -> Search Reference
+
+-- | Make a term search, given a short hash length and names to search in.
+makeTermSearch :: Int -> NamesWithHistory -> Search Referent
+
+-- | Interpret a <a>Search</a> as a function from name to search results.
+applySearch :: Show r => Search r -> HashQualified Name -> [SearchResult]
+hqNameQuery :: Monad m => NameScoping -> Branch m -> Codebase m v Ann -> [HashQualified Name] -> m QueryResult
+data DefinitionResults v
+DefinitionResults :: Map Reference (DisplayObject (Type v Ann) (Term v Ann)) -> Map Reference (DisplayObject () (Decl v Ann)) -> [HashQualified Name] -> DefinitionResults v
+[$sel:termResults:DefinitionResults] :: DefinitionResults v -> Map Reference (DisplayObject (Type v Ann) (Term v Ann))
+[$sel:typeResults:DefinitionResults] :: DefinitionResults v -> Map Reference (DisplayObject () (Decl v Ann))
+[$sel:noResults:DefinitionResults] :: DefinitionResults v -> [HashQualified Name]
+expandShortBranchHash :: Monad m => Codebase m v a -> ShortBranchHash -> Backend m Hash
+formatType' :: Var v => PrettyPrintEnv -> Width -> Type v a -> SyntaxText
+formatType :: Var v => PrettyPrintEnv -> Width -> Type v a -> SyntaxText
+formatSuffixedType :: Var v => PrettyPrintEnvDecl -> Width -> Type v Ann -> SyntaxText
+mungeSyntaxText :: Functor g => g (Element Reference) -> g Element
+prettyDefinitionsBySuffixes :: NameScoping -> Maybe Hash -> Maybe Width -> Suffixify -> Runtime Symbol -> Codebase IO Symbol Ann -> [HashQualified Name] -> Backend IO DefinitionDisplayResults
+renderDoc :: PrettyPrintEnvDecl -> Width -> Runtime Symbol -> Codebase IO Symbol Ann -> Reference -> IO (HashQualifiedName, UnisonHash, Doc)
+docsInBranchToHtmlFiles :: Runtime Symbol -> Codebase IO Symbol Ann -> Branch IO -> Path -> FilePath -> IO ()
+bestNameForTerm :: forall v. Var v => PrettyPrintEnv -> Width -> Referent -> Text
+bestNameForType :: forall v. Var v => PrettyPrintEnv -> Width -> Reference -> Text
+resolveBranchHash :: Monad m => Maybe Hash -> Codebase m v Ann -> Backend m (Branch m)
+resolveRootBranchHash :: Monad m => Maybe ShortBranchHash -> Codebase m v Ann -> Backend m (Branch m)
+
+-- | Determines whether we include full cycles in the results, (e.g. if I
+--   search for <tt>isEven</tt>, will I find <tt>isOdd</tt> too?)
+data IncludeCycles
+IncludeCycles :: IncludeCycles
+DontIncludeCycles :: IncludeCycles
+definitionsBySuffixes :: forall m. MonadIO m => NameScoping -> Branch m -> Codebase m Symbol Ann -> IncludeCycles -> [HashQualified Name] -> m (DefinitionResults Symbol)
+termsToSyntax :: Var v => Ord a => Suffixify -> Width -> PrettyPrintEnvDecl -> Map Reference (DisplayObject (Type v a) (Term v a)) -> Map Reference (DisplayObject SyntaxText SyntaxText)
+typesToSyntax :: Var v => Ord a => Suffixify -> Width -> PrettyPrintEnvDecl -> Map Reference (DisplayObject () (Decl v a)) -> Map Reference (DisplayObject SyntaxText SyntaxText)
+loadSearchResults :: Applicative m => Codebase m Symbol Ann -> [SearchResult] -> m [SearchResult' Symbol Ann]
+loadTypeDisplayObject :: Applicative m => Codebase m v Ann -> Reference -> m (DisplayObject () (Decl v Ann))
+instance GHC.Generics.Generic (Unison.Server.Backend.TermEntry v a)
+instance GHC.Show.Show v => GHC.Show.Show (Unison.Server.Backend.TermEntry v a)
+instance Unison.ABT.Var v => GHC.Classes.Ord (Unison.Server.Backend.TermEntry v a)
+instance Unison.ABT.Var v => GHC.Classes.Eq (Unison.Server.Backend.TermEntry v a)
+instance GHC.Generics.Generic Unison.Server.Backend.TypeEntry
+instance GHC.Show.Show Unison.Server.Backend.TypeEntry
+instance GHC.Classes.Ord Unison.Server.Backend.TypeEntry
+instance GHC.Classes.Eq Unison.Server.Backend.TypeEntry
+instance GHC.Generics.Generic (Unison.Server.Backend.ShallowListEntry v a)
+instance GHC.Show.Show v => GHC.Show.Show (Unison.Server.Backend.ShallowListEntry v a)
+instance Unison.ABT.Var v => GHC.Classes.Ord (Unison.Server.Backend.ShallowListEntry v a)
+instance Unison.ABT.Var v => GHC.Classes.Eq (Unison.Server.Backend.ShallowListEntry v a)
+instance GHC.Generics.Generic Unison.Server.Backend.FoundRef
+instance GHC.Show.Show Unison.Server.Backend.FoundRef
+instance GHC.Classes.Ord Unison.Server.Backend.FoundRef
+instance GHC.Classes.Eq Unison.Server.Backend.FoundRef
+
+module Unison.Server.Errors
+badHQN :: HashQualifiedName -> ServerError
+backendError :: BackendError -> ServerError
+rootBranchError :: GetRootBranchError -> ServerError
+badNamespace :: String -> String -> ServerError
+noSuchNamespace :: HashQualifiedName -> ServerError
+couldntLoadBranch :: Hash -> ServerError
+ambiguousNamespace :: HashQualifiedName -> Set HashQualifiedName -> ServerError
+missingSigForTerm :: HashQualifiedName -> ServerError
+
+module Unison.Server.Endpoints.Projects
+type ProjectsAPI = "projects" :> QueryParam "rootBranch" ShortBranchHash :> QueryParam "owner" ProjectOwner :> APIGet [ProjectListing]
+newtype ProjectOwner
+ProjectOwner :: Text -> ProjectOwner
+projectOwnerFromText :: Text -> Either Text ProjectOwner
+data ProjectListing
+ProjectListing :: ProjectOwner -> Text -> UnisonHash -> ProjectListing
+[$sel:owner:ProjectListing] :: ProjectListing -> ProjectOwner
+[$sel:name:ProjectListing] :: ProjectListing -> Text
+[$sel:hash:ProjectListing] :: ProjectListing -> UnisonHash
+backendListEntryToProjectListing :: ProjectOwner -> ShallowListEntry Symbol a -> Maybe ProjectListing
+entryToOwner :: ShallowListEntry Symbol a -> Maybe ProjectOwner
+serve :: Handler () -> Codebase IO Symbol Ann -> Maybe ShortBranchHash -> Maybe ProjectOwner -> Handler (APIHeaders [ProjectListing])
+instance Data.OpenApi.Internal.Schema.ToSchema Unison.Server.Endpoints.Projects.ProjectOwner
+instance GHC.Show.Show Unison.Server.Endpoints.Projects.ProjectOwner
+instance GHC.Generics.Generic Unison.Server.Endpoints.Projects.ProjectOwner
+instance Data.OpenApi.Internal.Schema.ToSchema Unison.Server.Endpoints.Projects.ProjectListing
+instance GHC.Show.Show Unison.Server.Endpoints.Projects.ProjectListing
+instance GHC.Generics.Generic Unison.Server.Endpoints.Projects.ProjectListing
+instance Data.OpenApi.Internal.ParamSchema.ToParamSchema Unison.Server.Endpoints.Projects.ProjectOwner
+instance Servant.Docs.Internal.ToSample Unison.Server.Endpoints.Projects.ProjectListing
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Server.Endpoints.Projects.ProjectListing
+instance Servant.Docs.Internal.ToParam (Servant.API.QueryParam.QueryParam "owner" Unison.Server.Endpoints.Projects.ProjectOwner)
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Server.Endpoints.Projects.ProjectOwner
+instance Web.Internal.HttpApiData.FromHttpApiData Unison.Server.Endpoints.Projects.ProjectOwner
+
+module Unison.Server.Endpoints.NamespaceListing
+type NamespaceListingAPI = "list" :> QueryParam "rootBranch" ShortBranchHash :> QueryParam "relativeTo" NamespaceFQN :> QueryParam "namespace" NamespaceFQN :> APIGet NamespaceListing
+data NamespaceListing
+NamespaceListing :: UnisonName -> UnisonHash -> [NamespaceObject] -> NamespaceListing
+[$sel:namespaceListingFQN:NamespaceListing] :: NamespaceListing -> UnisonName
+[$sel:namespaceListingHash:NamespaceListing] :: NamespaceListing -> UnisonHash
+[$sel:namespaceListingChildren:NamespaceListing] :: NamespaceListing -> [NamespaceObject]
+data NamespaceObject
+Subnamespace :: NamedNamespace -> NamespaceObject
+TermObject :: NamedTerm -> NamespaceObject
+TypeObject :: NamedType -> NamespaceObject
+PatchObject :: NamedPatch -> NamespaceObject
+data NamedNamespace
+NamedNamespace :: UnisonName -> UnisonHash -> Size -> NamedNamespace
+[$sel:namespaceName:NamedNamespace] :: NamedNamespace -> UnisonName
+[$sel:namespaceHash:NamedNamespace] :: NamedNamespace -> UnisonHash
+[$sel:namespaceSize:NamedNamespace] :: NamedNamespace -> Size
+newtype NamedPatch
+NamedPatch :: HashQualifiedName -> NamedPatch
+[$sel:patchName:NamedPatch] :: NamedPatch -> HashQualifiedName
+newtype KindExpression
+KindExpression :: Text -> KindExpression
+[$sel:kindExpressionText:KindExpression] :: KindExpression -> Text
+backendListEntryToNamespaceObject :: Var v => PrettyPrintEnv -> Maybe Width -> ShallowListEntry v a -> NamespaceObject
+serve :: Handler () -> Codebase IO Symbol Ann -> Maybe ShortBranchHash -> Maybe NamespaceFQN -> Maybe NamespaceFQN -> Handler (APIHeaders NamespaceListing)
+instance GHC.Show.Show Unison.Server.Endpoints.NamespaceListing.NamedNamespace
+instance GHC.Generics.Generic Unison.Server.Endpoints.NamespaceListing.NamedNamespace
+instance Data.OpenApi.Internal.Schema.ToSchema Unison.Server.Endpoints.NamespaceListing.NamedPatch
+instance GHC.Show.Show Unison.Server.Endpoints.NamespaceListing.NamedPatch
+instance GHC.Generics.Generic Unison.Server.Endpoints.NamespaceListing.NamedPatch
+instance GHC.Show.Show Unison.Server.Endpoints.NamespaceListing.NamespaceObject
+instance GHC.Generics.Generic Unison.Server.Endpoints.NamespaceListing.NamespaceObject
+instance GHC.Show.Show Unison.Server.Endpoints.NamespaceListing.NamespaceListing
+instance GHC.Generics.Generic Unison.Server.Endpoints.NamespaceListing.NamespaceListing
+instance Data.OpenApi.Internal.Schema.ToSchema Unison.Server.Endpoints.NamespaceListing.KindExpression
+instance GHC.Show.Show Unison.Server.Endpoints.NamespaceListing.KindExpression
+instance GHC.Generics.Generic Unison.Server.Endpoints.NamespaceListing.KindExpression
+instance Data.OpenApi.Internal.Schema.ToSchema Unison.Server.Endpoints.NamespaceListing.NamespaceListing
+instance Data.OpenApi.Internal.Schema.ToSchema Unison.Server.Endpoints.NamespaceListing.NamespaceObject
+instance Data.OpenApi.Internal.Schema.ToSchema Unison.Server.Endpoints.NamespaceListing.NamedNamespace
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Server.Endpoints.NamespaceListing.KindExpression
+instance Servant.Docs.Internal.ToSample Unison.Server.Endpoints.NamespaceListing.NamespaceListing
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Server.Endpoints.NamespaceListing.NamespaceListing
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Server.Endpoints.NamespaceListing.NamespaceObject
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Server.Endpoints.NamespaceListing.NamedPatch
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Server.Endpoints.NamespaceListing.NamedNamespace
+instance Servant.Docs.Internal.ToParam (Servant.API.QueryParam.QueryParam "namespace" Data.Text.Internal.Text)
+
+module Unison.Server.Endpoints.NamespaceDetails
+type NamespaceDetailsAPI = "namespaces" :> Capture "namespace" NamespaceFQN :> QueryParam "rootBranch" ShortBranchHash :> QueryParam "renderWidth" Width :> APIGet NamespaceDetails
+data NamespaceDetails
+NamespaceDetails :: UnisonName -> UnisonHash -> Maybe Doc -> NamespaceDetails
+[$sel:fqn:NamespaceDetails] :: NamespaceDetails -> UnisonName
+[$sel:hash:NamespaceDetails] :: NamespaceDetails -> UnisonHash
+[$sel:readme:NamespaceDetails] :: NamespaceDetails -> Maybe Doc
+serve :: Handler () -> Runtime Symbol -> Codebase IO Symbol Ann -> NamespaceFQN -> Maybe ShortBranchHash -> Maybe Width -> Handler (APIHeaders NamespaceDetails)
+instance GHC.Show.Show Unison.Server.Endpoints.NamespaceDetails.NamespaceDetails
+instance GHC.Generics.Generic Unison.Server.Endpoints.NamespaceDetails.NamespaceDetails
+instance Data.OpenApi.Internal.Schema.ToSchema Unison.Server.Endpoints.NamespaceDetails.NamespaceDetails
+instance Servant.Docs.Internal.ToSample Unison.Server.Endpoints.NamespaceDetails.NamespaceDetails
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Server.Endpoints.NamespaceDetails.NamespaceDetails
+instance Servant.Docs.Internal.ToCapture (Servant.API.Capture.Capture "namespace" Data.Text.Internal.Text)
+
+module Unison.Server.Endpoints.GetDefinitions
+type DefinitionsAPI = "getDefinition" :> QueryParam "rootBranch" ShortBranchHash :> QueryParam "relativeTo" NamespaceFQN :> QueryParams "names" HashQualifiedName :> QueryParam "renderWidth" Width :> QueryParam "suffixifyBindings" Suffixify :> APIGet DefinitionDisplayResults
+serveDefinitions :: Handler () -> Runtime Symbol -> Codebase IO Symbol Ann -> Maybe ShortBranchHash -> Maybe NamespaceFQN -> [HashQualifiedName] -> Maybe Width -> Maybe Suffixify -> Handler (APIHeaders DefinitionDisplayResults)
+instance Servant.Docs.Internal.ToParam (Servant.API.QueryParam.QueryParam "renderWidth" Unison.Util.Pretty.Width)
+instance Servant.Docs.Internal.ToParam (Servant.API.QueryParam.QueryParam "suffixifyBindings" Unison.Server.Types.Suffixify)
+instance Servant.Docs.Internal.ToParam (Servant.API.QueryParam.QueryParam "relativeTo" Unison.Server.Types.NamespaceFQN)
+instance Servant.Docs.Internal.ToParam (Servant.API.QueryParam.QueryParam "rootBranch" Unison.Codebase.ShortBranchHash.ShortBranchHash)
+instance Servant.Docs.Internal.ToParam (Servant.API.QueryParam.QueryParams "names" Data.Text.Internal.Text)
+instance Servant.Docs.Internal.ToSample Unison.Server.Types.DefinitionDisplayResults
+
+module Unison.Server.Endpoints.FuzzyFind
+type FuzzyFindAPI = "find" :> QueryParam "rootBranch" ShortBranchHash :> QueryParam "relativeTo" HashQualifiedName :> QueryParam "limit" Int :> QueryParam "renderWidth" Width :> QueryParam "query" String :> APIGet [(Alignment, FoundResult)]
+data FoundTerm
+FoundTerm :: HashQualifiedName -> NamedTerm -> FoundTerm
+[$sel:bestFoundTermName:FoundTerm] :: FoundTerm -> HashQualifiedName
+[$sel:namedTerm:FoundTerm] :: FoundTerm -> NamedTerm
+data FoundType
+FoundType :: HashQualifiedName -> DisplayObject SyntaxText SyntaxText -> NamedType -> FoundType
+[$sel:bestFoundTypeName:FoundType] :: FoundType -> HashQualifiedName
+[$sel:typeDef:FoundType] :: FoundType -> DisplayObject SyntaxText SyntaxText
+[$sel:namedType:FoundType] :: FoundType -> NamedType
+data FoundResult
+FoundTermResult :: FoundTerm -> FoundResult
+FoundTypeResult :: FoundType -> FoundResult
+serveFuzzyFind :: Handler () -> Codebase IO Symbol Ann -> Maybe ShortBranchHash -> Maybe HashQualifiedName -> Maybe Int -> Maybe Width -> Maybe String -> Handler (APIHeaders [(Alignment, FoundResult)])
+instance GHC.Show.Show Unison.Server.Endpoints.FuzzyFind.FoundTerm
+instance GHC.Generics.Generic Unison.Server.Endpoints.FuzzyFind.FoundTerm
+instance GHC.Show.Show Unison.Server.Endpoints.FuzzyFind.FoundType
+instance GHC.Generics.Generic Unison.Server.Endpoints.FuzzyFind.FoundType
+instance GHC.Show.Show Unison.Server.Endpoints.FuzzyFind.FoundResult
+instance GHC.Generics.Generic Unison.Server.Endpoints.FuzzyFind.FoundResult
+instance Data.OpenApi.Internal.Schema.ToSchema Text.FuzzyFind.Alignment
+instance Data.OpenApi.Internal.Schema.ToSchema Text.FuzzyFind.Result
+instance Data.OpenApi.Internal.Schema.ToSchema Text.FuzzyFind.ResultSegment
+instance Data.OpenApi.Internal.Schema.ToSchema Unison.Server.Endpoints.FuzzyFind.FoundType
+instance Data.OpenApi.Internal.Schema.ToSchema Unison.Server.Endpoints.FuzzyFind.FoundTerm
+instance Data.OpenApi.Internal.Schema.ToSchema Unison.Server.Endpoints.FuzzyFind.FoundResult
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Server.Endpoints.FuzzyFind.FoundResult
+instance Servant.Docs.Internal.ToSample Unison.Server.Endpoints.FuzzyFind.FoundResult
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Server.Endpoints.FuzzyFind.FoundType
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Server.Endpoints.FuzzyFind.FoundTerm
+instance Servant.Docs.Internal.ToSample Text.FuzzyFind.Alignment
+instance Servant.Docs.Internal.ToParam (Servant.API.QueryParam.QueryParam "limit" GHC.Types.Int)
+instance Servant.Docs.Internal.ToParam (Servant.API.QueryParam.QueryParam "query" GHC.Base.String)
+instance Data.Aeson.Types.ToJSON.ToJSON Text.FuzzyFind.Alignment
+instance Data.Aeson.Types.ToJSON.ToJSON Text.FuzzyFind.Result
+instance Data.Aeson.Types.ToJSON.ToJSON Text.FuzzyFind.ResultSegment
+
+module Unison.Server.CodebaseServer
+data HTML
+HTML :: HTML
+newtype RawHtml
+RawHtml :: ByteString -> RawHtml
+[$sel:unRaw:RawHtml] :: RawHtml -> ByteString
+type OpenApiJSON = "openapi.json" :> Get '[JSON] OpenApi
+type DocAPI = UnisonAPI :<|> OpenApiJSON :<|> Raw
+type UnisonAPI = NamespaceListingAPI :<|> NamespaceDetailsAPI :<|> ProjectsAPI :<|> DefinitionsAPI :<|> FuzzyFindAPI
+type WebUI = CaptureAll "route" Text :> Get '[HTML] RawHtml
+type ServerAPI = ("ui" :> WebUI) :<|> ("api" :> DocAPI)
+type AuthedServerAPI = ("static" :> Raw) :<|> (Capture "token" Text :> ServerAPI)
+data BaseUrl
+BaseUrl :: String -> ByteString -> Port -> BaseUrl
+[$sel:urlHost:BaseUrl] :: BaseUrl -> String
+[$sel:urlToken:BaseUrl] :: BaseUrl -> ByteString
+[$sel:urlPort:BaseUrl] :: BaseUrl -> Port
+data BaseUrlPath
+UI :: BaseUrlPath
+Api :: BaseUrlPath
+urlFor :: BaseUrlPath -> BaseUrl -> String
+handleAuth :: ByteString -> Text -> Handler ()
+openAPI :: OpenApi
+infoObject :: Info
+docsBS :: ByteString
+docAPI :: Proxy DocAPI
+api :: Proxy UnisonAPI
+serverAPI :: Proxy AuthedServerAPI
+app :: Runtime Symbol -> Codebase IO Symbol Ann -> FilePath -> ByteString -> Application
+genToken :: IO ByteString
+data Waiter a
+Waiter :: (a -> IO ()) -> IO a -> Waiter a
+[$sel:notify:Waiter] :: Waiter a -> a -> IO ()
+[$sel:waitFor:Waiter] :: Waiter a -> IO a
+mkWaiter :: IO (Waiter a)
+ucmUIVar :: String
+ucmPortVar :: String
+ucmHostVar :: String
+ucmTokenVar :: String
+data CodebaseServerOpts
+CodebaseServerOpts :: Maybe String -> Maybe String -> Maybe Int -> Maybe FilePath -> CodebaseServerOpts
+[$sel:token:CodebaseServerOpts] :: CodebaseServerOpts -> Maybe String
+[$sel:host:CodebaseServerOpts] :: CodebaseServerOpts -> Maybe String
+[$sel:port:CodebaseServerOpts] :: CodebaseServerOpts -> Maybe Int
+[$sel:codebaseUIPath:CodebaseServerOpts] :: CodebaseServerOpts -> Maybe FilePath
+startServer :: CodebaseServerOpts -> Runtime Symbol -> Codebase IO Symbol Ann -> (BaseUrl -> IO ()) -> IO ()
+serveIndex :: FilePath -> Handler RawHtml
+serveUI :: Handler () -> FilePath -> Server WebUI
+server :: Runtime Symbol -> Codebase IO Symbol Ann -> FilePath -> ByteString -> Server AuthedServerAPI
+instance GHC.Classes.Eq Unison.Server.CodebaseServer.CodebaseServerOpts
+instance GHC.Show.Show Unison.Server.CodebaseServer.CodebaseServerOpts
+instance GHC.Show.Show Unison.Server.CodebaseServer.BaseUrl
+instance Servant.API.ContentTypes.MimeRender Unison.Server.CodebaseServer.HTML Unison.Server.CodebaseServer.RawHtml
+instance Servant.API.ContentTypes.Accept Unison.Server.CodebaseServer.HTML
+instance Servant.Docs.Internal.ToSample GHC.Types.Char
+
 module Unison.Sync.Types
 
 -- | A newtype for JSON encoding binary data.
@@ -247,3 +994,11 @@ instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.Base64Bytes
 module Unison.Sync.API
 type API = "path" :> "get" :> GetCausalHashByPathEndpoint :<|> "path" :> "update" :> UpdatePathEndpoint :<|> "entities" :> "download" :> DownloadEntitiesEndpoint :<|> "entities" :> "upload" :> UploadEntitiesEndpoint
 api :: Proxy API
+
+module Unison.Util.Find
+fuzzyFinder :: forall a. String -> [a] -> (a -> String) -> [(a, Pretty ColorText)]
+simpleFuzzyFinder :: forall a. String -> [a] -> (a -> String) -> [(a, Pretty ColorText)]
+simpleFuzzyScore :: String -> String -> Maybe Int
+fuzzyFindInBranch :: HasCallStack => Names -> HashQualified Name -> [(SearchResult, Pretty ColorText)]
+fuzzyFindMatchArray :: forall a. String -> [a] -> (a -> String) -> [(MatchArray, (a, Pretty ColorText))]
+prefixFindInBranch :: Names -> HashQualified Name -> [(SearchResult, Pretty ColorText)]

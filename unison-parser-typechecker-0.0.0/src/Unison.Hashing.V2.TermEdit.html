@@ -5,7 +5,7 @@
 </span><span id="line-5"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Tokenizable.html"><span class="hs-identifier">Unison.Hashing.V2.Tokenizable</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">H</span></span><span>
 </span><span id="line-6"></span><span>
 </span><span id="line-7"></span><span class="hs-keyword">data</span><span> </span><span id="TermEdit"><span class="annot"><a href="Unison.Hashing.V2.TermEdit.html#TermEdit"><span class="hs-identifier hs-var">TermEdit</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Replace"><span class="annot"><a href="Unison.Hashing.V2.TermEdit.html#Replace"><span class="hs-identifier hs-var">Replace</span></a></span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Referent.html#Referent"><span class="hs-identifier hs-type">Referent</span></a></span><span> </span><span class="hs-glyph">|</span><span> </span><span id="Deprecate"><span class="annot"><a href="Unison.Hashing.V2.TermEdit.html#Deprecate"><span class="hs-identifier hs-var">Deprecate</span></a></span></span><span>
-</span><span id="line-8"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621680843441"><span id="local-6989586621680843443"><span class="annot"><span class="annottext">TermEdit -&gt; TermEdit -&gt; Bool
+</span><span id="line-8"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621680760707"><span id="local-6989586621680760709"><span class="annot"><span class="annottext">TermEdit -&gt; TermEdit -&gt; Bool
 (TermEdit -&gt; TermEdit -&gt; Bool)
 -&gt; (TermEdit -&gt; TermEdit -&gt; Bool) -&gt; Eq TermEdit
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -13,7 +13,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: TermEdit -&gt; TermEdit -&gt; Bool
 == :: TermEdit -&gt; TermEdit -&gt; Bool
 $c== :: TermEdit -&gt; TermEdit -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680843425"><span id="local-6989586621680843427"><span id="local-6989586621680843429"><span id="local-6989586621680843431"><span id="local-6989586621680843433"><span id="local-6989586621680843435"><span id="local-6989586621680843437"><span class="annot"><span class="annottext">Eq TermEdit
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680760691"><span id="local-6989586621680760693"><span id="local-6989586621680760695"><span id="local-6989586621680760697"><span id="local-6989586621680760699"><span id="local-6989586621680760701"><span id="local-6989586621680760703"><span class="annot"><span class="annottext">Eq TermEdit
 Eq TermEdit
 -&gt; (TermEdit -&gt; TermEdit -&gt; Ordering)
 -&gt; (TermEdit -&gt; TermEdit -&gt; Bool)
@@ -51,7 +51,7 @@ $c&lt; :: TermEdit -&gt; TermEdit -&gt; Bool
 compare :: TermEdit -&gt; TermEdit -&gt; Ordering
 $ccompare :: TermEdit -&gt; TermEdit -&gt; Ordering
 $cp1Ord :: Eq TermEdit
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680843418"><span id="local-6989586621680843420"><span id="local-6989586621680843422"><span class="annot"><span class="annottext">Int -&gt; TermEdit -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680760684"><span id="local-6989586621680760686"><span id="local-6989586621680760688"><span class="annot"><span class="annottext">Int -&gt; TermEdit -&gt; ShowS
 [TermEdit] -&gt; ShowS
 TermEdit -&gt; String
 (Int -&gt; TermEdit -&gt; ShowS)
@@ -67,9 +67,9 @@ $cshowsPrec :: Int -&gt; TermEdit -&gt; ShowS
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
 </span><span id="line-9"></span><span>
 </span><span id="line-10"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Tokenizable.html#Tokenizable"><span class="hs-identifier hs-type">Tokenizable</span></a></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.TermEdit.html#TermEdit"><span class="hs-identifier hs-type">TermEdit</span></a></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-11"></span><span>  </span><span id="local-6989586621680843414"><span class="annot"><span class="annottext">tokens :: TermEdit -&gt; [Token h]
-</span><a href="Unison.Hashing.V2.Tokenizable.html#tokens"><span class="hs-identifier hs-var hs-var hs-var hs-var">tokens</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Hashing.V2.TermEdit.html#Replace"><span class="hs-identifier hs-type">Replace</span></a></span><span> </span><span id="local-6989586621680843412"><span class="annot"><span class="annottext">Referent
-</span><a href="#local-6989586621680843412"><span class="hs-identifier hs-var">r</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Word8 -&gt; Token h
+</span><span id="line-11"></span><span>  </span><span id="local-6989586621680760680"><span class="annot"><span class="annottext">tokens :: TermEdit -&gt; [Token h]
+</span><a href="Unison.Hashing.V2.Tokenizable.html#tokens"><span class="hs-identifier hs-var hs-var hs-var hs-var">tokens</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Hashing.V2.TermEdit.html#Replace"><span class="hs-identifier hs-type">Replace</span></a></span><span> </span><span id="local-6989586621680760678"><span class="annot"><span class="annottext">Referent
+</span><a href="#local-6989586621680760678"><span class="hs-identifier hs-var">r</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Word8 -&gt; Token h
 forall h. Word8 -&gt; Token h
 </span><a href="Unison.Hashing.V2.Tokenizable.html#Tag"><span class="hs-identifier hs-var">H.Tag</span></a></span><span> </span><span class="annot"><span class="annottext">Word8
 </span><span class="hs-number">0</span></span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">[Token h] -&gt; [Token h] -&gt; [Token h]
@@ -77,7 +77,7 @@ forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">Referent -&gt; [Token h]
 forall t h. (Tokenizable t, Accumulate h) =&gt; t -&gt; [Token h]
 </span><a href="Unison.Hashing.V2.Tokenizable.html#tokens"><span class="hs-identifier hs-var">H.tokens</span></a></span><span> </span><span class="annot"><span class="annottext">Referent
-</span><a href="#local-6989586621680843412"><span class="hs-identifier hs-var">r</span></a></span><span>
+</span><a href="#local-6989586621680760678"><span class="hs-identifier hs-var">r</span></a></span><span>
 </span><span id="line-12"></span><span>  </span><span class="annot"><a href="Unison.Hashing.V2.Tokenizable.html#tokens"><span class="hs-identifier hs-var">tokens</span></a></span><span> </span><span class="annot"><span class="annottext">TermEdit
 </span><a href="Unison.Hashing.V2.TermEdit.html#Deprecate"><span class="hs-identifier hs-var">Deprecate</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Word8 -&gt; Token h
 forall h. Word8 -&gt; Token h
