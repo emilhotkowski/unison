@@ -78,6 +78,7 @@ OpenCodebaseDoesntExist :: OpenCodebaseError
 --   application.
 OpenCodebaseUnknownSchemaVersion :: Word64 -> OpenCodebaseError
 instance GHC.Exception.Type.Exception Unison.Codebase.Init.OpenCodebaseError.OpenCodebaseError
+instance GHC.Classes.Eq Unison.Codebase.Init.OpenCodebaseError.OpenCodebaseError
 instance GHC.Show.Show Unison.Codebase.Init.OpenCodebaseError.OpenCodebaseError
 
 module Unison.Codebase.Path
@@ -2274,9 +2275,9 @@ Env :: [Type v loc] -> TypeLookup v loc -> Map Name [NamedReference v loc] -> En
 [_ambientAbilities] :: Env v loc -> [Type v loc]
 [_typeLookup] :: Env v loc -> TypeLookup v loc
 [_termsByShortname] :: Env v loc -> Map Name [NamedReference v loc]
-typeLookup :: forall v_a3BH4 loc_a3BH5. Lens' (Env v_a3BH4 loc_a3BH5) (TypeLookup v_a3BH4 loc_a3BH5)
-termsByShortname :: forall v_a3BH4 loc_a3BH5. Lens' (Env v_a3BH4 loc_a3BH5) (Map Name [NamedReference v_a3BH4 loc_a3BH5])
-ambientAbilities :: forall v_a3BH4 loc_a3BH5. Lens' (Env v_a3BH4 loc_a3BH5) [Type v_a3BH4 loc_a3BH5]
+typeLookup :: forall v_a3BKn loc_a3BKo. Lens' (Env v_a3BKn loc_a3BKo) (TypeLookup v_a3BKn loc_a3BKo)
+termsByShortname :: forall v_a3BKn loc_a3BKo. Lens' (Env v_a3BKn loc_a3BKo) (Map Name [NamedReference v_a3BKn loc_a3BKo])
+ambientAbilities :: forall v_a3BKn loc_a3BKo. Lens' (Env v_a3BKn loc_a3BKo) [Type v_a3BKn loc_a3BKo]
 
 -- | Infer the type of a <a>Term</a>, using a function to resolve the type
 --   of <tt>Ref</tt> constructors contained in that term.
@@ -3794,6 +3795,8 @@ initCodebaseAndExit :: MonadIO m => Init m Symbol Ann -> DebugName -> Maybe Code
 withOpenOrCreateCodebase :: MonadIO m => Init m v a -> DebugName -> CodebaseInitOptions -> ((InitResult, CodebasePath, Codebase m v a) -> m r) -> m (Either (CodebasePath, InitError) r)
 withNewUcmCodebaseOrExit :: MonadIO m => Init m Symbol Ann -> DebugName -> CodebasePath -> (Codebase m Symbol Ann -> m r) -> m r
 withTemporaryUcmCodebase :: MonadUnliftIO m => Init m Symbol Ann -> DebugName -> ((CodebasePath, Codebase m Symbol Ann) -> m r) -> m r
+instance GHC.Classes.Eq Unison.Codebase.Init.InitError
+instance GHC.Show.Show Unison.Codebase.Init.InitError
 instance GHC.Classes.Eq Unison.Codebase.Init.InitResult
 instance GHC.Show.Show Unison.Codebase.Init.InitResult
 
@@ -4903,11 +4906,12 @@ runStandalone :: StoredCache -> Word64 -> IO ()
 data StoredCache
 decodeStandalone :: ByteString -> Either String (Text, Text, Word64, StoredCache)
 
--- | Whether the runtime is hosted within a UCM session or as a standalone
---   process.
+-- | Whether the runtime is hosted within a persistent session or as a
+--   one-off process. This affects the amount of clean-up and book-keeping
+--   the runtime does.
 data RuntimeHost
-Standalone :: RuntimeHost
-UCM :: RuntimeHost
+OneOff :: RuntimeHost
+Persistent :: RuntimeHost
 instance GHC.Show.Show Unison.Runtime.Interface.StoredCache
 
 module Unison.Util.TransitiveClosure

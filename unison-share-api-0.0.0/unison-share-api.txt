@@ -329,7 +329,7 @@ mungeString :: String -> ByteString
 defaultWidth :: Width
 discard :: Applicative m => a -> m ()
 mayDefaultWidth :: Maybe Width -> Width
-addHeaders :: v -> APIHeaders v
+setCacheControl :: v -> APIHeaders v
 branchToUnisonHash :: Branch m -> UnisonHash
 instance GHC.Generics.Generic Unison.Server.Types.Suffixify
 instance GHC.Show.Show Unison.Server.Types.Suffixify
@@ -419,6 +419,7 @@ ShallowPatchEntry :: NameSegment -> ShallowListEntry v a
 listEntryName :: ShallowListEntry v a -> Text
 data BackendError
 NoSuchNamespace :: Absolute -> BackendError
+BadNamespace :: String -> String -> BackendError
 BadRootBranch :: GetRootBranchError -> BackendError
 CouldntExpandBranchHash :: ShortBranchHash -> BackendError
 AmbiguousBranchHash :: ShortBranchHash -> Set ShortBranchHash -> BackendError
@@ -571,7 +572,7 @@ ProjectListing :: ProjectOwner -> Text -> UnisonHash -> ProjectListing
 [$sel:hash:ProjectListing] :: ProjectListing -> UnisonHash
 backendListEntryToProjectListing :: ProjectOwner -> ShallowListEntry Symbol a -> Maybe ProjectListing
 entryToOwner :: ShallowListEntry Symbol a -> Maybe ProjectOwner
-serve :: Handler () -> Codebase IO Symbol Ann -> Maybe ShortBranchHash -> Maybe ProjectOwner -> Handler (APIHeaders [ProjectListing])
+serve :: forall m. MonadIO m => Codebase m Symbol Ann -> Maybe ShortBranchHash -> Maybe ProjectOwner -> Backend m [ProjectListing]
 instance Data.OpenApi.Internal.Schema.ToSchema Unison.Server.Endpoints.Projects.ProjectOwner
 instance GHC.Show.Show Unison.Server.Endpoints.Projects.ProjectOwner
 instance GHC.Generics.Generic Unison.Server.Endpoints.Projects.ProjectOwner
@@ -609,7 +610,7 @@ newtype KindExpression
 KindExpression :: Text -> KindExpression
 [$sel:kindExpressionText:KindExpression] :: KindExpression -> Text
 backendListEntryToNamespaceObject :: Var v => PrettyPrintEnv -> Maybe Width -> ShallowListEntry v a -> NamespaceObject
-serve :: Handler () -> Codebase IO Symbol Ann -> Maybe ShortBranchHash -> Maybe NamespaceFQN -> Maybe NamespaceFQN -> Handler (APIHeaders NamespaceListing)
+serve :: Codebase IO Symbol Ann -> Maybe ShortBranchHash -> Maybe NamespaceFQN -> Maybe NamespaceFQN -> Backend IO NamespaceListing
 instance GHC.Show.Show Unison.Server.Endpoints.NamespaceListing.NamedNamespace
 instance GHC.Generics.Generic Unison.Server.Endpoints.NamespaceListing.NamedNamespace
 instance Data.OpenApi.Internal.Schema.ToSchema Unison.Server.Endpoints.NamespaceListing.NamedPatch
@@ -640,7 +641,7 @@ NamespaceDetails :: UnisonName -> UnisonHash -> Maybe Doc -> NamespaceDetails
 [$sel:fqn:NamespaceDetails] :: NamespaceDetails -> UnisonName
 [$sel:hash:NamespaceDetails] :: NamespaceDetails -> UnisonHash
 [$sel:readme:NamespaceDetails] :: NamespaceDetails -> Maybe Doc
-serve :: Handler () -> Runtime Symbol -> Codebase IO Symbol Ann -> NamespaceFQN -> Maybe ShortBranchHash -> Maybe Width -> Handler (APIHeaders NamespaceDetails)
+serve :: Runtime Symbol -> Codebase IO Symbol Ann -> NamespaceFQN -> Maybe ShortBranchHash -> Maybe Width -> Backend IO NamespaceDetails
 instance GHC.Show.Show Unison.Server.Endpoints.NamespaceDetails.NamespaceDetails
 instance GHC.Generics.Generic Unison.Server.Endpoints.NamespaceDetails.NamespaceDetails
 instance Data.OpenApi.Internal.Schema.ToSchema Unison.Server.Endpoints.NamespaceDetails.NamespaceDetails
@@ -650,7 +651,7 @@ instance Servant.Docs.Internal.ToCapture (Servant.API.Capture.Capture "namespace
 
 module Unison.Server.Endpoints.GetDefinitions
 type DefinitionsAPI = "getDefinition" :> QueryParam "rootBranch" ShortBranchHash :> QueryParam "relativeTo" NamespaceFQN :> QueryParams "names" HashQualifiedName :> QueryParam "renderWidth" Width :> QueryParam "suffixifyBindings" Suffixify :> APIGet DefinitionDisplayResults
-serveDefinitions :: Handler () -> Runtime Symbol -> Codebase IO Symbol Ann -> Maybe ShortBranchHash -> Maybe NamespaceFQN -> [HashQualifiedName] -> Maybe Width -> Maybe Suffixify -> Handler (APIHeaders DefinitionDisplayResults)
+serveDefinitions :: MonadIO m => Runtime Symbol -> Codebase IO Symbol Ann -> Maybe ShortBranchHash -> Maybe NamespaceFQN -> [HashQualifiedName] -> Maybe Width -> Maybe Suffixify -> Backend m DefinitionDisplayResults
 instance Servant.Docs.Internal.ToParam (Servant.API.QueryParam.QueryParam "renderWidth" Unison.Util.Pretty.Width)
 instance Servant.Docs.Internal.ToParam (Servant.API.QueryParam.QueryParam "suffixifyBindings" Unison.Server.Types.Suffixify)
 instance Servant.Docs.Internal.ToParam (Servant.API.QueryParam.QueryParam "relativeTo" Unison.Server.Types.NamespaceFQN)
@@ -672,7 +673,7 @@ FoundType :: HashQualifiedName -> DisplayObject SyntaxText SyntaxText -> NamedTy
 data FoundResult
 FoundTermResult :: FoundTerm -> FoundResult
 FoundTypeResult :: FoundType -> FoundResult
-serveFuzzyFind :: Handler () -> Codebase IO Symbol Ann -> Maybe ShortBranchHash -> Maybe HashQualifiedName -> Maybe Int -> Maybe Width -> Maybe String -> Handler (APIHeaders [(Alignment, FoundResult)])
+serveFuzzyFind :: forall m. MonadIO m => Codebase m Symbol Ann -> Maybe ShortBranchHash -> Maybe HashQualifiedName -> Maybe Int -> Maybe Width -> Maybe String -> Backend m [(Alignment, FoundResult)]
 instance GHC.Show.Show Unison.Server.Endpoints.FuzzyFind.FoundTerm
 instance GHC.Generics.Generic Unison.Server.Endpoints.FuzzyFind.FoundTerm
 instance GHC.Show.Show Unison.Server.Endpoints.FuzzyFind.FoundType
@@ -703,11 +704,13 @@ newtype RawHtml
 RawHtml :: ByteString -> RawHtml
 [$sel:unRaw:RawHtml] :: RawHtml -> ByteString
 type OpenApiJSON = "openapi.json" :> Get '[JSON] OpenApi
-type DocAPI = UnisonAPI :<|> OpenApiJSON :<|> Raw
+type UnisonAndDocsAPI = UnisonAPI :<|> OpenApiJSON :<|> Raw
 type UnisonAPI = NamespaceListingAPI :<|> NamespaceDetailsAPI :<|> ProjectsAPI :<|> DefinitionsAPI :<|> FuzzyFindAPI
 type WebUI = CaptureAll "route" Text :> Get '[HTML] RawHtml
-type ServerAPI = ("ui" :> WebUI) :<|> ("api" :> DocAPI)
-type AuthedServerAPI = ("static" :> Raw) :<|> (Capture "token" Text :> ServerAPI)
+type ServerAPI = ("ui" :> WebUI) :<|> ("api" :> UnisonAndDocsAPI)
+type StaticAPI = "static" :> Raw
+type Authed api = (Capture "token" Text :> api)
+type AppAPI = StaticAPI :<|> Authed ServerAPI
 data BaseUrl
 BaseUrl :: String -> ByteString -> Port -> BaseUrl
 [$sel:urlHost:BaseUrl] :: BaseUrl -> String
@@ -721,10 +724,14 @@ handleAuth :: ByteString -> Text -> Handler ()
 openAPI :: OpenApi
 infoObject :: Info
 docsBS :: ByteString
-docAPI :: Proxy DocAPI
+unisonAndDocsAPI :: Proxy UnisonAndDocsAPI
 api :: Proxy UnisonAPI
-serverAPI :: Proxy AuthedServerAPI
+serverAPI :: Proxy ServerAPI
+appAPI :: Proxy AppAPI
 app :: Runtime Symbol -> Codebase IO Symbol Ann -> FilePath -> ByteString -> Application
+
+-- | The Token is used to help prevent multiple users on a machine gain
+--   access to each others codebases.
 genToken :: IO ByteString
 data Waiter a
 Waiter :: (a -> IO ()) -> IO a -> Waiter a
@@ -743,8 +750,14 @@ CodebaseServerOpts :: Maybe String -> Maybe String -> Maybe Int -> Maybe FilePat
 [$sel:codebaseUIPath:CodebaseServerOpts] :: CodebaseServerOpts -> Maybe FilePath
 startServer :: CodebaseServerOpts -> Runtime Symbol -> Codebase IO Symbol Ann -> (BaseUrl -> IO ()) -> IO ()
 serveIndex :: FilePath -> Handler RawHtml
-serveUI :: Handler () -> FilePath -> Server WebUI
-server :: Runtime Symbol -> Codebase IO Symbol Ann -> FilePath -> ByteString -> Server AuthedServerAPI
+serveUI :: FilePath -> Server WebUI
+server :: Runtime Symbol -> Codebase IO Symbol Ann -> FilePath -> ByteString -> Server AppAPI
+serveUnisonAndDocs :: Runtime Symbol -> Codebase IO Symbol Ann -> Server UnisonAndDocsAPI
+serveDocs :: Application
+serveOpenAPI :: Handler OpenApi
+hoistWithAuth :: forall api. HasServer api '[] => Proxy api -> ByteString -> ServerT api Handler -> ServerT (Authed api) Handler
+serveUnison :: Codebase IO Symbol Ann -> Runtime Symbol -> Server UnisonAPI
+backendHandler :: Backend IO a -> Handler a
 instance GHC.Classes.Eq Unison.Server.CodebaseServer.CodebaseServerOpts
 instance GHC.Show.Show Unison.Server.CodebaseServer.CodebaseServerOpts
 instance GHC.Show.Show Unison.Server.CodebaseServer.BaseUrl
