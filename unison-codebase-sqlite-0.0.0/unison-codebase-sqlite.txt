@@ -5,16 +5,6 @@
 @package unison-codebase-sqlite
 @version 0.0.0
 
-module U.Codebase.Sqlite.Connection
-data Connection
-Connection :: String -> FilePath -> Connection -> Connection
-[name] :: Connection -> String
-[file] :: Connection -> FilePath
-[underlying] :: Connection -> Connection
-showFile :: Bool
-showHandle :: Bool
-instance GHC.Show.Show U.Codebase.Sqlite.Connection.Connection
-
 module U.Codebase.Sqlite.DbId
 newtype HashVersion
 HashVersion :: Word64 -> HashVersion
@@ -136,16 +126,6 @@ DbCausal :: causalHash -> valueHash -> Set causalHash -> GDbCausal causalHash va
 [valueHash] :: GDbCausal causalHash valueHash -> valueHash
 [parents] :: GDbCausal causalHash valueHash -> Set causalHash
 type DbCausal = GDbCausal CausalHashId BranchHashId
-
-module U.Codebase.Sqlite.JournalMode
-data JournalMode
-DELETE :: JournalMode
-TRUNCATE :: JournalMode
-PERSIST :: JournalMode
-MEMORY :: JournalMode
-WAL :: JournalMode
-OFF :: JournalMode
-instance GHC.Show.Show U.Codebase.Sqlite.JournalMode.JournalMode
 
 module U.Codebase.Sqlite.LocalIds
 
@@ -492,121 +472,142 @@ type LocalReferentH = Referent' LocalReferenceH LocalReferenceH
 instance Database.SQLite.Simple.ToRow.ToRow U.Codebase.Sqlite.Referent.Id
 instance Database.SQLite.Simple.FromRow.FromRow U.Codebase.Sqlite.Referent.Id
 
+
+-- | Some naming conventions used in this module:
+--   
+--   <ul>
+--   <li><tt>32</tt>: the base32 representation of a hash</li>
+--   <li><tt>expect</tt>: retrieve something that's known to exist</li>
+--   <li><tt>load</tt>: retrieve something that's not known to exist (so
+--   the return type is a Maybe, or another container that could be
+--   empty)</li>
+--   <li><tt>save</tt>: idempotent (on conflict do nothing) insert, and
+--   return the id of the thing (usually)</li>
+--   </ul>
 module U.Codebase.Sqlite.Queries
-type DB m = (MonadIO m, MonadReader Connection m)
-type EDB m = (DB m, Err m)
-type Err m = (MonadError Integrity m, HasCallStack)
-data Integrity
-UnknownHashId :: HashId -> Integrity
-UnknownTextId :: TextId -> Integrity
-UnknownObjectId :: ObjectId -> Integrity
-UnknownCausalHashId :: CausalHashId -> Integrity
-UnknownHash :: Hash -> Integrity
-NoObjectForHashId :: HashId -> Integrity
-NoObjectForPrimaryHashId :: HashId -> Integrity
-NoNamespaceRoot :: Integrity
-MultipleNamespaceRoots :: [CausalHashId] -> Integrity
-NoSchemaVersion :: Integrity
-MultipleSchemaVersions :: [SchemaVersion] -> Integrity
-NoTypeIndexForTerm :: Id -> Integrity
-saveText :: DB m => Text -> m TextId
-loadText :: DB m => Text -> m (Maybe TextId)
-loadTextById :: EDB m => TextId -> m Text
-saveHash :: DB m => Base32Hex -> m HashId
-saveHashHash :: DB m => Hash -> m HashId
-loadHashId :: DB m => Base32Hex -> m (Maybe HashId)
-loadHashById :: EDB m => HashId -> m Base32Hex
-loadHashHashById :: EDB m => HashId -> m Hash
-loadHashIdByHash :: DB m => Hash -> m (Maybe HashId)
-expectHashIdByHash :: EDB m => Hash -> m HashId
-saveCausalHash :: DB m => CausalHash -> m CausalHashId
-loadCausalHash :: EDB m => CausalHashId -> m CausalHash
-saveBranchHash :: DB m => BranchHash -> m BranchHashId
-saveHashObject :: DB m => HashId -> ObjectId -> HashVersion -> m ()
-hashIdsForObject :: DB m => ObjectId -> m (NonEmpty HashId)
-hashIdWithVersionForObject :: DB m => ObjectId -> m [(HashId, HashVersion)]
+saveText :: Text -> Transaction TextId
+loadTextId :: Text -> Transaction (Maybe TextId)
+expectTextId :: Text -> Transaction TextId
+expectText :: TextId -> Transaction Text
+expectTextCheck :: SqliteExceptionReason e => TextId -> (Text -> Either e a) -> Transaction a
+saveHash :: Base32Hex -> Transaction HashId
+saveHashHash :: Hash -> Transaction HashId
+loadHashId :: Base32Hex -> Transaction (Maybe HashId)
+expectHash :: HashId -> Transaction Hash
+expectHash32 :: HashId -> Transaction Base32Hex
+loadHashIdByHash :: Hash -> Transaction (Maybe HashId)
+expectHashIdByHash :: Hash -> Transaction HashId
+saveCausalHash :: CausalHash -> Transaction CausalHashId
+expectCausalHash :: CausalHashId -> Transaction CausalHash
+saveBranchHash :: BranchHash -> Transaction BranchHashId
+saveHashObject :: HashId -> ObjectId -> HashVersion -> Transaction ()
+expectHashIdsForObject :: ObjectId -> Transaction (NonEmpty HashId)
+hashIdWithVersionForObject :: ObjectId -> Transaction [(HashId, HashVersion)]
+loadObjectIdForPrimaryHashId :: HashId -> Transaction (Maybe ObjectId)
 
 -- | Not all hashes have corresponding objects; e.g., hashes of term types
-expectObjectIdForPrimaryHashId :: EDB m => HashId -> m ObjectId
-expectObjectIdForAnyHashId :: EDB m => HashId -> m ObjectId
-maybeObjectIdForPrimaryHashId :: DB m => HashId -> m (Maybe ObjectId)
-maybeObjectIdForAnyHashId :: DB m => HashId -> m (Maybe ObjectId)
+expectObjectIdForPrimaryHashId :: HashId -> Transaction ObjectId
+loadObjectIdForPrimaryHash :: Hash -> Transaction (Maybe ObjectId)
+expectObjectIdForPrimaryHash :: Hash -> Transaction ObjectId
+loadPatchObjectIdForPrimaryHash :: PatchHash -> Transaction (Maybe PatchObjectId)
+loadObjectIdForAnyHash :: Hash -> Transaction (Maybe ObjectId)
+loadObjectIdForAnyHashId :: HashId -> Transaction (Maybe ObjectId)
+expectObjectIdForAnyHashId :: HashId -> Transaction ObjectId
 
 -- | <tt>recordObjectRehash old new</tt> records that object <tt>old</tt>
 --   was rehashed and inserted as a new object, <tt>new</tt>.
 --   
 --   This function rewrites <tt>old</tt>'s <tt>hash_object</tt> rows in
 --   place to point at the new object.
-recordObjectRehash :: DB m => ObjectId -> ObjectId -> m ()
-saveObject :: DB m => HashId -> ObjectType -> ByteString -> m ObjectId
-loadObjectById :: EDB m => ObjectId -> m ByteString
+recordObjectRehash :: ObjectId -> ObjectId -> Transaction ()
+saveObject :: HashId -> ObjectType -> ByteString -> Transaction ObjectId
+expectObject :: SqliteExceptionReason e => ObjectId -> (ByteString -> Either e a) -> Transaction a
 
 -- | All objects have corresponding hashes.
-loadPrimaryHashByObjectId :: EDB m => ObjectId -> m Base32Hex
-loadObjectWithTypeById :: EDB m => ObjectId -> m (ObjectType, ByteString)
-loadObjectWithHashIdAndTypeById :: EDB m => ObjectId -> m (HashId, ObjectType, ByteString)
-updateObjectBlob :: DB m => ObjectId -> ByteString -> m ()
-loadMaybeNamespaceRoot :: EDB m => m (Maybe CausalHashId)
-setNamespaceRoot :: forall m. DB m => CausalHashId -> m ()
-loadNamespaceRoot :: EDB m => m CausalHashId
+expectPrimaryHashByObjectId :: ObjectId -> Transaction Hash
+expectObjectWithHashIdAndType :: ObjectId -> Transaction (HashId, ObjectType, ByteString)
+
+-- | Expect a decl component object.
+expectDeclObject :: SqliteExceptionReason e => ObjectId -> (ByteString -> Either e a) -> Transaction a
+
+-- | Load a decl component object.
+loadDeclObject :: SqliteExceptionReason e => ObjectId -> (ByteString -> Either e a) -> Transaction (Maybe a)
+
+-- | Expect a namespace object.
+expectNamespaceObject :: SqliteExceptionReason e => ObjectId -> (ByteString -> Either e a) -> Transaction a
+
+-- | Load a namespace object.
+loadNamespaceObject :: SqliteExceptionReason e => ObjectId -> (ByteString -> Either e a) -> Transaction (Maybe a)
+
+-- | Expect a patch object.
+expectPatchObject :: SqliteExceptionReason e => ObjectId -> (ByteString -> Either e a) -> Transaction a
+
+-- | Load a patch object.
+loadPatchObject :: SqliteExceptionReason e => ObjectId -> (ByteString -> Either e a) -> Transaction (Maybe a)
+
+-- | Load a term component object.
+loadTermObject :: SqliteExceptionReason e => ObjectId -> (ByteString -> Either e a) -> Transaction (Maybe a)
+
+-- | Expect a term component object.
+expectTermObject :: SqliteExceptionReason e => ObjectId -> (ByteString -> Either e a) -> Transaction a
+loadNamespaceRoot :: Transaction (Maybe CausalHashId)
+setNamespaceRoot :: CausalHashId -> Transaction ()
+expectNamespaceRoot :: Transaction CausalHashId
 
 -- | Maybe we would generalize this to something other than NamespaceHash
 --   if we end up wanting to store other kinds of Causals here too.
-saveCausal :: DB m => CausalHashId -> BranchHashId -> m ()
-isCausalHash :: DB m => HashId -> m Bool
-loadCausalHashIdByCausalHash :: DB m => CausalHash -> m (Maybe CausalHashId)
+saveCausal :: CausalHashId -> BranchHashId -> Transaction ()
+isCausalHash :: HashId -> Transaction Bool
+loadCausalHashIdByCausalHash :: CausalHash -> Transaction (Maybe CausalHashId)
 
 -- | ]
-loadCausalValueHashId :: EDB m => CausalHashId -> m BranchHashId
-loadCausalByCausalHash :: DB m => CausalHash -> m (Maybe (CausalHashId, BranchHashId))
-loadBranchObjectIdByCausalHashId :: EDB m => CausalHashId -> m (Maybe BranchObjectId)
-saveCausalParents :: DB m => CausalHashId -> [CausalHashId] -> m ()
-loadCausalParents :: DB m => CausalHashId -> m [CausalHashId]
-before :: DB m => CausalHashId -> CausalHashId -> m Bool
-lca :: CausalHashId -> CausalHashId -> Connection -> Connection -> IO (Maybe CausalHashId)
-saveWatch :: DB m => WatchKind -> IdH -> ByteString -> m ()
-loadWatch :: DB m => WatchKind -> IdH -> m (Maybe ByteString)
-loadWatchesByWatchKind :: DB m => WatchKind -> m [IdH]
-loadWatchKindsByReference :: DB m => IdH -> m [WatchKind]
-clearWatches :: DB m => m ()
-addToDependentsIndex :: DB m => Reference -> Id -> m ()
+expectCausalValueHashId :: CausalHashId -> Transaction BranchHashId
+loadCausalByCausalHash :: CausalHash -> Transaction (Maybe (CausalHashId, BranchHashId))
+loadBranchObjectIdByCausalHashId :: CausalHashId -> Transaction (Maybe BranchObjectId)
+expectBranchObjectIdByCausalHashId :: CausalHashId -> Transaction BranchObjectId
+saveCausalParents :: CausalHashId -> [CausalHashId] -> Transaction ()
+loadCausalParents :: CausalHashId -> Transaction [CausalHashId]
+before :: CausalHashId -> CausalHashId -> Transaction Bool
+lca :: CausalHashId -> CausalHashId -> Transaction (Maybe CausalHashId)
+saveWatch :: WatchKind -> IdH -> ByteString -> Transaction ()
+loadWatch :: SqliteExceptionReason e => WatchKind -> IdH -> (ByteString -> Either e a) -> Transaction (Maybe a)
+loadWatchesByWatchKind :: WatchKind -> Transaction [IdH]
+loadWatchKindsByReference :: IdH -> Transaction [WatchKind]
+clearWatches :: Transaction ()
+addToDependentsIndex :: Reference -> Id -> Transaction ()
 
 -- | Get non-self, user-defined dependents of a dependency.
-getDependentsForDependency :: DB m => Reference -> m [Id]
-getDependentsForDependencyComponent :: DB m => ObjectId -> m [Id]
+getDependentsForDependency :: Reference -> Transaction [Id]
+getDependentsForDependencyComponent :: ObjectId -> Transaction [Id]
 
 -- | Get non-self dependencies of a user-defined dependent.
-getDependenciesForDependent :: DB m => Id -> m [Reference]
+getDependenciesForDependent :: Id -> Transaction [Reference]
 
 -- | Get non-self, user-defined dependencies of a user-defined dependent.
-getDependencyIdsForDependent :: DB m => Id -> m [Id]
-countObjects :: DB m => m Int
-countCausals :: DB m => m Int
-countWatches :: DB m => m Int
+getDependencyIdsForDependent :: Id -> Transaction [Id]
+countObjects :: Transaction Int
+countCausals :: Transaction Int
+countWatches :: Transaction Int
 
 -- | Finds all causals that refer to a branch for which we don't have an
 --   object stored. Although there are plans to support this in the future,
 --   currently all such cases are the result of database inconsistencies
 --   and are unexpected.
-getCausalsWithoutBranchObjects :: DB m => m [CausalHashId]
+getCausalsWithoutBranchObjects :: Transaction [CausalHashId]
 
 -- | Delete all hash objects of a given hash version. Leaves the
 --   corresponding <tt>hash</tt>es in the hash table alone.
-removeHashObjectsByHashingVersion :: DB m => HashVersion -> m ()
-addToTypeIndex :: DB m => Reference' TextId HashId -> Id -> m ()
-getReferentsByType :: DB m => Reference' TextId HashId -> m [Id]
-getTypeReferenceForReferent :: EDB m => Id -> m (Reference' TextId HashId)
-getTypeReferencesForComponent :: EDB m => ObjectId -> m [(Reference' TextId HashId, Id)]
-addToTypeMentionsIndex :: DB m => Reference' TextId HashId -> Id -> m ()
-getReferentsByTypeMention :: DB m => Reference' TextId HashId -> m [Id]
-getTypeMentionsReferencesForComponent :: EDB m => ObjectId -> m [(Reference' TextId HashId, Id)]
-objectIdByBase32Prefix :: DB m => ObjectType -> Text -> m [ObjectId]
-namespaceHashIdByBase32Prefix :: DB m => Text -> m [BranchHashId]
-causalHashIdByBase32Prefix :: DB m => Text -> m [CausalHashId]
-
--- | Clean the database and recover disk space. This is an expensive
---   operation. Also note that it cannot be executed within a transaction.
-vacuum :: DB m => m ()
+removeHashObjectsByHashingVersion :: HashVersion -> Transaction ()
+addToTypeIndex :: Reference' TextId HashId -> Id -> Transaction ()
+getReferentsByType :: Reference' TextId HashId -> Transaction [Id]
+getTypeReferenceForReferent :: Id -> Transaction (Reference' TextId HashId)
+getTypeReferencesForComponent :: ObjectId -> Transaction [(Reference' TextId HashId, Id)]
+addToTypeMentionsIndex :: Reference' TextId HashId -> Id -> Transaction ()
+getReferentsByTypeMention :: Reference' TextId HashId -> Transaction [Id]
+getTypeMentionsReferencesForComponent :: ObjectId -> Transaction [(Reference' TextId HashId, Id)]
+objectIdByBase32Prefix :: ObjectType -> Text -> Transaction [ObjectId]
+namespaceHashIdByBase32Prefix :: Text -> Transaction [BranchHashId]
+causalHashIdByBase32Prefix :: Text -> Transaction [CausalHashId]
 
 -- | Delete objects without hashes. An object typically *would* have a
 --   hash, but (for example) during a migration in which an object's hash
@@ -614,58 +615,18 @@ vacuum :: DB m => m ()
 --   at a new version of that object. This procedure clears out all
 --   references to objects that do not have any corresponding hash_object
 --   rows.
-garbageCollectObjectsWithoutHashes :: DB m => m ()
+garbageCollectObjectsWithoutHashes :: Transaction ()
 
 -- | Delete all
-garbageCollectWatchesWithoutObjects :: DB m => m ()
-createSchema :: (DB m, MonadUnliftIO m) => m ()
-schemaVersion :: DB m => m SchemaVersion
-setSchemaVersion :: DB m => SchemaVersion -> m ()
-setFlags :: DB m => m ()
+garbageCollectWatchesWithoutObjects :: Transaction ()
+createSchema :: Transaction ()
+schemaVersion :: Transaction SchemaVersion
 
--- | The data version will increase if there has been any external
---   modification to the database since the last observed data version.
-data DataVersion
-dataVersion :: DB m => m DataVersion
-
--- | low-level transaction stuff
---   
---   Create a savepoint, which is a named transaction which may wrap many
---   nested sub-transactions.
-savepoint :: DB m => String -> m ()
-
--- | Release a savepoint, which will commit the results once all wrapping
---   transactions/savepoints are commited.
-release :: DB m => String -> m ()
-
--- | Roll back the savepoint and immediately release it. This effectively
---   _aborts_ the savepoint, useful if an irrecoverable error is
---   encountered.
-rollbackRelease :: DB m => String -> m ()
-
--- | Roll the database back to its state from when the savepoint was
---   created. Note: this also re-starts the savepoint and it must still be
---   released if that is the intention. See <a>rollbackRelease</a>.
-rollbackTo :: DB m => String -> m ()
-
--- | Runs the provided action within a savepoint. Releases the savepoint on
---   completion. If an exception occurs, the savepoint will be rolled-back
---   and released, abandoning all changes.
-withSavepoint :: (MonadUnliftIO m, DB m) => String -> (m () -> m r) -> m r
-withSavepoint_ :: (MonadUnliftIO m, DB m) => String -> m r -> m r
-
--- | Copy the database into the specified location, performing a VACUUM in
---   the process.
-vacuumInto :: DB m => FilePath -> m ()
-setJournalMode :: DB m => JournalMode -> m ()
-
--- | print the active database filename
-traceConnectionFile :: DB m => m ()
-instance GHC.Show.Show U.Codebase.Sqlite.Queries.Integrity
-instance Database.SQLite.Simple.FromField.FromField U.Codebase.Sqlite.Queries.DataVersion
-instance GHC.Show.Show U.Codebase.Sqlite.Queries.DataVersion
-instance GHC.Classes.Ord U.Codebase.Sqlite.Queries.DataVersion
-instance GHC.Classes.Eq U.Codebase.Sqlite.Queries.DataVersion
+-- | Expect the given schema version.
+expectSchemaVersion :: SchemaVersion -> Transaction ()
+setSchemaVersion :: SchemaVersion -> Transaction ()
+instance Unison.Sqlite.Exception.SqliteExceptionReason U.Codebase.Sqlite.Queries.UnexpectedSchemaVersion
+instance GHC.Show.Show U.Codebase.Sqlite.Queries.UnexpectedSchemaVersion
 instance Database.SQLite.Simple.ToField.ToField U.Util.Base32Hex.Base32Hex
 instance Database.SQLite.Simple.FromField.FromField U.Util.Base32Hex.Base32Hex
 instance Database.SQLite.Simple.ToField.ToField U.Codebase.WatchKind.WatchKind
@@ -861,9 +822,6 @@ data Entity
 O :: ObjectId -> Entity
 C :: CausalHashId -> Entity
 W :: WatchKind -> IdH -> Entity
-data DbTag
-SrcDb :: DbTag
-DestDb :: DbTag
 data DecodeError
 ErrTermComponent :: DecodeError
 ErrDeclComponent :: DecodeError
@@ -872,26 +830,23 @@ ErrPatchFormat :: DecodeError
 ErrWatchResult :: DecodeError
 type ErrString = String
 data Error
-DbIntegrity :: Integrity -> Error
 DecodeError :: DecodeError -> ByteString -> ErrString -> Error
 
 -- | hashes corresponding to a single object in source codebase correspond
 --   to multiple objects in destination codebase
 HashObjectCorrespondence :: ObjectId -> [HashId] -> [HashId] -> [ObjectId] -> Error
 SourceDbNotExist :: Error
-data Env
-Env :: Connection -> Connection -> Word -> Env
-[srcDB] :: Env -> Connection
-[destDB] :: Env -> Connection
+data Env m
+Env :: (forall a. Transaction a -> m a) -> (forall a. Transaction a -> m a) -> Word -> Env m
+[runSrc] :: Env m -> forall a. Transaction a -> m a
+[runDest] :: Env m -> forall a. Transaction a -> m a
 
 -- | there are three caches of this size
-[idCacheSize] :: Env -> Word
+[idCacheSize] :: Env m -> Word
+hoistEnv :: (forall x. m x -> n x) -> Env m -> Env n
 debug :: Bool
-sync22 :: (MonadIO m, MonadError Error m, MonadReader Env m) => m (Sync m Entity)
-trySync :: forall m. (MonadIO m, MonadError Error m, MonadReader Env m) => Cache TextId TextId -> Cache HashId HashId -> Cache ObjectId ObjectId -> Cache CausalHashId CausalHashId -> Entity -> m (TrySyncResult Entity)
-runSrc :: (MonadError Error m, MonadReader Env m) => ReaderT Connection (ExceptT Integrity m) a -> m a
-runDest :: (MonadError Error m, MonadReader Env m) => ReaderT Connection (ExceptT Integrity m) a -> m a
-runDB :: MonadError Error m => Connection -> ReaderT Connection (ExceptT Integrity m) a -> m a
+sync22 :: (MonadIO m, MonadError Error m) => Env m -> IO (Sync m Entity)
+trySync :: forall m. (MonadIO m, MonadError Error m) => (forall a. Transaction a -> m a) -> (forall a. Transaction a -> m a) -> Cache TextId TextId -> Cache HashId HashId -> Cache ObjectId ObjectId -> Cache CausalHashId CausalHashId -> Entity -> m (TrySyncResult Entity)
 instance GHC.Show.Show U.Codebase.Sqlite.Sync22.Entity
 instance GHC.Classes.Ord U.Codebase.Sqlite.Sync22.Entity
 instance GHC.Classes.Eq U.Codebase.Sqlite.Sync22.Entity
@@ -899,92 +854,67 @@ instance GHC.Show.Show U.Codebase.Sqlite.Sync22.DecodeError
 instance GHC.Show.Show U.Codebase.Sqlite.Sync22.Error
 
 module U.Codebase.Sqlite.Operations
-dataVersion :: DB m => m DataVersion
-saveRootBranch :: EDB m => Causal m -> m (BranchObjectId, CausalHashId)
-loadMaybeRootCausalHash :: EDB m => m (Maybe CausalHash)
-loadRootCausalHash :: EDB m => m CausalHash
-loadRootCausal :: EDB m => m (Causal m)
-saveBranch :: EDB m => Causal m -> m (BranchObjectId, CausalHashId)
-loadCausalBranchByCausalHash :: EDB m => CausalHash -> m (Maybe (Causal m))
-saveTermComponent :: EDB m => Hash -> [(Term Symbol, Type Symbol)] -> m ObjectId
-loadTermComponent :: EDB m => Hash -> MaybeT m [(Term Symbol, Type Symbol)]
-loadTermByReference :: EDB m => Id -> MaybeT m (Term Symbol)
-loadTypeOfTermByTermReference :: EDB m => Id -> MaybeT m (Type Symbol)
-saveDeclComponent :: EDB m => Hash -> [Decl Symbol] -> m ObjectId
-loadDeclComponent :: EDB m => Hash -> MaybeT m [Decl Symbol]
-loadDeclByReference :: EDB m => Id -> MaybeT m (Decl Symbol)
+saveRootBranch :: Causal Transaction -> Transaction (BranchObjectId, CausalHashId)
+loadRootCausalHash :: Transaction (Maybe CausalHash)
+expectRootCausalHash :: Transaction CausalHash
+expectRootCausal :: Transaction (Causal Transaction)
+saveBranch :: Causal Transaction -> Transaction (BranchObjectId, CausalHashId)
+loadCausalBranchByCausalHash :: CausalHash -> Transaction (Maybe (Causal Transaction))
+saveTermComponent :: Hash -> [(Term Symbol, Type Symbol)] -> Transaction ObjectId
+loadTermComponent :: Hash -> MaybeT Transaction [(Term Symbol, Type Symbol)]
+loadTermByReference :: Id -> MaybeT Transaction (Term Symbol)
+loadTypeOfTermByTermReference :: Id -> MaybeT Transaction (Type Symbol)
+saveDeclComponent :: Hash -> [Decl Symbol] -> Transaction ObjectId
+loadDeclComponent :: Hash -> MaybeT Transaction [Decl Symbol]
+loadDeclByReference :: Id -> MaybeT Transaction (Decl Symbol)
 
 -- | Get the <a>DeclType</a> of a <a>Id</a>.
-getDeclTypeById :: EDB m => Id -> m DeclType
-getCycleLen :: EDB m => Hash -> m (Maybe Word64)
-savePatch :: EDB m => PatchHash -> Patch -> m PatchObjectId
-loadPatchById :: EDB m => PatchObjectId -> m Patch
-objectExistsForHash :: DB m => Hash -> m Bool
-loadHashByObjectId :: EDB m => ObjectId -> m Hash
-primaryHashToMaybeObjectId :: DB m => Hash -> m (Maybe ObjectId)
-primaryHashToMaybePatchObjectId :: EDB m => PatchHash -> m (Maybe PatchObjectId)
-saveWatch :: EDB m => WatchKind -> Id -> Term Symbol -> m ()
+expectDeclTypeById :: Id -> Transaction DeclType
+getCycleLen :: Hash -> Transaction (Maybe Word64)
+savePatch :: PatchHash -> Patch -> Transaction PatchObjectId
+expectPatch :: PatchObjectId -> Transaction Patch
+objectExistsForHash :: Hash -> Transaction Bool
+saveWatch :: WatchKind -> Id -> Term Symbol -> Transaction ()
 
 -- | returns Nothing if the expression isn't cached.
-loadWatch :: EDB m => WatchKind -> Id -> MaybeT m (Term Symbol)
-listWatches :: EDB m => WatchKind -> m [Id]
-clearWatches :: DB m => m ()
-before :: DB m => CausalHash -> CausalHash -> m (Maybe Bool)
-lca :: EDB m => CausalHash -> CausalHash -> Connection -> Connection -> m (Maybe CausalHash)
-componentReferencesByPrefix :: EDB m => ObjectType -> Text -> Maybe Pos -> m [Id]
-termReferentsByPrefix :: EDB m => Text -> Maybe Word64 -> m [Id]
-declReferentsByPrefix :: EDB m => Text -> Maybe Pos -> Maybe ConstructorId -> m [(Hash, Pos, DeclType, [ConstructorId])]
-causalHashesByPrefix :: EDB m => ShortBranchHash -> m (Set CausalHash)
+loadWatch :: WatchKind -> Id -> MaybeT Transaction (Term Symbol)
+listWatches :: WatchKind -> Transaction [Id]
+clearWatches :: Transaction ()
+before :: CausalHash -> CausalHash -> Transaction (Maybe Bool)
+lca :: CausalHash -> CausalHash -> Transaction (Maybe CausalHash)
+componentReferencesByPrefix :: ObjectType -> Text -> Maybe Pos -> Transaction [Id]
+termReferentsByPrefix :: Text -> Maybe Word64 -> Transaction [Id]
+declReferentsByPrefix :: Text -> Maybe Pos -> Maybe ConstructorId -> Transaction [(Hash, Pos, DeclType, [ConstructorId])]
+causalHashesByPrefix :: ShortBranchHash -> Transaction (Set CausalHash)
 
 -- | returns a list of known definitions referencing <tt>r</tt>
-dependents :: EDB m => Reference -> m (Set Id)
+dependents :: Reference -> Transaction (Set Id)
 
 -- | returns a list of known definitions referencing <tt>h</tt>
-dependentsOfComponent :: EDB m => Hash -> m (Set Id)
-addTypeToIndexForTerm :: EDB m => Id -> Reference -> m ()
-termsHavingType :: EDB m => Reference -> m (Set Id)
-addTypeMentionsToIndexForTerm :: EDB m => Id -> Set Reference -> m ()
-termsMentioningType :: EDB m => Reference -> m (Set Id)
-liftQ :: Err m => ExceptT Integrity m a -> m a
-loadDbBranchByObjectId :: EDB m => BranchObjectId -> m DbBranch
-loadDbPatchById :: EDB m => PatchObjectId -> m Patch
-saveBranchObject :: DB m => BranchHashId -> BranchLocalIds -> LocalBranch -> m BranchObjectId
-saveDbPatch :: EDB m => PatchHash -> PatchFormat -> m PatchObjectId
-data Error
-DecodeError :: DecodeError -> ByteString -> ErrString -> Error
-DatabaseIntegrityError :: Integrity -> Error
-UnknownDependency :: Hash -> Error
-ExpectedBranch :: CausalHash -> BranchHash -> Error
-ExpectedBranch' :: CausalHashId -> Error
-LegacyUnknownCycleLen :: Hash -> Error
-LegacyUnknownConstructorType :: Hash -> Pos -> Error
-NeedTypeForBuiltinMetadata :: Text -> Error
-data DecodeError
-ErrTermFormat :: DecodeError
-ErrDeclFormat :: DecodeError
-ErrTermElement :: Word64 -> DecodeError
-ErrDeclElement :: Word64 -> DecodeError
-ErrFramedArrayLen :: DecodeError
-ErrTypeOfTerm :: Id -> DecodeError
-ErrWatch :: WatchKind -> Id -> DecodeError
-ErrBranch :: BranchObjectId -> DecodeError
-ErrPatch :: PatchObjectId -> DecodeError
-ErrObjectDependencies :: ObjectType -> ObjectId -> DecodeError
-type EDB m = (Err m, DB m)
-c2sReferenceId :: EDB m => Id -> m Id
-c2sReferentId :: EDB m => Id -> m Id
+dependentsOfComponent :: Hash -> Transaction (Set Id)
+addTypeToIndexForTerm :: Id -> Reference -> Transaction ()
+termsHavingType :: Reference -> Transaction (Set Id)
+addTypeMentionsToIndexForTerm :: Id -> Set Reference -> Transaction ()
+termsMentioningType :: Reference -> Transaction (Set Id)
+expectDbBranch :: BranchObjectId -> Transaction DbBranch
+expectDbPatch :: PatchObjectId -> Transaction Patch
+saveBranchObject :: BranchHashId -> BranchLocalIds -> LocalBranch -> Transaction BranchObjectId
+saveDbPatch :: PatchHash -> PatchFormat -> Transaction PatchObjectId
+c2sReferenceId :: Id -> Transaction Id
+c2sReferentId :: Id -> Transaction Id
 
 -- | produces a diff diff = full - ref; full = diff + ref
 diffPatch :: LocalPatch -> LocalPatch -> LocalPatchDiff
-decodeTermElementWithType :: Err m => Pos -> ByteString -> m (LocalIds, Term, Type)
-loadTermWithTypeByReference :: EDB m => Id -> MaybeT m (Term Symbol, Type Symbol)
-s2cTermWithType :: EDB m => LocalIds -> Term -> Type -> m (Term Symbol, Type Symbol)
-declReferencesByPrefix :: EDB m => Text -> Maybe Word64 -> m [Id]
-branchHashesByPrefix :: EDB m => ShortBranchHash -> m (Set BranchHash)
+decodeTermElementWithType :: Pos -> ByteString -> Either DecodeError (LocalIds, Term, Type)
+loadTermWithTypeByReference :: Id -> MaybeT Transaction (Term Symbol, Type Symbol)
+s2cTermWithType :: LocalIds -> Term -> Type -> Transaction (Term Symbol, Type Symbol)
+declReferencesByPrefix :: Text -> Maybe Word64 -> Transaction [Id]
+branchHashesByPrefix :: ShortBranchHash -> Transaction (Set BranchHash)
 
 -- | returns empty set for unknown inputs; doesn't distinguish between term
 --   and decl
-derivedDependencies :: EDB m => Id -> m (Set Id)
+derivedDependencies :: Id -> Transaction (Set Id)
+instance Unison.Sqlite.Exception.SqliteExceptionReason U.Codebase.Sqlite.Operations.DecodeError
 instance GHC.Show.Show U.Codebase.Sqlite.Operations.DecodeError
-instance GHC.Show.Show U.Codebase.Sqlite.Operations.Error
-instance GHC.Exception.Type.Exception U.Codebase.Sqlite.Operations.Error
+instance Unison.Sqlite.Exception.SqliteExceptionReason U.Codebase.Sqlite.Operations.NeedTypeForBuiltinMetadata
+instance GHC.Show.Show U.Codebase.Sqlite.Operations.NeedTypeForBuiltinMetadata

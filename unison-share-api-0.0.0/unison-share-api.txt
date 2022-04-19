@@ -420,7 +420,6 @@ listEntryName :: ShallowListEntry v a -> Text
 data BackendError
 NoSuchNamespace :: Absolute -> BackendError
 BadNamespace :: String -> String -> BackendError
-BadRootBranch :: GetRootBranchError -> BackendError
 CouldntExpandBranchHash :: ShortBranchHash -> BackendError
 AmbiguousBranchHash :: ShortBranchHash -> Set ShortBranchHash -> BackendError
 NoBranchForHash :: Hash -> BackendError
@@ -432,7 +431,6 @@ basicSuffixifiedNames :: Int -> Branch m -> NameScoping -> PrettyPrintEnv
 basicPrettyPrintNames :: Branch m -> NameScoping -> Names
 basicParseNames :: Branch m -> NameScoping -> Names
 loadReferentType :: Applicative m => Codebase m Symbol Ann -> Referent -> m (Maybe (Type Symbol Ann))
-getRootBranch :: Functor m => Codebase m v Ann -> Backend m (Branch m)
 data TermEntry v a
 TermEntry :: Referent -> HQSegment -> Maybe (Type v a) -> Maybe TermTag -> TermEntry v a
 [$sel:termEntryReferent:TermEntry] :: TermEntry v a -> Referent
@@ -448,18 +446,18 @@ data FoundRef
 FoundTermRef :: Referent -> FoundRef
 FoundTypeRef :: Reference -> FoundRef
 fuzzyFind :: Monad m => Path -> Branch m -> String -> [(Alignment, UnisonName, [FoundRef])]
-findShallow :: Monad m => Codebase m Symbol Ann -> Absolute -> Backend m [ShallowListEntry Symbol Ann]
+findShallow :: Monad m => Codebase m Symbol Ann -> Absolute -> m [ShallowListEntry Symbol Ann]
 findShallowReadmeInBranchAndRender :: Width -> Runtime Symbol -> Codebase IO Symbol Ann -> NamesWithHistory -> Branch IO -> Backend IO (Maybe Doc)
 isDoc :: Monad m => Codebase m Symbol Ann -> Referent -> m Bool
 isDoc' :: (Var v, Monoid loc) => Maybe (Type v loc) -> Bool
-termListEntry :: Monad m => Codebase m Symbol Ann -> Branch0 m -> Referent -> HQSegment -> Backend m (TermEntry Symbol Ann)
-typeListEntry :: Monad m => Var v => Codebase m v Ann -> Reference -> HQSegment -> Backend m TypeEntry
-typeDeclHeader :: forall v m. Monad m => Var v => Codebase m v Ann -> PrettyPrintEnv -> Reference -> Backend m (DisplayObject SyntaxText SyntaxText)
+termListEntry :: Monad m => Codebase m Symbol Ann -> Branch0 m -> Referent -> HQSegment -> m (TermEntry Symbol Ann)
+typeListEntry :: Monad m => Var v => Codebase m v Ann -> Reference -> HQSegment -> m TypeEntry
+typeDeclHeader :: forall v m. Monad m => Var v => Codebase m v Ann -> PrettyPrintEnv -> Reference -> m (DisplayObject SyntaxText SyntaxText)
 formatTypeName :: PrettyPrintEnv -> Reference -> SyntaxText
 formatTypeName' :: PrettyPrintEnv -> Reference -> SyntaxText
 termEntryToNamedTerm :: Var v => PrettyPrintEnv -> Maybe Width -> TermEntry v a -> NamedTerm
 typeEntryToNamedType :: TypeEntry -> NamedType
-findShallowInBranch :: Monad m => Codebase m Symbol Ann -> Branch m -> Backend m [ShallowListEntry Symbol Ann]
+findShallowInBranch :: Monad m => Codebase m Symbol Ann -> Branch m -> m [ShallowListEntry Symbol Ann]
 termReferencesByShortHash :: Monad m => Codebase m v a -> ShortHash -> m (Set Reference)
 
 -- | Look up types in the codebase by short hash, and include builtins.
@@ -553,7 +551,6 @@ instance GHC.Classes.Eq Unison.Server.Backend.FoundRef
 module Unison.Server.Errors
 badHQN :: HashQualifiedName -> ServerError
 backendError :: BackendError -> ServerError
-rootBranchError :: GetRootBranchError -> ServerError
 badNamespace :: String -> String -> ServerError
 noSuchNamespace :: HashQualifiedName -> ServerError
 couldntLoadBranch :: Hash -> ServerError

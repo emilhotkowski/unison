@@ -1,93 +1,35 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema2To3</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema2To3.html#migrateSchema2To3"><span class="hs-identifier">migrateSchema2To3</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
 </span><span id="line-2"></span><span>
-</span><span id="line-3"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Control.Monad.Reader</span></span><span>
-</span><span id="line-4"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">U.Codebase.Sqlite.Connection</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Connection</span></span><span class="hs-special">)</span><span>
-</span><span id="line-5"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">U.Codebase.Sqlite.DbId</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">HashVersion</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">SchemaVersion</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
-</span><span id="line-6"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">U.Codebase.Sqlite.Queries</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Q</span></span><span>
-</span><span id="line-7"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Unison.Codebase.html"><span class="hs-identifier">Unison.Codebase</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Codebase.Type.html#Codebase"><span class="hs-identifier">Codebase</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-8"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.Errors.html"><span class="hs-identifier">Unison.Codebase.SqliteCodebase.Migrations.Errors</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.Errors.html#MigrationError"><span class="hs-identifier">MigrationError</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.Errors.html#IncorrectStartingSchemaVersion"><span class="hs-identifier">IncorrectStartingSchemaVersion</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
-</span><span id="line-9"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Var</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Var</span></span><span class="hs-special">)</span><span>
-</span><span id="line-10"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Prelude</span></span><span>
-</span><span id="line-11"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">UnliftIO</span></span><span>
-</span><span id="line-12"></span><span>
-</span><span id="line-13"></span><span class="hs-comment">-- | The 1 to 2 migration kept around hash objects of hash version 1, unfortunately this</span><span>
-</span><span id="line-14"></span><span class="hs-comment">-- caused an issue:</span><span>
-</span><span id="line-15"></span><span class="hs-comment">--</span><span>
-</span><span id="line-16"></span><span class="hs-comment">-- The migration would detect causals whose value hash did not have a corresponding branch</span><span>
-</span><span id="line-17"></span><span class="hs-comment">-- object, this was caused by a race-condition in sync which could end up in a partial sync.</span><span>
-</span><span id="line-18"></span><span class="hs-comment">-- When a branch object was determined to be missing, the migration would replace it with the</span><span>
-</span><span id="line-19"></span><span class="hs-comment">-- empty branch. This worked well, but led to a situation where related parent or successors</span><span>
-</span><span id="line-20"></span><span class="hs-comment">-- of that causal would have their hash objects mapped to the new v2 object which contained</span><span>
-</span><span id="line-21"></span><span class="hs-comment">-- the empty branch in place of missing branches. This is fine, but, if a different codebase</span><span>
-</span><span id="line-22"></span><span class="hs-comment">-- migrated the same branch and wasn't missing the branch in question it would migrate</span><span>
-</span><span id="line-23"></span><span class="hs-comment">-- successfully and each database now have the same v1 hash object mapped to two distinct v2</span><span>
-</span><span id="line-24"></span><span class="hs-comment">-- objects, which rightfully causes a crash when syncing.</span><span>
-</span><span id="line-25"></span><span class="hs-comment">--</span><span>
-</span><span id="line-26"></span><span class="hs-comment">-- This migration drops all the v1 hash objects to avoid this issue, since these hash objects</span><span>
-</span><span id="line-27"></span><span class="hs-comment">-- weren't being used for anything anyways.</span><span>
-</span><span id="line-28"></span><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema2To3.html#migrateSchema2To3"><span class="hs-identifier hs-type">migrateSchema2To3</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-keyword">forall</span><span> </span><span id="local-6989586621680792831"><span class="annot"><a href="#local-6989586621680792831"><span class="hs-identifier hs-type">a</span></a></span></span><span> </span><span id="local-6989586621680792830"><span class="annot"><a href="#local-6989586621680792830"><span class="hs-identifier hs-type">m</span></a></span></span><span> </span><span id="local-6989586621680792829"><span class="annot"><a href="#local-6989586621680792829"><span class="hs-identifier hs-type">v</span></a></span></span><span class="hs-operator">.</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">MonadUnliftIO</span></span><span> </span><span class="annot"><a href="#local-6989586621680792830"><span class="hs-identifier hs-type">m</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Var</span></span><span> </span><span class="annot"><a href="#local-6989586621680792829"><span class="hs-identifier hs-type">v</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Connection</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Unison.Codebase.Type.html#Codebase"><span class="hs-identifier hs-type">Codebase</span></a></span><span> </span><span class="annot"><a href="#local-6989586621680792830"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="#local-6989586621680792829"><span class="hs-identifier hs-type">v</span></a></span><span> </span><span class="annot"><a href="#local-6989586621680792831"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621680792830"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.Errors.html#MigrationError"><span class="hs-identifier hs-type">MigrationError</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
-</span><span id="line-29"></span><span id="migrateSchema2To3"><span class="annot"><span class="annottext">migrateSchema2To3 :: Connection -&gt; Codebase m v a -&gt; m (Either MigrationError ())
-</span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema2To3.html#migrateSchema2To3"><span class="hs-identifier hs-var hs-var">migrateSchema2To3</span></a></span></span><span> </span><span id="local-6989586621680792828"><span class="annot"><span class="annottext">Connection
-</span><a href="#local-6989586621680792828"><span class="hs-identifier hs-var">conn</span></a></span></span><span> </span><span class="annot"><span class="annottext">Codebase m v a
-</span><span class="hs-identifier">_</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">m () -&gt; m (Either MigrationError ())
-forall (m :: * -&gt; *) e a.
-(MonadUnliftIO m, Exception e) =&gt;
-m a -&gt; m (Either e a)
-</span><span class="hs-identifier hs-var">UnliftIO.try</span></span><span> </span><span class="annot"><span class="annottext">(m () -&gt; m (Either MigrationError ()))
--&gt; (ReaderT Connection m () -&gt; m ())
--&gt; ReaderT Connection m ()
--&gt; m (Either MigrationError ())
-forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
-</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">(ReaderT Connection m () -&gt; Connection -&gt; m ())
--&gt; Connection -&gt; ReaderT Connection m () -&gt; m ()
-forall a b c. (a -&gt; b -&gt; c) -&gt; b -&gt; a -&gt; c
-</span><span class="hs-identifier hs-var">flip</span></span><span> </span><span class="annot"><span class="annottext">ReaderT Connection m () -&gt; Connection -&gt; m ()
-forall r (m :: * -&gt; *) a. ReaderT r m a -&gt; r -&gt; m a
-</span><span class="hs-identifier hs-var hs-var">runReaderT</span></span><span> </span><span class="annot"><span class="annottext">Connection
-</span><a href="#local-6989586621680792828"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="annot"><span class="annottext">(ReaderT Connection m () -&gt; m (Either MigrationError ()))
--&gt; ReaderT Connection m () -&gt; m (Either MigrationError ())
-forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span>
-</span><span id="line-30"></span><span>  </span><span class="annot"><span class="annottext">String
--&gt; (ReaderT Connection m () -&gt; ReaderT Connection m ())
--&gt; ReaderT Connection m ()
-forall (m :: * -&gt; *) r.
-(MonadUnliftIO m, DB m) =&gt;
-String -&gt; (m () -&gt; m r) -&gt; m r
-</span><span class="hs-identifier hs-var">Q.withSavepoint</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><span class="hs-string">&quot;MIGRATE_SCHEMA_2_TO_3&quot;</span></span><span> </span><span class="annot"><span class="annottext">((ReaderT Connection m () -&gt; ReaderT Connection m ())
- -&gt; ReaderT Connection m ())
--&gt; (ReaderT Connection m () -&gt; ReaderT Connection m ())
--&gt; ReaderT Connection m ()
-forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621680792822"><span class="annot"><span class="annottext">ReaderT Connection m ()
-</span><a href="#local-6989586621680792822"><span class="hs-identifier hs-var">_rollback</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-31"></span><span>    </span><span id="local-6989586621680792821"><span class="annot"><span class="annottext">SchemaVersion
-</span><a href="#local-6989586621680792821"><span class="hs-identifier hs-var">version</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">ReaderT Connection m SchemaVersion
-forall (m :: * -&gt; *). DB m =&gt; m SchemaVersion
-</span><span class="hs-identifier hs-var">Q.schemaVersion</span></span><span>
-</span><span id="line-32"></span><span>    </span><span class="annot"><span class="annottext">Bool -&gt; ReaderT Connection m () -&gt; ReaderT Connection m ()
-forall (f :: * -&gt; *). Applicative f =&gt; Bool -&gt; f () -&gt; f ()
-</span><span class="hs-identifier hs-var">when</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">SchemaVersion
-</span><a href="#local-6989586621680792821"><span class="hs-identifier hs-var">version</span></a></span><span> </span><span class="annot"><span class="annottext">SchemaVersion -&gt; SchemaVersion -&gt; Bool
-forall a. Eq a =&gt; a -&gt; a -&gt; Bool
-</span><span class="hs-operator hs-var">/=</span></span><span> </span><span class="annot"><span class="annottext">SchemaVersion
-</span><span class="hs-number">2</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(ReaderT Connection m () -&gt; ReaderT Connection m ())
--&gt; ReaderT Connection m () -&gt; ReaderT Connection m ()
-forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">MigrationError -&gt; ReaderT Connection m ()
-forall (m :: * -&gt; *) e a. (MonadIO m, Exception e) =&gt; e -&gt; m a
-</span><span class="hs-identifier hs-var">UnliftIO.throwIO</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">SchemaVersion -&gt; MigrationError
-</span><a href="Unison.Codebase.SqliteCodebase.Migrations.Errors.html#IncorrectStartingSchemaVersion"><span class="hs-identifier hs-var">IncorrectStartingSchemaVersion</span></a></span><span> </span><span class="annot"><span class="annottext">SchemaVersion
-</span><a href="#local-6989586621680792821"><span class="hs-identifier hs-var">version</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-33"></span><span>    </span><span class="annot"><span class="annottext">HashVersion -&gt; ReaderT Connection m ()
-forall (m :: * -&gt; *). DB m =&gt; HashVersion -&gt; m ()
+</span><span id="line-3"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">U.Codebase.Sqlite.DbId</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">HashVersion</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-4"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">U.Codebase.Sqlite.Queries</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Q</span></span><span>
+</span><span id="line-5"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Sqlite</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Sqlite</span></span><span>
+</span><span id="line-6"></span><span>
+</span><span id="line-7"></span><span class="hs-comment">-- | The 1 to 2 migration kept around hash objects of hash version 1, unfortunately this</span><span>
+</span><span id="line-8"></span><span class="hs-comment">-- caused an issue:</span><span>
+</span><span id="line-9"></span><span class="hs-comment">--</span><span>
+</span><span id="line-10"></span><span class="hs-comment">-- The migration would detect causals whose value hash did not have a corresponding branch</span><span>
+</span><span id="line-11"></span><span class="hs-comment">-- object, this was caused by a race-condition in sync which could end up in a partial sync.</span><span>
+</span><span id="line-12"></span><span class="hs-comment">-- When a branch object was determined to be missing, the migration would replace it with the</span><span>
+</span><span id="line-13"></span><span class="hs-comment">-- empty branch. This worked well, but led to a situation where related parent or successors</span><span>
+</span><span id="line-14"></span><span class="hs-comment">-- of that causal would have their hash objects mapped to the new v2 object which contained</span><span>
+</span><span id="line-15"></span><span class="hs-comment">-- the empty branch in place of missing branches. This is fine, but, if a different codebase</span><span>
+</span><span id="line-16"></span><span class="hs-comment">-- migrated the same branch and wasn't missing the branch in question it would migrate</span><span>
+</span><span id="line-17"></span><span class="hs-comment">-- successfully and each database now have the same v1 hash object mapped to two distinct v2</span><span>
+</span><span id="line-18"></span><span class="hs-comment">-- objects, which rightfully causes a crash when syncing.</span><span>
+</span><span id="line-19"></span><span class="hs-comment">--</span><span>
+</span><span id="line-20"></span><span class="hs-comment">-- This migration drops all the v1 hash objects to avoid this issue, since these hash objects</span><span>
+</span><span id="line-21"></span><span class="hs-comment">-- weren't being used for anything anyways.</span><span>
+</span><span id="line-22"></span><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema2To3.html#migrateSchema2To3"><span class="hs-identifier hs-type">migrateSchema2To3</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Sqlite.Transaction</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-23"></span><span id="migrateSchema2To3"><span class="annot"><span class="annottext">migrateSchema2To3 :: Transaction ()
+</span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema2To3.html#migrateSchema2To3"><span class="hs-identifier hs-var hs-var">migrateSchema2To3</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-24"></span><span>  </span><span class="annot"><span class="annottext">SchemaVersion -&gt; Transaction ()
+</span><span class="hs-identifier hs-var">Q.expectSchemaVersion</span></span><span> </span><span class="annot"><span class="annottext">SchemaVersion
+</span><span class="hs-number">2</span></span><span>
+</span><span id="line-25"></span><span>  </span><span class="annot"><span class="annottext">HashVersion -&gt; Transaction ()
 </span><span class="hs-identifier hs-var">Q.removeHashObjectsByHashingVersion</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Word64 -&gt; HashVersion
 </span><span class="hs-identifier hs-var">HashVersion</span></span><span> </span><span class="annot"><span class="annottext">Word64
 </span><span class="hs-number">1</span></span><span class="hs-special">)</span><span>
-</span><span id="line-34"></span><span>    </span><span class="annot"><span class="annottext">SchemaVersion -&gt; ReaderT Connection m ()
-forall (m :: * -&gt; *). DB m =&gt; SchemaVersion -&gt; m ()
-</span><span class="hs-identifier hs-var">Q.setSchemaVersion</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Word64 -&gt; SchemaVersion
-</span><span class="hs-identifier hs-var">SchemaVersion</span></span><span> </span><span class="annot"><span class="annottext">Word64
-</span><span class="hs-number">3</span></span><span class="hs-special">)</span><span>
-</span><span id="line-35"></span></pre></body></html>
+</span><span id="line-26"></span><span>  </span><span class="annot"><span class="annottext">SchemaVersion -&gt; Transaction ()
+</span><span class="hs-identifier hs-var">Q.setSchemaVersion</span></span><span> </span><span class="annot"><span class="annottext">SchemaVersion
+</span><span class="hs-number">3</span></span><span>
+</span><span id="line-27"></span></pre></body></html>

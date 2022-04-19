@@ -5,6 +5,16 @@
 @package unison-sqlite
 @version 0.0.0
 
+module Unison.Sqlite.Connection.Internal
+
+-- | A <i>non-thread safe</i> connection to a SQLite database.
+data Connection
+Connection :: String -> FilePath -> Connection -> Connection
+[$sel:name:Connection] :: Connection -> String
+[$sel:file:Connection] :: Connection -> FilePath
+[$sel:conn:Connection] :: Connection -> Connection
+instance GHC.Show.Show Unison.Sqlite.Connection.Internal.Connection
+
 module Unison.Sqlite.Connection
 
 -- | A <i>non-thread safe</i> connection to a SQLite database.
@@ -25,6 +35,8 @@ withConnection :: MonadUnliftIO m => String -> FilePath -> (Connection -> m a) -
 execute :: ToRow a => Connection -> Sql -> a -> IO ()
 executeMany :: ToRow a => Connection -> Sql -> [a] -> IO ()
 execute_ :: Connection -> Sql -> IO ()
+queryStreamRow :: (FromRow b, ToRow a) => Connection -> Sql -> a -> (IO (Maybe b) -> IO r) -> IO r
+queryStreamCol :: forall a b r. (FromField b, ToRow a) => Connection -> Sql -> a -> (IO (Maybe b) -> IO r) -> IO r
 queryListRow :: (FromRow b, ToRow a) => Connection -> Sql -> a -> IO [b]
 queryListCol :: forall a b. (FromField b, ToRow a) => Connection -> Sql -> a -> IO [b]
 queryMaybeRow :: (ToRow a, FromRow b) => Connection -> Sql -> a -> IO (Maybe b)
@@ -33,8 +45,8 @@ queryOneRow :: (FromRow b, ToRow a) => Connection -> Sql -> a -> IO b
 queryOneCol :: forall a b. (FromField b, ToRow a) => Connection -> Sql -> a -> IO b
 queryListRowCheck :: (FromRow b, ToRow a, SqliteExceptionReason e) => Connection -> Sql -> a -> ([b] -> Either e r) -> IO r
 queryListColCheck :: forall a b e r. (FromField b, ToRow a, SqliteExceptionReason e) => Connection -> Sql -> a -> ([b] -> Either e r) -> IO r
-queryMaybeRowCheck :: (FromRow b, ToRow a, SqliteExceptionReason e) => Connection -> Sql -> a -> (Maybe b -> Either e r) -> IO r
-queryMaybeColCheck :: forall a b e r. (FromField b, ToRow a, SqliteExceptionReason e) => Connection -> Sql -> a -> (Maybe b -> Either e r) -> IO r
+queryMaybeRowCheck :: (FromRow b, ToRow a, SqliteExceptionReason e) => Connection -> Sql -> a -> (b -> Either e r) -> IO (Maybe r)
+queryMaybeColCheck :: forall a b e r. (FromField b, ToRow a, SqliteExceptionReason e) => Connection -> Sql -> a -> (b -> Either e r) -> IO (Maybe r)
 queryOneRowCheck :: (FromRow b, ToRow a, SqliteExceptionReason e) => Connection -> Sql -> a -> (b -> Either e r) -> IO r
 queryOneColCheck :: forall a b e r. (FromField b, ToRow a, SqliteExceptionReason e) => Connection -> Sql -> a -> (b -> Either e r) -> IO r
 queryListRow_ :: FromRow a => Connection -> Sql -> IO [a]
@@ -45,15 +57,60 @@ queryOneRow_ :: FromRow a => Connection -> Sql -> IO a
 queryOneCol_ :: forall a. FromField a => Connection -> Sql -> IO a
 queryListRowCheck_ :: (FromRow a, SqliteExceptionReason e) => Connection -> Sql -> ([a] -> Either e r) -> IO r
 queryListColCheck_ :: forall a e r. (FromField a, SqliteExceptionReason e) => Connection -> Sql -> ([a] -> Either e r) -> IO r
-queryMaybeRowCheck_ :: (FromRow a, SqliteExceptionReason e) => Connection -> Sql -> (Maybe a -> Either e r) -> IO r
-queryMaybeColCheck_ :: forall a e r. (FromField a, SqliteExceptionReason e) => Connection -> Sql -> (Maybe a -> Either e r) -> IO r
+queryMaybeRowCheck_ :: (FromRow a, SqliteExceptionReason e) => Connection -> Sql -> (a -> Either e r) -> IO (Maybe r)
+queryMaybeColCheck_ :: forall a e r. (FromField a, SqliteExceptionReason e) => Connection -> Sql -> (a -> Either e r) -> IO (Maybe r)
 queryOneRowCheck_ :: (FromRow a, SqliteExceptionReason e) => Connection -> Sql -> (a -> Either e r) -> IO r
 queryOneColCheck_ :: forall a e r. (FromField a, SqliteExceptionReason e) => Connection -> Sql -> (a -> Either e r) -> IO r
 
+-- | <pre>
+--   VACUUM
+--   </pre>
+vacuum :: Connection -> IO ()
+
+-- | <pre>
+--   VACUUM INTO
+--   </pre>
+vacuumInto :: Connection -> Text -> IO ()
+
+-- | <pre>
+--   BEGIN
+--   </pre>
+begin :: Connection -> IO ()
+
+-- | <pre>
+--   BEGIN IMMEDIATE
+--   </pre>
+beginImmediate :: Connection -> IO ()
+
+-- | <pre>
+--   COMMIT
+--   </pre>
+commit :: Connection -> IO ()
+
+-- | <pre>
+--   ROLLBACK
+--   </pre>
+rollback :: Connection -> IO ()
+
 -- | Perform an action within a named savepoint. The action is provided a
 --   rollback action.
-withSavepoint :: Connection -> Text -> (IO () -> IO a) -> IO a
-withStatement :: (FromRow a, ToRow b) => Connection -> Sql -> b -> (IO (Maybe a) -> IO c) -> IO c
+withSavepoint :: MonadUnliftIO m => Connection -> Text -> (m () -> m a) -> m a
+withSavepointIO :: Connection -> Text -> (IO () -> IO a) -> IO a
+
+-- | <pre>
+--   SAVEPOINT
+--   </pre>
+savepoint :: Connection -> Text -> IO ()
+
+-- | <pre>
+--   ROLLBACK TO
+--   </pre>
+rollbackTo :: Connection -> Text -> IO ()
+
+-- | <pre>
+--   RELEASE
+--   </pre>
+release :: Connection -> Text -> IO ()
 
 -- | A query was expected to return exactly one row, but it did not. The
 --   exception carries a string representation of the rows that were
@@ -72,16 +129,54 @@ instance Unison.Sqlite.Exception.SqliteExceptionReason Unison.Sqlite.Connection.
 instance GHC.Show.Show Unison.Sqlite.Connection.ExpectedExactlyOneRowException
 instance Unison.Sqlite.Exception.SqliteExceptionReason Unison.Sqlite.Connection.ExpectedAtMostOneRowException
 instance GHC.Show.Show Unison.Sqlite.Connection.ExpectedAtMostOneRowException
-instance GHC.Show.Show Unison.Sqlite.Connection.Connection
+instance GHC.Show.Show Unison.Sqlite.Connection.Query
 
 module Unison.Sqlite.Transaction
 data Transaction a
 
 -- | Run a transaction on the given connection.
 runTransaction :: MonadIO m => Connection -> Transaction a -> m a
+
+-- | Run a transaction that is known to only perform reads.
+--   
+--   The action is provided a function that peels off the
+--   <a>Transaction</a> newtype without sending the corresponding
+--   BEGIN/COMMIT statements.
+--   
+--   The transaction is never retried, so it is (more) safe to interleave
+--   arbitrary IO actions. If the transaction does attempt a write and gets
+--   SQLITE_BUSY, it's your fault!
+runReadOnlyTransaction :: MonadUnliftIO m => Connection -> ((forall x. Transaction x -> m x) -> m a) -> m a
+
+-- | Run a transaction that is known to perform at least one write.
+--   
+--   The action is provided a function that peels off the
+--   <a>Transaction</a> newtype without sending the corresponding
+--   BEGIN/COMMIT statements.
+--   
+--   The transaction is never retried, so it is (more) safe to interleave
+--   arbitrary IO actions.
+runWriteTransaction :: MonadUnliftIO m => Connection -> ((forall x. Transaction x -> m x) -> m a) -> m a
+
+-- | Unwrap the transaction newtype, throwing away the sending of
+--   BEGIN/COMMIT + automatic retry.
+unsafeUnTransaction :: Transaction a -> Connection -> IO a
+
+-- | Perform an atomic sub-computation within a transaction; if it returns
+--   <a>Left</a>, it's rolled back.
+savepoint :: Transaction (Either a a) -> Transaction a
+
+-- | Perform IO inside a transaction, which should be idempotent, because
+--   it may be run more than once if the transaction needs to retry.
+--   
+--   <i>Warning</i>: attempting to run a transaction inside a transaction
+--   will cause an exception!
+unsafeIO :: IO a -> Transaction a
 execute :: ToRow a => Sql -> a -> Transaction ()
 executeMany :: ToRow a => Sql -> [a] -> Transaction ()
 execute_ :: Sql -> Transaction ()
+queryStreamRow :: (FromRow a, ToRow b) => Sql -> b -> (Transaction (Maybe a) -> Transaction r) -> Transaction r
+queryStreamCol :: forall a b r. (FromField a, ToRow b) => Sql -> b -> (Transaction (Maybe a) -> Transaction r) -> Transaction r
 queryListRow :: (FromRow a, ToRow b) => Sql -> b -> Transaction [a]
 queryListCol :: (FromField a, ToRow b) => Sql -> b -> Transaction [a]
 queryMaybeRow :: (FromRow a, ToRow b) => Sql -> b -> Transaction (Maybe a)
@@ -90,8 +185,8 @@ queryOneRow :: (FromRow b, ToRow a) => Sql -> a -> Transaction b
 queryOneCol :: (FromField b, ToRow a) => Sql -> a -> Transaction b
 queryListRowCheck :: (FromRow b, ToRow a, SqliteExceptionReason e) => Sql -> a -> ([b] -> Either e r) -> Transaction r
 queryListColCheck :: (FromField b, ToRow a, SqliteExceptionReason e) => Sql -> a -> ([b] -> Either e r) -> Transaction r
-queryMaybeRowCheck :: (FromRow b, ToRow a, SqliteExceptionReason e) => Sql -> a -> (Maybe b -> Either e r) -> Transaction r
-queryMaybeColCheck :: (FromField b, ToRow a, SqliteExceptionReason e) => Sql -> a -> (Maybe b -> Either e r) -> Transaction r
+queryMaybeRowCheck :: (FromRow b, ToRow a, SqliteExceptionReason e) => Sql -> a -> (b -> Either e r) -> Transaction (Maybe r)
+queryMaybeColCheck :: (FromField b, ToRow a, SqliteExceptionReason e) => Sql -> a -> (b -> Either e r) -> Transaction (Maybe r)
 queryOneRowCheck :: (FromRow b, ToRow a, SqliteExceptionReason e) => Sql -> a -> (b -> Either e r) -> Transaction r
 queryOneColCheck :: (FromField b, ToRow a, SqliteExceptionReason e) => Sql -> a -> (b -> Either e r) -> Transaction r
 queryListRow_ :: FromRow a => Sql -> Transaction [a]
@@ -102,52 +197,13 @@ queryOneRow_ :: FromRow a => Sql -> Transaction a
 queryOneCol_ :: FromField a => Sql -> Transaction a
 queryListRowCheck_ :: (FromRow a, SqliteExceptionReason e) => Sql -> ([a] -> Either e r) -> Transaction r
 queryListColCheck_ :: (FromField a, SqliteExceptionReason e) => Sql -> ([a] -> Either e r) -> Transaction r
-queryMaybeRowCheck_ :: (FromRow a, SqliteExceptionReason e) => Sql -> (Maybe a -> Either e r) -> Transaction r
-queryMaybeColCheck_ :: (FromField a, SqliteExceptionReason e) => Sql -> (Maybe a -> Either e r) -> Transaction r
+queryMaybeRowCheck_ :: (FromRow a, SqliteExceptionReason e) => Sql -> (a -> Either e r) -> Transaction (Maybe r)
+queryMaybeColCheck_ :: (FromField a, SqliteExceptionReason e) => Sql -> (a -> Either e r) -> Transaction (Maybe r)
 queryOneRowCheck_ :: (FromRow a, SqliteExceptionReason e) => Sql -> (a -> Either e r) -> Transaction r
 queryOneColCheck_ :: (FromField a, SqliteExceptionReason e) => Sql -> (a -> Either e r) -> Transaction r
 instance GHC.Base.Monad Unison.Sqlite.Transaction.Transaction
 instance GHC.Base.Functor Unison.Sqlite.Transaction.Transaction
 instance GHC.Base.Applicative Unison.Sqlite.Transaction.Transaction
-
-
--- | A type class interface to SQLite.
-module Unison.Sqlite.DB
-type DB m = (MonadIO m, MonadReader Connection m)
-runDB :: MonadIO m => Connection -> ReaderT Connection m a -> m a
-runTransaction :: DB m => Transaction a -> m a
-execute :: (DB m, ToRow a) => Sql -> a -> m ()
-executeMany :: (DB m, ToRow a) => Sql -> [a] -> m ()
-execute_ :: DB m => Sql -> m ()
-queryListRow :: (DB m, FromRow a, ToRow b) => Sql -> b -> m [a]
-queryListCol :: (DB m, FromField a, ToRow b) => Sql -> b -> m [a]
-queryMaybeRow :: (DB m, FromRow a, ToRow b) => Sql -> b -> m (Maybe a)
-queryMaybeCol :: (DB m, FromField a, ToRow b) => Sql -> b -> m (Maybe a)
-queryOneRow :: (DB m, FromRow b, ToRow a) => Sql -> a -> m b
-queryOneCol :: (DB m, FromField b, ToRow a) => Sql -> a -> m b
-queryListRowCheck :: (DB m, FromRow b, ToRow a, SqliteExceptionReason e) => Sql -> a -> ([b] -> Either e r) -> m r
-queryListColCheck :: (DB m, FromField b, ToRow a, SqliteExceptionReason e) => Sql -> a -> ([b] -> Either e r) -> m r
-queryMaybeRowCheck :: (DB m, FromRow b, ToRow a, SqliteExceptionReason e) => Sql -> a -> (Maybe b -> Either e r) -> m r
-queryMaybeColCheck :: (DB m, FromField b, ToRow a, SqliteExceptionReason e) => Sql -> a -> (Maybe b -> Either e r) -> m r
-queryOneRowCheck :: (DB m, FromRow b, ToRow a, SqliteExceptionReason e) => Sql -> a -> (b -> Either e r) -> m r
-queryOneColCheck :: (DB m, FromField b, ToRow a, SqliteExceptionReason e) => Sql -> a -> (b -> Either e r) -> m r
-queryListRow_ :: (DB m, FromRow a) => Sql -> m [a]
-queryListCol_ :: (DB m, FromField a) => Sql -> m [a]
-queryMaybeRow_ :: (DB m, FromRow a) => Sql -> m (Maybe a)
-queryMaybeCol_ :: (DB m, FromField a) => Sql -> m (Maybe a)
-queryOneRow_ :: (DB m, FromRow a) => Sql -> m a
-queryOneCol_ :: (DB m, FromField a) => Sql -> m a
-queryListRowCheck_ :: (DB m, FromRow a, SqliteExceptionReason e) => Sql -> ([a] -> Either e r) -> m r
-queryListColCheck_ :: (DB m, FromField a, SqliteExceptionReason e) => Sql -> ([a] -> Either e r) -> m r
-queryMaybeRowCheck_ :: (DB m, FromRow a, SqliteExceptionReason e) => Sql -> (Maybe a -> Either e r) -> m r
-queryMaybeColCheck_ :: (DB m, FromField a, SqliteExceptionReason e) => Sql -> (Maybe a -> Either e r) -> m r
-queryOneRowCheck_ :: (DB m, FromRow a, SqliteExceptionReason e) => Sql -> (a -> Either e r) -> m r
-queryOneColCheck_ :: (DB m, FromField a, SqliteExceptionReason e) => Sql -> (a -> Either e r) -> m r
-
--- | Perform an action within a named savepoint. The action is provided a
---   rollback action.
-withSavepoint :: (DB m, MonadUnliftIO m) => Text -> (m () -> m a) -> m a
-withStatement :: (DB m, MonadUnliftIO m, FromRow a, ToRow b) => Sql -> b -> (m (Maybe a) -> m c) -> m c
 
 
 -- | The Unison monorepo interface to SQLite.
@@ -163,13 +219,9 @@ withStatement :: (DB m, MonadUnliftIO m, FromRow a, ToRow b) => Sql -> b -> (m (
 --   <li><a>Unison.Sqlite.Connection</a> provides an interface in
 --   <tt>IO</tt>, which takes the <a>Connection</a> argument as an explicit
 --   argument.</li>
---   <li><a>Unison.Sqlite.DB</a> provides a type class interface, which
---   moves the <a>Connection</a> to an implicit argument. This interface is
---   also re-exported by this module, for convenient backwards
---   compatibility with the existing queries.</li>
---   <li><a>Unison.Sqlite.Transaction</a> provides a newer, yet-unused
---   interface that executes queries in transactions, with automatic
---   retries on <tt>SQLITE_BUSY</tt> due to concurrent writers.</li>
+--   <li><a>Unison.Sqlite.Transaction</a> provides a safer interface that
+--   executes queries in transactions, with automatic retries on
+--   <tt>SQLITE_BUSY</tt> due to concurrent writers.</li>
 --   </ul>
 module Unison.Sqlite
 
@@ -184,39 +236,79 @@ data Connection
 --   maintain backwards compatibility with code that was written before the
 --   foreign key integrity feature was implemented.
 withConnection :: MonadUnliftIO m => String -> FilePath -> (Connection -> m a) -> m a
-type DB m = (MonadIO m, MonadReader Connection m)
-runDB :: MonadIO m => Connection -> ReaderT Connection m a -> m a
+data Transaction a
+
+-- | Run a transaction on the given connection.
+runTransaction :: MonadIO m => Connection -> Transaction a -> m a
+
+-- | Run a transaction that is known to only perform reads.
+--   
+--   The action is provided a function that peels off the
+--   <a>Transaction</a> newtype without sending the corresponding
+--   BEGIN/COMMIT statements.
+--   
+--   The transaction is never retried, so it is (more) safe to interleave
+--   arbitrary IO actions. If the transaction does attempt a write and gets
+--   SQLITE_BUSY, it's your fault!
+runReadOnlyTransaction :: MonadUnliftIO m => Connection -> ((forall x. Transaction x -> m x) -> m a) -> m a
+
+-- | Run a transaction that is known to perform at least one write.
+--   
+--   The action is provided a function that peels off the
+--   <a>Transaction</a> newtype without sending the corresponding
+--   BEGIN/COMMIT statements.
+--   
+--   The transaction is never retried, so it is (more) safe to interleave
+--   arbitrary IO actions.
+runWriteTransaction :: MonadUnliftIO m => Connection -> ((forall x. Transaction x -> m x) -> m a) -> m a
+
+-- | Unwrap the transaction newtype, throwing away the sending of
+--   BEGIN/COMMIT + automatic retry.
+unsafeUnTransaction :: Transaction a -> Connection -> IO a
+
+-- | Perform an atomic sub-computation within a transaction; if it returns
+--   <a>Left</a>, it's rolled back.
+savepoint :: Transaction (Either a a) -> Transaction a
+
+-- | Perform IO inside a transaction, which should be idempotent, because
+--   it may be run more than once if the transaction needs to retry.
+--   
+--   <i>Warning</i>: attempting to run a transaction inside a transaction
+--   will cause an exception!
+unsafeIO :: IO a -> Transaction a
 
 -- | A SQL snippet.
 newtype Sql
 Sql :: Text -> Sql
-execute :: (DB m, ToRow a) => Sql -> a -> m ()
-executeMany :: (DB m, ToRow a) => Sql -> [a] -> m ()
-execute_ :: DB m => Sql -> m ()
-queryListRow :: (DB m, FromRow a, ToRow b) => Sql -> b -> m [a]
-queryListCol :: (DB m, FromField a, ToRow b) => Sql -> b -> m [a]
-queryMaybeRow :: (DB m, FromRow a, ToRow b) => Sql -> b -> m (Maybe a)
-queryMaybeCol :: (DB m, FromField a, ToRow b) => Sql -> b -> m (Maybe a)
-queryOneRow :: (DB m, FromRow b, ToRow a) => Sql -> a -> m b
-queryOneCol :: (DB m, FromField b, ToRow a) => Sql -> a -> m b
-queryListRowCheck :: (DB m, FromRow b, ToRow a, SqliteExceptionReason e) => Sql -> a -> ([b] -> Either e r) -> m r
-queryListColCheck :: (DB m, FromField b, ToRow a, SqliteExceptionReason e) => Sql -> a -> ([b] -> Either e r) -> m r
-queryMaybeRowCheck :: (DB m, FromRow b, ToRow a, SqliteExceptionReason e) => Sql -> a -> (Maybe b -> Either e r) -> m r
-queryMaybeColCheck :: (DB m, FromField b, ToRow a, SqliteExceptionReason e) => Sql -> a -> (Maybe b -> Either e r) -> m r
-queryOneRowCheck :: (DB m, FromRow b, ToRow a, SqliteExceptionReason e) => Sql -> a -> (b -> Either e r) -> m r
-queryOneColCheck :: (DB m, FromField b, ToRow a, SqliteExceptionReason e) => Sql -> a -> (b -> Either e r) -> m r
-queryListRow_ :: (DB m, FromRow a) => Sql -> m [a]
-queryListCol_ :: (DB m, FromField a) => Sql -> m [a]
-queryMaybeRow_ :: (DB m, FromRow a) => Sql -> m (Maybe a)
-queryMaybeCol_ :: (DB m, FromField a) => Sql -> m (Maybe a)
-queryOneRow_ :: (DB m, FromRow a) => Sql -> m a
-queryOneCol_ :: (DB m, FromField a) => Sql -> m a
-queryListRowCheck_ :: (DB m, FromRow a, SqliteExceptionReason e) => Sql -> ([a] -> Either e r) -> m r
-queryListColCheck_ :: (DB m, FromField a, SqliteExceptionReason e) => Sql -> ([a] -> Either e r) -> m r
-queryMaybeRowCheck_ :: (DB m, FromRow a, SqliteExceptionReason e) => Sql -> (Maybe a -> Either e r) -> m r
-queryMaybeColCheck_ :: (DB m, FromField a, SqliteExceptionReason e) => Sql -> (Maybe a -> Either e r) -> m r
-queryOneRowCheck_ :: (DB m, FromRow a, SqliteExceptionReason e) => Sql -> (a -> Either e r) -> m r
-queryOneColCheck_ :: (DB m, FromField a, SqliteExceptionReason e) => Sql -> (a -> Either e r) -> m r
+execute :: ToRow a => Sql -> a -> Transaction ()
+executeMany :: ToRow a => Sql -> [a] -> Transaction ()
+execute_ :: Sql -> Transaction ()
+queryStreamRow :: (FromRow a, ToRow b) => Sql -> b -> (Transaction (Maybe a) -> Transaction r) -> Transaction r
+queryStreamCol :: forall a b r. (FromField a, ToRow b) => Sql -> b -> (Transaction (Maybe a) -> Transaction r) -> Transaction r
+queryListRow :: (FromRow a, ToRow b) => Sql -> b -> Transaction [a]
+queryListCol :: (FromField a, ToRow b) => Sql -> b -> Transaction [a]
+queryMaybeRow :: (FromRow a, ToRow b) => Sql -> b -> Transaction (Maybe a)
+queryMaybeCol :: (FromField a, ToRow b) => Sql -> b -> Transaction (Maybe a)
+queryOneRow :: (FromRow b, ToRow a) => Sql -> a -> Transaction b
+queryOneCol :: (FromField b, ToRow a) => Sql -> a -> Transaction b
+queryListRowCheck :: (FromRow b, ToRow a, SqliteExceptionReason e) => Sql -> a -> ([b] -> Either e r) -> Transaction r
+queryListColCheck :: (FromField b, ToRow a, SqliteExceptionReason e) => Sql -> a -> ([b] -> Either e r) -> Transaction r
+queryMaybeRowCheck :: (FromRow b, ToRow a, SqliteExceptionReason e) => Sql -> a -> (b -> Either e r) -> Transaction (Maybe r)
+queryMaybeColCheck :: (FromField b, ToRow a, SqliteExceptionReason e) => Sql -> a -> (b -> Either e r) -> Transaction (Maybe r)
+queryOneRowCheck :: (FromRow b, ToRow a, SqliteExceptionReason e) => Sql -> a -> (b -> Either e r) -> Transaction r
+queryOneColCheck :: (FromField b, ToRow a, SqliteExceptionReason e) => Sql -> a -> (b -> Either e r) -> Transaction r
+queryListRow_ :: FromRow a => Sql -> Transaction [a]
+queryListCol_ :: FromField a => Sql -> Transaction [a]
+queryMaybeRow_ :: FromRow a => Sql -> Transaction (Maybe a)
+queryMaybeCol_ :: FromField a => Sql -> Transaction (Maybe a)
+queryOneRow_ :: FromRow a => Sql -> Transaction a
+queryOneCol_ :: FromField a => Sql -> Transaction a
+queryListRowCheck_ :: (FromRow a, SqliteExceptionReason e) => Sql -> ([a] -> Either e r) -> Transaction r
+queryListColCheck_ :: (FromField a, SqliteExceptionReason e) => Sql -> ([a] -> Either e r) -> Transaction r
+queryMaybeRowCheck_ :: (FromRow a, SqliteExceptionReason e) => Sql -> (a -> Either e r) -> Transaction (Maybe r)
+queryMaybeColCheck_ :: (FromField a, SqliteExceptionReason e) => Sql -> (a -> Either e r) -> Transaction (Maybe r)
+queryOneRowCheck_ :: (FromRow a, SqliteExceptionReason e) => Sql -> (a -> Either e r) -> Transaction r
+queryOneColCheck_ :: (FromField a, SqliteExceptionReason e) => Sql -> (a -> Either e r) -> Transaction r
 newtype DataVersion
 DataVersion :: Int64 -> DataVersion
 getDataVersion :: Transaction DataVersion
@@ -229,12 +321,17 @@ JournalMode'PERSIST :: JournalMode
 JournalMode'MEMORY :: JournalMode
 JournalMode'WAL :: JournalMode
 JournalMode'OFF :: JournalMode
-trySetJournalMode :: JournalMode -> Transaction ()
+trySetJournalMode :: Connection -> JournalMode -> IO ()
 
--- | Perform an action within a named savepoint. The action is provided a
---   rollback action.
-withSavepoint :: (DB m, MonadUnliftIO m) => Text -> (m () -> m a) -> m a
-withStatement :: (DB m, MonadUnliftIO m, FromRow a, ToRow b) => Sql -> b -> (m (Maybe a) -> m c) -> m c
+-- | <pre>
+--   VACUUM
+--   </pre>
+vacuum :: Connection -> IO ()
+
+-- | <pre>
+--   VACUUM INTO
+--   </pre>
+vacuumInto :: Connection -> Text -> IO ()
 
 -- | The root exception for all exceptions thrown by this library.
 --   
@@ -257,6 +354,7 @@ withStatement :: (DB m, MonadUnliftIO m, FromRow a, ToRow b) => Sql -> b -> (m (
 --   type, <tt>SomeSqliteException</tt>.
 data SomeSqliteException
 SomeSqliteException :: e -> SomeSqliteException
+isCantOpenException :: SomeSqliteException -> Bool
 
 -- | An exception thrown during establishing a connection.
 data SqliteConnectException
@@ -282,10 +380,19 @@ SqliteConnectException :: ThreadId -> String -> FilePath -> SQLError -> SqliteCo
 --   <a>queryListRowCheck</a>, which takes a user-defined check as an
 --   argument.</li>
 --   </ul>
+--   
+--   A <tt>SqliteQueryException</tt> should not be inspected or used for
+--   control flow when run in a trusted environment, where the database can
+--   be assumed to be uncorrupt. Rather, wherever possible, the user of
+--   this library should write code that is guaranteed not to throw
+--   exceptions, by checking the necessary preconditions first. If that is
+--   not possible, it should be considered a bug in this library.
+--   
+--   When actions are run on an untrusted codebase, e.g. one downloaded
+--   from a remote server, it is sufficient to catch just one exception
+--   type, <tt>SqliteQueryException</tt>.
 data SqliteQueryException
-SqliteQueryException :: ThreadId -> String -> Sql -> String -> SomeSqliteExceptionReason -> SqliteQueryException
-[$sel:threadId:SqliteQueryException] :: SqliteQueryException -> ThreadId
-[$sel:connection:SqliteQueryException] :: SqliteQueryException -> String
+SqliteQueryException :: Sql -> String -> SomeSqliteExceptionReason -> [String] -> Connection -> ThreadId -> SqliteQueryException
 [$sel:sql:SqliteQueryException] :: SqliteQueryException -> Sql
 [$sel:params:SqliteQueryException] :: SqliteQueryException -> String
 
@@ -293,6 +400,9 @@ SqliteQueryException :: ThreadId -> String -> Sql -> String -> SomeSqliteExcepti
 --   that calling code cannot accidentally <a>throwIO</a> domain-specific
 --   exception types, but must instead use a <tt>*Check</tt> query variant.
 [$sel:exception:SqliteQueryException] :: SqliteQueryException -> SomeSqliteExceptionReason
+[$sel:callStack:SqliteQueryException] :: SqliteQueryException -> [String]
+[$sel:connection:SqliteQueryException] :: SqliteQueryException -> Connection
+[$sel:threadId:SqliteQueryException] :: SqliteQueryException -> ThreadId
 
 -- | A type that is intended to be used as additional context for a
 --   sqlite-related exception.
@@ -317,3 +427,88 @@ data SetJournalModeException
 SetJournalModeException :: JournalMode -> JournalMode -> SetJournalModeException
 [$sel:currentJournalMode:SetJournalModeException] :: SetJournalModeException -> JournalMode
 [$sel:couldntSetTo:SetJournalModeException] :: SetJournalModeException -> JournalMode
+field :: FromField a => RowParser a
+
+-- | A composite type to parse your custom data structures without having
+--   to define dummy newtype wrappers every time.
+--   
+--   <pre>
+--   instance FromRow MyData where ...
+--   </pre>
+--   
+--   <pre>
+--   instance FromRow MyData2 where ...
+--   </pre>
+--   
+--   then I can do the following for free:
+--   
+--   <pre>
+--   res &lt;- query' c "..."
+--   forM res $ \(MyData{..} :. MyData2{..}) -&gt; do
+--     ....
+--   </pre>
+data h :. t
+(:.) :: h -> t -> (:.) h t
+infixr 3 :.
+infixr 3 :.
+
+-- | A type that may be converted from a SQL type.
+class FromField a
+
+-- | Convert a SQL value to a Haskell value.
+--   
+--   Returns a list of exceptions if the conversion fails. In the case of
+--   library instances, this will usually be a single <a>ResultError</a>,
+--   but may be a <tt>UnicodeException</tt>.
+--   
+--   Implementations of <a>fromField</a> should not retain any references
+--   to the <a>Field</a> nor the <a>ByteString</a> arguments after the
+--   result has been evaluated to WHNF. Such a reference causes the entire
+--   <tt>LibPQ.<a>Result</a></tt> to be retained.
+--   
+--   For example, the instance for <a>ByteString</a> uses <a>copy</a> to
+--   avoid such a reference, and that using bytestring functions such as
+--   <a>drop</a> and <a>takeWhile</a> alone will also trigger this memory
+--   leak.
+fromField :: FromField a => FieldParser a
+
+-- | A collection type that can be converted from a sequence of fields.
+--   Instances are provided for tuples up to 10 elements and lists of any
+--   length.
+--   
+--   Note that instances can defined outside of sqlite-simple, which is
+--   often useful. For example, here's an instance for a user-defined pair:
+--   
+--   @data User = User { name :: String, fileQuota :: Int }
+--   
+--   instance <a>FromRow</a> User where fromRow = User &lt;$&gt;
+--   <a>field</a> &lt;*&gt; <a>field</a> @
+--   
+--   The number of calls to <a>field</a> must match the number of fields
+--   returned in a single row of the query result. Otherwise, a
+--   <a>ConversionFailed</a> exception will be thrown.
+--   
+--   Note the caveats associated with user-defined implementations of
+--   <a>fromRow</a>.
+class FromRow a
+fromRow :: FromRow a => RowParser a
+data RowParser a
+data SQLData
+SQLInteger :: !Int64 -> SQLData
+SQLFloat :: !Double -> SQLData
+SQLText :: !Text -> SQLData
+SQLBlob :: !ByteString -> SQLData
+SQLNull :: SQLData
+
+-- | A type that may be used as a single parameter to a SQL query.
+class ToField a
+
+-- | Prepare a value for substitution into a query string.
+toField :: ToField a => a -> SQLData
+
+-- | A collection type that can be turned into a list of <a>SQLData</a>
+--   elements.
+class ToRow a
+
+-- | <a>ToField</a> a collection of values.
+toRow :: ToRow a => a -> [SQLData]

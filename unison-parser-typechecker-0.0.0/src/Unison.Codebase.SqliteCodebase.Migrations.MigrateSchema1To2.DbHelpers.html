@@ -17,263 +17,230 @@
 </span><span id="line-17"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">U.Codebase.Sqlite.Patch.TermEdit</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">S.TermEdit</span></span><span>
 </span><span id="line-18"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">U.Codebase.Sqlite.Patch.TypeEdit</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">S</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">TypeEdit</span></span><span class="hs-special">)</span><span>
 </span><span id="line-19"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">U.Codebase.Sqlite.Patch.TypeEdit</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">S.TypeEdit</span></span><span>
-</span><span id="line-20"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">U.Codebase.Sqlite.Queries</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">EDB</span></span><span class="hs-special">)</span><span>
-</span><span id="line-21"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">U.Codebase.Sqlite.Queries</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Q</span></span><span>
-</span><span id="line-22"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">U.Codebase.Sqlite.Reference</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">S</span></span><span>
-</span><span id="line-23"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">U.Codebase.Sqlite.Referent</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">S</span></span><span>
-</span><span id="line-24"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">U.Util.Hash</span></span><span>
-</span><span id="line-25"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Conversions.html"><span class="hs-identifier">Unison.Codebase.SqliteCodebase.Conversions</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Cv</span></span><span>
-</span><span id="line-26"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Hash</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Hash</span></span><span class="hs-special">)</span><span>
-</span><span id="line-27"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Branch.html"><span class="hs-identifier">Unison.Hashing.V2.Branch</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Hashing.V2.Branch.html#NameSegment"><span class="hs-identifier">NameSegment</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
-</span><span id="line-28"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Branch.html"><span class="hs-identifier">Unison.Hashing.V2.Branch</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Hashing.Branch</span></span><span>
-</span><span id="line-29"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Patch.html"><span class="hs-identifier">Unison.Hashing.V2.Patch</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Hashing</span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Hashing.V2.Patch.html#Patch"><span class="hs-identifier">Patch</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
-</span><span id="line-30"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Patch.html"><span class="hs-identifier">Unison.Hashing.V2.Patch</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Hashing.Patch</span></span><span>
-</span><span id="line-31"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Reference.html"><span class="hs-identifier">Unison.Hashing.V2.Reference</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Hashing</span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Hashing.V2.Reference.html#Reference"><span class="hs-identifier">Reference</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-32"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Reference.html"><span class="hs-identifier">Unison.Hashing.V2.Reference</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Hashing.Reference</span></span><span>
-</span><span id="line-33"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Referent.html"><span class="hs-identifier">Unison.Hashing.V2.Referent</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Hashing</span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Hashing.V2.Referent.html#Referent"><span class="hs-identifier">Referent</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-34"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Referent.html"><span class="hs-identifier">Unison.Hashing.V2.Referent</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Hashing.Referent</span></span><span>
-</span><span id="line-35"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.TermEdit.html"><span class="hs-identifier">Unison.Hashing.V2.TermEdit</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Hashing</span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Hashing.V2.TermEdit.html#TermEdit"><span class="hs-identifier">TermEdit</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-36"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.TermEdit.html"><span class="hs-identifier">Unison.Hashing.V2.TermEdit</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Hashing.TermEdit</span></span><span>
-</span><span id="line-37"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.TypeEdit.html"><span class="hs-identifier">Unison.Hashing.V2.TypeEdit</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Hashing</span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Hashing.V2.TypeEdit.html#TypeEdit"><span class="hs-identifier">TypeEdit</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-38"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.TypeEdit.html"><span class="hs-identifier">Unison.Hashing.V2.TypeEdit</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Hashing.TypeEdit</span></span><span>
-</span><span id="line-39"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Prelude</span></span><span>
-</span><span id="line-40"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Util.Map</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Map</span></span><span>
-</span><span id="line-41"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Util.Set</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Set</span></span><span>
-</span><span id="line-42"></span><span>
-</span><span id="line-43"></span><span id="local-6989586621680790887"><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#dbBranchHash"><span class="hs-identifier hs-type">dbBranchHash</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">EDB</span></span><span> </span><span class="annot"><a href="#local-6989586621680790887"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.DbBranch</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621680790887"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Hash</span></span></span><span>
-</span><span id="line-44"></span><span id="dbBranchHash"><span class="annot"><span class="annottext">dbBranchHash :: DbBranch -&gt; m Hash
-</span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#dbBranchHash"><span class="hs-identifier hs-var hs-var">dbBranchHash</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">S.Branch.Full.Branch</span></span><span> </span><span id="local-6989586621680790885"><span class="annot"><span class="annottext">Map
+</span><span id="line-20"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">U.Codebase.Sqlite.Queries</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Q</span></span><span>
+</span><span id="line-21"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">U.Codebase.Sqlite.Reference</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">S</span></span><span>
+</span><span id="line-22"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">U.Codebase.Sqlite.Referent</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">S</span></span><span>
+</span><span id="line-23"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Conversions.html"><span class="hs-identifier">Unison.Codebase.SqliteCodebase.Conversions</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Cv</span></span><span>
+</span><span id="line-24"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Hash</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Hash</span></span><span class="hs-special">)</span><span>
+</span><span id="line-25"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Branch.html"><span class="hs-identifier">Unison.Hashing.V2.Branch</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Hashing.V2.Branch.html#NameSegment"><span class="hs-identifier">NameSegment</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-26"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Branch.html"><span class="hs-identifier">Unison.Hashing.V2.Branch</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Hashing.Branch</span></span><span>
+</span><span id="line-27"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Patch.html"><span class="hs-identifier">Unison.Hashing.V2.Patch</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Hashing</span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Hashing.V2.Patch.html#Patch"><span class="hs-identifier">Patch</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-28"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Patch.html"><span class="hs-identifier">Unison.Hashing.V2.Patch</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Hashing.Patch</span></span><span>
+</span><span id="line-29"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Reference.html"><span class="hs-identifier">Unison.Hashing.V2.Reference</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Hashing</span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Hashing.V2.Reference.html#Reference"><span class="hs-identifier">Reference</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-30"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Reference.html"><span class="hs-identifier">Unison.Hashing.V2.Reference</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Hashing.Reference</span></span><span>
+</span><span id="line-31"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Referent.html"><span class="hs-identifier">Unison.Hashing.V2.Referent</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Hashing</span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Hashing.V2.Referent.html#Referent"><span class="hs-identifier">Referent</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-32"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Referent.html"><span class="hs-identifier">Unison.Hashing.V2.Referent</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Hashing.Referent</span></span><span>
+</span><span id="line-33"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.TermEdit.html"><span class="hs-identifier">Unison.Hashing.V2.TermEdit</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Hashing</span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Hashing.V2.TermEdit.html#TermEdit"><span class="hs-identifier">TermEdit</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-34"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.TermEdit.html"><span class="hs-identifier">Unison.Hashing.V2.TermEdit</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Hashing.TermEdit</span></span><span>
+</span><span id="line-35"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.TypeEdit.html"><span class="hs-identifier">Unison.Hashing.V2.TypeEdit</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Hashing</span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Hashing.V2.TypeEdit.html#TypeEdit"><span class="hs-identifier">TypeEdit</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-36"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Hashing.V2.TypeEdit.html"><span class="hs-identifier">Unison.Hashing.V2.TypeEdit</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Hashing.TypeEdit</span></span><span>
+</span><span id="line-37"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Prelude</span></span><span>
+</span><span id="line-38"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Sqlite</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Transaction</span></span><span class="hs-special">)</span><span>
+</span><span id="line-39"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Util.Map</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Map</span></span><span>
+</span><span id="line-40"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Util.Set</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Set</span></span><span>
+</span><span id="line-41"></span><span>
+</span><span id="line-42"></span><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#dbBranchHash"><span class="hs-identifier hs-type">dbBranchHash</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.DbBranch</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Transaction</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Hash</span></span><span>
+</span><span id="line-43"></span><span id="dbBranchHash"><span class="annot"><span class="annottext">dbBranchHash :: DbBranch -&gt; Transaction Hash
+</span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#dbBranchHash"><span class="hs-identifier hs-var hs-var">dbBranchHash</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">S.Branch.Full.Branch</span></span><span> </span><span id="local-6989586621680730177"><span class="annot"><span class="annottext">Map
   TextId
   (Map
      (Referent'' TextId ObjectId) (MetadataSetFormat' TextId ObjectId))
-</span><a href="#local-6989586621680790885"><span class="hs-identifier hs-var">tms</span></a></span></span><span> </span><span id="local-6989586621680790884"><span class="annot"><span class="annottext">Map
+</span><a href="#local-6989586621680730177"><span class="hs-identifier hs-var">tms</span></a></span></span><span> </span><span id="local-6989586621680730176"><span class="annot"><span class="annottext">Map
   TextId
   (Map
      (Reference' TextId ObjectId) (MetadataSetFormat' TextId ObjectId))
-</span><a href="#local-6989586621680790884"><span class="hs-identifier hs-var">tps</span></a></span></span><span> </span><span id="local-6989586621680790883"><span class="annot"><span class="annottext">Map TextId PatchObjectId
-</span><a href="#local-6989586621680790883"><span class="hs-identifier hs-var">patches</span></a></span></span><span> </span><span id="local-6989586621680790882"><span class="annot"><span class="annottext">Map TextId (BranchObjectId, CausalHashId)
-</span><a href="#local-6989586621680790882"><span class="hs-identifier hs-var">children</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-45"></span><span>  </span><span class="annot"><span class="annottext">(Raw -&gt; Hash) -&gt; m Raw -&gt; m Hash
+</span><a href="#local-6989586621680730176"><span class="hs-identifier hs-var">tps</span></a></span></span><span> </span><span id="local-6989586621680730175"><span class="annot"><span class="annottext">Map TextId PatchObjectId
+</span><a href="#local-6989586621680730175"><span class="hs-identifier hs-var">patches</span></a></span></span><span> </span><span id="local-6989586621680730174"><span class="annot"><span class="annottext">Map TextId (BranchObjectId, CausalHashId)
+</span><a href="#local-6989586621680730174"><span class="hs-identifier hs-var">children</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-44"></span><span>  </span><span class="annot"><span class="annottext">(Raw -&gt; Hash) -&gt; Transaction Raw -&gt; Transaction Hash
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-identifier hs-var">fmap</span></span><span> </span><span class="annot"><span class="annottext">Raw -&gt; Hash
-</span><a href="Unison.Hashing.V2.Branch.html#hashBranch"><span class="hs-identifier hs-var">Hashing.Branch.hashBranch</span></a></span><span> </span><span class="annot"><span class="annottext">(m Raw -&gt; m Hash) -&gt; m Raw -&gt; m Hash
+</span><a href="Unison.Hashing.V2.Branch.html#hashBranch"><span class="hs-identifier hs-var">Hashing.Branch.hashBranch</span></a></span><span> </span><span class="annot"><span class="annottext">(Transaction Raw -&gt; Transaction Hash)
+-&gt; Transaction Raw -&gt; Transaction Hash
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span>
-</span><span id="line-46"></span><span>    </span><span class="annot"><span class="annottext">Map NameSegment (Map Referent MdValues)
+</span><span id="line-45"></span><span>    </span><span class="annot"><span class="annottext">Map NameSegment (Map Referent MdValues)
 -&gt; Map NameSegment (Map Reference MdValues)
 -&gt; Map NameSegment Hash
 -&gt; Map NameSegment Hash
 -&gt; Raw
 </span><a href="Unison.Hashing.V2.Branch.html#Raw"><span class="hs-identifier hs-var">Hashing.Branch.Raw</span></a></span><span>
-</span><span id="line-47"></span><span>      </span><span class="annot"><span class="annottext">(Map NameSegment (Map Referent MdValues)
+</span><span id="line-46"></span><span>      </span><span class="annot"><span class="annottext">(Map NameSegment (Map Referent MdValues)
  -&gt; Map NameSegment (Map Reference MdValues)
  -&gt; Map NameSegment Hash
  -&gt; Map NameSegment Hash
  -&gt; Raw)
--&gt; m (Map NameSegment (Map Referent MdValues))
--&gt; m (Map NameSegment (Map Reference MdValues)
+-&gt; Transaction (Map NameSegment (Map Referent MdValues))
+-&gt; Transaction
+     (Map NameSegment (Map Reference MdValues)
       -&gt; Map NameSegment Hash -&gt; Map NameSegment Hash -&gt; Raw)
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Map
   TextId
   (Map
      (Referent'' TextId ObjectId) (MetadataSetFormat' TextId ObjectId))
--&gt; m (Map NameSegment (Map Referent MdValues))
-forall (m :: * -&gt; *).
-EDB m =&gt;
-Map
+-&gt; Transaction (Map NameSegment (Map Referent MdValues))
+</span><a href="#local-6989586621680730170"><span class="hs-identifier hs-var">doTerms</span></a></span><span> </span><span class="annot"><span class="annottext">Map
   TextId
   (Map
      (Referent'' TextId ObjectId) (MetadataSetFormat' TextId ObjectId))
--&gt; m (Map NameSegment (Map Referent MdValues))
-</span><a href="#local-6989586621680790878"><span class="hs-identifier hs-var">doTerms</span></a></span><span> </span><span class="annot"><span class="annottext">Map
-  TextId
-  (Map
-     (Referent'' TextId ObjectId) (MetadataSetFormat' TextId ObjectId))
-</span><a href="#local-6989586621680790885"><span class="hs-identifier hs-var">tms</span></a></span><span>
-</span><span id="line-48"></span><span>      </span><span class="annot"><span class="annottext">m (Map NameSegment (Map Reference MdValues)
+</span><a href="#local-6989586621680730177"><span class="hs-identifier hs-var">tms</span></a></span><span>
+</span><span id="line-47"></span><span>      </span><span class="annot"><span class="annottext">Transaction
+  (Map NameSegment (Map Reference MdValues)
    -&gt; Map NameSegment Hash -&gt; Map NameSegment Hash -&gt; Raw)
--&gt; m (Map NameSegment (Map Reference MdValues))
--&gt; m (Map NameSegment Hash -&gt; Map NameSegment Hash -&gt; Raw)
+-&gt; Transaction (Map NameSegment (Map Reference MdValues))
+-&gt; Transaction
+     (Map NameSegment Hash -&gt; Map NameSegment Hash -&gt; Raw)
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">Map
   TextId
   (Map
      (Reference' TextId ObjectId) (MetadataSetFormat' TextId ObjectId))
--&gt; m (Map NameSegment (Map Reference MdValues))
-forall (m :: * -&gt; *).
-EDB m =&gt;
-Map
+-&gt; Transaction (Map NameSegment (Map Reference MdValues))
+</span><a href="#local-6989586621680730169"><span class="hs-identifier hs-var">doTypes</span></a></span><span> </span><span class="annot"><span class="annottext">Map
   TextId
   (Map
      (Reference' TextId ObjectId) (MetadataSetFormat' TextId ObjectId))
--&gt; m (Map NameSegment (Map Reference MdValues))
-</span><a href="#local-6989586621680790877"><span class="hs-identifier hs-var">doTypes</span></a></span><span> </span><span class="annot"><span class="annottext">Map
-  TextId
-  (Map
-     (Reference' TextId ObjectId) (MetadataSetFormat' TextId ObjectId))
-</span><a href="#local-6989586621680790884"><span class="hs-identifier hs-var">tps</span></a></span><span>
-</span><span id="line-49"></span><span>      </span><span class="annot"><span class="annottext">m (Map NameSegment Hash -&gt; Map NameSegment Hash -&gt; Raw)
--&gt; m (Map NameSegment Hash) -&gt; m (Map NameSegment Hash -&gt; Raw)
+</span><a href="#local-6989586621680730176"><span class="hs-identifier hs-var">tps</span></a></span><span>
+</span><span id="line-48"></span><span>      </span><span class="annot"><span class="annottext">Transaction (Map NameSegment Hash -&gt; Map NameSegment Hash -&gt; Raw)
+-&gt; Transaction (Map NameSegment Hash)
+-&gt; Transaction (Map NameSegment Hash -&gt; Raw)
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
-</span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">Map TextId PatchObjectId -&gt; m (Map NameSegment Hash)
-forall (m :: * -&gt; *).
-EDB m =&gt;
-Map TextId PatchObjectId -&gt; m (Map NameSegment Hash)
-</span><a href="#local-6989586621680790876"><span class="hs-identifier hs-var">doPatches</span></a></span><span> </span><span class="annot"><span class="annottext">Map TextId PatchObjectId
-</span><a href="#local-6989586621680790883"><span class="hs-identifier hs-var">patches</span></a></span><span>
-</span><span id="line-50"></span><span>      </span><span class="annot"><span class="annottext">m (Map NameSegment Hash -&gt; Raw)
--&gt; m (Map NameSegment Hash) -&gt; m Raw
+</span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">Map TextId PatchObjectId -&gt; Transaction (Map NameSegment Hash)
+</span><a href="#local-6989586621680730168"><span class="hs-identifier hs-var">doPatches</span></a></span><span> </span><span class="annot"><span class="annottext">Map TextId PatchObjectId
+</span><a href="#local-6989586621680730175"><span class="hs-identifier hs-var">patches</span></a></span><span>
+</span><span id="line-49"></span><span>      </span><span class="annot"><span class="annottext">Transaction (Map NameSegment Hash -&gt; Raw)
+-&gt; Transaction (Map NameSegment Hash) -&gt; Transaction Raw
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">Map TextId (BranchObjectId, CausalHashId)
--&gt; m (Map NameSegment Hash)
-forall (m :: * -&gt; *).
-EDB m =&gt;
-Map TextId (BranchObjectId, CausalHashId)
--&gt; m (Map NameSegment Hash)
-</span><a href="#local-6989586621680790875"><span class="hs-identifier hs-var">doChildren</span></a></span><span> </span><span class="annot"><span class="annottext">Map TextId (BranchObjectId, CausalHashId)
-</span><a href="#local-6989586621680790882"><span class="hs-identifier hs-var">children</span></a></span><span>
-</span><span id="line-51"></span><span>  </span><span class="hs-keyword">where</span><span>
-</span><span id="line-52"></span><span>    </span><span id="local-6989586621680790964"><span class="annot"><a href="#local-6989586621680790878"><span class="hs-identifier hs-type">doTerms</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">EDB</span></span><span> </span><span class="annot"><a href="#local-6989586621680790964"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Db.TextId</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.Referent</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.DbMetadataSet</span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621680790964"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Branch.html#NameSegment"><span class="hs-identifier hs-type">NameSegment</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Referent.html#Referent"><span class="hs-identifier hs-type">Hashing.Referent</span></a></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Branch.html#MdValues"><span class="hs-identifier hs-type">Hashing.Branch.MdValues</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span></span><span>
-</span><span id="line-53"></span><span>    </span><span id="local-6989586621680790878"><span class="annot"><span class="annottext">doTerms :: Map
+-&gt; Transaction (Map NameSegment Hash)
+</span><a href="#local-6989586621680730167"><span class="hs-identifier hs-var">doChildren</span></a></span><span> </span><span class="annot"><span class="annottext">Map TextId (BranchObjectId, CausalHashId)
+</span><a href="#local-6989586621680730174"><span class="hs-identifier hs-var">children</span></a></span><span>
+</span><span id="line-50"></span><span>  </span><span class="hs-keyword">where</span><span>
+</span><span id="line-51"></span><span>    </span><span class="annot"><a href="#local-6989586621680730170"><span class="hs-identifier hs-type">doTerms</span></a></span><span> </span><span class="hs-glyph">::</span><span>
+</span><span id="line-52"></span><span>      </span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Db.TextId</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.Referent</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.DbMetadataSet</span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span>
+</span><span id="line-53"></span><span>      </span><span class="annot"><span class="hs-identifier hs-type">Transaction</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Branch.html#NameSegment"><span class="hs-identifier hs-type">NameSegment</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Referent.html#Referent"><span class="hs-identifier hs-type">Hashing.Referent</span></a></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Branch.html#MdValues"><span class="hs-identifier hs-type">Hashing.Branch.MdValues</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-54"></span><span>    </span><span id="local-6989586621680730170"><span class="annot"><span class="annottext">doTerms :: Map
   TextId
   (Map
      (Referent'' TextId ObjectId) (MetadataSetFormat' TextId ObjectId))
--&gt; m (Map NameSegment (Map Referent MdValues))
-</span><a href="#local-6989586621680790878"><span class="hs-identifier hs-var hs-var">doTerms</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-54"></span><span>      </span><span class="annot"><span class="annottext">(TextId -&gt; m NameSegment)
+-&gt; Transaction (Map NameSegment (Map Referent MdValues))
+</span><a href="#local-6989586621680730170"><span class="hs-identifier hs-var hs-var">doTerms</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-55"></span><span>      </span><span class="annot"><span class="annottext">(TextId -&gt; Transaction NameSegment)
 -&gt; (Map
       (Referent'' TextId ObjectId) (MetadataSetFormat' TextId ObjectId)
-    -&gt; m (Map Referent MdValues))
+    -&gt; Transaction (Map Referent MdValues))
 -&gt; Map
      TextId
      (Map
         (Referent'' TextId ObjectId) (MetadataSetFormat' TextId ObjectId))
--&gt; m (Map NameSegment (Map Referent MdValues))
+-&gt; Transaction (Map NameSegment (Map Referent MdValues))
 forall (f :: * -&gt; *) a' a b b'.
 (Applicative f, Ord a') =&gt;
 (a -&gt; f a') -&gt; (b -&gt; f b') -&gt; Map a b -&gt; f (Map a' b')
 </span><span class="hs-identifier hs-var">Map.bitraverse</span></span><span>
-</span><span id="line-55"></span><span>        </span><span class="annot"><span class="annottext">TextId -&gt; m NameSegment
-forall (m :: * -&gt; *). EDB m =&gt; TextId -&gt; m NameSegment
+</span><span id="line-56"></span><span>        </span><span class="annot"><span class="annottext">TextId -&gt; Transaction NameSegment
 </span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hNameSegment"><span class="hs-identifier hs-var">s2hNameSegment</span></a></span><span>
-</span><span id="line-56"></span><span>        </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(Referent'' TextId ObjectId -&gt; m Referent)
--&gt; (MetadataSetFormat' TextId ObjectId -&gt; m MdValues)
+</span><span id="line-57"></span><span>        </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(Referent'' TextId ObjectId -&gt; Transaction Referent)
+-&gt; (MetadataSetFormat' TextId ObjectId -&gt; Transaction MdValues)
 -&gt; Map
      (Referent'' TextId ObjectId) (MetadataSetFormat' TextId ObjectId)
--&gt; m (Map Referent MdValues)
+-&gt; Transaction (Map Referent MdValues)
 forall (f :: * -&gt; *) a' a b b'.
 (Applicative f, Ord a') =&gt;
 (a -&gt; f a') -&gt; (b -&gt; f b') -&gt; Map a b -&gt; f (Map a' b')
-</span><span class="hs-identifier hs-var">Map.bitraverse</span></span><span> </span><span class="annot"><span class="annottext">Referent'' TextId ObjectId -&gt; m Referent
-forall (m :: * -&gt; *).
-EDB m =&gt;
-Referent'' TextId ObjectId -&gt; m Referent
-</span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hReferent"><span class="hs-identifier hs-var">s2hReferent</span></a></span><span> </span><span class="annot"><span class="annottext">MetadataSetFormat' TextId ObjectId -&gt; m MdValues
-forall (m :: * -&gt; *).
-EDB m =&gt;
-MetadataSetFormat' TextId ObjectId -&gt; m MdValues
+</span><span class="hs-identifier hs-var">Map.bitraverse</span></span><span> </span><span class="annot"><span class="annottext">Referent'' TextId ObjectId -&gt; Transaction Referent
+</span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hReferent"><span class="hs-identifier hs-var">s2hReferent</span></a></span><span> </span><span class="annot"><span class="annottext">MetadataSetFormat' TextId ObjectId -&gt; Transaction MdValues
 </span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hMetadataSet"><span class="hs-identifier hs-var">s2hMetadataSet</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-57"></span><span>
-</span><span id="line-58"></span><span>    </span><span id="local-6989586621680790959"><span class="annot"><a href="#local-6989586621680790877"><span class="hs-identifier hs-type">doTypes</span></a></span><span> </span><span class="hs-glyph">::</span><span>
-</span><span id="line-59"></span><span>      </span><span class="annot"><span class="hs-identifier hs-type">EDB</span></span><span> </span><span class="annot"><a href="#local-6989586621680790959"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span>
+</span><span id="line-58"></span><span>
+</span><span id="line-59"></span><span>    </span><span class="annot"><a href="#local-6989586621680730169"><span class="hs-identifier hs-type">doTypes</span></a></span><span> </span><span class="hs-glyph">::</span><span>
 </span><span id="line-60"></span><span>      </span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Db.TextId</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.Reference</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.DbMetadataSet</span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span>
-</span><span id="line-61"></span><span>      </span><span class="annot"><a href="#local-6989586621680790959"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Branch.html#NameSegment"><span class="hs-identifier hs-type">NameSegment</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Reference.html#Reference"><span class="hs-identifier hs-type">Hashing.Reference</span></a></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Branch.html#MdValues"><span class="hs-identifier hs-type">Hashing.Branch.MdValues</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span></span><span>
-</span><span id="line-62"></span><span>    </span><span id="local-6989586621680790877"><span class="annot"><span class="annottext">doTypes :: Map
+</span><span id="line-61"></span><span>      </span><span class="annot"><span class="hs-identifier hs-type">Transaction</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Branch.html#NameSegment"><span class="hs-identifier hs-type">NameSegment</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Reference.html#Reference"><span class="hs-identifier hs-type">Hashing.Reference</span></a></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Branch.html#MdValues"><span class="hs-identifier hs-type">Hashing.Branch.MdValues</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-62"></span><span>    </span><span id="local-6989586621680730169"><span class="annot"><span class="annottext">doTypes :: Map
   TextId
   (Map
      (Reference' TextId ObjectId) (MetadataSetFormat' TextId ObjectId))
--&gt; m (Map NameSegment (Map Reference MdValues))
-</span><a href="#local-6989586621680790877"><span class="hs-identifier hs-var hs-var">doTypes</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-63"></span><span>      </span><span class="annot"><span class="annottext">(TextId -&gt; m NameSegment)
+-&gt; Transaction (Map NameSegment (Map Reference MdValues))
+</span><a href="#local-6989586621680730169"><span class="hs-identifier hs-var hs-var">doTypes</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-63"></span><span>      </span><span class="annot"><span class="annottext">(TextId -&gt; Transaction NameSegment)
 -&gt; (Map
       (Reference' TextId ObjectId) (MetadataSetFormat' TextId ObjectId)
-    -&gt; m (Map Reference MdValues))
+    -&gt; Transaction (Map Reference MdValues))
 -&gt; Map
      TextId
      (Map
         (Reference' TextId ObjectId) (MetadataSetFormat' TextId ObjectId))
--&gt; m (Map NameSegment (Map Reference MdValues))
+-&gt; Transaction (Map NameSegment (Map Reference MdValues))
 forall (f :: * -&gt; *) a' a b b'.
 (Applicative f, Ord a') =&gt;
 (a -&gt; f a') -&gt; (b -&gt; f b') -&gt; Map a b -&gt; f (Map a' b')
 </span><span class="hs-identifier hs-var">Map.bitraverse</span></span><span>
-</span><span id="line-64"></span><span>        </span><span class="annot"><span class="annottext">TextId -&gt; m NameSegment
-forall (m :: * -&gt; *). EDB m =&gt; TextId -&gt; m NameSegment
+</span><span id="line-64"></span><span>        </span><span class="annot"><span class="annottext">TextId -&gt; Transaction NameSegment
 </span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hNameSegment"><span class="hs-identifier hs-var">s2hNameSegment</span></a></span><span>
-</span><span id="line-65"></span><span>        </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(Reference' TextId ObjectId -&gt; m Reference)
--&gt; (MetadataSetFormat' TextId ObjectId -&gt; m MdValues)
+</span><span id="line-65"></span><span>        </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(Reference' TextId ObjectId -&gt; Transaction Reference)
+-&gt; (MetadataSetFormat' TextId ObjectId -&gt; Transaction MdValues)
 -&gt; Map
      (Reference' TextId ObjectId) (MetadataSetFormat' TextId ObjectId)
--&gt; m (Map Reference MdValues)
+-&gt; Transaction (Map Reference MdValues)
 forall (f :: * -&gt; *) a' a b b'.
 (Applicative f, Ord a') =&gt;
 (a -&gt; f a') -&gt; (b -&gt; f b') -&gt; Map a b -&gt; f (Map a' b')
-</span><span class="hs-identifier hs-var">Map.bitraverse</span></span><span> </span><span class="annot"><span class="annottext">Reference' TextId ObjectId -&gt; m Reference
-forall (m :: * -&gt; *).
-EDB m =&gt;
-Reference' TextId ObjectId -&gt; m Reference
-</span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hReference"><span class="hs-identifier hs-var">s2hReference</span></a></span><span> </span><span class="annot"><span class="annottext">MetadataSetFormat' TextId ObjectId -&gt; m MdValues
-forall (m :: * -&gt; *).
-EDB m =&gt;
-MetadataSetFormat' TextId ObjectId -&gt; m MdValues
+</span><span class="hs-identifier hs-var">Map.bitraverse</span></span><span> </span><span class="annot"><span class="annottext">Reference' TextId ObjectId -&gt; Transaction Reference
+</span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hReference"><span class="hs-identifier hs-var">s2hReference</span></a></span><span> </span><span class="annot"><span class="annottext">MetadataSetFormat' TextId ObjectId -&gt; Transaction MdValues
 </span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hMetadataSet"><span class="hs-identifier hs-var">s2hMetadataSet</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-66"></span><span>
-</span><span id="line-67"></span><span>    </span><span id="local-6989586621680790958"><span class="annot"><a href="#local-6989586621680790876"><span class="hs-identifier hs-type">doPatches</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">EDB</span></span><span> </span><span class="annot"><a href="#local-6989586621680790958"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Db.TextId</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Db.PatchObjectId</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621680790958"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Branch.html#NameSegment"><span class="hs-identifier hs-type">NameSegment</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Hash</span></span><span class="hs-special">)</span></span><span>
-</span><span id="line-68"></span><span>    </span><span id="local-6989586621680790876"><span class="annot"><span class="annottext">doPatches :: Map TextId PatchObjectId -&gt; m (Map NameSegment Hash)
-</span><a href="#local-6989586621680790876"><span class="hs-identifier hs-var hs-var">doPatches</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-69"></span><span>      </span><span class="annot"><span class="annottext">(TextId -&gt; m NameSegment)
--&gt; (PatchObjectId -&gt; m Hash)
+</span><span id="line-67"></span><span>    </span><span class="annot"><a href="#local-6989586621680730168"><span class="hs-identifier hs-type">doPatches</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Db.TextId</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Db.PatchObjectId</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Transaction</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Branch.html#NameSegment"><span class="hs-identifier hs-type">NameSegment</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Hash</span></span><span class="hs-special">)</span><span>
+</span><span id="line-68"></span><span>    </span><span id="local-6989586621680730168"><span class="annot"><span class="annottext">doPatches :: Map TextId PatchObjectId -&gt; Transaction (Map NameSegment Hash)
+</span><a href="#local-6989586621680730168"><span class="hs-identifier hs-var hs-var">doPatches</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-69"></span><span>      </span><span class="annot"><span class="annottext">(TextId -&gt; Transaction NameSegment)
+-&gt; (PatchObjectId -&gt; Transaction Hash)
 -&gt; Map TextId PatchObjectId
--&gt; m (Map NameSegment Hash)
+-&gt; Transaction (Map NameSegment Hash)
 forall (f :: * -&gt; *) a' a b b'.
 (Applicative f, Ord a') =&gt;
 (a -&gt; f a') -&gt; (b -&gt; f b') -&gt; Map a b -&gt; f (Map a' b')
-</span><span class="hs-identifier hs-var">Map.bitraverse</span></span><span> </span><span class="annot"><span class="annottext">TextId -&gt; m NameSegment
-forall (m :: * -&gt; *). EDB m =&gt; TextId -&gt; m NameSegment
-</span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hNameSegment"><span class="hs-identifier hs-var">s2hNameSegment</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ObjectId -&gt; m Hash
-forall (m :: * -&gt; *). EDB m =&gt; ObjectId -&gt; m Hash
-</span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#objectIdToPrimaryHash"><span class="hs-identifier hs-var">objectIdToPrimaryHash</span></a></span><span> </span><span class="annot"><span class="annottext">(ObjectId -&gt; m Hash)
--&gt; (PatchObjectId -&gt; ObjectId) -&gt; PatchObjectId -&gt; m Hash
+</span><span class="hs-identifier hs-var">Map.bitraverse</span></span><span> </span><span class="annot"><span class="annottext">TextId -&gt; Transaction NameSegment
+</span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hNameSegment"><span class="hs-identifier hs-var">s2hNameSegment</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ObjectId -&gt; Transaction Hash
+</span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#objectIdToPrimaryHash"><span class="hs-identifier hs-var">objectIdToPrimaryHash</span></a></span><span> </span><span class="annot"><span class="annottext">(ObjectId -&gt; Transaction Hash)
+-&gt; (PatchObjectId -&gt; ObjectId) -&gt; PatchObjectId -&gt; Transaction Hash
 forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">PatchObjectId -&gt; ObjectId
 </span><span class="hs-identifier hs-var hs-var">Db.unPatchObjectId</span></span><span class="hs-special">)</span><span>
 </span><span id="line-70"></span><span>
-</span><span id="line-71"></span><span>    </span><span id="local-6989586621680790957"><span class="annot"><a href="#local-6989586621680790875"><span class="hs-identifier hs-type">doChildren</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">EDB</span></span><span> </span><span class="annot"><a href="#local-6989586621680790957"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Db.TextId</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Db.BranchObjectId</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Db.CausalHashId</span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621680790957"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Branch.html#NameSegment"><span class="hs-identifier hs-type">NameSegment</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Hash</span></span><span class="hs-special">)</span></span><span>
-</span><span id="line-72"></span><span>    </span><span id="local-6989586621680790875"><span class="annot"><span class="annottext">doChildren :: Map TextId (BranchObjectId, CausalHashId)
--&gt; m (Map NameSegment Hash)
-</span><a href="#local-6989586621680790875"><span class="hs-identifier hs-var hs-var">doChildren</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-73"></span><span>      </span><span class="annot"><span class="annottext">(TextId -&gt; m NameSegment)
--&gt; ((BranchObjectId, CausalHashId) -&gt; m Hash)
+</span><span id="line-71"></span><span>    </span><span class="annot"><a href="#local-6989586621680730167"><span class="hs-identifier hs-type">doChildren</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Db.TextId</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Db.BranchObjectId</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Db.CausalHashId</span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Transaction</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Branch.html#NameSegment"><span class="hs-identifier hs-type">NameSegment</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Hash</span></span><span class="hs-special">)</span><span>
+</span><span id="line-72"></span><span>    </span><span id="local-6989586621680730167"><span class="annot"><span class="annottext">doChildren :: Map TextId (BranchObjectId, CausalHashId)
+-&gt; Transaction (Map NameSegment Hash)
+</span><a href="#local-6989586621680730167"><span class="hs-identifier hs-var hs-var">doChildren</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-73"></span><span>      </span><span class="annot"><span class="annottext">(TextId -&gt; Transaction NameSegment)
+-&gt; ((BranchObjectId, CausalHashId) -&gt; Transaction Hash)
 -&gt; Map TextId (BranchObjectId, CausalHashId)
--&gt; m (Map NameSegment Hash)
+-&gt; Transaction (Map NameSegment Hash)
 forall (f :: * -&gt; *) a' a b b'.
 (Applicative f, Ord a') =&gt;
 (a -&gt; f a') -&gt; (b -&gt; f b') -&gt; Map a b -&gt; f (Map a' b')
-</span><span class="hs-identifier hs-var">Map.bitraverse</span></span><span> </span><span class="annot"><span class="annottext">TextId -&gt; m NameSegment
-forall (m :: * -&gt; *). EDB m =&gt; TextId -&gt; m NameSegment
-</span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hNameSegment"><span class="hs-identifier hs-var">s2hNameSegment</span></a></span><span> </span><span class="hs-glyph">\</span><span class="hs-special">(</span><span id="local-6989586621680790864"><span class="annot"><span class="annottext">BranchObjectId
-</span><a href="#local-6989586621680790864"><span class="hs-identifier hs-var">_boId</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680790863"><span class="annot"><span class="annottext">CausalHashId
-</span><a href="#local-6989586621680790863"><span class="hs-identifier hs-var">chId</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">CausalHashId -&gt; m Hash
-forall (m :: * -&gt; *). EDB m =&gt; CausalHashId -&gt; m Hash
+</span><span class="hs-identifier hs-var">Map.bitraverse</span></span><span> </span><span class="annot"><span class="annottext">TextId -&gt; Transaction NameSegment
+</span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hNameSegment"><span class="hs-identifier hs-var">s2hNameSegment</span></a></span><span> </span><span class="hs-glyph">\</span><span class="hs-special">(</span><span id="local-6989586621680730156"><span class="annot"><span class="annottext">BranchObjectId
+</span><a href="#local-6989586621680730156"><span class="hs-identifier hs-var">_boId</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680730155"><span class="annot"><span class="annottext">CausalHashId
+</span><a href="#local-6989586621680730155"><span class="hs-identifier hs-var">chId</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">CausalHashId -&gt; Transaction Hash
 </span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#causalHashIdToHash"><span class="hs-identifier hs-var">causalHashIdToHash</span></a></span><span> </span><span class="annot"><span class="annottext">CausalHashId
-</span><a href="#local-6989586621680790863"><span class="hs-identifier hs-var">chId</span></a></span><span>
+</span><a href="#local-6989586621680730155"><span class="hs-identifier hs-var">chId</span></a></span><span>
 </span><span id="line-74"></span><span>
-</span><span id="line-75"></span><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#dbPatchHash"><span class="hs-identifier hs-type">dbPatchHash</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-keyword">forall</span><span> </span><span id="local-6989586621680790861"><span class="annot"><a href="#local-6989586621680790861"><span class="hs-identifier hs-type">m</span></a></span></span><span class="hs-operator">.</span><span> </span><span class="annot"><span class="hs-identifier hs-type">EDB</span></span><span> </span><span class="annot"><a href="#local-6989586621680790861"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.Patch</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621680790861"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Hash</span></span><span>
-</span><span id="line-76"></span><span id="dbPatchHash"><span class="annot"><span class="annottext">dbPatchHash :: Patch -&gt; m Hash
-</span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#dbPatchHash"><span class="hs-identifier hs-var hs-var">dbPatchHash</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.Patch</span></span><span> </span><span class="hs-special">{</span><span id="local-6989586621680790859"><span class="annot"><span class="annottext">Map (Referent'' TextId HashId) (Set (TermEdit' TextId ObjectId))
+</span><span id="line-75"></span><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#dbPatchHash"><span class="hs-identifier hs-type">dbPatchHash</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.Patch</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Transaction</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Hash</span></span><span>
+</span><span id="line-76"></span><span id="dbPatchHash"><span class="annot"><span class="annottext">dbPatchHash :: Patch -&gt; Transaction Hash
+</span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#dbPatchHash"><span class="hs-identifier hs-var hs-var">dbPatchHash</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.Patch</span></span><span> </span><span class="hs-special">{</span><span id="local-6989586621680730152"><span class="annot"><span class="annottext">Map (Referent'' TextId HashId) (Set (TermEdit' TextId ObjectId))
 termEdits :: forall t h o.
 Patch' t h o -&gt; Map (Referent'' t h) (Set (TermEdit' t o))
 termEdits :: Map (Referent'' TextId HashId) (Set (TermEdit' TextId ObjectId))
-</span><span class="hs-identifier hs-var hs-var">S.termEdits</span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680790857"><span class="annot"><span class="annottext">Map (Reference' TextId HashId) (Set (TypeEdit' TextId ObjectId))
+</span><span class="hs-identifier hs-var hs-var">S.termEdits</span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680730150"><span class="annot"><span class="annottext">Map (Reference' TextId HashId) (Set (TypeEdit' TextId ObjectId))
 typeEdits :: forall t h o.
 Patch' t h o -&gt; Map (Reference' t h) (Set (TypeEdit' t o))
 typeEdits :: Map (Reference' TextId HashId) (Set (TypeEdit' TextId ObjectId))
 </span><span class="hs-identifier hs-var hs-var">S.typeEdits</span></span></span><span class="hs-special">}</span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-77"></span><span>  </span><span class="annot"><span class="annottext">(Patch -&gt; Hash) -&gt; m Patch -&gt; m Hash
+</span><span id="line-77"></span><span>  </span><span class="annot"><span class="annottext">(Patch -&gt; Hash) -&gt; Transaction Patch -&gt; Transaction Hash
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-identifier hs-var">fmap</span></span><span> </span><span class="annot"><span class="annottext">Patch -&gt; Hash
-</span><a href="Unison.Hashing.V2.Patch.html#hashPatch"><span class="hs-identifier hs-var">Hashing.Patch.hashPatch</span></a></span><span> </span><span class="annot"><span class="annottext">(m Patch -&gt; m Hash) -&gt; m Patch -&gt; m Hash
+</span><a href="Unison.Hashing.V2.Patch.html#hashPatch"><span class="hs-identifier hs-var">Hashing.Patch.hashPatch</span></a></span><span> </span><span class="annot"><span class="annottext">(Transaction Patch -&gt; Transaction Hash)
+-&gt; Transaction Patch -&gt; Transaction Hash
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span>
 </span><span id="line-78"></span><span>    </span><span class="annot"><span class="annottext">Map Referent (Set TermEdit)
@@ -281,308 +248,279 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><a href="Unison.Hashing.V2.Patch.html#Patch"><span class="hs-identifier hs-var">Hashing.Patch</span></a></span><span>
 </span><span id="line-79"></span><span>      </span><span class="annot"><span class="annottext">(Map Referent (Set TermEdit)
  -&gt; Map Reference (Set TypeEdit) -&gt; Patch)
--&gt; m (Map Referent (Set TermEdit))
--&gt; m (Map Reference (Set TypeEdit) -&gt; Patch)
+-&gt; Transaction (Map Referent (Set TermEdit))
+-&gt; Transaction (Map Reference (Set TypeEdit) -&gt; Patch)
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Map (Referent'' TextId HashId) (Set (TermEdit' TextId ObjectId))
--&gt; m (Map Referent (Set TermEdit))
-</span><a href="#local-6989586621680790853"><span class="hs-identifier hs-var">doTermEdits</span></a></span><span> </span><span class="annot"><span class="annottext">Map (Referent'' TextId HashId) (Set (TermEdit' TextId ObjectId))
-</span><a href="#local-6989586621680790859"><span class="hs-identifier hs-var">termEdits</span></a></span><span>
-</span><span id="line-80"></span><span>      </span><span class="annot"><span class="annottext">m (Map Reference (Set TypeEdit) -&gt; Patch)
--&gt; m (Map Reference (Set TypeEdit)) -&gt; m Patch
+-&gt; Transaction (Map Referent (Set TermEdit))
+</span><a href="#local-6989586621680730146"><span class="hs-identifier hs-var">doTermEdits</span></a></span><span> </span><span class="annot"><span class="annottext">Map (Referent'' TextId HashId) (Set (TermEdit' TextId ObjectId))
+</span><a href="#local-6989586621680730152"><span class="hs-identifier hs-var">termEdits</span></a></span><span>
+</span><span id="line-80"></span><span>      </span><span class="annot"><span class="annottext">Transaction (Map Reference (Set TypeEdit) -&gt; Patch)
+-&gt; Transaction (Map Reference (Set TypeEdit)) -&gt; Transaction Patch
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">Map (Reference' TextId HashId) (Set (TypeEdit' TextId ObjectId))
--&gt; m (Map Reference (Set TypeEdit))
-</span><a href="#local-6989586621680790852"><span class="hs-identifier hs-var">doTypeEdits</span></a></span><span> </span><span class="annot"><span class="annottext">Map (Reference' TextId HashId) (Set (TypeEdit' TextId ObjectId))
-</span><a href="#local-6989586621680790857"><span class="hs-identifier hs-var">typeEdits</span></a></span><span>
+-&gt; Transaction (Map Reference (Set TypeEdit))
+</span><a href="#local-6989586621680730145"><span class="hs-identifier hs-var">doTypeEdits</span></a></span><span> </span><span class="annot"><span class="annottext">Map (Reference' TextId HashId) (Set (TypeEdit' TextId ObjectId))
+</span><a href="#local-6989586621680730150"><span class="hs-identifier hs-var">typeEdits</span></a></span><span>
 </span><span id="line-81"></span><span>  </span><span class="hs-keyword">where</span><span>
-</span><span id="line-82"></span><span>    </span><span class="annot"><a href="#local-6989586621680790853"><span class="hs-identifier hs-type">doTermEdits</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.ReferentH</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Set</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.TermEdit</span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621680790861"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Referent.html#Referent"><span class="hs-identifier hs-type">Hashing.Referent</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Set</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.TermEdit.html#TermEdit"><span class="hs-identifier hs-type">Hashing.TermEdit</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
-</span><span id="line-83"></span><span>    </span><span id="local-6989586621680790853"><span class="annot"><span class="annottext">doTermEdits :: Map (Referent'' TextId HashId) (Set (TermEdit' TextId ObjectId))
--&gt; m (Map Referent (Set TermEdit))
-</span><a href="#local-6989586621680790853"><span class="hs-identifier hs-var hs-var">doTermEdits</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-84"></span><span>      </span><span class="annot"><span class="annottext">(Referent'' TextId HashId -&gt; m Referent)
--&gt; (Set (TermEdit' TextId ObjectId) -&gt; m (Set TermEdit))
+</span><span id="line-82"></span><span>    </span><span class="annot"><a href="#local-6989586621680730146"><span class="hs-identifier hs-type">doTermEdits</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.ReferentH</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Set</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.TermEdit</span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Transaction</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Referent.html#Referent"><span class="hs-identifier hs-type">Hashing.Referent</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Set</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.TermEdit.html#TermEdit"><span class="hs-identifier hs-type">Hashing.TermEdit</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-83"></span><span>    </span><span id="local-6989586621680730146"><span class="annot"><span class="annottext">doTermEdits :: Map (Referent'' TextId HashId) (Set (TermEdit' TextId ObjectId))
+-&gt; Transaction (Map Referent (Set TermEdit))
+</span><a href="#local-6989586621680730146"><span class="hs-identifier hs-var hs-var">doTermEdits</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-84"></span><span>      </span><span class="annot"><span class="annottext">(Referent'' TextId HashId -&gt; Transaction Referent)
+-&gt; (Set (TermEdit' TextId ObjectId) -&gt; Transaction (Set TermEdit))
 -&gt; Map (Referent'' TextId HashId) (Set (TermEdit' TextId ObjectId))
--&gt; m (Map Referent (Set TermEdit))
+-&gt; Transaction (Map Referent (Set TermEdit))
 forall (f :: * -&gt; *) a' a b b'.
 (Applicative f, Ord a') =&gt;
 (a -&gt; f a') -&gt; (b -&gt; f b') -&gt; Map a b -&gt; f (Map a' b')
-</span><span class="hs-identifier hs-var">Map.bitraverse</span></span><span> </span><span class="annot"><span class="annottext">Referent'' TextId HashId -&gt; m Referent
-forall (m :: * -&gt; *).
-EDB m =&gt;
-Referent'' TextId HashId -&gt; m Referent
-</span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hReferentH"><span class="hs-identifier hs-var">s2hReferentH</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(TermEdit' TextId ObjectId -&gt; m TermEdit)
--&gt; Set (TermEdit' TextId ObjectId) -&gt; m (Set TermEdit)
+</span><span class="hs-identifier hs-var">Map.bitraverse</span></span><span> </span><span class="annot"><span class="annottext">Referent'' TextId HashId -&gt; Transaction Referent
+</span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hReferentH"><span class="hs-identifier hs-var">s2hReferentH</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(TermEdit' TextId ObjectId -&gt; Transaction TermEdit)
+-&gt; Set (TermEdit' TextId ObjectId) -&gt; Transaction (Set TermEdit)
 forall (f :: * -&gt; *) b a.
 (Applicative f, Ord b) =&gt;
 (a -&gt; f b) -&gt; Set a -&gt; f (Set b)
-</span><span class="hs-identifier hs-var">Set.traverse</span></span><span> </span><span class="annot"><span class="annottext">TermEdit' TextId ObjectId -&gt; m TermEdit
-forall (m :: * -&gt; *).
-EDB m =&gt;
-TermEdit' TextId ObjectId -&gt; m TermEdit
+</span><span class="hs-identifier hs-var">Set.traverse</span></span><span> </span><span class="annot"><span class="annottext">TermEdit' TextId ObjectId -&gt; Transaction TermEdit
 </span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hTermEdit"><span class="hs-identifier hs-var">s2hTermEdit</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-85"></span><span>
-</span><span id="line-86"></span><span>    </span><span class="annot"><a href="#local-6989586621680790852"><span class="hs-identifier hs-type">doTypeEdits</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.ReferenceH</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Set</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.TypeEdit</span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621680790861"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Reference.html#Reference"><span class="hs-identifier hs-type">Hashing.Reference</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Set</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.TypeEdit.html#TypeEdit"><span class="hs-identifier hs-type">Hashing.TypeEdit</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
-</span><span id="line-87"></span><span>    </span><span id="local-6989586621680790852"><span class="annot"><span class="annottext">doTypeEdits :: Map (Reference' TextId HashId) (Set (TypeEdit' TextId ObjectId))
--&gt; m (Map Reference (Set TypeEdit))
-</span><a href="#local-6989586621680790852"><span class="hs-identifier hs-var hs-var">doTypeEdits</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-88"></span><span>      </span><span class="annot"><span class="annottext">(Reference' TextId HashId -&gt; m Reference)
--&gt; (Set (TypeEdit' TextId ObjectId) -&gt; m (Set TypeEdit))
+</span><span id="line-86"></span><span>    </span><span class="annot"><a href="#local-6989586621680730145"><span class="hs-identifier hs-type">doTypeEdits</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.ReferenceH</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Set</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.TypeEdit</span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Transaction</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Reference.html#Reference"><span class="hs-identifier hs-type">Hashing.Reference</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Set</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.TypeEdit.html#TypeEdit"><span class="hs-identifier hs-type">Hashing.TypeEdit</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-87"></span><span>    </span><span id="local-6989586621680730145"><span class="annot"><span class="annottext">doTypeEdits :: Map (Reference' TextId HashId) (Set (TypeEdit' TextId ObjectId))
+-&gt; Transaction (Map Reference (Set TypeEdit))
+</span><a href="#local-6989586621680730145"><span class="hs-identifier hs-var hs-var">doTypeEdits</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-88"></span><span>      </span><span class="annot"><span class="annottext">(Reference' TextId HashId -&gt; Transaction Reference)
+-&gt; (Set (TypeEdit' TextId ObjectId) -&gt; Transaction (Set TypeEdit))
 -&gt; Map (Reference' TextId HashId) (Set (TypeEdit' TextId ObjectId))
--&gt; m (Map Reference (Set TypeEdit))
+-&gt; Transaction (Map Reference (Set TypeEdit))
 forall (f :: * -&gt; *) a' a b b'.
 (Applicative f, Ord a') =&gt;
 (a -&gt; f a') -&gt; (b -&gt; f b') -&gt; Map a b -&gt; f (Map a' b')
-</span><span class="hs-identifier hs-var">Map.bitraverse</span></span><span> </span><span class="annot"><span class="annottext">Reference' TextId HashId -&gt; m Reference
-forall (m :: * -&gt; *).
-EDB m =&gt;
-Reference' TextId HashId -&gt; m Reference
-</span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hReferenceH"><span class="hs-identifier hs-var">s2hReferenceH</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(TypeEdit' TextId ObjectId -&gt; m TypeEdit)
--&gt; Set (TypeEdit' TextId ObjectId) -&gt; m (Set TypeEdit)
+</span><span class="hs-identifier hs-var">Map.bitraverse</span></span><span> </span><span class="annot"><span class="annottext">Reference' TextId HashId -&gt; Transaction Reference
+</span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hReferenceH"><span class="hs-identifier hs-var">s2hReferenceH</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(TypeEdit' TextId ObjectId -&gt; Transaction TypeEdit)
+-&gt; Set (TypeEdit' TextId ObjectId) -&gt; Transaction (Set TypeEdit)
 forall (f :: * -&gt; *) b a.
 (Applicative f, Ord b) =&gt;
 (a -&gt; f b) -&gt; Set a -&gt; f (Set b)
-</span><span class="hs-identifier hs-var">Set.traverse</span></span><span> </span><span class="annot"><span class="annottext">TypeEdit' TextId ObjectId -&gt; m TypeEdit
-forall (m :: * -&gt; *).
-EDB m =&gt;
-TypeEdit' TextId ObjectId -&gt; m TypeEdit
+</span><span class="hs-identifier hs-var">Set.traverse</span></span><span> </span><span class="annot"><span class="annottext">TypeEdit' TextId ObjectId -&gt; Transaction TypeEdit
 </span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hTypeEdit"><span class="hs-identifier hs-var">s2hTypeEdit</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-89"></span><span>
-</span><span id="line-90"></span><span id="local-6989586621680790948"><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hMetadataSet"><span class="hs-identifier hs-type">s2hMetadataSet</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">EDB</span></span><span> </span><span class="annot"><a href="#local-6989586621680790948"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">DbMetadataSet</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621680790948"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Branch.html#MdValues"><span class="hs-identifier hs-type">Hashing.Branch.MdValues</span></a></span></span><span>
-</span><span id="line-91"></span><span id="s2hMetadataSet"><span class="annot"><span class="annottext">s2hMetadataSet :: MetadataSetFormat' TextId ObjectId -&gt; m MdValues
+</span><span id="line-90"></span><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hMetadataSet"><span class="hs-identifier hs-type">s2hMetadataSet</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">DbMetadataSet</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Transaction</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Branch.html#MdValues"><span class="hs-identifier hs-type">Hashing.Branch.MdValues</span></a></span><span>
+</span><span id="line-91"></span><span id="s2hMetadataSet"><span class="annot"><span class="annottext">s2hMetadataSet :: MetadataSetFormat' TextId ObjectId -&gt; Transaction MdValues
 </span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hMetadataSet"><span class="hs-identifier hs-var hs-var">s2hMetadataSet</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-glyph">\</span><span class="hs-glyph">case</span><span>
-</span><span id="line-92"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">S.MetadataSet.Inline</span></span><span> </span><span id="local-6989586621680790843"><span class="annot"><span class="annottext">Set (Reference' TextId ObjectId)
-</span><a href="#local-6989586621680790843"><span class="hs-identifier hs-var">rs</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Set Reference -&gt; MdValues
-</span><a href="Unison.Hashing.V2.Branch.html#MdValues"><span class="hs-identifier hs-var">Hashing.Branch.MdValues</span></a></span><span> </span><span class="annot"><span class="annottext">(Set Reference -&gt; MdValues) -&gt; m (Set Reference) -&gt; m MdValues
+</span><span id="line-92"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">S.MetadataSet.Inline</span></span><span> </span><span id="local-6989586621680730136"><span class="annot"><span class="annottext">Set (Reference' TextId ObjectId)
+</span><a href="#local-6989586621680730136"><span class="hs-identifier hs-var">rs</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Set Reference -&gt; MdValues
+</span><a href="Unison.Hashing.V2.Branch.html#MdValues"><span class="hs-identifier hs-var">Hashing.Branch.MdValues</span></a></span><span> </span><span class="annot"><span class="annottext">(Set Reference -&gt; MdValues)
+-&gt; Transaction (Set Reference) -&gt; Transaction MdValues
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
-</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">(Reference' TextId ObjectId -&gt; m Reference)
--&gt; Set (Reference' TextId ObjectId) -&gt; m (Set Reference)
+</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">(Reference' TextId ObjectId -&gt; Transaction Reference)
+-&gt; Set (Reference' TextId ObjectId) -&gt; Transaction (Set Reference)
 forall (f :: * -&gt; *) b a.
 (Applicative f, Ord b) =&gt;
 (a -&gt; f b) -&gt; Set a -&gt; f (Set b)
-</span><span class="hs-identifier hs-var">Set.traverse</span></span><span> </span><span class="annot"><span class="annottext">Reference' TextId ObjectId -&gt; m Reference
-forall (m :: * -&gt; *).
-EDB m =&gt;
-Reference' TextId ObjectId -&gt; m Reference
+</span><span class="hs-identifier hs-var">Set.traverse</span></span><span> </span><span class="annot"><span class="annottext">Reference' TextId ObjectId -&gt; Transaction Reference
 </span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hReference"><span class="hs-identifier hs-var">s2hReference</span></a></span><span> </span><span class="annot"><span class="annottext">Set (Reference' TextId ObjectId)
-</span><a href="#local-6989586621680790843"><span class="hs-identifier hs-var">rs</span></a></span><span>
+</span><a href="#local-6989586621680730136"><span class="hs-identifier hs-var">rs</span></a></span><span>
 </span><span id="line-93"></span><span>
-</span><span id="line-94"></span><span id="local-6989586621680790950"><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hNameSegment"><span class="hs-identifier hs-type">s2hNameSegment</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">EDB</span></span><span> </span><span class="annot"><a href="#local-6989586621680790950"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Db.TextId</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621680790950"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Branch.html#NameSegment"><span class="hs-identifier hs-type">NameSegment</span></a></span></span><span>
-</span><span id="line-95"></span><span id="s2hNameSegment"><span class="annot"><span class="annottext">s2hNameSegment :: TextId -&gt; m NameSegment
+</span><span id="line-94"></span><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hNameSegment"><span class="hs-identifier hs-type">s2hNameSegment</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Db.TextId</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Transaction</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Branch.html#NameSegment"><span class="hs-identifier hs-type">NameSegment</span></a></span><span>
+</span><span id="line-95"></span><span id="s2hNameSegment"><span class="annot"><span class="annottext">s2hNameSegment :: TextId -&gt; Transaction NameSegment
 </span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hNameSegment"><span class="hs-identifier hs-var hs-var">s2hNameSegment</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-96"></span><span>  </span><span class="annot"><span class="annottext">(Text -&gt; NameSegment) -&gt; m Text -&gt; m NameSegment
+</span><span id="line-96"></span><span>  </span><span class="annot"><span class="annottext">(Text -&gt; NameSegment)
+-&gt; Transaction Text -&gt; Transaction NameSegment
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-identifier hs-var">fmap</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; NameSegment
-</span><a href="Unison.Hashing.V2.Branch.html#NameSegment"><span class="hs-identifier hs-var">NameSegment</span></a></span><span> </span><span class="annot"><span class="annottext">(m Text -&gt; m NameSegment)
--&gt; (TextId -&gt; m Text) -&gt; TextId -&gt; m NameSegment
+</span><a href="Unison.Hashing.V2.Branch.html#NameSegment"><span class="hs-identifier hs-var">NameSegment</span></a></span><span> </span><span class="annot"><span class="annottext">(Transaction Text -&gt; Transaction NameSegment)
+-&gt; (TextId -&gt; Transaction Text)
+-&gt; TextId
+-&gt; Transaction NameSegment
 forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
-</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">TextId -&gt; m Text
-forall (m :: * -&gt; *). EDB m =&gt; TextId -&gt; m Text
-</span><span class="hs-identifier hs-var">Q.loadTextById</span></span><span>
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">TextId -&gt; Transaction Text
+</span><span class="hs-identifier hs-var">Q.expectText</span></span><span>
 </span><span id="line-97"></span><span>
-</span><span id="line-98"></span><span id="local-6989586621680790949"><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hReferent"><span class="hs-identifier hs-type">s2hReferent</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">EDB</span></span><span> </span><span class="annot"><a href="#local-6989586621680790949"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.Referent</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621680790949"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Referent.html#Referent"><span class="hs-identifier hs-type">Hashing.Referent</span></a></span></span><span>
-</span><span id="line-99"></span><span id="s2hReferent"><span class="annot"><span class="annottext">s2hReferent :: Referent'' TextId ObjectId -&gt; m Referent
+</span><span id="line-98"></span><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hReferent"><span class="hs-identifier hs-type">s2hReferent</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.Referent</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Transaction</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Referent.html#Referent"><span class="hs-identifier hs-type">Hashing.Referent</span></a></span><span>
+</span><span id="line-99"></span><span id="s2hReferent"><span class="annot"><span class="annottext">s2hReferent :: Referent'' TextId ObjectId -&gt; Transaction Referent
 </span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hReferent"><span class="hs-identifier hs-var hs-var">s2hReferent</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-glyph">\</span><span class="hs-glyph">case</span><span>
-</span><span id="line-100"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">S.Referent.Ref</span></span><span> </span><span id="local-6989586621680790838"><span class="annot"><span class="annottext">Reference' TextId ObjectId
-</span><a href="#local-6989586621680790838"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Reference -&gt; Referent
-</span><a href="Unison.Hashing.V2.Referent.html#Ref"><span class="hs-identifier hs-var">Hashing.Referent.Ref</span></a></span><span> </span><span class="annot"><span class="annottext">(Reference -&gt; Referent) -&gt; m Reference -&gt; m Referent
+</span><span id="line-100"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">S.Referent.Ref</span></span><span> </span><span id="local-6989586621680730131"><span class="annot"><span class="annottext">Reference' TextId ObjectId
+</span><a href="#local-6989586621680730131"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Reference -&gt; Referent
+</span><a href="Unison.Hashing.V2.Referent.html#Ref"><span class="hs-identifier hs-var">Hashing.Referent.Ref</span></a></span><span> </span><span class="annot"><span class="annottext">(Reference -&gt; Referent)
+-&gt; Transaction Reference -&gt; Transaction Referent
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
-</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Reference' TextId ObjectId -&gt; m Reference
-forall (m :: * -&gt; *).
-EDB m =&gt;
-Reference' TextId ObjectId -&gt; m Reference
+</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Reference' TextId ObjectId -&gt; Transaction Reference
 </span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hReference"><span class="hs-identifier hs-var">s2hReference</span></a></span><span> </span><span class="annot"><span class="annottext">Reference' TextId ObjectId
-</span><a href="#local-6989586621680790838"><span class="hs-identifier hs-var">r</span></a></span><span>
-</span><span id="line-101"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">S.Referent.Con</span></span><span> </span><span id="local-6989586621680790835"><span class="annot"><span class="annottext">Reference' TextId ObjectId
-</span><a href="#local-6989586621680790835"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span id="local-6989586621680790834"><span class="annot"><span class="annottext">ConstructorId
-</span><a href="#local-6989586621680790834"><span class="hs-identifier hs-var">cid</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Reference -&gt; ConstructorId -&gt; Referent
+</span><a href="#local-6989586621680730131"><span class="hs-identifier hs-var">r</span></a></span><span>
+</span><span id="line-101"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">S.Referent.Con</span></span><span> </span><span id="local-6989586621680730128"><span class="annot"><span class="annottext">Reference' TextId ObjectId
+</span><a href="#local-6989586621680730128"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span id="local-6989586621680730127"><span class="annot"><span class="annottext">ConstructorId
+</span><a href="#local-6989586621680730127"><span class="hs-identifier hs-var">cid</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Reference -&gt; ConstructorId -&gt; Referent
 </span><a href="Unison.Hashing.V2.Referent.html#Con"><span class="hs-identifier hs-var">Hashing.Referent.Con</span></a></span><span> </span><span class="annot"><span class="annottext">(Reference -&gt; ConstructorId -&gt; Referent)
--&gt; m Reference -&gt; m (ConstructorId -&gt; Referent)
+-&gt; Transaction Reference -&gt; Transaction (ConstructorId -&gt; Referent)
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
-</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Reference' TextId ObjectId -&gt; m Reference
-forall (m :: * -&gt; *).
-EDB m =&gt;
-Reference' TextId ObjectId -&gt; m Reference
+</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Reference' TextId ObjectId -&gt; Transaction Reference
 </span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hReference"><span class="hs-identifier hs-var">s2hReference</span></a></span><span> </span><span class="annot"><span class="annottext">Reference' TextId ObjectId
-</span><a href="#local-6989586621680790835"><span class="hs-identifier hs-var">r</span></a></span><span> </span><span class="annot"><span class="annottext">m (ConstructorId -&gt; Referent) -&gt; m ConstructorId -&gt; m Referent
+</span><a href="#local-6989586621680730128"><span class="hs-identifier hs-var">r</span></a></span><span> </span><span class="annot"><span class="annottext">Transaction (ConstructorId -&gt; Referent)
+-&gt; Transaction ConstructorId -&gt; Transaction Referent
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
-</span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">ConstructorId -&gt; m ConstructorId
+</span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">ConstructorId -&gt; Transaction ConstructorId
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ConstructorId -&gt; ConstructorId
 forall a b. (Integral a, Num b) =&gt; a -&gt; b
 </span><span class="hs-identifier hs-var">fromIntegral</span></span><span> </span><span class="annot"><span class="annottext">ConstructorId
-</span><a href="#local-6989586621680790834"><span class="hs-identifier hs-var">cid</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621680730127"><span class="hs-identifier hs-var">cid</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-102"></span><span>
-</span><span id="line-103"></span><span id="local-6989586621680790921"><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hReferentH"><span class="hs-identifier hs-type">s2hReferentH</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">EDB</span></span><span> </span><span class="annot"><a href="#local-6989586621680790921"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.ReferentH</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621680790921"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Referent.html#Referent"><span class="hs-identifier hs-type">Hashing.Referent</span></a></span></span><span>
-</span><span id="line-104"></span><span id="s2hReferentH"><span class="annot"><span class="annottext">s2hReferentH :: Referent'' TextId HashId -&gt; m Referent
+</span><span id="line-103"></span><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hReferentH"><span class="hs-identifier hs-type">s2hReferentH</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.ReferentH</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Transaction</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Referent.html#Referent"><span class="hs-identifier hs-type">Hashing.Referent</span></a></span><span>
+</span><span id="line-104"></span><span id="s2hReferentH"><span class="annot"><span class="annottext">s2hReferentH :: Referent'' TextId HashId -&gt; Transaction Referent
 </span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hReferentH"><span class="hs-identifier hs-var hs-var">s2hReferentH</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-glyph">\</span><span class="hs-glyph">case</span><span>
-</span><span id="line-105"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">S.Referent.Ref</span></span><span> </span><span id="local-6989586621680790832"><span class="annot"><span class="annottext">Reference' TextId HashId
-</span><a href="#local-6989586621680790832"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Reference -&gt; Referent
-</span><a href="Unison.Hashing.V2.Referent.html#Ref"><span class="hs-identifier hs-var">Hashing.Referent.Ref</span></a></span><span> </span><span class="annot"><span class="annottext">(Reference -&gt; Referent) -&gt; m Reference -&gt; m Referent
+</span><span id="line-105"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">S.Referent.Ref</span></span><span> </span><span id="local-6989586621680730125"><span class="annot"><span class="annottext">Reference' TextId HashId
+</span><a href="#local-6989586621680730125"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Reference -&gt; Referent
+</span><a href="Unison.Hashing.V2.Referent.html#Ref"><span class="hs-identifier hs-var">Hashing.Referent.Ref</span></a></span><span> </span><span class="annot"><span class="annottext">(Reference -&gt; Referent)
+-&gt; Transaction Reference -&gt; Transaction Referent
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
-</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Reference' TextId HashId -&gt; m Reference
-forall (m :: * -&gt; *).
-EDB m =&gt;
-Reference' TextId HashId -&gt; m Reference
+</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Reference' TextId HashId -&gt; Transaction Reference
 </span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hReferenceH"><span class="hs-identifier hs-var">s2hReferenceH</span></a></span><span> </span><span class="annot"><span class="annottext">Reference' TextId HashId
-</span><a href="#local-6989586621680790832"><span class="hs-identifier hs-var">r</span></a></span><span>
-</span><span id="line-106"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">S.Referent.Con</span></span><span> </span><span id="local-6989586621680790831"><span class="annot"><span class="annottext">Reference' TextId HashId
-</span><a href="#local-6989586621680790831"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span id="local-6989586621680790830"><span class="annot"><span class="annottext">ConstructorId
-</span><a href="#local-6989586621680790830"><span class="hs-identifier hs-var">cid</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Reference -&gt; ConstructorId -&gt; Referent
+</span><a href="#local-6989586621680730125"><span class="hs-identifier hs-var">r</span></a></span><span>
+</span><span id="line-106"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">S.Referent.Con</span></span><span> </span><span id="local-6989586621680730124"><span class="annot"><span class="annottext">Reference' TextId HashId
+</span><a href="#local-6989586621680730124"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span id="local-6989586621680730123"><span class="annot"><span class="annottext">ConstructorId
+</span><a href="#local-6989586621680730123"><span class="hs-identifier hs-var">cid</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Reference -&gt; ConstructorId -&gt; Referent
 </span><a href="Unison.Hashing.V2.Referent.html#Con"><span class="hs-identifier hs-var">Hashing.Referent.Con</span></a></span><span> </span><span class="annot"><span class="annottext">(Reference -&gt; ConstructorId -&gt; Referent)
--&gt; m Reference -&gt; m (ConstructorId -&gt; Referent)
+-&gt; Transaction Reference -&gt; Transaction (ConstructorId -&gt; Referent)
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
-</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Reference' TextId HashId -&gt; m Reference
-forall (m :: * -&gt; *).
-EDB m =&gt;
-Reference' TextId HashId -&gt; m Reference
+</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Reference' TextId HashId -&gt; Transaction Reference
 </span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hReferenceH"><span class="hs-identifier hs-var">s2hReferenceH</span></a></span><span> </span><span class="annot"><span class="annottext">Reference' TextId HashId
-</span><a href="#local-6989586621680790831"><span class="hs-identifier hs-var">r</span></a></span><span> </span><span class="annot"><span class="annottext">m (ConstructorId -&gt; Referent) -&gt; m ConstructorId -&gt; m Referent
+</span><a href="#local-6989586621680730124"><span class="hs-identifier hs-var">r</span></a></span><span> </span><span class="annot"><span class="annottext">Transaction (ConstructorId -&gt; Referent)
+-&gt; Transaction ConstructorId -&gt; Transaction Referent
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
-</span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">ConstructorId -&gt; m ConstructorId
+</span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">ConstructorId -&gt; Transaction ConstructorId
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ConstructorId -&gt; ConstructorId
 forall a b. (Integral a, Num b) =&gt; a -&gt; b
 </span><span class="hs-identifier hs-var">fromIntegral</span></span><span> </span><span class="annot"><span class="annottext">ConstructorId
-</span><a href="#local-6989586621680790830"><span class="hs-identifier hs-var">cid</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621680730123"><span class="hs-identifier hs-var">cid</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-107"></span><span>
-</span><span id="line-108"></span><span id="local-6989586621680790946"><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hReference"><span class="hs-identifier hs-type">s2hReference</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">EDB</span></span><span> </span><span class="annot"><a href="#local-6989586621680790946"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.Reference</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621680790946"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Reference.html#Reference"><span class="hs-identifier hs-type">Hashing.Reference</span></a></span></span><span>
-</span><span id="line-109"></span><span id="s2hReference"><span class="annot"><span class="annottext">s2hReference :: Reference' TextId ObjectId -&gt; m Reference
+</span><span id="line-108"></span><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hReference"><span class="hs-identifier hs-type">s2hReference</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.Reference</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Transaction</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Reference.html#Reference"><span class="hs-identifier hs-type">Hashing.Reference</span></a></span><span>
+</span><span id="line-109"></span><span id="s2hReference"><span class="annot"><span class="annottext">s2hReference :: Reference' TextId ObjectId -&gt; Transaction Reference
 </span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hReference"><span class="hs-identifier hs-var hs-var">s2hReference</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-glyph">\</span><span class="hs-glyph">case</span><span>
-</span><span id="line-110"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">S.ReferenceBuiltin</span></span><span> </span><span id="local-6989586621680790828"><span class="annot"><span class="annottext">TextId
-</span><a href="#local-6989586621680790828"><span class="hs-identifier hs-var">t</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Text -&gt; Reference
-</span><a href="Unison.Hashing.V2.Reference.html#Builtin"><span class="hs-identifier hs-var">Hashing.Reference.Builtin</span></a></span><span> </span><span class="annot"><span class="annottext">(Text -&gt; Reference) -&gt; m Text -&gt; m Reference
+</span><span id="line-110"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">S.ReferenceBuiltin</span></span><span> </span><span id="local-6989586621680730121"><span class="annot"><span class="annottext">TextId
+</span><a href="#local-6989586621680730121"><span class="hs-identifier hs-var">t</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Text -&gt; Reference
+</span><a href="Unison.Hashing.V2.Reference.html#Builtin"><span class="hs-identifier hs-var">Hashing.Reference.Builtin</span></a></span><span> </span><span class="annot"><span class="annottext">(Text -&gt; Reference) -&gt; Transaction Text -&gt; Transaction Reference
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
-</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">TextId -&gt; m Text
-forall (m :: * -&gt; *). EDB m =&gt; TextId -&gt; m Text
-</span><span class="hs-identifier hs-var">Q.loadTextById</span></span><span> </span><span class="annot"><span class="annottext">TextId
-</span><a href="#local-6989586621680790828"><span class="hs-identifier hs-var">t</span></a></span><span>
-</span><span id="line-111"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">S.Reference.Derived</span></span><span> </span><span id="local-6989586621680790825"><span class="annot"><span class="annottext">ObjectId
-</span><a href="#local-6989586621680790825"><span class="hs-identifier hs-var">h</span></a></span></span><span> </span><span id="local-6989586621680790824"><span class="annot"><span class="annottext">ConstructorId
-</span><a href="#local-6989586621680790824"><span class="hs-identifier hs-var">i</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Hash -&gt; ConstructorId -&gt; Reference
+</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">TextId -&gt; Transaction Text
+</span><span class="hs-identifier hs-var">Q.expectText</span></span><span> </span><span class="annot"><span class="annottext">TextId
+</span><a href="#local-6989586621680730121"><span class="hs-identifier hs-var">t</span></a></span><span>
+</span><span id="line-111"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">S.Reference.Derived</span></span><span> </span><span id="local-6989586621680730118"><span class="annot"><span class="annottext">ObjectId
+</span><a href="#local-6989586621680730118"><span class="hs-identifier hs-var">h</span></a></span></span><span> </span><span id="local-6989586621680730117"><span class="annot"><span class="annottext">ConstructorId
+</span><a href="#local-6989586621680730117"><span class="hs-identifier hs-var">i</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Hash -&gt; ConstructorId -&gt; Reference
 </span><a href="Unison.Hashing.V2.Reference.html#Derived"><span class="hs-identifier hs-var">Hashing.Reference.Derived</span></a></span><span> </span><span class="annot"><span class="annottext">(Hash -&gt; ConstructorId -&gt; Reference)
--&gt; m Hash -&gt; m (ConstructorId -&gt; Reference)
+-&gt; Transaction Hash -&gt; Transaction (ConstructorId -&gt; Reference)
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
-</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">ObjectId -&gt; m Hash
-forall (m :: * -&gt; *). EDB m =&gt; ObjectId -&gt; m Hash
+</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">ObjectId -&gt; Transaction Hash
 </span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#objectIdToPrimaryHash"><span class="hs-identifier hs-var">objectIdToPrimaryHash</span></a></span><span> </span><span class="annot"><span class="annottext">ObjectId
-</span><a href="#local-6989586621680790825"><span class="hs-identifier hs-var">h</span></a></span><span> </span><span class="annot"><span class="annottext">m (ConstructorId -&gt; Reference) -&gt; m ConstructorId -&gt; m Reference
+</span><a href="#local-6989586621680730118"><span class="hs-identifier hs-var">h</span></a></span><span> </span><span class="annot"><span class="annottext">Transaction (ConstructorId -&gt; Reference)
+-&gt; Transaction ConstructorId -&gt; Transaction Reference
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
-</span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">ConstructorId -&gt; m ConstructorId
+</span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">ConstructorId -&gt; Transaction ConstructorId
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">ConstructorId
-</span><a href="#local-6989586621680790824"><span class="hs-identifier hs-var">i</span></a></span><span>
+</span><a href="#local-6989586621680730117"><span class="hs-identifier hs-var">i</span></a></span><span>
 </span><span id="line-112"></span><span>
-</span><span id="line-113"></span><span id="local-6989586621680790916"><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hReferenceH"><span class="hs-identifier hs-type">s2hReferenceH</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">EDB</span></span><span> </span><span class="annot"><a href="#local-6989586621680790916"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.ReferenceH</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621680790916"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Reference.html#Reference"><span class="hs-identifier hs-type">Hashing.Reference</span></a></span></span><span>
-</span><span id="line-114"></span><span id="s2hReferenceH"><span class="annot"><span class="annottext">s2hReferenceH :: Reference' TextId HashId -&gt; m Reference
+</span><span id="line-113"></span><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hReferenceH"><span class="hs-identifier hs-type">s2hReferenceH</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.ReferenceH</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Transaction</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.Reference.html#Reference"><span class="hs-identifier hs-type">Hashing.Reference</span></a></span><span>
+</span><span id="line-114"></span><span id="s2hReferenceH"><span class="annot"><span class="annottext">s2hReferenceH :: Reference' TextId HashId -&gt; Transaction Reference
 </span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hReferenceH"><span class="hs-identifier hs-var hs-var">s2hReferenceH</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-glyph">\</span><span class="hs-glyph">case</span><span>
-</span><span id="line-115"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">S.ReferenceBuiltin</span></span><span> </span><span id="local-6989586621680790822"><span class="annot"><span class="annottext">TextId
-</span><a href="#local-6989586621680790822"><span class="hs-identifier hs-var">t</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Text -&gt; Reference
-</span><a href="Unison.Hashing.V2.Reference.html#Builtin"><span class="hs-identifier hs-var">Hashing.Reference.Builtin</span></a></span><span> </span><span class="annot"><span class="annottext">(Text -&gt; Reference) -&gt; m Text -&gt; m Reference
+</span><span id="line-115"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">S.ReferenceBuiltin</span></span><span> </span><span id="local-6989586621680730115"><span class="annot"><span class="annottext">TextId
+</span><a href="#local-6989586621680730115"><span class="hs-identifier hs-var">t</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Text -&gt; Reference
+</span><a href="Unison.Hashing.V2.Reference.html#Builtin"><span class="hs-identifier hs-var">Hashing.Reference.Builtin</span></a></span><span> </span><span class="annot"><span class="annottext">(Text -&gt; Reference) -&gt; Transaction Text -&gt; Transaction Reference
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
-</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">TextId -&gt; m Text
-forall (m :: * -&gt; *). EDB m =&gt; TextId -&gt; m Text
-</span><span class="hs-identifier hs-var">Q.loadTextById</span></span><span> </span><span class="annot"><span class="annottext">TextId
-</span><a href="#local-6989586621680790822"><span class="hs-identifier hs-var">t</span></a></span><span>
-</span><span id="line-116"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">S.Reference.Derived</span></span><span> </span><span id="local-6989586621680790821"><span class="annot"><span class="annottext">HashId
-</span><a href="#local-6989586621680790821"><span class="hs-identifier hs-var">h</span></a></span></span><span> </span><span id="local-6989586621680790820"><span class="annot"><span class="annottext">ConstructorId
-</span><a href="#local-6989586621680790820"><span class="hs-identifier hs-var">i</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Hash -&gt; ConstructorId -&gt; Reference
+</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">TextId -&gt; Transaction Text
+</span><span class="hs-identifier hs-var">Q.expectText</span></span><span> </span><span class="annot"><span class="annottext">TextId
+</span><a href="#local-6989586621680730115"><span class="hs-identifier hs-var">t</span></a></span><span>
+</span><span id="line-116"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">S.Reference.Derived</span></span><span> </span><span id="local-6989586621680730114"><span class="annot"><span class="annottext">HashId
+</span><a href="#local-6989586621680730114"><span class="hs-identifier hs-var">h</span></a></span></span><span> </span><span id="local-6989586621680730113"><span class="annot"><span class="annottext">ConstructorId
+</span><a href="#local-6989586621680730113"><span class="hs-identifier hs-var">i</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Hash -&gt; ConstructorId -&gt; Reference
 </span><a href="Unison.Hashing.V2.Reference.html#Derived"><span class="hs-identifier hs-var">Hashing.Reference.Derived</span></a></span><span> </span><span class="annot"><span class="annottext">(Hash -&gt; ConstructorId -&gt; Reference)
--&gt; m Hash -&gt; m (ConstructorId -&gt; Reference)
+-&gt; Transaction Hash -&gt; Transaction (ConstructorId -&gt; Reference)
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
-</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">HashId -&gt; m Hash
-forall (m :: * -&gt; *). EDB m =&gt; HashId -&gt; m Hash
-</span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#loadHashHashById"><span class="hs-identifier hs-var">loadHashHashById</span></a></span><span> </span><span class="annot"><span class="annottext">HashId
-</span><a href="#local-6989586621680790821"><span class="hs-identifier hs-var">h</span></a></span><span> </span><span class="annot"><span class="annottext">m (ConstructorId -&gt; Reference) -&gt; m ConstructorId -&gt; m Reference
+</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">HashId -&gt; Transaction Hash
+</span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#expectHash"><span class="hs-identifier hs-var">expectHash</span></a></span><span> </span><span class="annot"><span class="annottext">HashId
+</span><a href="#local-6989586621680730114"><span class="hs-identifier hs-var">h</span></a></span><span> </span><span class="annot"><span class="annottext">Transaction (ConstructorId -&gt; Reference)
+-&gt; Transaction ConstructorId -&gt; Transaction Reference
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
-</span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">ConstructorId -&gt; m ConstructorId
+</span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">ConstructorId -&gt; Transaction ConstructorId
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">ConstructorId
-</span><a href="#local-6989586621680790820"><span class="hs-identifier hs-var">i</span></a></span><span>
+</span><a href="#local-6989586621680730113"><span class="hs-identifier hs-var">i</span></a></span><span>
 </span><span id="line-117"></span><span>
-</span><span id="line-118"></span><span id="local-6989586621680790917"><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hTermEdit"><span class="hs-identifier hs-type">s2hTermEdit</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">EDB</span></span><span> </span><span class="annot"><a href="#local-6989586621680790917"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.TermEdit</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621680790917"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.TermEdit.html#TermEdit"><span class="hs-identifier hs-type">Hashing.TermEdit</span></a></span></span><span>
-</span><span id="line-119"></span><span id="s2hTermEdit"><span class="annot"><span class="annottext">s2hTermEdit :: TermEdit' TextId ObjectId -&gt; m TermEdit
+</span><span id="line-118"></span><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hTermEdit"><span class="hs-identifier hs-type">s2hTermEdit</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.TermEdit</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Transaction</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.TermEdit.html#TermEdit"><span class="hs-identifier hs-type">Hashing.TermEdit</span></a></span><span>
+</span><span id="line-119"></span><span id="s2hTermEdit"><span class="annot"><span class="annottext">s2hTermEdit :: TermEdit' TextId ObjectId -&gt; Transaction TermEdit
 </span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hTermEdit"><span class="hs-identifier hs-var hs-var">s2hTermEdit</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-glyph">\</span><span class="hs-glyph">case</span><span>
-</span><span id="line-120"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">S.TermEdit.Replace</span></span><span> </span><span id="local-6989586621680790817"><span class="annot"><span class="annottext">Referent'' TextId ObjectId
-</span><a href="#local-6989586621680790817"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span id="local-6989586621680790816"><span class="annot"><span class="annottext">Typing
-</span><a href="#local-6989586621680790816"><span class="hs-identifier hs-var">_typing</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Referent -&gt; TermEdit
-</span><a href="Unison.Hashing.V2.TermEdit.html#Replace"><span class="hs-identifier hs-var">Hashing.TermEdit.Replace</span></a></span><span> </span><span class="annot"><span class="annottext">(Referent -&gt; TermEdit) -&gt; m Referent -&gt; m TermEdit
+</span><span id="line-120"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">S.TermEdit.Replace</span></span><span> </span><span id="local-6989586621680730110"><span class="annot"><span class="annottext">Referent'' TextId ObjectId
+</span><a href="#local-6989586621680730110"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span id="local-6989586621680730109"><span class="annot"><span class="annottext">Typing
+</span><a href="#local-6989586621680730109"><span class="hs-identifier hs-var">_typing</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Referent -&gt; TermEdit
+</span><a href="Unison.Hashing.V2.TermEdit.html#Replace"><span class="hs-identifier hs-var">Hashing.TermEdit.Replace</span></a></span><span> </span><span class="annot"><span class="annottext">(Referent -&gt; TermEdit)
+-&gt; Transaction Referent -&gt; Transaction TermEdit
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
-</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Referent'' TextId ObjectId -&gt; m Referent
-forall (m :: * -&gt; *).
-EDB m =&gt;
-Referent'' TextId ObjectId -&gt; m Referent
+</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Referent'' TextId ObjectId -&gt; Transaction Referent
 </span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hReferent"><span class="hs-identifier hs-var">s2hReferent</span></a></span><span> </span><span class="annot"><span class="annottext">Referent'' TextId ObjectId
-</span><a href="#local-6989586621680790817"><span class="hs-identifier hs-var">r</span></a></span><span>
+</span><a href="#local-6989586621680730110"><span class="hs-identifier hs-var">r</span></a></span><span>
 </span><span id="line-121"></span><span>  </span><span class="annot"><span class="annottext">TermEdit' TextId ObjectId
-</span><span class="hs-identifier hs-var">S.TermEdit.Deprecate</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">TermEdit -&gt; m TermEdit
+</span><span class="hs-identifier hs-var">S.TermEdit.Deprecate</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">TermEdit -&gt; Transaction TermEdit
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">TermEdit
 </span><a href="Unison.Hashing.V2.TermEdit.html#Deprecate"><span class="hs-identifier hs-var">Hashing.TermEdit.Deprecate</span></a></span><span>
 </span><span id="line-122"></span><span>
-</span><span id="line-123"></span><span id="local-6989586621680790915"><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hTypeEdit"><span class="hs-identifier hs-type">s2hTypeEdit</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">EDB</span></span><span> </span><span class="annot"><a href="#local-6989586621680790915"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.TypeEdit</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621680790915"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.TypeEdit.html#TypeEdit"><span class="hs-identifier hs-type">Hashing.TypeEdit</span></a></span></span><span>
-</span><span id="line-124"></span><span id="s2hTypeEdit"><span class="annot"><span class="annottext">s2hTypeEdit :: TypeEdit' TextId ObjectId -&gt; m TypeEdit
+</span><span id="line-123"></span><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hTypeEdit"><span class="hs-identifier hs-type">s2hTypeEdit</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">S.TypeEdit</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Transaction</span></span><span> </span><span class="annot"><a href="Unison.Hashing.V2.TypeEdit.html#TypeEdit"><span class="hs-identifier hs-type">Hashing.TypeEdit</span></a></span><span>
+</span><span id="line-124"></span><span id="s2hTypeEdit"><span class="annot"><span class="annottext">s2hTypeEdit :: TypeEdit' TextId ObjectId -&gt; Transaction TypeEdit
 </span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hTypeEdit"><span class="hs-identifier hs-var hs-var">s2hTypeEdit</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-glyph">\</span><span class="hs-glyph">case</span><span>
-</span><span id="line-125"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">S.TypeEdit.Replace</span></span><span> </span><span id="local-6989586621680790811"><span class="annot"><span class="annottext">Reference' TextId ObjectId
-</span><a href="#local-6989586621680790811"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Reference -&gt; TypeEdit
-</span><a href="Unison.Hashing.V2.TypeEdit.html#Replace"><span class="hs-identifier hs-var">Hashing.TypeEdit.Replace</span></a></span><span> </span><span class="annot"><span class="annottext">(Reference -&gt; TypeEdit) -&gt; m Reference -&gt; m TypeEdit
+</span><span id="line-125"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">S.TypeEdit.Replace</span></span><span> </span><span id="local-6989586621680730104"><span class="annot"><span class="annottext">Reference' TextId ObjectId
+</span><a href="#local-6989586621680730104"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Reference -&gt; TypeEdit
+</span><a href="Unison.Hashing.V2.TypeEdit.html#Replace"><span class="hs-identifier hs-var">Hashing.TypeEdit.Replace</span></a></span><span> </span><span class="annot"><span class="annottext">(Reference -&gt; TypeEdit)
+-&gt; Transaction Reference -&gt; Transaction TypeEdit
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
-</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Reference' TextId ObjectId -&gt; m Reference
-forall (m :: * -&gt; *).
-EDB m =&gt;
-Reference' TextId ObjectId -&gt; m Reference
+</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Reference' TextId ObjectId -&gt; Transaction Reference
 </span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#s2hReference"><span class="hs-identifier hs-var">s2hReference</span></a></span><span> </span><span class="annot"><span class="annottext">Reference' TextId ObjectId
-</span><a href="#local-6989586621680790811"><span class="hs-identifier hs-var">r</span></a></span><span>
+</span><a href="#local-6989586621680730104"><span class="hs-identifier hs-var">r</span></a></span><span>
 </span><span id="line-126"></span><span>  </span><span class="annot"><span class="annottext">TypeEdit' TextId ObjectId
-</span><span class="hs-identifier hs-var">S.TypeEdit.Deprecate</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">TypeEdit -&gt; m TypeEdit
+</span><span class="hs-identifier hs-var">S.TypeEdit.Deprecate</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">TypeEdit -&gt; Transaction TypeEdit
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">TypeEdit
 </span><a href="Unison.Hashing.V2.TypeEdit.html#Deprecate"><span class="hs-identifier hs-var">Hashing.TypeEdit.Deprecate</span></a></span><span>
 </span><span id="line-127"></span><span>
 </span><span id="line-128"></span><span class="hs-comment">-- Mitchell: Do these variants of Q.* queries belong somewhere else? Or in Q perhaps?</span><span>
 </span><span id="line-129"></span><span>
-</span><span id="line-130"></span><span id="local-6989586621680790939"><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#causalHashIdToHash"><span class="hs-identifier hs-type">causalHashIdToHash</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">EDB</span></span><span> </span><span class="annot"><a href="#local-6989586621680790939"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Db.CausalHashId</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621680790939"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Hash</span></span></span><span>
-</span><span id="line-131"></span><span id="causalHashIdToHash"><span class="annot"><span class="annottext">causalHashIdToHash :: CausalHashId -&gt; m Hash
+</span><span id="line-130"></span><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#causalHashIdToHash"><span class="hs-identifier hs-type">causalHashIdToHash</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Db.CausalHashId</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Transaction</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Hash</span></span><span>
+</span><span id="line-131"></span><span id="causalHashIdToHash"><span class="annot"><span class="annottext">causalHashIdToHash :: CausalHashId -&gt; Transaction Hash
 </span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#causalHashIdToHash"><span class="hs-identifier hs-var hs-var">causalHashIdToHash</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-132"></span><span>  </span><span class="annot"><span class="annottext">(Hash -&gt; Hash) -&gt; m Hash -&gt; m Hash
+</span><span id="line-132"></span><span>  </span><span class="annot"><span class="annottext">(Hash -&gt; Hash) -&gt; Transaction Hash -&gt; Transaction Hash
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-identifier hs-var">fmap</span></span><span> </span><span class="annot"><span class="annottext">Hash -&gt; Hash
-</span><a href="Unison.Codebase.SqliteCodebase.Conversions.html#hash2to1"><span class="hs-identifier hs-var">Cv.hash2to1</span></a></span><span> </span><span class="annot"><span class="annottext">(m Hash -&gt; m Hash)
--&gt; (CausalHashId -&gt; m Hash) -&gt; CausalHashId -&gt; m Hash
+</span><a href="Unison.Codebase.SqliteCodebase.Conversions.html#hash2to1"><span class="hs-identifier hs-var">Cv.hash2to1</span></a></span><span> </span><span class="annot"><span class="annottext">(Transaction Hash -&gt; Transaction Hash)
+-&gt; (CausalHashId -&gt; Transaction Hash)
+-&gt; CausalHashId
+-&gt; Transaction Hash
 forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
-</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">HashId -&gt; m Hash
-forall (m :: * -&gt; *). EDB m =&gt; HashId -&gt; m Hash
-</span><span class="hs-identifier hs-var">Q.loadHashHashById</span></span><span> </span><span class="annot"><span class="annottext">(HashId -&gt; m Hash)
--&gt; (CausalHashId -&gt; HashId) -&gt; CausalHashId -&gt; m Hash
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">HashId -&gt; Transaction Hash
+</span><span class="hs-identifier hs-var">Q.expectHash</span></span><span> </span><span class="annot"><span class="annottext">(HashId -&gt; Transaction Hash)
+-&gt; (CausalHashId -&gt; HashId) -&gt; CausalHashId -&gt; Transaction Hash
 forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">CausalHashId -&gt; HashId
 </span><span class="hs-identifier hs-var hs-var">Db.unCausalHashId</span></span><span>
 </span><span id="line-133"></span><span>
-</span><span id="line-134"></span><span id="local-6989586621680790944"><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#objectIdToPrimaryHash"><span class="hs-identifier hs-type">objectIdToPrimaryHash</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">EDB</span></span><span> </span><span class="annot"><a href="#local-6989586621680790944"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Db.ObjectId</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621680790944"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Hash</span></span></span><span>
-</span><span id="line-135"></span><span id="objectIdToPrimaryHash"><span class="annot"><span class="annottext">objectIdToPrimaryHash :: ObjectId -&gt; m Hash
+</span><span id="line-134"></span><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#objectIdToPrimaryHash"><span class="hs-identifier hs-type">objectIdToPrimaryHash</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Db.ObjectId</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Transaction</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Hash</span></span><span>
+</span><span id="line-135"></span><span id="objectIdToPrimaryHash"><span class="annot"><span class="annottext">objectIdToPrimaryHash :: ObjectId -&gt; Transaction Hash
 </span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#objectIdToPrimaryHash"><span class="hs-identifier hs-var hs-var">objectIdToPrimaryHash</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-136"></span><span>  </span><span class="annot"><span class="annottext">(Base32Hex -&gt; Hash) -&gt; m Base32Hex -&gt; m Hash
-forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
-</span><span class="hs-identifier hs-var">fmap</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Hash -&gt; Hash
-</span><a href="Unison.Codebase.SqliteCodebase.Conversions.html#hash2to1"><span class="hs-identifier hs-var">Cv.hash2to1</span></a></span><span> </span><span class="annot"><span class="annottext">(Hash -&gt; Hash) -&gt; (Base32Hex -&gt; Hash) -&gt; Base32Hex -&gt; Hash
-forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
-</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">Base32Hex -&gt; Hash
-</span><span class="hs-identifier hs-var">U.Util.Hash.fromBase32Hex</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(m Base32Hex -&gt; m Hash)
--&gt; (ObjectId -&gt; m Base32Hex) -&gt; ObjectId -&gt; m Hash
-forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
-</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">ObjectId -&gt; m Base32Hex
-forall (m :: * -&gt; *). EDB m =&gt; ObjectId -&gt; m Base32Hex
-</span><span class="hs-identifier hs-var">Q.loadPrimaryHashByObjectId</span></span><span>
-</span><span id="line-137"></span><span>
-</span><span id="line-138"></span><span id="local-6989586621680790902"><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#loadHashHashById"><span class="hs-identifier hs-type">loadHashHashById</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">EDB</span></span><span> </span><span class="annot"><a href="#local-6989586621680790902"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Db.HashId</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621680790902"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Hash</span></span></span><span>
-</span><span id="line-139"></span><span id="loadHashHashById"><span class="annot"><span class="annottext">loadHashHashById :: HashId -&gt; m Hash
-</span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#loadHashHashById"><span class="hs-identifier hs-var hs-var">loadHashHashById</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-140"></span><span>  </span><span class="annot"><span class="annottext">(Hash -&gt; Hash) -&gt; m Hash -&gt; m Hash
+</span><span id="line-136"></span><span>  </span><span class="annot"><span class="annottext">(Hash -&gt; Hash) -&gt; Transaction Hash -&gt; Transaction Hash
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-identifier hs-var">fmap</span></span><span> </span><span class="annot"><span class="annottext">Hash -&gt; Hash
-</span><a href="Unison.Codebase.SqliteCodebase.Conversions.html#hash2to1"><span class="hs-identifier hs-var">Cv.hash2to1</span></a></span><span> </span><span class="annot"><span class="annottext">(m Hash -&gt; m Hash) -&gt; (HashId -&gt; m Hash) -&gt; HashId -&gt; m Hash
+</span><a href="Unison.Codebase.SqliteCodebase.Conversions.html#hash2to1"><span class="hs-identifier hs-var">Cv.hash2to1</span></a></span><span> </span><span class="annot"><span class="annottext">(Transaction Hash -&gt; Transaction Hash)
+-&gt; (ObjectId -&gt; Transaction Hash) -&gt; ObjectId -&gt; Transaction Hash
 forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
-</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">HashId -&gt; m Hash
-forall (m :: * -&gt; *). EDB m =&gt; HashId -&gt; m Hash
-</span><span class="hs-identifier hs-var">Q.loadHashHashById</span></span><span>
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">ObjectId -&gt; Transaction Hash
+</span><span class="hs-identifier hs-var">Q.expectPrimaryHashByObjectId</span></span><span>
+</span><span id="line-137"></span><span>
+</span><span id="line-138"></span><span class="annot"><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#expectHash"><span class="hs-identifier hs-type">expectHash</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Db.HashId</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Transaction</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Hash</span></span><span>
+</span><span id="line-139"></span><span id="expectHash"><span class="annot"><span class="annottext">expectHash :: HashId -&gt; Transaction Hash
+</span><a href="Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers.html#expectHash"><span class="hs-identifier hs-var hs-var">expectHash</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-140"></span><span>  </span><span class="annot"><span class="annottext">(Hash -&gt; Hash) -&gt; Transaction Hash -&gt; Transaction Hash
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-identifier hs-var">fmap</span></span><span> </span><span class="annot"><span class="annottext">Hash -&gt; Hash
+</span><a href="Unison.Codebase.SqliteCodebase.Conversions.html#hash2to1"><span class="hs-identifier hs-var">Cv.hash2to1</span></a></span><span> </span><span class="annot"><span class="annottext">(Transaction Hash -&gt; Transaction Hash)
+-&gt; (HashId -&gt; Transaction Hash) -&gt; HashId -&gt; Transaction Hash
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">HashId -&gt; Transaction Hash
+</span><span class="hs-identifier hs-var">Q.expectHash</span></span><span>
 </span><span id="line-141"></span></pre></body></html>

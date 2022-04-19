@@ -1,18 +1,16 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span id="%24maxtag_54sOy0EtObMBiDfx0oXgCS"><span id="%24tag2con_54sOy0EtObMBiDfx0oXgCS"><span id="%24con2tag_54sOy0EtObMBiDfx0oXgCS"></span></span></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">U.Codebase.Sqlite.ObjectType</span><span> </span><span class="hs-keyword">where</span><span>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span id="%24maxtag_GwhK7KyKzct9jT1xQhVBl3"><span id="%24tag2con_GwhK7KyKzct9jT1xQhVBl3"><span id="%24con2tag_GwhK7KyKzct9jT1xQhVBl3"></span></span></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">U.Codebase.Sqlite.ObjectType</span><span> </span><span class="hs-keyword">where</span><span>
 </span><span id="line-2"></span><span>
-</span><span id="line-3"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Database.SQLite.Simple</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">SQLData</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">SQLInteger</span></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
-</span><span id="line-4"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Database.SQLite.Simple.FromField</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">FromField</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
-</span><span id="line-5"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Database.SQLite.Simple.ToField</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">ToField</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
-</span><span id="line-6"></span><span>
-</span><span id="line-7"></span><span class="hs-comment">-- | Don't reorder these, they are part of the database,</span><span>
-</span><span id="line-8"></span><span class="hs-comment">--  and the ToField and FromField implementation currently</span><span>
-</span><span id="line-9"></span><span class="hs-comment">--  depends on the derived Enum implementation.</span><span>
-</span><span id="line-10"></span><span class="hs-keyword">data</span><span> </span><span id="ObjectType"><span class="annot"><a href="U.Codebase.Sqlite.ObjectType.html#ObjectType"><span class="hs-identifier hs-var">ObjectType</span></a></span></span><span>
-</span><span id="line-11"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="TermComponent"><span class="annot"><a href="U.Codebase.Sqlite.ObjectType.html#TermComponent"><span class="hs-identifier hs-var">TermComponent</span></a></span></span><span> </span><span class="hs-comment">-- 0</span><span>
-</span><span id="line-12"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="DeclComponent"><span class="annot"><a href="U.Codebase.Sqlite.ObjectType.html#DeclComponent"><span class="hs-identifier hs-var">DeclComponent</span></a></span></span><span> </span><span class="hs-comment">-- 1</span><span>
-</span><span id="line-13"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="Namespace"><span class="annot"><a href="U.Codebase.Sqlite.ObjectType.html#Namespace"><span class="hs-identifier hs-var">Namespace</span></a></span></span><span> </span><span class="hs-comment">-- 2</span><span>
-</span><span id="line-14"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="Patch"><span class="annot"><a href="U.Codebase.Sqlite.ObjectType.html#Patch"><span class="hs-identifier hs-var">Patch</span></a></span></span><span> </span><span class="hs-comment">-- 3</span><span>
-</span><span id="line-15"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679270658"><span id="local-6989586621679270660"><span class="annot"><span class="annottext">ObjectType -&gt; ObjectType -&gt; Bool
+</span><span id="line-3"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Sqlite</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">FromField</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">SQLData</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">SQLInteger</span></span><span class="hs-special">)</span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">ToField</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-4"></span><span>
+</span><span id="line-5"></span><span class="hs-comment">-- | Don't reorder these, they are part of the database,</span><span>
+</span><span id="line-6"></span><span class="hs-comment">--  and the ToField and FromField implementation currently</span><span>
+</span><span id="line-7"></span><span class="hs-comment">--  depends on the derived Enum implementation.</span><span>
+</span><span id="line-8"></span><span class="hs-keyword">data</span><span> </span><span id="ObjectType"><span class="annot"><a href="U.Codebase.Sqlite.ObjectType.html#ObjectType"><span class="hs-identifier hs-var">ObjectType</span></a></span></span><span>
+</span><span id="line-9"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="TermComponent"><span class="annot"><a href="U.Codebase.Sqlite.ObjectType.html#TermComponent"><span class="hs-identifier hs-var">TermComponent</span></a></span></span><span> </span><span class="hs-comment">-- 0</span><span>
+</span><span id="line-10"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="DeclComponent"><span class="annot"><a href="U.Codebase.Sqlite.ObjectType.html#DeclComponent"><span class="hs-identifier hs-var">DeclComponent</span></a></span></span><span> </span><span class="hs-comment">-- 1</span><span>
+</span><span id="line-11"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="Namespace"><span class="annot"><a href="U.Codebase.Sqlite.ObjectType.html#Namespace"><span class="hs-identifier hs-var">Namespace</span></a></span></span><span> </span><span class="hs-comment">-- 2</span><span>
+</span><span id="line-12"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="Patch"><span class="annot"><a href="U.Codebase.Sqlite.ObjectType.html#Patch"><span class="hs-identifier hs-var">Patch</span></a></span></span><span> </span><span class="hs-comment">-- 3</span><span>
+</span><span id="line-13"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679389441"><span id="local-6989586621679389443"><span class="annot"><span class="annottext">ObjectType -&gt; ObjectType -&gt; Bool
 (ObjectType -&gt; ObjectType -&gt; Bool)
 -&gt; (ObjectType -&gt; ObjectType -&gt; Bool) -&gt; Eq ObjectType
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -20,7 +18,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: ObjectType -&gt; ObjectType -&gt; Bool
 == :: ObjectType -&gt; ObjectType -&gt; Bool
 $c== :: ObjectType -&gt; ObjectType -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679270642"><span id="local-6989586621679270644"><span id="local-6989586621679270646"><span id="local-6989586621679270648"><span id="local-6989586621679270650"><span id="local-6989586621679270652"><span id="local-6989586621679270654"><span class="annot"><span class="annottext">Eq ObjectType
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679389425"><span id="local-6989586621679389427"><span id="local-6989586621679389429"><span id="local-6989586621679389431"><span id="local-6989586621679389433"><span id="local-6989586621679389435"><span id="local-6989586621679389437"><span class="annot"><span class="annottext">Eq ObjectType
 Eq ObjectType
 -&gt; (ObjectType -&gt; ObjectType -&gt; Ordering)
 -&gt; (ObjectType -&gt; ObjectType -&gt; Bool)
@@ -58,7 +56,7 @@ $c&lt; :: ObjectType -&gt; ObjectType -&gt; Bool
 compare :: ObjectType -&gt; ObjectType -&gt; Ordering
 $ccompare :: ObjectType -&gt; ObjectType -&gt; Ordering
 $cp1Ord :: Eq ObjectType
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679270635"><span id="local-6989586621679270637"><span id="local-6989586621679270639"><span class="annot"><span class="annottext">Int -&gt; ObjectType -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679389418"><span id="local-6989586621679389420"><span id="local-6989586621679389422"><span class="annot"><span class="annottext">Int -&gt; ObjectType -&gt; ShowS
 [ObjectType] -&gt; ShowS
 ObjectType -&gt; String
 (Int -&gt; ObjectType -&gt; ShowS)
@@ -73,7 +71,7 @@ show :: ObjectType -&gt; String
 $cshow :: ObjectType -&gt; String
 showsPrec :: Int -&gt; ObjectType -&gt; ShowS
 $cshowsPrec :: Int -&gt; ObjectType -&gt; ShowS
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679270618"><span id="local-6989586621679270620"><span id="local-6989586621679270622"><span id="local-6989586621679270624"><span id="local-6989586621679270626"><span id="local-6989586621679270628"><span id="local-6989586621679270630"><span id="local-6989586621679270632"><span class="annot"><span class="annottext">Int -&gt; ObjectType
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679389401"><span id="local-6989586621679389403"><span id="local-6989586621679389405"><span id="local-6989586621679389407"><span id="local-6989586621679389409"><span id="local-6989586621679389411"><span id="local-6989586621679389413"><span id="local-6989586621679389415"><span class="annot"><span class="annottext">Int -&gt; ObjectType
 ObjectType -&gt; Int
 ObjectType -&gt; [ObjectType]
 ObjectType -&gt; ObjectType
@@ -115,9 +113,9 @@ $cpred :: ObjectType -&gt; ObjectType
 succ :: ObjectType -&gt; ObjectType
 $csucc :: ObjectType -&gt; ObjectType
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Enum</span></span></span></span></span></span></span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-16"></span><span>
-</span><span id="line-17"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToField</span></span><span> </span><span class="annot"><a href="U.Codebase.Sqlite.ObjectType.html#ObjectType"><span class="hs-identifier hs-type">ObjectType</span></a></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-18"></span><span>  </span><span id="local-6989586621679270614"><span class="annot"><span class="annottext">toField :: ObjectType -&gt; SQLData
+</span><span id="line-14"></span><span>
+</span><span id="line-15"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToField</span></span><span> </span><span class="annot"><a href="U.Codebase.Sqlite.ObjectType.html#ObjectType"><span class="hs-identifier hs-type">ObjectType</span></a></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-16"></span><span>  </span><span id="local-6989586621679389397"><span class="annot"><span class="annottext">toField :: ObjectType -&gt; SQLData
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var">toField</span></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Int64 -&gt; SQLData
 </span><span class="hs-identifier hs-var">SQLInteger</span></span><span> </span><span class="annot"><span class="annottext">(Int64 -&gt; SQLData)
 -&gt; (ObjectType -&gt; Int64) -&gt; ObjectType -&gt; SQLData
@@ -129,9 +127,9 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">ObjectType -&gt; Int
 forall a. Enum a =&gt; a -&gt; Int
 </span><span class="hs-identifier hs-var">fromEnum</span></span><span>
-</span><span id="line-19"></span><span>
-</span><span id="line-20"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FromField</span></span><span> </span><span class="annot"><a href="U.Codebase.Sqlite.ObjectType.html#ObjectType"><span class="hs-identifier hs-type">ObjectType</span></a></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-21"></span><span>  </span><span id="local-6989586621679270608"><span class="annot"><span class="annottext">fromField :: FieldParser ObjectType
+</span><span id="line-17"></span><span>
+</span><span id="line-18"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FromField</span></span><span> </span><span class="annot"><a href="U.Codebase.Sqlite.ObjectType.html#ObjectType"><span class="hs-identifier hs-type">ObjectType</span></a></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-19"></span><span>  </span><span id="local-6989586621679389391"><span class="annot"><span class="annottext">fromField :: FieldParser ObjectType
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var">fromField</span></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Int -&gt; ObjectType) -&gt; Ok Int -&gt; Ok ObjectType
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-identifier hs-var">fmap</span></span><span> </span><span class="annot"><span class="annottext">Int -&gt; ObjectType
@@ -142,4 +140,4 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">Field -&gt; Ok Int
 forall a. FromField a =&gt; FieldParser a
 </span><span class="hs-identifier hs-var">fromField</span></span><span>
-</span><span id="line-22"></span></pre></body></html>
+</span><span id="line-20"></span></pre></body></html>

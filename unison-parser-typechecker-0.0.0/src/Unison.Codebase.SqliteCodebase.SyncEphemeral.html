@@ -1,26 +1,24 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-pragma">{-# LANGUAGE ScopedTypeVariables #-}</span><span>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Unison.Codebase.SqliteCodebase.SyncEphemeral</span><span> </span><span class="hs-keyword">where</span><span>
 </span><span id="line-2"></span><span>
-</span><span id="line-3"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Unison.Codebase.SqliteCodebase.SyncEphemeral</span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-4"></span><span>
-</span><span id="line-5"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Data.Set</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Set</span></span><span class="hs-special">)</span><span>
-</span><span id="line-6"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">U.Codebase.HashTags</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">CausalHash</span></span><span class="hs-special">)</span><span>
-</span><span id="line-7"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">U.Codebase.Sqlite.DbId</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">SchemaVersion</span></span><span class="hs-special">)</span><span>
-</span><span id="line-8"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">U.Codebase.Sqlite.Sync22</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Sync22</span></span><span>
-</span><span id="line-9"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Hash</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Hash</span></span><span class="hs-special">)</span><span>
-</span><span id="line-10"></span><span>
-</span><span id="line-11"></span><span class="hs-keyword">data</span><span> </span><span id="Dependencies"><span class="annot"><a href="Unison.Codebase.SqliteCodebase.SyncEphemeral.html#Dependencies"><span class="hs-identifier hs-var">Dependencies</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Dependencies"><span class="annot"><a href="Unison.Codebase.SqliteCodebase.SyncEphemeral.html#Dependencies"><span class="hs-identifier hs-var">Dependencies</span></a></span></span><span>
-</span><span id="line-12"></span><span>  </span><span class="hs-special">{</span><span> </span><span id="definitions"><span class="annot"><span class="annottext">Dependencies -&gt; Set Hash
+</span><span id="line-3"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">U.Codebase.HashTags</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">CausalHash</span></span><span class="hs-special">)</span><span>
+</span><span id="line-4"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">U.Codebase.Sqlite.DbId</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">SchemaVersion</span></span><span class="hs-special">)</span><span>
+</span><span id="line-5"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">U.Codebase.Sqlite.Sync22</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Sync22</span></span><span>
+</span><span id="line-6"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Hash</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Hash</span></span><span class="hs-special">)</span><span>
+</span><span id="line-7"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Prelude</span></span><span>
+</span><span id="line-8"></span><span>
+</span><span id="line-9"></span><span class="hs-keyword">data</span><span> </span><span id="Dependencies"><span class="annot"><a href="Unison.Codebase.SqliteCodebase.SyncEphemeral.html#Dependencies"><span class="hs-identifier hs-var">Dependencies</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Dependencies"><span class="annot"><a href="Unison.Codebase.SqliteCodebase.SyncEphemeral.html#Dependencies"><span class="hs-identifier hs-var">Dependencies</span></a></span></span><span>
+</span><span id="line-10"></span><span>  </span><span class="hs-special">{</span><span> </span><span id="definitions"><span class="annot"><span class="annottext">Dependencies -&gt; Set Hash
 </span><a href="Unison.Codebase.SqliteCodebase.SyncEphemeral.html#definitions"><span class="hs-identifier hs-var hs-var">definitions</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Set</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Hash</span></span><span class="hs-special">,</span><span>
-</span><span id="line-13"></span><span>    </span><span id="branches"><span class="annot"><span class="annottext">Dependencies -&gt; Set Hash
+</span><span id="line-11"></span><span>    </span><span id="branches"><span class="annot"><span class="annottext">Dependencies -&gt; Set Hash
 </span><a href="Unison.Codebase.SqliteCodebase.SyncEphemeral.html#branches"><span class="hs-identifier hs-var hs-var">branches</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Set</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Hash</span></span><span>
-</span><span id="line-14"></span><span>  </span><span class="hs-special">}</span><span>
-</span><span id="line-15"></span><span>
-</span><span id="line-16"></span><span class="hs-keyword">data</span><span> </span><span id="Error"><span class="annot"><a href="Unison.Codebase.SqliteCodebase.SyncEphemeral.html#Error"><span class="hs-identifier hs-var">Error</span></a></span></span><span>
-</span><span id="line-17"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="Sync22Error"><span class="annot"><a href="Unison.Codebase.SqliteCodebase.SyncEphemeral.html#Sync22Error"><span class="hs-identifier hs-var">Sync22Error</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Sync22.Error</span></span><span>
-</span><span id="line-18"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="SrcWrongSchema"><span class="annot"><a href="Unison.Codebase.SqliteCodebase.SyncEphemeral.html#SrcWrongSchema"><span class="hs-identifier hs-var">SrcWrongSchema</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">SchemaVersion</span></span><span>
-</span><span id="line-19"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="DestWrongSchema"><span class="annot"><a href="Unison.Codebase.SqliteCodebase.SyncEphemeral.html#DestWrongSchema"><span class="hs-identifier hs-var">DestWrongSchema</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">SchemaVersion</span></span><span>
-</span><span id="line-20"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="DisappearingBranch"><span class="annot"><a href="Unison.Codebase.SqliteCodebase.SyncEphemeral.html#DisappearingBranch"><span class="hs-identifier hs-var">DisappearingBranch</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">CausalHash</span></span><span>
-</span><span id="line-21"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621680760948"><span id="local-6989586621680760950"><span id="local-6989586621680760952"><span class="annot"><span class="annottext">Int -&gt; Error -&gt; ShowS
+</span><span id="line-12"></span><span>  </span><span class="hs-special">}</span><span>
+</span><span id="line-13"></span><span>
+</span><span id="line-14"></span><span class="hs-keyword">data</span><span> </span><span id="Error"><span class="annot"><a href="Unison.Codebase.SqliteCodebase.SyncEphemeral.html#Error"><span class="hs-identifier hs-var">Error</span></a></span></span><span>
+</span><span id="line-15"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="Sync22Error"><span class="annot"><a href="Unison.Codebase.SqliteCodebase.SyncEphemeral.html#Sync22Error"><span class="hs-identifier hs-var">Sync22Error</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Sync22.Error</span></span><span>
+</span><span id="line-16"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="SrcWrongSchema"><span class="annot"><a href="Unison.Codebase.SqliteCodebase.SyncEphemeral.html#SrcWrongSchema"><span class="hs-identifier hs-var">SrcWrongSchema</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">SchemaVersion</span></span><span>
+</span><span id="line-17"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="DestWrongSchema"><span class="annot"><a href="Unison.Codebase.SqliteCodebase.SyncEphemeral.html#DestWrongSchema"><span class="hs-identifier hs-var">DestWrongSchema</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">SchemaVersion</span></span><span>
+</span><span id="line-18"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="DisappearingBranch"><span class="annot"><a href="Unison.Codebase.SqliteCodebase.SyncEphemeral.html#DisappearingBranch"><span class="hs-identifier hs-var">DisappearingBranch</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">CausalHash</span></span><span>
+</span><span id="line-19"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">stock</span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621680699583"><span id="local-6989586621680699585"><span id="local-6989586621680699587"><span class="annot"><span class="annottext">Int -&gt; Error -&gt; ShowS
 [Error] -&gt; ShowS
 Error -&gt; String
 (Int -&gt; Error -&gt; ShowS)
@@ -34,4 +32,31 @@ $cshow :: Error -&gt; String
 showsPrec :: Int -&gt; Error -&gt; ShowS
 $cshowsPrec :: Int -&gt; Error -&gt; ShowS
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-22"></span></pre></body></html>
+</span><span id="line-20"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">anyclass</span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621680699574"><span id="local-6989586621680699576"><span id="local-6989586621680699578"><span class="annot"><span class="annottext">Show Error
+Typeable Error
+Typeable Error
+-&gt; Show Error
+-&gt; (Error -&gt; SomeException)
+-&gt; (SomeException -&gt; Maybe Error)
+-&gt; (Error -&gt; String)
+-&gt; Exception Error
+SomeException -&gt; Maybe Error
+Error -&gt; String
+Error -&gt; SomeException
+forall e.
+Typeable e
+-&gt; Show e
+-&gt; (e -&gt; SomeException)
+-&gt; (SomeException -&gt; Maybe e)
+-&gt; (e -&gt; String)
+-&gt; Exception e
+displayException :: Error -&gt; String
+$cdisplayException :: Error -&gt; String
+fromException :: SomeException -&gt; Maybe Error
+$cfromException :: SomeException -&gt; Maybe Error
+toException :: Error -&gt; SomeException
+$ctoException :: Error -&gt; SomeException
+$cp2Exception :: Show Error
+$cp1Exception :: Typeable Error
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Exception</span></span></span></span></span><span class="hs-special">)</span><span>
+</span><span id="line-21"></span></pre></body></html>
