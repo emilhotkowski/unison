@@ -850,13 +850,13 @@ LoopState :: Branch m -> Branch m -> NonEmpty Absolute -> Maybe (FilePath, SkipN
 type Action' m v = Action m (Either Event Input) v
 type SkipNextUpdate = Bool
 type InputDescription = Text
-root :: forall m_a1LzD v_a1LzE. Lens' (LoopState m_a1LzD v_a1LzE) (Branch m_a1LzD)
-numberedArgs :: forall m_a1LzD v_a1LzE. Lens' (LoopState m_a1LzD v_a1LzE) NumberedArgs
-latestTypecheckedFile :: forall m_a1LzD v_a1LzE v_a1MkE. Lens (LoopState m_a1LzD v_a1LzE) (LoopState m_a1LzD v_a1MkE) (Maybe (TypecheckedUnisonFile v_a1LzE Ann)) (Maybe (TypecheckedUnisonFile v_a1MkE Ann))
-latestFile :: forall m_a1LzD v_a1LzE. Lens' (LoopState m_a1LzD v_a1LzE) (Maybe (FilePath, SkipNextUpdate))
-lastSavedRoot :: forall m_a1LzD v_a1LzE. Lens' (LoopState m_a1LzD v_a1LzE) (Branch m_a1LzD)
-lastInput :: forall m_a1LzD v_a1LzE. Lens' (LoopState m_a1LzD v_a1LzE) (Maybe Input)
-currentPathStack :: forall m_a1LzD v_a1LzE. Lens' (LoopState m_a1LzD v_a1LzE) (NonEmpty Absolute)
+root :: forall m_a1LDY v_a1LDZ. Lens' (LoopState m_a1LDY v_a1LDZ) (Branch m_a1LDY)
+numberedArgs :: forall m_a1LDY v_a1LDZ. Lens' (LoopState m_a1LDY v_a1LDZ) NumberedArgs
+latestTypecheckedFile :: forall m_a1LDY v_a1LDZ v_a1MoZ. Lens (LoopState m_a1LDY v_a1LDZ) (LoopState m_a1LDY v_a1MoZ) (Maybe (TypecheckedUnisonFile v_a1LDZ Ann)) (Maybe (TypecheckedUnisonFile v_a1MoZ Ann))
+latestFile :: forall m_a1LDY v_a1LDZ. Lens' (LoopState m_a1LDY v_a1LDZ) (Maybe (FilePath, SkipNextUpdate))
+lastSavedRoot :: forall m_a1LDY v_a1LDZ. Lens' (LoopState m_a1LDY v_a1LDZ) (Branch m_a1LDY)
+lastInput :: forall m_a1LDY v_a1LDZ. Lens' (LoopState m_a1LDY v_a1LDZ) (Maybe Input)
+currentPathStack :: forall m_a1LDY v_a1LDZ. Lens' (LoopState m_a1LDY v_a1LDZ) (NonEmpty Absolute)
 currentPath :: Getter (LoopState m v) Absolute
 loopState0 :: Branch m -> Absolute -> LoopState m v
 respond :: MonadCommand n m i v => Output v -> n ()
@@ -1080,6 +1080,7 @@ prettyBranchId :: AbsBranchId -> Pretty
 prettyRelative :: Relative -> Pretty
 prettyAbsolute :: Absolute -> Pretty
 prettySBH :: IsString s => ShortBranchHash -> Pretty s
+prettyCausalHash :: IsString s => RawHash x -> Pretty s
 formatMissingStuff :: (Show tm, Show typ) => [(HashQualified Name, tm)] -> [(HashQualified Name, typ)] -> Pretty
 displayDefinitions' :: Var v => Ord a1 => PrettyPrintEnvDecl -> Map Reference (DisplayObject () (Decl v a1)) -> Map Reference (DisplayObject (Type v a1) (Term v a1)) -> Pretty
 displayRendered :: Maybe FilePath -> Pretty -> IO Pretty

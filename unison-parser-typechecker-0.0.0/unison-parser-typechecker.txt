@@ -97,6 +97,10 @@ Relative :: Path -> Relative
 class Resolve l r o
 resolve :: Resolve l r o => l -> r -> o
 pattern Empty :: Path
+pattern (:<) :: Cons b b a a => a -> b -> b
+infixr 5 :<
+pattern (:>) :: Snoc a a b b => a -> b -> a
+infixl 5 :>
 singleton :: NameSegment -> Path
 uncons :: Path -> Maybe (NameSegment, Path)
 empty :: Path
@@ -161,6 +165,7 @@ instance GHC.Classes.Ord Unison.Codebase.Path.Relative
 instance GHC.Classes.Eq Unison.Codebase.Path.Relative
 instance GHC.Classes.Ord Unison.Codebase.Path.Path'
 instance GHC.Classes.Eq Unison.Codebase.Path.Path'
+instance Control.Lens.Empty.AsEmpty Unison.Codebase.Path.Path
 instance Unison.Codebase.Path.Resolve Unison.Codebase.Path.Path Unison.Codebase.Path.Path Unison.Codebase.Path.Path
 instance Unison.Codebase.Path.Resolve Unison.Codebase.Path.Relative Unison.Codebase.Path.Relative Unison.Codebase.Path.Relative
 instance Unison.Codebase.Path.Resolve Unison.Codebase.Path.Absolute Unison.Codebase.Path.Relative Unison.Codebase.Path.Absolute
@@ -233,7 +238,6 @@ module Unison.Codebase.ShortBranchHash
 toString :: ShortBranchHash -> String
 toHash :: Coercible Hash h => ShortBranchHash -> Maybe h
 fromHash :: Coercible h Hash => Int -> h -> ShortBranchHash
-fullFromHash :: Coercible h Hash => h -> ShortBranchHash
 fromText :: Text -> Maybe ShortBranchHash
 newtype ShortBranchHash
 ShortBranchHash :: Text -> ShortBranchHash
@@ -2290,9 +2294,9 @@ Env :: [Type v loc] -> TypeLookup v loc -> Map Name [NamedReference v loc] -> En
 [_ambientAbilities] :: Env v loc -> [Type v loc]
 [_typeLookup] :: Env v loc -> TypeLookup v loc
 [_termsByShortname] :: Env v loc -> Map Name [NamedReference v loc]
-typeLookup :: forall v_a3CIt loc_a3CIu. Lens' (Env v_a3CIt loc_a3CIu) (TypeLookup v_a3CIt loc_a3CIu)
-termsByShortname :: forall v_a3CIt loc_a3CIu. Lens' (Env v_a3CIt loc_a3CIu) (Map Name [NamedReference v_a3CIt loc_a3CIu])
-ambientAbilities :: forall v_a3CIt loc_a3CIu. Lens' (Env v_a3CIt loc_a3CIu) [Type v_a3CIt loc_a3CIu]
+typeLookup :: forall v_a3CHH loc_a3CHI. Lens' (Env v_a3CHH loc_a3CHI) (TypeLookup v_a3CHH loc_a3CHI)
+termsByShortname :: forall v_a3CHH loc_a3CHI. Lens' (Env v_a3CHH loc_a3CHI) (Map Name [NamedReference v_a3CHH loc_a3CHI])
+ambientAbilities :: forall v_a3CHH loc_a3CHI. Lens' (Env v_a3CHH loc_a3CHI) [Type v_a3CHH loc_a3CHI]
 
 -- | Infer the type of a <a>Term</a>, using a function to resolve the type
 --   of <tt>Ref</tt> constructors contained in that term.
@@ -2963,7 +2967,6 @@ Branch0 :: Star Referent NameSegment -> Star Reference NameSegment -> Map NameSe
 [deepPaths] :: Branch0 m -> Set Path
 [deepEdits] :: Branch0 m -> Map Name EditHash
 data Raw
-Raw :: Star Referent NameSegment -> Star Reference NameSegment -> Map NameSegment Hash -> Map NameSegment EditHash -> Raw
 type Star r n = Star r n
 type Hash = RawHash Raw
 type EditHash = Hash
@@ -3098,7 +3101,7 @@ module Unison.Codebase.Type
 
 -- | Abstract interface to a user's codebase.
 data Codebase m v a
-Codebase :: (Id -> m (Maybe (Term v a))) -> (Id -> m (Maybe (Type v a))) -> (Id -> m (Maybe (Decl v a))) -> (Id -> Term v a -> Type v a -> m ()) -> (Id -> Decl v a -> m ()) -> (Hash -> m (Maybe [(Term v a, Type v a)])) -> (Hash -> m (Maybe [Decl v a])) -> (Hash -> m (Maybe CycleSize)) -> m (Branch m) -> m Bool -> (Branch m -> m ()) -> m (IO (), IO (Set Hash)) -> (Hash -> m (Maybe (Branch m))) -> (Branch m -> m ()) -> (Hash -> m Bool) -> (EditHash -> m (Maybe Patch)) -> (EditHash -> Patch -> m ()) -> (EditHash -> m Bool) -> (Reference -> m (Set Id)) -> (Hash -> m (Set Id)) -> (CodebasePath -> SyncMode -> Branch m -> m ()) -> (CodebasePath -> SyncMode -> Branch m -> m ()) -> (forall r. ReadRemoteNamespace -> GitBranchBehavior -> ((Branch m, CodebasePath) -> m r) -> m (Either GitError r)) -> (forall e. WriteRepo -> PushGitBranchOpts -> (Branch m -> m (Either e (Branch m))) -> m (Either GitError (Either e (Branch m)))) -> (WatchKind -> m [Id]) -> (WatchKind -> Id -> m (Maybe (Term v a))) -> (WatchKind -> Id -> Term v a -> m ()) -> m () -> m [Entry Hash] -> (Text -> Branch m -> Branch m -> m ()) -> (Reference -> m (Set Id)) -> (Reference -> m (Set Id)) -> m Int -> (ShortHash -> m (Set Id)) -> (ShortHash -> m (Set Id)) -> (ShortHash -> m (Set Id)) -> m Int -> (ShortBranchHash -> m (Set Hash)) -> Maybe (Hash -> Hash -> m (Maybe Hash)) -> Maybe (Hash -> Hash -> m Bool) -> Codebase m v a
+Codebase :: (Id -> m (Maybe (Term v a))) -> (Id -> m (Maybe (Type v a))) -> (Id -> m (Maybe (Decl v a))) -> (Reference -> m ConstructorType) -> (Id -> Term v a -> Type v a -> m ()) -> (Id -> Decl v a -> m ()) -> (Hash -> m (Maybe [(Term v a, Type v a)])) -> (Hash -> m (Maybe [Decl v a])) -> (Hash -> m (Maybe CycleSize)) -> m CausalHash -> m (Branch m) -> m Bool -> (Branch m -> m ()) -> m (IO (), IO (Set Hash)) -> (CausalHash -> m (CausalBranch m)) -> (Hash -> m (Maybe (Branch m))) -> (Branch m -> m ()) -> (Hash -> m Bool) -> (EditHash -> m (Maybe Patch)) -> (EditHash -> Patch -> m ()) -> (EditHash -> m Bool) -> (Reference -> m (Set Id)) -> (Hash -> m (Set Id)) -> (CodebasePath -> SyncMode -> Branch m -> m ()) -> (CodebasePath -> SyncMode -> Branch m -> m ()) -> (forall r. ReadRemoteNamespace -> GitBranchBehavior -> ((Branch m, CodebasePath) -> m r) -> m (Either GitError r)) -> (forall e. WriteRepo -> PushGitBranchOpts -> (Branch m -> m (Either e (Branch m))) -> m (Either GitError (Either e (Branch m)))) -> (WatchKind -> m [Id]) -> (WatchKind -> Id -> m (Maybe (Term v a))) -> (WatchKind -> Id -> Term v a -> m ()) -> m () -> m [Entry Hash] -> (Text -> Branch m -> Branch m -> m ()) -> (Reference -> m (Set Id)) -> (Reference -> m (Set Id)) -> m Int -> (ShortHash -> m (Set Id)) -> (ShortHash -> m (Set Id)) -> (ShortHash -> m (Set Id)) -> m Int -> (ShortBranchHash -> m (Set Hash)) -> Maybe (Hash -> Hash -> m (Maybe Hash)) -> Maybe (Hash -> Hash -> m Bool) -> Codebase m v a
 
 -- | Get a user-defined term from the codebase.
 --   
@@ -3120,6 +3123,9 @@ Codebase :: (Id -> m (Maybe (Term v a))) -> (Id -> m (Maybe (Type v a))) -> (Id 
 --   semantics of <a>putTypeDeclaration</a>.
 [getTypeDeclaration] :: Codebase m v a -> Id -> m (Maybe (Decl v a))
 
+-- | Get the type of a given decl.
+[getDeclType] :: Codebase m v a -> Reference -> m ConstructorType
+
 -- | Enqueue the put of a user-defined term (with its type) into the
 --   codebase, if it doesn't already exist. The implementation may choose
 --   to delay the put until all of the term's (and its type's) references
@@ -3134,6 +3140,9 @@ Codebase :: (Id -> m (Maybe (Term v a))) -> (Id -> m (Maybe (Type v a))) -> (Id 
 [getDeclComponent] :: Codebase m v a -> Hash -> m (Maybe [Decl v a])
 [getComponentLength] :: Codebase m v a -> Hash -> m (Maybe CycleSize)
 
+-- | Get the root branch Hash.
+[getRootBranchHash] :: Codebase m v a -> m CausalHash
+
 -- | Get the root branch.
 [getRootBranch] :: Codebase m v a -> m (Branch m)
 
@@ -3144,6 +3153,7 @@ Codebase :: (Id -> m (Maybe (Term v a))) -> (Id -> m (Maybe (Type v a))) -> (Id 
 --   afterwards.
 [putRootBranch] :: Codebase m v a -> Branch m -> m ()
 [rootBranchUpdates] :: Codebase m v a -> m (IO (), IO (Set Hash))
+[getShallowBranchForHash] :: Codebase m v a -> CausalHash -> m (CausalBranch m)
 [getBranchForHashImpl] :: Codebase m v a -> Hash -> m (Maybe (Branch m))
 
 -- | Put a branch into the codebase, which includes its children, its
@@ -3323,9 +3333,9 @@ ttype1to2 :: Type Symbol a -> TypeT Symbol
 type1to2' :: (Reference -> r) -> Type Symbol a -> TypeR r Symbol
 
 -- | forces loading v1 branches even if they may not exist
-causalbranch2to1 :: Monad m => (Reference -> m ConstructorType) -> Causal m -> m (Branch m)
-causalbranch2to1' :: Monad m => (Reference -> m ConstructorType) -> Causal m -> m (UnwrappedBranch m)
-causalbranch1to2 :: forall m. Monad m => Branch m -> Causal m
+causalbranch2to1 :: Monad m => (Reference -> m ConstructorType) -> CausalBranch m -> m (Branch m)
+causalbranch2to1' :: Monad m => (Reference -> m ConstructorType) -> CausalBranch m -> m (UnwrappedBranch m)
+causalbranch1to2 :: forall m. Monad m => Branch m -> CausalBranch m
 patch2to1 :: Patch -> Patch
 patch1to2 :: Patch -> Patch
 edithash2to1 :: PatchHash -> EditHash
@@ -3550,6 +3560,9 @@ getTermComponentWithTypes :: Codebase m v a -> Hash -> m (Maybe [(Term v a, Type
 --   of <a>putTerm</a>.
 getTypeOfTerm :: (Applicative m, BuiltinAnnotation a) => Codebase m Symbol a -> Reference -> m (Maybe (Type Symbol a))
 
+-- | Get the type of a given decl.
+getDeclType :: Codebase m v a -> Reference -> m ConstructorType
+
 -- | Like <a>getTypeOfTerm</a>, but for when the term is known to exist in
 --   the codebase.
 unsafeGetTypeOfTermById :: (HasCallStack, Monad m) => Codebase m v a -> Id -> m (Type v a)
@@ -3621,6 +3634,14 @@ branchHashesByPrefix :: Codebase m v a -> ShortBranchHash -> m (Set Hash)
 --   branch that is an ancestor of both branches.
 lca :: Monad m => Codebase m v a -> Branch m -> Branch m -> m (Maybe (Branch m))
 beforeImpl :: Codebase m v a -> Maybe (Hash -> Hash -> m Bool)
+
+-- | Recursively descend into shallow branches following the given path.
+shallowBranchAtPath :: Monad m => Path -> CausalBranch m -> m (Maybe (CausalBranch m))
+getShallowBranchForHash :: Codebase m v a -> CausalHash -> m (CausalBranch m)
+
+-- | Get the shallow representation of the root branches without loading
+--   the children or history.
+getShallowRootBranch :: Monad m => Codebase m v a -> m (CausalBranch m)
 
 -- | Get the root branch.
 getRootBranch :: Codebase m v a -> m (Branch m)

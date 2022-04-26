@@ -559,10 +559,12 @@ expectNamespaceRoot :: Transaction CausalHashId
 saveCausal :: CausalHashId -> BranchHashId -> Transaction ()
 isCausalHash :: HashId -> Transaction Bool
 loadCausalHashIdByCausalHash :: CausalHash -> Transaction (Maybe CausalHashId)
+expectCausalHashIdByCausalHash :: CausalHash -> Transaction CausalHashId
 
 -- | ]
 expectCausalValueHashId :: CausalHashId -> Transaction BranchHashId
 loadCausalByCausalHash :: CausalHash -> Transaction (Maybe (CausalHashId, BranchHashId))
+expectCausalByCausalHash :: CausalHash -> Transaction (CausalHashId, BranchHashId)
 loadBranchObjectIdByCausalHashId :: CausalHashId -> Transaction (Maybe BranchObjectId)
 expectBranchObjectIdByCausalHashId :: CausalHashId -> Transaction BranchObjectId
 saveCausalParents :: CausalHashId -> [CausalHashId] -> Transaction ()
@@ -854,12 +856,13 @@ instance GHC.Show.Show U.Codebase.Sqlite.Sync22.DecodeError
 instance GHC.Show.Show U.Codebase.Sqlite.Sync22.Error
 
 module U.Codebase.Sqlite.Operations
-saveRootBranch :: Causal Transaction -> Transaction (BranchObjectId, CausalHashId)
+saveRootBranch :: CausalBranch Transaction -> Transaction (BranchObjectId, CausalHashId)
 loadRootCausalHash :: Transaction (Maybe CausalHash)
 expectRootCausalHash :: Transaction CausalHash
-expectRootCausal :: Transaction (Causal Transaction)
-saveBranch :: Causal Transaction -> Transaction (BranchObjectId, CausalHashId)
-loadCausalBranchByCausalHash :: CausalHash -> Transaction (Maybe (Causal Transaction))
+expectRootCausal :: Transaction (CausalBranch Transaction)
+saveBranch :: CausalBranch Transaction -> Transaction (BranchObjectId, CausalHashId)
+loadCausalBranchByCausalHash :: CausalHash -> Transaction (Maybe (CausalBranch Transaction))
+expectCausalBranchByCausalHash :: CausalHash -> Transaction (CausalBranch Transaction)
 saveTermComponent :: Hash -> [(Term Symbol, Type Symbol)] -> Transaction ObjectId
 loadTermComponent :: Hash -> MaybeT Transaction [(Term Symbol, Type Symbol)]
 loadTermByReference :: Id -> MaybeT Transaction (Term Symbol)

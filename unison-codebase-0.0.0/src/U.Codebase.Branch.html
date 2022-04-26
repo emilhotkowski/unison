@@ -1,18 +1,34 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">U.Codebase.Branch</span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-2"></span><span>
-</span><span id="line-3"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Data.Map</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Map</span></span><span class="hs-special">)</span><span>
-</span><span id="line-4"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Map</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Map</span></span><span>
-</span><span id="line-5"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Data.Set</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Set</span></span><span class="hs-special">)</span><span>
-</span><span id="line-6"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Data.Text</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Text</span></span><span class="hs-special">)</span><span>
-</span><span id="line-7"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="U.Codebase.Causal.html"><span class="hs-identifier">U.Codebase.Causal</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">C</span></span><span>
-</span><span id="line-8"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="U.Codebase.HashTags.html"><span class="hs-identifier">U.Codebase.HashTags</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="U.Codebase.HashTags.html#BranchHash"><span class="hs-identifier">BranchHash</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="U.Codebase.HashTags.html#CausalHash"><span class="hs-identifier">CausalHash</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="U.Codebase.HashTags.html#PatchHash"><span class="hs-identifier">PatchHash</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-9"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="U.Codebase.Reference.html"><span class="hs-identifier">U.Codebase.Reference</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="U.Codebase.Reference.html#Reference"><span class="hs-identifier">Reference</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-10"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="U.Codebase.Referent.html"><span class="hs-identifier">U.Codebase.Referent</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="U.Codebase.Referent.html#Referent"><span class="hs-identifier">Referent</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-11"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="U.Codebase.TermEdit.html"><span class="hs-identifier">U.Codebase.TermEdit</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="U.Codebase.TermEdit.html#TermEdit"><span class="hs-identifier">TermEdit</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-12"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="U.Codebase.TypeEdit.html"><span class="hs-identifier">U.Codebase.TypeEdit</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="U.Codebase.TypeEdit.html#TypeEdit"><span class="hs-identifier">TypeEdit</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-13"></span><span>
-</span><span id="line-14"></span><span class="hs-keyword">newtype</span><span> </span><span id="NameSegment"><span class="annot"><a href="U.Codebase.Branch.html#NameSegment"><span class="hs-identifier hs-var">NameSegment</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="NameSegment"><span class="annot"><a href="U.Codebase.Branch.html#NameSegment"><span class="hs-identifier hs-var">NameSegment</span></a></span></span><span> </span><span class="hs-special">{</span><span id="unNameSegment"><span class="annot"><span class="annottext">NameSegment -&gt; Text
-</span><a href="U.Codebase.Branch.html#unNameSegment"><span class="hs-identifier hs-var hs-var">unNameSegment</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679121526"><span id="local-6989586621679121528"><span class="annot"><span class="annottext">NameSegment -&gt; NameSegment -&gt; Bool
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-pragma">{-# LANGUAGE RankNTypes #-}</span><span>
+</span><span id="line-2"></span><span class="hs-pragma">{-# LANGUAGE RecordWildCards #-}</span><span>
+</span><span id="line-3"></span><span>
+</span><span id="line-4"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">U.Codebase.Branch</span><span>
+</span><span id="line-5"></span><span>  </span><span class="hs-special">(</span><span> </span><span class="annot"><a href="U.Codebase.Branch.html#Branch"><span class="hs-identifier">Branch</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><span id="line-6"></span><span>    </span><span class="annot"><a href="U.Codebase.Branch.html#CausalBranch"><span class="hs-identifier">CausalBranch</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-7"></span><span>    </span><span class="annot"><a href="U.Codebase.Branch.html#Patch"><span class="hs-identifier">Patch</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><span id="line-8"></span><span>    </span><span class="annot"><a href="U.Codebase.Branch.html#MetadataType"><span class="hs-identifier">MetadataType</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-9"></span><span>    </span><span class="annot"><a href="U.Codebase.Branch.html#MetadataValue"><span class="hs-identifier">MetadataValue</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-10"></span><span>    </span><span class="annot"><a href="U.Codebase.Branch.html#MdValues"><span class="hs-identifier">MdValues</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><span id="line-11"></span><span>    </span><span class="annot"><a href="U.Codebase.Branch.html#NameSegment"><span class="hs-identifier">NameSegment</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><span id="line-12"></span><span>    </span><span class="annot"><a href="U.Codebase.HashTags.html#CausalHash"><span class="hs-identifier">CausalHash</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-13"></span><span>    </span><span class="annot"><a href="U.Codebase.Branch.html#childAt"><span class="hs-identifier">childAt</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-14"></span><span>    </span><span class="annot"><a href="U.Codebase.Branch.html#hoist"><span class="hs-identifier">hoist</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-15"></span><span>    </span><span class="annot"><a href="U.Codebase.Branch.html#hoistCausalBranch"><span class="hs-identifier">hoistCausalBranch</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-16"></span><span>  </span><span class="hs-special">)</span><span>
+</span><span id="line-17"></span><span class="hs-keyword">where</span><span>
+</span><span id="line-18"></span><span>
+</span><span id="line-19"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Control.Lens</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">AsEmpty</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">nearly</span></span><span class="hs-special">)</span><span>
+</span><span id="line-20"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Map</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Map</span></span><span>
+</span><span id="line-21"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="U.Codebase.Causal.html"><span class="hs-identifier">U.Codebase.Causal</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="U.Codebase.Causal.html#Causal"><span class="hs-identifier">Causal</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-22"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="U.Codebase.Causal.html"><span class="hs-identifier">U.Codebase.Causal</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Causal</span></span><span>
+</span><span id="line-23"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="U.Codebase.HashTags.html"><span class="hs-identifier">U.Codebase.HashTags</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="U.Codebase.HashTags.html#BranchHash"><span class="hs-identifier">BranchHash</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="U.Codebase.HashTags.html#CausalHash"><span class="hs-identifier">CausalHash</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="U.Codebase.HashTags.html#PatchHash"><span class="hs-identifier">PatchHash</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-24"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="U.Codebase.Reference.html"><span class="hs-identifier">U.Codebase.Reference</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="U.Codebase.Reference.html#Reference"><span class="hs-identifier">Reference</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-25"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="U.Codebase.Referent.html"><span class="hs-identifier">U.Codebase.Referent</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="U.Codebase.Referent.html#Referent"><span class="hs-identifier">Referent</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-26"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="U.Codebase.TermEdit.html"><span class="hs-identifier">U.Codebase.TermEdit</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="U.Codebase.TermEdit.html#TermEdit"><span class="hs-identifier">TermEdit</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-27"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="U.Codebase.TypeEdit.html"><span class="hs-identifier">U.Codebase.TypeEdit</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="U.Codebase.TypeEdit.html#TypeEdit"><span class="hs-identifier">TypeEdit</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-28"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Prelude</span></span><span>
+</span><span id="line-29"></span><span>
+</span><span id="line-30"></span><span class="hs-keyword">newtype</span><span> </span><span id="NameSegment"><span class="annot"><a href="U.Codebase.Branch.html#NameSegment"><span class="hs-identifier hs-var">NameSegment</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="NameSegment"><span class="annot"><a href="U.Codebase.Branch.html#NameSegment"><span class="hs-identifier hs-var">NameSegment</span></a></span></span><span> </span><span class="hs-special">{</span><span id="unNameSegment"><span class="annot"><span class="annottext">NameSegment -&gt; Text
+</span><a href="U.Codebase.Branch.html#unNameSegment"><span class="hs-identifier hs-var hs-var">unNameSegment</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679122318"><span id="local-6989586621679122320"><span class="annot"><span class="annottext">NameSegment -&gt; NameSegment -&gt; Bool
 (NameSegment -&gt; NameSegment -&gt; Bool)
 -&gt; (NameSegment -&gt; NameSegment -&gt; Bool) -&gt; Eq NameSegment
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -20,7 +36,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: NameSegment -&gt; NameSegment -&gt; Bool
 == :: NameSegment -&gt; NameSegment -&gt; Bool
 $c== :: NameSegment -&gt; NameSegment -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679121510"><span id="local-6989586621679121512"><span id="local-6989586621679121514"><span id="local-6989586621679121516"><span id="local-6989586621679121518"><span id="local-6989586621679121520"><span id="local-6989586621679121522"><span class="annot"><span class="annottext">Eq NameSegment
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679122302"><span id="local-6989586621679122304"><span id="local-6989586621679122306"><span id="local-6989586621679122308"><span id="local-6989586621679122310"><span id="local-6989586621679122312"><span id="local-6989586621679122314"><span class="annot"><span class="annottext">Eq NameSegment
 Eq NameSegment
 -&gt; (NameSegment -&gt; NameSegment -&gt; Ordering)
 -&gt; (NameSegment -&gt; NameSegment -&gt; Bool)
@@ -58,7 +74,7 @@ $c&lt; :: NameSegment -&gt; NameSegment -&gt; Bool
 compare :: NameSegment -&gt; NameSegment -&gt; Ordering
 $ccompare :: NameSegment -&gt; NameSegment -&gt; Ordering
 $cp1Ord :: Eq NameSegment
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679121503"><span id="local-6989586621679121505"><span id="local-6989586621679121507"><span class="annot"><span class="annottext">Int -&gt; NameSegment -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679122295"><span id="local-6989586621679122297"><span id="local-6989586621679122299"><span class="annot"><span class="annottext">Int -&gt; NameSegment -&gt; ShowS
 [NameSegment] -&gt; ShowS
 NameSegment -&gt; String
 (Int -&gt; NameSegment -&gt; ShowS)
@@ -74,12 +90,12 @@ $cshow :: NameSegment -&gt; String
 showsPrec :: Int -&gt; NameSegment -&gt; ShowS
 $cshowsPrec :: Int -&gt; NameSegment -&gt; ShowS
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-15"></span><span>
-</span><span id="line-16"></span><span class="hs-keyword">type</span><span> </span><span id="MetadataType"><span class="annot"><a href="U.Codebase.Branch.html#MetadataType"><span class="hs-identifier hs-var">MetadataType</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><a href="U.Codebase.Reference.html#Reference"><span class="hs-identifier hs-type">Reference</span></a></span><span>
-</span><span id="line-17"></span><span>
-</span><span id="line-18"></span><span class="hs-keyword">type</span><span> </span><span id="MetadataValue"><span class="annot"><a href="U.Codebase.Branch.html#MetadataValue"><span class="hs-identifier hs-var">MetadataValue</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><a href="U.Codebase.Reference.html#Reference"><span class="hs-identifier hs-type">Reference</span></a></span><span>
-</span><span id="line-19"></span><span>
-</span><span id="line-20"></span><span class="hs-keyword">data</span><span> </span><span id="MdValues"><span class="annot"><a href="U.Codebase.Branch.html#MdValues"><span class="hs-identifier hs-var">MdValues</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="MdValues"><span class="annot"><a href="U.Codebase.Branch.html#MdValues"><span class="hs-identifier hs-var">MdValues</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="U.Codebase.Branch.html#MetadataValue"><span class="hs-identifier hs-type">MetadataValue</span></a></span><span> </span><span class="annot"><a href="U.Codebase.Branch.html#MetadataType"><span class="hs-identifier hs-type">MetadataType</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679121495"><span id="local-6989586621679121497"><span class="annot"><span class="annottext">MdValues -&gt; MdValues -&gt; Bool
+</span><span id="line-31"></span><span>
+</span><span id="line-32"></span><span class="hs-keyword">type</span><span> </span><span id="MetadataType"><span class="annot"><a href="U.Codebase.Branch.html#MetadataType"><span class="hs-identifier hs-var">MetadataType</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><a href="U.Codebase.Reference.html#Reference"><span class="hs-identifier hs-type">Reference</span></a></span><span>
+</span><span id="line-33"></span><span>
+</span><span id="line-34"></span><span class="hs-keyword">type</span><span> </span><span id="MetadataValue"><span class="annot"><a href="U.Codebase.Branch.html#MetadataValue"><span class="hs-identifier hs-var">MetadataValue</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><a href="U.Codebase.Reference.html#Reference"><span class="hs-identifier hs-type">Reference</span></a></span><span>
+</span><span id="line-35"></span><span>
+</span><span id="line-36"></span><span class="hs-keyword">data</span><span> </span><span id="MdValues"><span class="annot"><a href="U.Codebase.Branch.html#MdValues"><span class="hs-identifier hs-var">MdValues</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="MdValues"><span class="annot"><a href="U.Codebase.Branch.html#MdValues"><span class="hs-identifier hs-var">MdValues</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="U.Codebase.Branch.html#MetadataValue"><span class="hs-identifier hs-type">MetadataValue</span></a></span><span> </span><span class="annot"><a href="U.Codebase.Branch.html#MetadataType"><span class="hs-identifier hs-type">MetadataType</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679122289"><span id="local-6989586621679122291"><span class="annot"><span class="annottext">MdValues -&gt; MdValues -&gt; Bool
 (MdValues -&gt; MdValues -&gt; Bool)
 -&gt; (MdValues -&gt; MdValues -&gt; Bool) -&gt; Eq MdValues
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -87,7 +103,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: MdValues -&gt; MdValues -&gt; Bool
 == :: MdValues -&gt; MdValues -&gt; Bool
 $c== :: MdValues -&gt; MdValues -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679121480"><span id="local-6989586621679121482"><span id="local-6989586621679121484"><span id="local-6989586621679121486"><span id="local-6989586621679121488"><span id="local-6989586621679121490"><span id="local-6989586621679121492"><span class="annot"><span class="annottext">Eq MdValues
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679122274"><span id="local-6989586621679122276"><span id="local-6989586621679122278"><span id="local-6989586621679122280"><span id="local-6989586621679122282"><span id="local-6989586621679122284"><span id="local-6989586621679122286"><span class="annot"><span class="annottext">Eq MdValues
 Eq MdValues
 -&gt; (MdValues -&gt; MdValues -&gt; Ordering)
 -&gt; (MdValues -&gt; MdValues -&gt; Bool)
@@ -125,7 +141,7 @@ $c&lt; :: MdValues -&gt; MdValues -&gt; Bool
 compare :: MdValues -&gt; MdValues -&gt; Ordering
 $ccompare :: MdValues -&gt; MdValues -&gt; Ordering
 $cp1Ord :: Eq MdValues
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679121474"><span id="local-6989586621679121476"><span id="local-6989586621679121478"><span class="annot"><span class="annottext">Int -&gt; MdValues -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679122268"><span id="local-6989586621679122270"><span id="local-6989586621679122272"><span class="annot"><span class="annottext">Int -&gt; MdValues -&gt; ShowS
 [MdValues] -&gt; ShowS
 MdValues -&gt; String
 (Int -&gt; MdValues -&gt; ShowS)
@@ -139,33 +155,81 @@ $cshow :: MdValues -&gt; String
 showsPrec :: Int -&gt; MdValues -&gt; ShowS
 $cshowsPrec :: Int -&gt; MdValues -&gt; ShowS
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-21"></span><span>
-</span><span id="line-22"></span><span class="hs-keyword">type</span><span> </span><span id="Causal"><span class="annot"><a href="U.Codebase.Branch.html#Causal"><span class="hs-identifier hs-var">Causal</span></a></span></span><span> </span><span id="local-6989586621679121473"><span class="annot"><a href="#local-6989586621679121473"><span class="hs-identifier hs-type">m</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><a href="U.Codebase.Causal.html#Causal"><span class="hs-identifier hs-type">C.Causal</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679121473"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="U.Codebase.HashTags.html#CausalHash"><span class="hs-identifier hs-type">CausalHash</span></a></span><span> </span><span class="annot"><a href="U.Codebase.HashTags.html#BranchHash"><span class="hs-identifier hs-type">BranchHash</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="U.Codebase.Branch.html#Branch"><span class="hs-identifier hs-type">Branch</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679121473"><span class="hs-identifier hs-type">m</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-23"></span><span>
-</span><span id="line-24"></span><span class="hs-comment">-- | V2.Branch is like V1.Branch0; I would rename it, at least temporarily, but too hard.</span><span>
-</span><span id="line-25"></span><span class="hs-keyword">data</span><span> </span><span id="Branch"><span class="annot"><a href="U.Codebase.Branch.html#Branch"><span class="hs-identifier hs-var">Branch</span></a></span></span><span> </span><span id="local-6989586621679121536"><span class="annot"><a href="#local-6989586621679121536"><span class="hs-identifier hs-type">m</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Branch"><span class="annot"><a href="U.Codebase.Branch.html#Branch"><span class="hs-identifier hs-var">Branch</span></a></span></span><span>
-</span><span id="line-26"></span><span>  </span><span class="hs-special">{</span><span> </span><span id="terms"><span class="annot"><span class="annottext">Branch m -&gt; Map NameSegment (Map Referent (m MdValues))
-</span><a href="U.Codebase.Branch.html#terms"><span class="hs-identifier hs-var hs-var">terms</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="U.Codebase.Branch.html#NameSegment"><span class="hs-identifier hs-type">NameSegment</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="U.Codebase.Referent.html#Referent"><span class="hs-identifier hs-type">Referent</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="#local-6989586621679121536"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="U.Codebase.Branch.html#MdValues"><span class="hs-identifier hs-type">MdValues</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span class="hs-special">,</span><span>
-</span><span id="line-27"></span><span>    </span><span id="types"><span class="annot"><span class="annottext">Branch m -&gt; Map NameSegment (Map Reference (m MdValues))
-</span><a href="U.Codebase.Branch.html#types"><span class="hs-identifier hs-var hs-var">types</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="U.Codebase.Branch.html#NameSegment"><span class="hs-identifier hs-type">NameSegment</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="U.Codebase.Reference.html#Reference"><span class="hs-identifier hs-type">Reference</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="#local-6989586621679121536"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="U.Codebase.Branch.html#MdValues"><span class="hs-identifier hs-type">MdValues</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span class="hs-special">,</span><span>
-</span><span id="line-28"></span><span>    </span><span id="patches"><span class="annot"><span class="annottext">Branch m -&gt; Map NameSegment (PatchHash, m Patch)
-</span><a href="U.Codebase.Branch.html#patches"><span class="hs-identifier hs-var hs-var">patches</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="U.Codebase.Branch.html#NameSegment"><span class="hs-identifier hs-type">NameSegment</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="U.Codebase.HashTags.html#PatchHash"><span class="hs-identifier hs-type">PatchHash</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="#local-6989586621679121536"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="U.Codebase.Branch.html#Patch"><span class="hs-identifier hs-type">Patch</span></a></span><span class="hs-special">)</span><span class="hs-special">,</span><span>
-</span><span id="line-29"></span><span>    </span><span id="children"><span class="annot"><span class="annottext">Branch m -&gt; Map NameSegment (Causal m)
-</span><a href="U.Codebase.Branch.html#children"><span class="hs-identifier hs-var hs-var">children</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="U.Codebase.Branch.html#NameSegment"><span class="hs-identifier hs-type">NameSegment</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="U.Codebase.Branch.html#Causal"><span class="hs-identifier hs-type">Causal</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679121536"><span class="hs-identifier hs-type">m</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-30"></span><span>  </span><span class="hs-special">}</span><span>
-</span><span id="line-31"></span><span>
-</span><span id="line-32"></span><span class="hs-keyword">data</span><span> </span><span id="Patch"><span class="annot"><a href="U.Codebase.Branch.html#Patch"><span class="hs-identifier hs-var">Patch</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Patch"><span class="annot"><a href="U.Codebase.Branch.html#Patch"><span class="hs-identifier hs-var">Patch</span></a></span></span><span>
-</span><span id="line-33"></span><span>  </span><span class="hs-special">{</span><span> </span><span id="termEdits"><span class="annot"><span class="annottext">Patch -&gt; Map Referent (Set TermEdit)
+</span><span id="line-37"></span><span>
+</span><span id="line-38"></span><span class="hs-keyword">type</span><span> </span><span id="CausalBranch"><span class="annot"><a href="U.Codebase.Branch.html#CausalBranch"><span class="hs-identifier hs-var">CausalBranch</span></a></span></span><span> </span><span id="local-6989586621679122267"><span class="annot"><a href="#local-6989586621679122267"><span class="hs-identifier hs-type">m</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><a href="U.Codebase.Causal.html#Causal"><span class="hs-identifier hs-type">Causal</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679122267"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="U.Codebase.HashTags.html#CausalHash"><span class="hs-identifier hs-type">CausalHash</span></a></span><span> </span><span class="annot"><a href="U.Codebase.HashTags.html#BranchHash"><span class="hs-identifier hs-type">BranchHash</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="U.Codebase.Branch.html#Branch"><span class="hs-identifier hs-type">Branch</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679122267"><span class="hs-identifier hs-type">m</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-39"></span><span>
+</span><span id="line-40"></span><span class="hs-comment">-- | A re-imagining of Unison.Codebase.Branch which is less eager in what it loads,</span><span>
+</span><span id="line-41"></span><span class="hs-comment">-- which can often speed up load times and keep fewer things in memory.</span><span>
+</span><span id="line-42"></span><span class="hs-keyword">data</span><span> </span><span id="Branch"><span class="annot"><a href="U.Codebase.Branch.html#Branch"><span class="hs-identifier hs-var">Branch</span></a></span></span><span> </span><span id="local-6989586621679122370"><span class="annot"><a href="#local-6989586621679122370"><span class="hs-identifier hs-type">m</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Branch"><span class="annot"><a href="U.Codebase.Branch.html#Branch"><span class="hs-identifier hs-var">Branch</span></a></span></span><span>
+</span><span id="line-43"></span><span>  </span><span class="hs-special">{</span><span> </span><span id="terms"><span class="annot"><span class="annottext">Branch m -&gt; Map NameSegment (Map Referent (m MdValues))
+</span><a href="U.Codebase.Branch.html#terms"><span class="hs-identifier hs-var hs-var">terms</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="U.Codebase.Branch.html#NameSegment"><span class="hs-identifier hs-type">NameSegment</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="U.Codebase.Referent.html#Referent"><span class="hs-identifier hs-type">Referent</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="#local-6989586621679122370"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="U.Codebase.Branch.html#MdValues"><span class="hs-identifier hs-type">MdValues</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><span id="line-44"></span><span>    </span><span id="types"><span class="annot"><span class="annottext">Branch m -&gt; Map NameSegment (Map Reference (m MdValues))
+</span><a href="U.Codebase.Branch.html#types"><span class="hs-identifier hs-var hs-var">types</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="U.Codebase.Branch.html#NameSegment"><span class="hs-identifier hs-type">NameSegment</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="U.Codebase.Reference.html#Reference"><span class="hs-identifier hs-type">Reference</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="#local-6989586621679122370"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="U.Codebase.Branch.html#MdValues"><span class="hs-identifier hs-type">MdValues</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><span id="line-45"></span><span>    </span><span id="patches"><span class="annot"><span class="annottext">Branch m -&gt; Map NameSegment (PatchHash, m Patch)
+</span><a href="U.Codebase.Branch.html#patches"><span class="hs-identifier hs-var hs-var">patches</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="U.Codebase.Branch.html#NameSegment"><span class="hs-identifier hs-type">NameSegment</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="U.Codebase.HashTags.html#PatchHash"><span class="hs-identifier hs-type">PatchHash</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="#local-6989586621679122370"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="U.Codebase.Branch.html#Patch"><span class="hs-identifier hs-type">Patch</span></a></span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><span id="line-46"></span><span>    </span><span id="children"><span class="annot"><span class="annottext">Branch m -&gt; Map NameSegment (CausalBranch m)
+</span><a href="U.Codebase.Branch.html#children"><span class="hs-identifier hs-var hs-var">children</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="U.Codebase.Branch.html#NameSegment"><span class="hs-identifier hs-type">NameSegment</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="U.Codebase.Branch.html#CausalBranch"><span class="hs-identifier hs-type">CausalBranch</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679122370"><span class="hs-identifier hs-type">m</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-47"></span><span>  </span><span class="hs-special">}</span><span>
+</span><span id="line-48"></span><span>
+</span><span id="line-49"></span><span id="local-6989586621679122261"><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">AsEmpty</span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="U.Codebase.Branch.html#Branch"><span class="hs-identifier hs-type">Branch</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679122261"><span class="hs-identifier hs-type">m</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-50"></span><span>  </span><span id="local-6989586621679122258"><span class="annot"><span class="annottext">_Empty :: p () (f ()) -&gt; p (Branch m) (f (Branch m))
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">_Empty</span></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-51"></span><span>    </span><span class="annot"><span class="annottext">Branch m -&gt; (Branch m -&gt; Bool) -&gt; Prism' (Branch m) ()
+forall a. a -&gt; (a -&gt; Bool) -&gt; Prism' a ()
+</span><span class="hs-identifier hs-var">nearly</span></span><span>
+</span><span id="line-52"></span><span>      </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Map NameSegment (Map Referent (m MdValues))
+-&gt; Map NameSegment (Map Reference (m MdValues))
+-&gt; Map NameSegment (PatchHash, m Patch)
+-&gt; Map NameSegment (CausalBranch m)
+-&gt; Branch m
+forall (m :: * -&gt; *).
+Map NameSegment (Map Referent (m MdValues))
+-&gt; Map NameSegment (Map Reference (m MdValues))
+-&gt; Map NameSegment (PatchHash, m Patch)
+-&gt; Map NameSegment (CausalBranch m)
+-&gt; Branch m
+</span><a href="U.Codebase.Branch.html#Branch"><span class="hs-identifier hs-var">Branch</span></a></span><span> </span><span class="annot"><span class="annottext">Map NameSegment (Map Referent (m MdValues))
+forall a. Monoid a =&gt; a
+</span><span class="hs-identifier hs-var">mempty</span></span><span> </span><span class="annot"><span class="annottext">Map NameSegment (Map Reference (m MdValues))
+forall a. Monoid a =&gt; a
+</span><span class="hs-identifier hs-var">mempty</span></span><span> </span><span class="annot"><span class="annottext">Map NameSegment (PatchHash, m Patch)
+forall a. Monoid a =&gt; a
+</span><span class="hs-identifier hs-var">mempty</span></span><span> </span><span class="annot"><span class="annottext">Map NameSegment (CausalBranch m)
+forall a. Monoid a =&gt; a
+</span><span class="hs-identifier hs-var">mempty</span></span><span class="hs-special">)</span><span>
+</span><span id="line-53"></span><span>      </span><span class="hs-special">(</span><span class="hs-glyph">\</span><span class="hs-special">(</span><span class="annot"><a href="U.Codebase.Branch.html#Branch"><span class="hs-identifier hs-type">Branch</span></a></span><span> </span><span id="local-6989586621679122256"><span class="annot"><span class="annottext">Map NameSegment (Map Referent (m MdValues))
+</span><a href="#local-6989586621679122256"><span class="hs-identifier hs-var">terms</span></a></span></span><span> </span><span id="local-6989586621679122255"><span class="annot"><span class="annottext">Map NameSegment (Map Reference (m MdValues))
+</span><a href="#local-6989586621679122255"><span class="hs-identifier hs-var">types</span></a></span></span><span> </span><span id="local-6989586621679122254"><span class="annot"><span class="annottext">Map NameSegment (PatchHash, m Patch)
+</span><a href="#local-6989586621679122254"><span class="hs-identifier hs-var">patches</span></a></span></span><span> </span><span id="local-6989586621679122253"><span class="annot"><span class="annottext">Map NameSegment (CausalBranch m)
+</span><a href="#local-6989586621679122253"><span class="hs-identifier hs-var">children</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Map NameSegment (Map Referent (m MdValues)) -&gt; Bool
+forall (t :: * -&gt; *) a. Foldable t =&gt; t a -&gt; Bool
+</span><span class="hs-identifier hs-var">null</span></span><span> </span><span class="annot"><span class="annottext">Map NameSegment (Map Referent (m MdValues))
+</span><a href="#local-6989586621679122256"><span class="hs-identifier hs-var">terms</span></a></span><span> </span><span class="annot"><span class="annottext">Bool -&gt; Bool -&gt; Bool
+</span><span class="hs-operator hs-var">&amp;&amp;</span></span><span> </span><span class="annot"><span class="annottext">Map NameSegment (Map Reference (m MdValues)) -&gt; Bool
+forall (t :: * -&gt; *) a. Foldable t =&gt; t a -&gt; Bool
+</span><span class="hs-identifier hs-var">null</span></span><span> </span><span class="annot"><span class="annottext">Map NameSegment (Map Reference (m MdValues))
+</span><a href="#local-6989586621679122255"><span class="hs-identifier hs-var">types</span></a></span><span> </span><span class="annot"><span class="annottext">Bool -&gt; Bool -&gt; Bool
+</span><span class="hs-operator hs-var">&amp;&amp;</span></span><span> </span><span class="annot"><span class="annottext">Map NameSegment (PatchHash, m Patch) -&gt; Bool
+forall (t :: * -&gt; *) a. Foldable t =&gt; t a -&gt; Bool
+</span><span class="hs-identifier hs-var">null</span></span><span> </span><span class="annot"><span class="annottext">Map NameSegment (PatchHash, m Patch)
+</span><a href="#local-6989586621679122254"><span class="hs-identifier hs-var">patches</span></a></span><span> </span><span class="annot"><span class="annottext">Bool -&gt; Bool -&gt; Bool
+</span><span class="hs-operator hs-var">&amp;&amp;</span></span><span> </span><span class="annot"><span class="annottext">Map NameSegment (CausalBranch m) -&gt; Bool
+forall (t :: * -&gt; *) a. Foldable t =&gt; t a -&gt; Bool
+</span><span class="hs-identifier hs-var">null</span></span><span> </span><span class="annot"><span class="annottext">Map NameSegment (CausalBranch m)
+</span><a href="#local-6989586621679122253"><span class="hs-identifier hs-var">children</span></a></span><span class="hs-special">)</span></span><span>
+</span><span id="line-54"></span><span>
+</span><span id="line-55"></span><span class="hs-keyword">data</span><span> </span><span id="Patch"><span class="annot"><a href="U.Codebase.Branch.html#Patch"><span class="hs-identifier hs-var">Patch</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Patch"><span class="annot"><a href="U.Codebase.Branch.html#Patch"><span class="hs-identifier hs-var">Patch</span></a></span></span><span>
+</span><span id="line-56"></span><span>  </span><span class="hs-special">{</span><span> </span><span id="termEdits"><span class="annot"><span class="annottext">Patch -&gt; Map Referent (Set TermEdit)
 </span><a href="U.Codebase.Branch.html#termEdits"><span class="hs-identifier hs-var hs-var">termEdits</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="U.Codebase.Referent.html#Referent"><span class="hs-identifier hs-type">Referent</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Set</span></span><span> </span><span class="annot"><a href="U.Codebase.TermEdit.html#TermEdit"><span class="hs-identifier hs-type">TermEdit</span></a></span><span class="hs-special">)</span><span class="hs-special">,</span><span>
-</span><span id="line-34"></span><span>    </span><span id="typeEdits"><span class="annot"><span class="annottext">Patch -&gt; Map Reference (Set TypeEdit)
+</span><span id="line-57"></span><span>    </span><span id="typeEdits"><span class="annot"><span class="annottext">Patch -&gt; Map Reference (Set TypeEdit)
 </span><a href="U.Codebase.Branch.html#typeEdits"><span class="hs-identifier hs-var hs-var">typeEdits</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="U.Codebase.Reference.html#Reference"><span class="hs-identifier hs-type">Reference</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Set</span></span><span> </span><span class="annot"><a href="U.Codebase.TypeEdit.html#TypeEdit"><span class="hs-identifier hs-type">TypeEdit</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-35"></span><span>  </span><span class="hs-special">}</span><span>
-</span><span id="line-36"></span><span>
-</span><span id="line-37"></span><span id="local-6989586621679121463"><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679121458"><span id="local-6989586621679121461"><span class="annot"><span class="hs-identifier hs-type">Show</span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="U.Codebase.Branch.html#Branch"><span class="hs-identifier hs-type">Branch</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679121463"><span class="hs-identifier hs-type">m</span></a></span><span class="hs-special">)</span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-38"></span><span>  </span><span id="local-6989586621679121457"><span class="annot"><span class="annottext">show :: Branch m -&gt; String
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var">show</span></span></span><span> </span><span id="local-6989586621679121455"><span class="annot"><span class="annottext">Branch m
-</span><a href="#local-6989586621679121455"><span class="hs-identifier hs-var">b</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-39"></span><span>    </span><span class="annot"><span class="annottext">String
+</span><span id="line-58"></span><span>  </span><span class="hs-special">}</span><span>
+</span><span id="line-59"></span><span>
+</span><span id="line-60"></span><span id="local-6989586621679122247"><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679122242"><span id="local-6989586621679122245"><span class="annot"><span class="hs-identifier hs-type">Show</span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="U.Codebase.Branch.html#Branch"><span class="hs-identifier hs-type">Branch</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679122247"><span class="hs-identifier hs-type">m</span></a></span><span class="hs-special">)</span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-61"></span><span>  </span><span id="local-6989586621679122241"><span class="annot"><span class="annottext">show :: Branch m -&gt; String
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">show</span></span></span><span> </span><span id="local-6989586621679122239"><span class="annot"><span class="annottext">Branch m
+</span><a href="#local-6989586621679122239"><span class="hs-identifier hs-var">b</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-62"></span><span>    </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;Branch { terms = &quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">Map NameSegment [Referent] -&gt; String
@@ -180,12 +244,12 @@ forall k a. Map k a -&gt; [k]
 forall (m :: * -&gt; *).
 Branch m -&gt; Map NameSegment (Map Referent (m MdValues))
 </span><a href="U.Codebase.Branch.html#terms"><span class="hs-identifier hs-var hs-var">terms</span></a></span><span> </span><span class="annot"><span class="annottext">Branch m
-</span><a href="#local-6989586621679121455"><span class="hs-identifier hs-var">b</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
-</span><span id="line-40"></span><span>      </span><span class="annot"><span class="annottext">String -&gt; ShowS
+</span><a href="#local-6989586621679122239"><span class="hs-identifier hs-var">b</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-63"></span><span>      </span><span class="annot"><span class="annottext">String -&gt; ShowS
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;, types = &quot;</span></span><span>
-</span><span id="line-41"></span><span>      </span><span class="annot"><span class="annottext">String -&gt; ShowS
+</span><span id="line-64"></span><span>      </span><span class="annot"><span class="annottext">String -&gt; ShowS
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">Map NameSegment [Reference] -&gt; String
 forall a. Show a =&gt; a -&gt; String
@@ -199,12 +263,12 @@ forall k a. Map k a -&gt; [k]
 forall (m :: * -&gt; *).
 Branch m -&gt; Map NameSegment (Map Reference (m MdValues))
 </span><a href="U.Codebase.Branch.html#types"><span class="hs-identifier hs-var hs-var">types</span></a></span><span> </span><span class="annot"><span class="annottext">Branch m
-</span><a href="#local-6989586621679121455"><span class="hs-identifier hs-var">b</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
-</span><span id="line-42"></span><span>      </span><span class="annot"><span class="annottext">String -&gt; ShowS
+</span><a href="#local-6989586621679122239"><span class="hs-identifier hs-var">b</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-65"></span><span>      </span><span class="annot"><span class="annottext">String -&gt; ShowS
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;, patches = &quot;</span></span><span>
-</span><span id="line-43"></span><span>      </span><span class="annot"><span class="annottext">String -&gt; ShowS
+</span><span id="line-66"></span><span>      </span><span class="annot"><span class="annottext">String -&gt; ShowS
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">Map NameSegment PatchHash -&gt; String
 forall a. Show a =&gt; a -&gt; String
@@ -218,19 +282,181 @@ forall a b. (a, b) -&gt; a
 forall (m :: * -&gt; *).
 Branch m -&gt; Map NameSegment (PatchHash, m Patch)
 </span><a href="U.Codebase.Branch.html#patches"><span class="hs-identifier hs-var hs-var">patches</span></a></span><span> </span><span class="annot"><span class="annottext">Branch m
-</span><a href="#local-6989586621679121455"><span class="hs-identifier hs-var">b</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
-</span><span id="line-44"></span><span>      </span><span class="annot"><span class="annottext">String -&gt; ShowS
+</span><a href="#local-6989586621679122239"><span class="hs-identifier hs-var">b</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-67"></span><span>      </span><span class="annot"><span class="annottext">String -&gt; ShowS
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;, children = &quot;</span></span><span>
-</span><span id="line-45"></span><span>      </span><span class="annot"><span class="annottext">String -&gt; ShowS
+</span><span id="line-68"></span><span>      </span><span class="annot"><span class="annottext">String -&gt; ShowS
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">[NameSegment] -&gt; String
 forall a. Show a =&gt; a -&gt; String
-</span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Map NameSegment (Causal m) -&gt; [NameSegment]
+</span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Map NameSegment (CausalBranch m) -&gt; [NameSegment]
 forall k a. Map k a -&gt; [k]
-</span><span class="hs-identifier hs-var">Map.keys</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Branch m -&gt; Map NameSegment (Causal m)
-forall (m :: * -&gt; *). Branch m -&gt; Map NameSegment (Causal m)
+</span><span class="hs-identifier hs-var">Map.keys</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Branch m -&gt; Map NameSegment (CausalBranch m)
+forall (m :: * -&gt; *). Branch m -&gt; Map NameSegment (CausalBranch m)
 </span><a href="U.Codebase.Branch.html#children"><span class="hs-identifier hs-var hs-var">children</span></a></span><span> </span><span class="annot"><span class="annottext">Branch m
-</span><a href="#local-6989586621679121455"><span class="hs-identifier hs-var">b</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span></span><span>
-</span><span id="line-46"></span></pre></body></html>
+</span><a href="#local-6989586621679122239"><span class="hs-identifier hs-var">b</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span></span><span>
+</span><span id="line-69"></span><span>
+</span><span id="line-70"></span><span id="local-6989586621679122237"><span class="annot"><a href="U.Codebase.Branch.html#childAt"><span class="hs-identifier hs-type">childAt</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="U.Codebase.Branch.html#NameSegment"><span class="hs-identifier hs-type">NameSegment</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="U.Codebase.Branch.html#Branch"><span class="hs-identifier hs-type">Branch</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679122237"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="U.Codebase.Branch.html#CausalBranch"><span class="hs-identifier hs-type">CausalBranch</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679122237"><span class="hs-identifier hs-type">m</span></a></span><span class="hs-special">)</span></span><span>
+</span><span id="line-71"></span><span id="childAt"><span class="annot"><span class="annottext">childAt :: NameSegment -&gt; Branch m -&gt; Maybe (CausalBranch m)
+</span><a href="U.Codebase.Branch.html#childAt"><span class="hs-identifier hs-var hs-var">childAt</span></a></span></span><span> </span><span id="local-6989586621679122236"><span class="annot"><span class="annottext">NameSegment
+</span><a href="#local-6989586621679122236"><span class="hs-identifier hs-var">ns</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="U.Codebase.Branch.html#Branch"><span class="hs-identifier hs-type">Branch</span></a></span><span> </span><span class="hs-special">{</span><span id="local-6989586621679122235"><span class="annot"><span class="annottext">Map NameSegment (CausalBranch m)
+children :: Map NameSegment (CausalBranch m)
+children :: forall (m :: * -&gt; *). Branch m -&gt; Map NameSegment (CausalBranch m)
+</span><a href="#local-6989586621679122235"><span class="hs-identifier hs-var hs-var">children</span></a></span></span><span class="hs-special">}</span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">NameSegment
+-&gt; Map NameSegment (CausalBranch m) -&gt; Maybe (CausalBranch m)
+forall k a. Ord k =&gt; k -&gt; Map k a -&gt; Maybe a
+</span><span class="hs-identifier hs-var">Map.lookup</span></span><span> </span><span class="annot"><span class="annottext">NameSegment
+</span><a href="#local-6989586621679122236"><span class="hs-identifier hs-var">ns</span></a></span><span> </span><span class="annot"><span class="annottext">Map NameSegment (CausalBranch m)
+</span><a href="#local-6989586621679122235"><span class="hs-identifier hs-var">children</span></a></span><span>
+</span><span id="line-72"></span><span>
+</span><span id="line-73"></span><span id="local-6989586621679122341"><span id="local-6989586621679122342"><span class="annot"><a href="U.Codebase.Branch.html#hoist"><span class="hs-identifier hs-type">hoist</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Functor</span></span><span> </span><span class="annot"><a href="#local-6989586621679122342"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="hs-special">(</span><span class="hs-keyword">forall</span><span> </span><span id="local-6989586621679122350"><span class="annot"><a href="#local-6989586621679122350"><span class="hs-identifier hs-type">x</span></a></span></span><span class="hs-operator">.</span><span> </span><span class="annot"><a href="#local-6989586621679122341"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679122350"><span class="hs-identifier hs-type">x</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679122342"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679122350"><span class="hs-identifier hs-type">x</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="U.Codebase.Branch.html#Branch"><span class="hs-identifier hs-type">Branch</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679122341"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="U.Codebase.Branch.html#Branch"><span class="hs-identifier hs-type">Branch</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679122342"><span class="hs-identifier hs-type">n</span></a></span></span></span><span>
+</span><span id="line-74"></span><span id="hoist"><span class="annot"><span class="annottext">hoist :: (forall x. m x -&gt; n x) -&gt; Branch m -&gt; Branch n
+</span><a href="U.Codebase.Branch.html#hoist"><span class="hs-identifier hs-var hs-var">hoist</span></a></span></span><span> </span><span id="local-6989586621679122233"><span class="annot"><span class="annottext">forall x. m x -&gt; n x
+</span><a href="#local-6989586621679122233"><span class="hs-identifier hs-var">f</span></a></span></span><span> </span><span class="annot"><a href="U.Codebase.Branch.html#Branch"><span class="hs-identifier hs-type">Branch</span></a></span><span> </span><span class="hs-special">{</span><span id="local-6989586621679122229"><span id="local-6989586621679122230"><span id="local-6989586621679122231"><span id="local-6989586621679122232"><span class="annot"><span class="annottext">Map NameSegment (PatchHash, m Patch)
+Map NameSegment (Map Reference (m MdValues))
+Map NameSegment (Map Referent (m MdValues))
+Map NameSegment (CausalBranch m)
+children :: Map NameSegment (CausalBranch m)
+patches :: Map NameSegment (PatchHash, m Patch)
+types :: Map NameSegment (Map Reference (m MdValues))
+terms :: Map NameSegment (Map Referent (m MdValues))
+children :: forall (m :: * -&gt; *). Branch m -&gt; Map NameSegment (CausalBranch m)
+patches :: forall (m :: * -&gt; *).
+Branch m -&gt; Map NameSegment (PatchHash, m Patch)
+types :: forall (m :: * -&gt; *).
+Branch m -&gt; Map NameSegment (Map Reference (m MdValues))
+terms :: forall (m :: * -&gt; *).
+Branch m -&gt; Map NameSegment (Map Referent (m MdValues))
+</span><a href="#local-6989586621679122229"><span class="hs-glyph hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">..</span></a></span></span></span></span></span><span class="hs-special">}</span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-75"></span><span>  </span><span class="annot"><span class="annottext">Branch :: forall (m :: * -&gt; *).
+Map NameSegment (Map Referent (m MdValues))
+-&gt; Map NameSegment (Map Reference (m MdValues))
+-&gt; Map NameSegment (PatchHash, m Patch)
+-&gt; Map NameSegment (CausalBranch m)
+-&gt; Branch m
+</span><a href="U.Codebase.Branch.html#Branch"><span class="hs-identifier hs-type">Branch</span></a></span><span>
+</span><span id="line-76"></span><span>    </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">terms :: Map NameSegment (Map Referent (n MdValues))
+</span><a href="U.Codebase.Branch.html#terms"><span class="hs-identifier hs-var">terms</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(Map Referent (m MdValues) -&gt; Map Referent (n MdValues))
+-&gt; Map NameSegment (Map Referent (m MdValues))
+-&gt; Map NameSegment (Map Referent (n MdValues))
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-identifier hs-var">fmap</span></span><span> </span><span class="annot"><span class="annottext">((Map Referent (m MdValues) -&gt; Map Referent (n MdValues))
+ -&gt; Map NameSegment (Map Referent (m MdValues))
+ -&gt; Map NameSegment (Map Referent (n MdValues)))
+-&gt; ((m MdValues -&gt; n MdValues)
+    -&gt; Map Referent (m MdValues) -&gt; Map Referent (n MdValues))
+-&gt; (m MdValues -&gt; n MdValues)
+-&gt; Map NameSegment (Map Referent (m MdValues))
+-&gt; Map NameSegment (Map Referent (n MdValues))
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">(m MdValues -&gt; n MdValues)
+-&gt; Map Referent (m MdValues) -&gt; Map Referent (n MdValues)
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-identifier hs-var">fmap</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">m MdValues -&gt; n MdValues
+forall x. m x -&gt; n x
+</span><a href="#local-6989586621679122233"><span class="hs-identifier hs-var">f</span></a></span><span> </span><span class="annot"><span class="annottext">Map NameSegment (Map Referent (m MdValues))
+</span><a href="#local-6989586621679122232"><span class="hs-identifier hs-var">terms</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-77"></span><span>      </span><span class="annot"><span class="annottext">types :: Map NameSegment (Map Reference (n MdValues))
+</span><a href="U.Codebase.Branch.html#types"><span class="hs-identifier hs-var">types</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(Map Reference (m MdValues) -&gt; Map Reference (n MdValues))
+-&gt; Map NameSegment (Map Reference (m MdValues))
+-&gt; Map NameSegment (Map Reference (n MdValues))
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-identifier hs-var">fmap</span></span><span> </span><span class="annot"><span class="annottext">((Map Reference (m MdValues) -&gt; Map Reference (n MdValues))
+ -&gt; Map NameSegment (Map Reference (m MdValues))
+ -&gt; Map NameSegment (Map Reference (n MdValues)))
+-&gt; ((m MdValues -&gt; n MdValues)
+    -&gt; Map Reference (m MdValues) -&gt; Map Reference (n MdValues))
+-&gt; (m MdValues -&gt; n MdValues)
+-&gt; Map NameSegment (Map Reference (m MdValues))
+-&gt; Map NameSegment (Map Reference (n MdValues))
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">(m MdValues -&gt; n MdValues)
+-&gt; Map Reference (m MdValues) -&gt; Map Reference (n MdValues)
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-identifier hs-var">fmap</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">m MdValues -&gt; n MdValues
+forall x. m x -&gt; n x
+</span><a href="#local-6989586621679122233"><span class="hs-identifier hs-var">f</span></a></span><span> </span><span class="annot"><span class="annottext">Map NameSegment (Map Reference (m MdValues))
+</span><a href="#local-6989586621679122231"><span class="hs-identifier hs-var">types</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-78"></span><span>      </span><span class="annot"><span class="annottext">patches :: Map NameSegment (PatchHash, n Patch)
+</span><a href="U.Codebase.Branch.html#patches"><span class="hs-identifier hs-var">patches</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">((PatchHash, m Patch) -&gt; (PatchHash, n Patch))
+-&gt; Map NameSegment (PatchHash, m Patch)
+-&gt; Map NameSegment (PatchHash, n Patch)
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-identifier hs-var">fmap</span></span><span> </span><span class="annot"><span class="annottext">(((PatchHash, m Patch) -&gt; (PatchHash, n Patch))
+ -&gt; Map NameSegment (PatchHash, m Patch)
+ -&gt; Map NameSegment (PatchHash, n Patch))
+-&gt; ((m Patch -&gt; n Patch)
+    -&gt; (PatchHash, m Patch) -&gt; (PatchHash, n Patch))
+-&gt; (m Patch -&gt; n Patch)
+-&gt; Map NameSegment (PatchHash, m Patch)
+-&gt; Map NameSegment (PatchHash, n Patch)
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">(m Patch -&gt; n Patch)
+-&gt; (PatchHash, m Patch) -&gt; (PatchHash, n Patch)
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-identifier hs-var">fmap</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">m Patch -&gt; n Patch
+forall x. m x -&gt; n x
+</span><a href="#local-6989586621679122233"><span class="hs-identifier hs-var">f</span></a></span><span> </span><span class="annot"><span class="annottext">Map NameSegment (PatchHash, m Patch)
+</span><a href="#local-6989586621679122230"><span class="hs-identifier hs-var">patches</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-79"></span><span>      </span><span class="annot"><span class="annottext">children :: Map NameSegment (CausalBranch n)
+</span><a href="U.Codebase.Branch.html#children"><span class="hs-identifier hs-var">children</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(CausalBranch m -&gt; CausalBranch n)
+-&gt; Map NameSegment (CausalBranch m)
+-&gt; Map NameSegment (CausalBranch n)
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-identifier hs-var">fmap</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(Branch m -&gt; Branch n)
+-&gt; Causal n CausalHash BranchHash (Branch m) -&gt; CausalBranch n
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-identifier hs-var">fmap</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(forall x. m x -&gt; n x) -&gt; Branch m -&gt; Branch n
+forall (n :: * -&gt; *) (m :: * -&gt; *).
+Functor n =&gt;
+(forall x. m x -&gt; n x) -&gt; Branch m -&gt; Branch n
+</span><a href="U.Codebase.Branch.html#hoist"><span class="hs-identifier hs-var">hoist</span></a></span><span> </span><span class="annot"><span class="annottext">forall x. m x -&gt; n x
+</span><a href="#local-6989586621679122233"><span class="hs-identifier hs-var">f</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(Causal n CausalHash BranchHash (Branch m) -&gt; CausalBranch n)
+-&gt; (CausalBranch m -&gt; Causal n CausalHash BranchHash (Branch m))
+-&gt; CausalBranch m
+-&gt; CausalBranch n
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">(forall x. m x -&gt; n x)
+-&gt; CausalBranch m -&gt; Causal n CausalHash BranchHash (Branch m)
+forall (n :: * -&gt; *) (m :: * -&gt; *) hc he e.
+Functor n =&gt;
+(forall x. m x -&gt; n x) -&gt; Causal m hc he e -&gt; Causal n hc he e
+</span><a href="U.Codebase.Causal.html#hoist"><span class="hs-identifier hs-var">Causal.hoist</span></a></span><span> </span><span class="annot"><span class="annottext">forall x. m x -&gt; n x
+</span><a href="#local-6989586621679122233"><span class="hs-identifier hs-var">f</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Map NameSegment (CausalBranch m)
+</span><a href="#local-6989586621679122229"><span class="hs-identifier hs-var">children</span></a></span><span>
+</span><span id="line-80"></span><span>    </span><span class="hs-special">}</span><span>
+</span><span id="line-81"></span><span>
+</span><span id="line-82"></span><span id="local-6989586621679122225"><span id="local-6989586621679122226"><span class="annot"><a href="U.Codebase.Branch.html#hoistCausalBranch"><span class="hs-identifier hs-type">hoistCausalBranch</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Functor</span></span><span> </span><span class="annot"><a href="#local-6989586621679122226"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="hs-special">(</span><span class="hs-keyword">forall</span><span> </span><span id="local-6989586621679122333"><span class="annot"><a href="#local-6989586621679122333"><span class="hs-identifier hs-type">x</span></a></span></span><span class="hs-operator">.</span><span> </span><span class="annot"><a href="#local-6989586621679122225"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679122333"><span class="hs-identifier hs-type">x</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679122226"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679122333"><span class="hs-identifier hs-type">x</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="U.Codebase.Branch.html#CausalBranch"><span class="hs-identifier hs-type">CausalBranch</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679122225"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="U.Codebase.Branch.html#CausalBranch"><span class="hs-identifier hs-type">CausalBranch</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679122226"><span class="hs-identifier hs-type">n</span></a></span></span></span><span>
+</span><span id="line-83"></span><span id="hoistCausalBranch"><span class="annot"><span class="annottext">hoistCausalBranch :: (forall x. m x -&gt; n x) -&gt; CausalBranch m -&gt; CausalBranch n
+</span><a href="U.Codebase.Branch.html#hoistCausalBranch"><span class="hs-identifier hs-var hs-var">hoistCausalBranch</span></a></span></span><span> </span><span id="local-6989586621679122224"><span class="annot"><span class="annottext">forall x. m x -&gt; n x
+</span><a href="#local-6989586621679122224"><span class="hs-identifier hs-var">f</span></a></span></span><span> </span><span id="local-6989586621679122223"><span class="annot"><span class="annottext">CausalBranch m
+</span><a href="#local-6989586621679122223"><span class="hs-identifier hs-var">cb</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-84"></span><span>  </span><span class="annot"><span class="annottext">CausalBranch m
+</span><a href="#local-6989586621679122223"><span class="hs-identifier hs-var">cb</span></a></span><span>
+</span><span id="line-85"></span><span>    </span><span class="annot"><span class="annottext">CausalBranch m
+-&gt; (CausalBranch m -&gt; Causal n CausalHash BranchHash (Branch m))
+-&gt; Causal n CausalHash BranchHash (Branch m)
+forall a b. a -&gt; (a -&gt; b) -&gt; b
+</span><span class="hs-operator hs-var">&amp;</span></span><span> </span><span class="annot"><span class="annottext">(forall x. m x -&gt; n x)
+-&gt; CausalBranch m -&gt; Causal n CausalHash BranchHash (Branch m)
+forall (n :: * -&gt; *) (m :: * -&gt; *) hc he e.
+Functor n =&gt;
+(forall x. m x -&gt; n x) -&gt; Causal m hc he e -&gt; Causal n hc he e
+</span><a href="U.Codebase.Causal.html#hoist"><span class="hs-identifier hs-var">Causal.hoist</span></a></span><span> </span><span class="annot"><span class="annottext">forall x. m x -&gt; n x
+</span><a href="#local-6989586621679122224"><span class="hs-identifier hs-var">f</span></a></span><span>
+</span><span id="line-86"></span><span>    </span><span class="annot"><span class="annottext">Causal n CausalHash BranchHash (Branch m)
+-&gt; (Causal n CausalHash BranchHash (Branch m) -&gt; CausalBranch n)
+-&gt; CausalBranch n
+forall a b. a -&gt; (a -&gt; b) -&gt; b
+</span><span class="hs-operator hs-var">&amp;</span></span><span> </span><span class="annot"><span class="annottext">(Branch m -&gt; Branch n)
+-&gt; Causal n CausalHash BranchHash (Branch m) -&gt; CausalBranch n
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-identifier hs-var">fmap</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(forall x. m x -&gt; n x) -&gt; Branch m -&gt; Branch n
+forall (n :: * -&gt; *) (m :: * -&gt; *).
+Functor n =&gt;
+(forall x. m x -&gt; n x) -&gt; Branch m -&gt; Branch n
+</span><a href="U.Codebase.Branch.html#hoist"><span class="hs-identifier hs-var">hoist</span></a></span><span> </span><span class="annot"><span class="annottext">forall x. m x -&gt; n x
+</span><a href="#local-6989586621679122224"><span class="hs-identifier hs-var">f</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-87"></span></pre></body></html>

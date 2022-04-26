@@ -331,6 +331,7 @@ discard :: Applicative m => a -> m ()
 mayDefaultWidth :: Maybe Width -> Width
 setCacheControl :: v -> APIHeaders v
 branchToUnisonHash :: Branch m -> UnisonHash
+v2CausalBranchToUnisonHash :: CausalBranch m -> UnisonHash
 instance GHC.Generics.Generic Unison.Server.Types.Suffixify
 instance GHC.Show.Show Unison.Server.Types.Suffixify
 instance GHC.Classes.Ord Unison.Server.Types.Suffixify
@@ -414,7 +415,7 @@ type SyntaxText = SyntaxText' Reference
 data ShallowListEntry v a
 ShallowTermEntry :: TermEntry v a -> ShallowListEntry v a
 ShallowTypeEntry :: TypeEntry -> ShallowListEntry v a
-ShallowBranchEntry :: NameSegment -> ShortBranchHash -> Int -> ShallowListEntry v a
+ShallowBranchEntry :: NameSegment -> Hash -> Maybe Int -> ShallowListEntry v a
 ShallowPatchEntry :: NameSegment -> ShallowListEntry v a
 listEntryName :: ShallowListEntry v a -> Text
 data BackendError
@@ -429,6 +430,15 @@ type Backend m a = ExceptT BackendError m a
 basicNames' :: Branch m -> NameScoping -> (Names, Names)
 basicSuffixifiedNames :: Int -> Branch m -> NameScoping -> PrettyPrintEnv
 basicPrettyPrintNames :: Branch m -> NameScoping -> Names
+shallowPPE :: Monad m => Codebase m v a -> Branch m -> m PrettyPrintEnv
+
+-- | A <a>Names</a> which only includes mappings for things _directly_
+--   accessible from the branch.
+--   
+--   I.e. names in nested children are omitted. This should probably live
+--   elsewhere, but the package dependency graph makes it hard to find a
+--   good place.
+shallowNames :: forall m v a. Monad m => Codebase m v a -> Branch m -> m Names
 basicParseNames :: Branch m -> NameScoping -> Names
 loadReferentType :: Applicative m => Codebase m Symbol Ann -> Referent -> m (Maybe (Type Symbol Ann))
 data TermEntry v a
@@ -450,14 +460,28 @@ findShallow :: Monad m => Codebase m Symbol Ann -> Absolute -> m [ShallowListEnt
 findShallowReadmeInBranchAndRender :: Width -> Runtime Symbol -> Codebase IO Symbol Ann -> NamesWithHistory -> Branch IO -> Backend IO (Maybe Doc)
 isDoc :: Monad m => Codebase m Symbol Ann -> Referent -> m Bool
 isDoc' :: (Var v, Monoid loc) => Maybe (Type v loc) -> Bool
-termListEntry :: Monad m => Codebase m Symbol Ann -> Branch0 m -> Referent -> HQSegment -> m (TermEntry Symbol Ann)
+termListEntry :: Monad m => Codebase m Symbol Ann -> Bool -> Referent -> HQSegment -> m (TermEntry Symbol Ann)
+checkIsTestForBranch :: Branch0 m -> Referent -> Bool
+checkIsTestForV2Branch :: Monad m => Branch m -> Referent -> m Bool
 typeListEntry :: Monad m => Var v => Codebase m v Ann -> Reference -> HQSegment -> m TypeEntry
 typeDeclHeader :: forall v m. Monad m => Var v => Codebase m v Ann -> PrettyPrintEnv -> Reference -> m (DisplayObject SyntaxText SyntaxText)
 formatTypeName :: PrettyPrintEnv -> Reference -> SyntaxText
 formatTypeName' :: PrettyPrintEnv -> Reference -> SyntaxText
 termEntryToNamedTerm :: Var v => PrettyPrintEnv -> Maybe Width -> TermEntry v a -> NamedTerm
 typeEntryToNamedType :: TypeEntry -> NamedType
-findShallowInBranch :: Monad m => Codebase m Symbol Ann -> Branch m -> m [ShallowListEntry Symbol Ann]
+
+-- | Find all definitions and children reachable from the given branch.
+--   Note: this differs from <a>lsShallowBranch</a> in that it takes a
+--   fully loaded <a>Branch</a> object, and thus can include definition
+--   counts for child namespaces.
+lsBranch :: Monad m => Codebase m Symbol Ann -> Branch m -> m [ShallowListEntry Symbol Ann]
+
+-- | Find all definitions and children reachable from the given
+--   <a>Branch</a>, Note: this differs from <a>lsBranch</a> in that it
+--   takes a shallow v2 branch, As a result, it omits definition counts
+--   from child-namespaces in its results, but doesn't require loading the
+--   entire sub-tree to do so.
+lsShallowBranch :: Monad m => Codebase m Symbol Ann -> Branch m -> m [ShallowListEntry Symbol Ann]
 termReferencesByShortHash :: Monad m => Codebase m v a -> ShortHash -> m (Set Reference)
 
 -- | Look up types in the codebase by short hash, and include builtins.
@@ -596,10 +620,9 @@ TermObject :: NamedTerm -> NamespaceObject
 TypeObject :: NamedType -> NamespaceObject
 PatchObject :: NamedPatch -> NamespaceObject
 data NamedNamespace
-NamedNamespace :: UnisonName -> UnisonHash -> Size -> NamedNamespace
+NamedNamespace :: UnisonName -> UnisonHash -> NamedNamespace
 [$sel:namespaceName:NamedNamespace] :: NamedNamespace -> UnisonName
 [$sel:namespaceHash:NamedNamespace] :: NamedNamespace -> UnisonHash
-[$sel:namespaceSize:NamedNamespace] :: NamedNamespace -> Size
 newtype NamedPatch
 NamedPatch :: HashQualifiedName -> NamedPatch
 [$sel:patchName:NamedPatch] :: NamedPatch -> HashQualifiedName

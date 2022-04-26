@@ -12,6 +12,8 @@ Causal :: hc -> he -> Map hc (m (Causal m hc he e)) -> m e -> Causal m hc he e
 [valueHash] :: Causal m hc he e -> he
 [parents] :: Causal m hc he e -> Map hc (m (Causal m hc he e))
 [value] :: Causal m hc he e -> m e
+hoist :: Functor n => (forall x. m x -> n x) -> Causal m hc he e -> Causal n hc he e
+instance GHC.Base.Functor m => GHC.Base.Functor (U.Codebase.Causal.Causal m hc he)
 
 module U.Codebase.HashTags
 newtype BranchHash
@@ -313,33 +315,39 @@ instance GHC.Classes.Ord U.Codebase.TypeEdit.TypeEdit
 instance GHC.Classes.Eq U.Codebase.TypeEdit.TypeEdit
 
 module U.Codebase.Branch
-newtype NameSegment
-NameSegment :: Text -> NameSegment
-[unNameSegment] :: NameSegment -> Text
-type MetadataType = Reference
-type MetadataValue = Reference
-data MdValues
-MdValues :: Map MetadataValue MetadataType -> MdValues
-type Causal m = Causal m CausalHash BranchHash (Branch m)
 
--- | V2.Branch is like V1.Branch0; I would rename it, at least temporarily,
---   but too hard.
+-- | A re-imagining of Unison.Codebase.Branch which is less eager in what
+--   it loads, which can often speed up load times and keep fewer things in
+--   memory.
 data Branch m
-Branch :: Map NameSegment (Map Referent (m MdValues)) -> Map NameSegment (Map Reference (m MdValues)) -> Map NameSegment (PatchHash, m Patch) -> Map NameSegment (Causal m) -> Branch m
+Branch :: Map NameSegment (Map Referent (m MdValues)) -> Map NameSegment (Map Reference (m MdValues)) -> Map NameSegment (PatchHash, m Patch) -> Map NameSegment (CausalBranch m) -> Branch m
 [terms] :: Branch m -> Map NameSegment (Map Referent (m MdValues))
 [types] :: Branch m -> Map NameSegment (Map Reference (m MdValues))
 [patches] :: Branch m -> Map NameSegment (PatchHash, m Patch)
-[children] :: Branch m -> Map NameSegment (Causal m)
+[children] :: Branch m -> Map NameSegment (CausalBranch m)
+type CausalBranch m = Causal m CausalHash BranchHash (Branch m)
 data Patch
 Patch :: Map Referent (Set TermEdit) -> Map Reference (Set TypeEdit) -> Patch
 [termEdits] :: Patch -> Map Referent (Set TermEdit)
 [typeEdits] :: Patch -> Map Reference (Set TypeEdit)
+type MetadataType = Reference
+type MetadataValue = Reference
+data MdValues
+MdValues :: Map MetadataValue MetadataType -> MdValues
+newtype NameSegment
+NameSegment :: Text -> NameSegment
+[unNameSegment] :: NameSegment -> Text
+data CausalHash
+childAt :: NameSegment -> Branch m -> Maybe (CausalBranch m)
+hoist :: Functor n => (forall x. m x -> n x) -> Branch m -> Branch n
+hoistCausalBranch :: Functor n => (forall x. m x -> n x) -> CausalBranch m -> CausalBranch n
 instance GHC.Show.Show U.Codebase.Branch.NameSegment
 instance GHC.Classes.Ord U.Codebase.Branch.NameSegment
 instance GHC.Classes.Eq U.Codebase.Branch.NameSegment
 instance GHC.Show.Show U.Codebase.Branch.MdValues
 instance GHC.Classes.Ord U.Codebase.Branch.MdValues
 instance GHC.Classes.Eq U.Codebase.Branch.MdValues
+instance Control.Lens.Empty.AsEmpty (U.Codebase.Branch.Branch m)
 instance GHC.Show.Show (U.Codebase.Branch.Branch m)
 
 module U.Codebase.WatchKind

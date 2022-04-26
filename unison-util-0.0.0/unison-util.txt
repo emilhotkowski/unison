@@ -74,6 +74,7 @@ Hash :: ShortByteString -> Hash
 fromBase32Hex :: Base32Hex -> Hash
 fromByteString :: ByteString -> Hash
 toBase32Hex :: Hash -> Base32Hex
+toBase32HexText :: Hash -> Text
 toByteString :: Hash -> ByteString
 instance GHC.Generics.Generic U.Util.Hash.Hash
 instance GHC.Classes.Ord U.Util.Hash.Hash
