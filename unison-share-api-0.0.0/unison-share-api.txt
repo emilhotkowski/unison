@@ -768,7 +768,8 @@ CodebaseServerOpts :: Maybe String -> Maybe String -> Maybe Int -> Maybe FilePat
 [$sel:host:CodebaseServerOpts] :: CodebaseServerOpts -> Maybe String
 [$sel:port:CodebaseServerOpts] :: CodebaseServerOpts -> Maybe Int
 [$sel:codebaseUIPath:CodebaseServerOpts] :: CodebaseServerOpts -> Maybe FilePath
-startServer :: CodebaseServerOpts -> Runtime Symbol -> Codebase IO Symbol Ann -> (BaseUrl -> IO ()) -> IO ()
+defaultCodebaseServerOpts :: CodebaseServerOpts
+startServer :: CodebaseServerOpts -> Runtime Symbol -> Codebase IO Symbol Ann -> (BaseUrl -> IO a) -> IO a
 serveIndex :: FilePath -> Handler RawHtml
 serveUI :: FilePath -> Server WebUI
 server :: Runtime Symbol -> Codebase IO Symbol Ann -> FilePath -> ByteString -> Server AppAPI

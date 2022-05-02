@@ -850,13 +850,13 @@ LoopState :: Branch m -> Branch m -> NonEmpty Absolute -> Maybe (FilePath, SkipN
 type Action' m v = Action m (Either Event Input) v
 type SkipNextUpdate = Bool
 type InputDescription = Text
-root :: forall m_a1LDY v_a1LDZ. Lens' (LoopState m_a1LDY v_a1LDZ) (Branch m_a1LDY)
-numberedArgs :: forall m_a1LDY v_a1LDZ. Lens' (LoopState m_a1LDY v_a1LDZ) NumberedArgs
-latestTypecheckedFile :: forall m_a1LDY v_a1LDZ v_a1MoZ. Lens (LoopState m_a1LDY v_a1LDZ) (LoopState m_a1LDY v_a1MoZ) (Maybe (TypecheckedUnisonFile v_a1LDZ Ann)) (Maybe (TypecheckedUnisonFile v_a1MoZ Ann))
-latestFile :: forall m_a1LDY v_a1LDZ. Lens' (LoopState m_a1LDY v_a1LDZ) (Maybe (FilePath, SkipNextUpdate))
-lastSavedRoot :: forall m_a1LDY v_a1LDZ. Lens' (LoopState m_a1LDY v_a1LDZ) (Branch m_a1LDY)
-lastInput :: forall m_a1LDY v_a1LDZ. Lens' (LoopState m_a1LDY v_a1LDZ) (Maybe Input)
-currentPathStack :: forall m_a1LDY v_a1LDZ. Lens' (LoopState m_a1LDY v_a1LDZ) (NonEmpty Absolute)
+root :: forall m_a1LDZ v_a1LE0. Lens' (LoopState m_a1LDZ v_a1LE0) (Branch m_a1LDZ)
+numberedArgs :: forall m_a1LDZ v_a1LE0. Lens' (LoopState m_a1LDZ v_a1LE0) NumberedArgs
+latestTypecheckedFile :: forall m_a1LDZ v_a1LE0 v_a1Mp0. Lens (LoopState m_a1LDZ v_a1LE0) (LoopState m_a1LDZ v_a1Mp0) (Maybe (TypecheckedUnisonFile v_a1LE0 Ann)) (Maybe (TypecheckedUnisonFile v_a1Mp0 Ann))
+latestFile :: forall m_a1LDZ v_a1LE0. Lens' (LoopState m_a1LDZ v_a1LE0) (Maybe (FilePath, SkipNextUpdate))
+lastSavedRoot :: forall m_a1LDZ v_a1LE0. Lens' (LoopState m_a1LDZ v_a1LE0) (Branch m_a1LDZ)
+lastInput :: forall m_a1LDZ v_a1LE0. Lens' (LoopState m_a1LDZ v_a1LE0) (Maybe Input)
+currentPathStack :: forall m_a1LDZ v_a1LE0. Lens' (LoopState m_a1LDZ v_a1LE0) (NonEmpty Absolute)
 currentPath :: Getter (LoopState m v) Absolute
 loopState0 :: Branch m -> Absolute -> LoopState m v
 respond :: MonadCommand n m i v => Output v -> n ()
@@ -1178,6 +1178,7 @@ module Unison.Codebase.TranscriptParser
 data Stanza
 Ucm :: Hidden -> ExpectingError -> [UcmLine] -> Stanza
 Unison :: Hidden -> ExpectingError -> Maybe ScratchFileName -> Text -> Stanza
+API :: [APIRequest] -> Stanza
 UnprocessedFence :: FenceType -> Text -> Stanza
 Unfenced :: Text -> Stanza
 type FenceType = Text
@@ -1197,6 +1198,7 @@ instance GHC.Classes.Eq Unison.Codebase.TranscriptParser.Hidden
 instance GHC.Exception.Type.Exception Unison.Codebase.TranscriptParser.TranscriptError
 instance GHC.Show.Show Unison.Codebase.TranscriptParser.TranscriptError
 instance GHC.Show.Show Unison.Codebase.TranscriptParser.Stanza
+instance GHC.Show.Show Unison.Codebase.TranscriptParser.APIRequest
 instance GHC.Show.Show Unison.Codebase.TranscriptParser.UcmLine
 
 module Unison.Util.HTTP
