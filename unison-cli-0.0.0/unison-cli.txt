@@ -199,6 +199,7 @@ UiI :: Input
 DocsToHtmlI :: Path' -> FilePath -> Input
 GistI :: GistInput -> Input
 AuthLoginI :: Maybe CodebaseServerName -> Input
+VersionI :: Input
 
 -- | <tt>"gist repo"</tt> pushes the contents of the current namespace to
 --   <tt>repo</tt>.
@@ -669,6 +670,7 @@ GistCreated :: Int -> WriteRepo -> Hash -> Output v
 InitiateAuthFlow :: URI -> Output v
 UnknownCodeServer :: Text -> Output v
 CredentialFailureMsg :: CredentialFailure -> Output v
+PrintVersion :: Text -> Output v
 data NumberedOutput v
 ShowDiffNamespace :: AbsBranchId -> AbsBranchId -> PrettyPrintEnv -> BranchDiffOutput v Ann -> NumberedOutput v
 ShowDiffAfterUndo :: PrettyPrintEnv -> BranchDiffOutput v Ann -> NumberedOutput v
@@ -850,13 +852,13 @@ LoopState :: Branch m -> Branch m -> NonEmpty Absolute -> Maybe (FilePath, SkipN
 type Action' m v = Action m (Either Event Input) v
 type SkipNextUpdate = Bool
 type InputDescription = Text
-root :: forall m_a1LDZ v_a1LE0. Lens' (LoopState m_a1LDZ v_a1LE0) (Branch m_a1LDZ)
-numberedArgs :: forall m_a1LDZ v_a1LE0. Lens' (LoopState m_a1LDZ v_a1LE0) NumberedArgs
-latestTypecheckedFile :: forall m_a1LDZ v_a1LE0 v_a1Mp0. Lens (LoopState m_a1LDZ v_a1LE0) (LoopState m_a1LDZ v_a1Mp0) (Maybe (TypecheckedUnisonFile v_a1LE0 Ann)) (Maybe (TypecheckedUnisonFile v_a1Mp0 Ann))
-latestFile :: forall m_a1LDZ v_a1LE0. Lens' (LoopState m_a1LDZ v_a1LE0) (Maybe (FilePath, SkipNextUpdate))
-lastSavedRoot :: forall m_a1LDZ v_a1LE0. Lens' (LoopState m_a1LDZ v_a1LE0) (Branch m_a1LDZ)
-lastInput :: forall m_a1LDZ v_a1LE0. Lens' (LoopState m_a1LDZ v_a1LE0) (Maybe Input)
-currentPathStack :: forall m_a1LDZ v_a1LE0. Lens' (LoopState m_a1LDZ v_a1LE0) (NonEmpty Absolute)
+root :: forall m_a1LG9 v_a1LGa. Lens' (LoopState m_a1LG9 v_a1LGa) (Branch m_a1LG9)
+numberedArgs :: forall m_a1LG9 v_a1LGa. Lens' (LoopState m_a1LG9 v_a1LGa) NumberedArgs
+latestTypecheckedFile :: forall m_a1LG9 v_a1LGa v_a1Mra. Lens (LoopState m_a1LG9 v_a1LGa) (LoopState m_a1LG9 v_a1Mra) (Maybe (TypecheckedUnisonFile v_a1LGa Ann)) (Maybe (TypecheckedUnisonFile v_a1Mra Ann))
+latestFile :: forall m_a1LG9 v_a1LGa. Lens' (LoopState m_a1LG9 v_a1LGa) (Maybe (FilePath, SkipNextUpdate))
+lastSavedRoot :: forall m_a1LG9 v_a1LGa. Lens' (LoopState m_a1LG9 v_a1LGa) (Branch m_a1LG9)
+lastInput :: forall m_a1LG9 v_a1LGa. Lens' (LoopState m_a1LG9 v_a1LGa) (Maybe Input)
+currentPathStack :: forall m_a1LG9 v_a1LGa. Lens' (LoopState m_a1LG9 v_a1LGa) (NonEmpty Absolute)
 currentPath :: Getter (LoopState m v) Absolute
 loopState0 :: Branch m -> Absolute -> LoopState m v
 respond :: MonadCommand n m i v => Output v -> n ()
@@ -1020,6 +1022,7 @@ makeStandalone :: InputPattern
 createAuthor :: InputPattern
 gist :: InputPattern
 authLogin :: InputPattern
+printVersion :: InputPattern
 validInputs :: [InputPattern]
 visibleInputs :: [InputPattern]
 commandNames :: [String]
