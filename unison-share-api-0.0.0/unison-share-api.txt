@@ -426,10 +426,20 @@ AmbiguousBranchHash :: ShortBranchHash -> Set ShortBranchHash -> BackendError
 NoBranchForHash :: Hash -> BackendError
 CouldntLoadBranch :: Hash -> BackendError
 MissingSignatureForTerm :: Reference -> BackendError
-type Backend m a = ExceptT BackendError m a
-basicNames' :: Branch m -> NameScoping -> (Names, Names)
+data BackendEnv
+BackendEnv :: Bool -> BackendEnv
+
+-- | Whether to use the sqlite name-lookup table to generate Names objects
+--   rather than building Names from the root branch.
+[$sel:useNamesIndex:BackendEnv] :: BackendEnv -> Bool
+newtype Backend m a
+Backend :: ReaderT BackendEnv (ExceptT BackendError m) a -> Backend m a
+[$sel:runBackend:Backend] :: Backend m a -> ReaderT BackendEnv (ExceptT BackendError m) a
+suffixifyNames :: Int -> Names -> PrettyPrintEnv
+prettyAndParseNamesForBranch :: Branch m -> NameScoping -> (Names, Names)
 basicSuffixifiedNames :: Int -> Branch m -> NameScoping -> PrettyPrintEnv
-basicPrettyPrintNames :: Branch m -> NameScoping -> Names
+parseNamesForBranch :: Branch m -> NameScoping -> Names
+prettyNamesForBranch :: Branch m -> NameScoping -> Names
 shallowPPE :: Monad m => Codebase m v a -> Branch m -> m PrettyPrintEnv
 
 -- | A <a>Names</a> which only includes mappings for things _directly_
@@ -439,7 +449,6 @@ shallowPPE :: Monad m => Codebase m v a -> Branch m -> m PrettyPrintEnv
 --   elsewhere, but the package dependency graph makes it hard to find a
 --   good place.
 shallowNames :: forall m v a. Monad m => Codebase m v a -> Branch m -> m Names
-basicParseNames :: Branch m -> NameScoping -> Names
 loadReferentType :: Applicative m => Codebase m Symbol Ann -> Referent -> m (Maybe (Type Symbol Ann))
 data TermEntry v a
 TermEntry :: Referent -> HQSegment -> Maybe (Type v a) -> Maybe TermTag -> TermEntry v a
@@ -455,14 +464,16 @@ TypeEntry :: Reference -> HQSegment -> TypeTag -> TypeEntry
 data FoundRef
 FoundTermRef :: Referent -> FoundRef
 FoundTypeRef :: Reference -> FoundRef
-fuzzyFind :: Monad m => Path -> Branch m -> String -> [(Alignment, UnisonName, [FoundRef])]
+fuzzyFind :: Names -> String -> [(Alignment, UnisonName, [FoundRef])]
 findShallow :: Monad m => Codebase m Symbol Ann -> Absolute -> m [ShallowListEntry Symbol Ann]
 findShallowReadmeInBranchAndRender :: Width -> Runtime Symbol -> Codebase IO Symbol Ann -> NamesWithHistory -> Branch IO -> Backend IO (Maybe Doc)
 isDoc :: Monad m => Codebase m Symbol Ann -> Referent -> m Bool
 isDoc' :: (Var v, Monoid loc) => Maybe (Type v loc) -> Bool
-termListEntry :: Monad m => Codebase m Symbol Ann -> Bool -> Referent -> HQSegment -> m (TermEntry Symbol Ann)
-checkIsTestForBranch :: Branch0 m -> Referent -> Bool
-checkIsTestForV2Branch :: Monad m => Branch m -> Referent -> m Bool
+doc1Type :: (Ord v, Monoid a) => Type v a
+doc2Type :: (Ord v, Monoid a) => Type v a
+isTestResultList :: forall v a. (Var v, Monoid a) => Maybe (Type v a) -> Bool
+resultListType :: (Ord v, Monoid a) => Type v a
+termListEntry :: Monad m => Codebase m Symbol Ann -> Referent -> HQSegment -> m (TermEntry Symbol Ann)
 typeListEntry :: Monad m => Var v => Codebase m v Ann -> Reference -> HQSegment -> m TypeEntry
 typeDeclHeader :: forall v m. Monad m => Var v => Codebase m v Ann -> PrettyPrintEnv -> Reference -> m (DisplayObject SyntaxText SyntaxText)
 formatTypeName :: PrettyPrintEnv -> Reference -> SyntaxText
@@ -517,16 +528,21 @@ Search :: (r -> Set (HashQualified Name)) -> (HashQualified Name -> Set r) -> (H
 [$sel:lookupRelativeHQRefs':Search] :: Search r -> HashQualified Name -> Set r
 [$sel:makeResult:Search] :: Search r -> HashQualified Name -> r -> Set (HashQualified Name) -> SearchResult
 [$sel:matchesNamedRef:Search] :: Search r -> Name -> r -> HashQualified Name -> Bool
+data NameSearch
+NameSearch :: Search Reference -> Search Referent -> NameSearch
+[$sel:typeSearch:NameSearch] :: NameSearch -> Search Reference
+[$sel:termSearch:NameSearch] :: NameSearch -> Search Referent
 
 -- | Make a type search, given a short hash length and names to search in.
 makeTypeSearch :: Int -> NamesWithHistory -> Search Reference
 
 -- | Make a term search, given a short hash length and names to search in.
 makeTermSearch :: Int -> NamesWithHistory -> Search Referent
+makeNameSearch :: Int -> NamesWithHistory -> NameSearch
 
 -- | Interpret a <a>Search</a> as a function from name to search results.
 applySearch :: Show r => Search r -> HashQualified Name -> [SearchResult]
-hqNameQuery :: Monad m => NameScoping -> Branch m -> Codebase m v Ann -> [HashQualified Name] -> m QueryResult
+hqNameQuery :: Monad m => Codebase m v Ann -> NameSearch -> [HashQualified Name] -> m QueryResult
 data DefinitionResults v
 DefinitionResults :: Map Reference (DisplayObject (Type v Ann) (Term v Ann)) -> Map Reference (DisplayObject () (Decl v Ann)) -> [HashQualified Name] -> DefinitionResults v
 [$sel:termResults:DefinitionResults] :: DefinitionResults v -> Map Reference (DisplayObject (Type v Ann) (Term v Ann))
@@ -537,24 +553,31 @@ formatType' :: Var v => PrettyPrintEnv -> Width -> Type v a -> SyntaxText
 formatType :: Var v => PrettyPrintEnv -> Width -> Type v a -> SyntaxText
 formatSuffixedType :: Var v => PrettyPrintEnvDecl -> Width -> Type v Ann -> SyntaxText
 mungeSyntaxText :: Functor g => g (Element Reference) -> g Element
-prettyDefinitionsBySuffixes :: NameScoping -> Maybe Hash -> Maybe Width -> Suffixify -> Runtime Symbol -> Codebase IO Symbol Ann -> [HashQualified Name] -> Backend IO DefinitionDisplayResults
+prettyDefinitionsBySuffixes :: Path -> Maybe Hash -> Maybe Width -> Suffixify -> Runtime Symbol -> Codebase IO Symbol Ann -> [HashQualified Name] -> Backend IO DefinitionDisplayResults
 renderDoc :: PrettyPrintEnvDecl -> Width -> Runtime Symbol -> Codebase IO Symbol Ann -> Reference -> IO (HashQualifiedName, UnisonHash, Doc)
 docsInBranchToHtmlFiles :: Runtime Symbol -> Codebase IO Symbol Ann -> Branch IO -> Path -> FilePath -> IO ()
 bestNameForTerm :: forall v. Var v => PrettyPrintEnv -> Width -> Referent -> Text
 bestNameForType :: forall v. Var v => PrettyPrintEnv -> Width -> Reference -> Text
-resolveBranchHash :: Monad m => Maybe Hash -> Codebase m v Ann -> Backend m (Branch m)
-resolveRootBranchHash :: Monad m => Maybe ShortBranchHash -> Codebase m v Ann -> Backend m (Branch m)
+scopedNamesForBranchHash :: forall m v a. Monad m => Codebase m v a -> Maybe Hash -> Path -> Backend m (Names, Names)
+resolveBranchHash :: Monad m => Maybe Hash -> Codebase m v a -> Backend m (Branch m)
+resolveRootBranchHash :: Monad m => Maybe ShortBranchHash -> Codebase m v a -> Backend m (Branch m)
 
 -- | Determines whether we include full cycles in the results, (e.g. if I
 --   search for <tt>isEven</tt>, will I find <tt>isOdd</tt> too?)
 data IncludeCycles
 IncludeCycles :: IncludeCycles
 DontIncludeCycles :: IncludeCycles
-definitionsBySuffixes :: forall m. MonadIO m => NameScoping -> Branch m -> Codebase m Symbol Ann -> IncludeCycles -> [HashQualified Name] -> m (DefinitionResults Symbol)
+definitionsBySuffixes :: forall m. MonadIO m => Codebase m Symbol Ann -> NameSearch -> IncludeCycles -> [HashQualified Name] -> m (DefinitionResults Symbol)
 termsToSyntax :: Var v => Ord a => Suffixify -> Width -> PrettyPrintEnvDecl -> Map Reference (DisplayObject (Type v a) (Term v a)) -> Map Reference (DisplayObject SyntaxText SyntaxText)
 typesToSyntax :: Var v => Ord a => Suffixify -> Width -> PrettyPrintEnvDecl -> Map Reference (DisplayObject () (Decl v a)) -> Map Reference (DisplayObject SyntaxText SyntaxText)
 loadSearchResults :: Applicative m => Codebase m Symbol Ann -> [SearchResult] -> m [SearchResult' Symbol Ann]
 loadTypeDisplayObject :: Applicative m => Codebase m v Ann -> Reference -> m (DisplayObject () (Decl v Ann))
+instance GHC.Base.Monad m => Control.Monad.Error.Class.MonadError Unison.Server.Backend.BackendError (Unison.Server.Backend.Backend m)
+instance GHC.Base.Monad m => Control.Monad.Reader.Class.MonadReader Unison.Server.Backend.BackendEnv (Unison.Server.Backend.Backend m)
+instance Control.Monad.IO.Class.MonadIO m => Control.Monad.IO.Class.MonadIO (Unison.Server.Backend.Backend m)
+instance GHC.Base.Monad m => GHC.Base.Monad (Unison.Server.Backend.Backend m)
+instance GHC.Base.Monad m => GHC.Base.Applicative (Unison.Server.Backend.Backend m)
+instance GHC.Base.Functor m => GHC.Base.Functor (Unison.Server.Backend.Backend m)
 instance GHC.Generics.Generic (Unison.Server.Backend.TermEntry v a)
 instance GHC.Show.Show v => GHC.Show.Show (Unison.Server.Backend.TermEntry v a)
 instance Unison.ABT.Var v => GHC.Classes.Ord (Unison.Server.Backend.TermEntry v a)
@@ -571,6 +594,7 @@ instance GHC.Generics.Generic Unison.Server.Backend.FoundRef
 instance GHC.Show.Show Unison.Server.Backend.FoundRef
 instance GHC.Classes.Ord Unison.Server.Backend.FoundRef
 instance GHC.Classes.Eq Unison.Server.Backend.FoundRef
+instance Control.Monad.Trans.Class.MonadTrans Unison.Server.Backend.Backend
 
 module Unison.Server.Errors
 badHQN :: HashQualifiedName -> ServerError
@@ -671,7 +695,7 @@ instance Servant.Docs.Internal.ToCapture (Servant.API.Capture.Capture "namespace
 
 module Unison.Server.Endpoints.GetDefinitions
 type DefinitionsAPI = "getDefinition" :> QueryParam "rootBranch" ShortBranchHash :> QueryParam "relativeTo" NamespaceFQN :> QueryParams "names" HashQualifiedName :> QueryParam "renderWidth" Width :> QueryParam "suffixifyBindings" Suffixify :> APIGet DefinitionDisplayResults
-serveDefinitions :: MonadIO m => Runtime Symbol -> Codebase IO Symbol Ann -> Maybe ShortBranchHash -> Maybe NamespaceFQN -> [HashQualifiedName] -> Maybe Width -> Maybe Suffixify -> Backend m DefinitionDisplayResults
+serveDefinitions :: Runtime Symbol -> Codebase IO Symbol Ann -> Maybe ShortBranchHash -> Maybe NamespaceFQN -> [HashQualifiedName] -> Maybe Width -> Maybe Suffixify -> Backend IO DefinitionDisplayResults
 instance Servant.Docs.Internal.ToParam (Servant.API.QueryParam.QueryParam "renderWidth" Unison.Util.Pretty.Width)
 instance Servant.Docs.Internal.ToParam (Servant.API.QueryParam.QueryParam "suffixifyBindings" Unison.Server.Types.Suffixify)
 instance Servant.Docs.Internal.ToParam (Servant.API.QueryParam.QueryParam "relativeTo" Unison.Server.Types.NamespaceFQN)
@@ -748,7 +772,7 @@ unisonAndDocsAPI :: Proxy UnisonAndDocsAPI
 api :: Proxy UnisonAPI
 serverAPI :: Proxy ServerAPI
 appAPI :: Proxy AppAPI
-app :: Runtime Symbol -> Codebase IO Symbol Ann -> FilePath -> ByteString -> Application
+app :: BackendEnv -> Runtime Symbol -> Codebase IO Symbol Ann -> FilePath -> ByteString -> Application
 
 -- | The Token is used to help prevent multiple users on a machine gain
 --   access to each others codebases.
@@ -769,16 +793,16 @@ CodebaseServerOpts :: Maybe String -> Maybe String -> Maybe Int -> Maybe FilePat
 [$sel:port:CodebaseServerOpts] :: CodebaseServerOpts -> Maybe Int
 [$sel:codebaseUIPath:CodebaseServerOpts] :: CodebaseServerOpts -> Maybe FilePath
 defaultCodebaseServerOpts :: CodebaseServerOpts
-startServer :: CodebaseServerOpts -> Runtime Symbol -> Codebase IO Symbol Ann -> (BaseUrl -> IO a) -> IO a
+startServer :: BackendEnv -> CodebaseServerOpts -> Runtime Symbol -> Codebase IO Symbol Ann -> (BaseUrl -> IO a) -> IO a
 serveIndex :: FilePath -> Handler RawHtml
 serveUI :: FilePath -> Server WebUI
-server :: Runtime Symbol -> Codebase IO Symbol Ann -> FilePath -> ByteString -> Server AppAPI
-serveUnisonAndDocs :: Runtime Symbol -> Codebase IO Symbol Ann -> Server UnisonAndDocsAPI
+server :: BackendEnv -> Runtime Symbol -> Codebase IO Symbol Ann -> FilePath -> ByteString -> Server AppAPI
+serveUnisonAndDocs :: BackendEnv -> Runtime Symbol -> Codebase IO Symbol Ann -> Server UnisonAndDocsAPI
 serveDocs :: Application
 serveOpenAPI :: Handler OpenApi
 hoistWithAuth :: forall api. HasServer api '[] => Proxy api -> ByteString -> ServerT api Handler -> ServerT (Authed api) Handler
-serveUnison :: Codebase IO Symbol Ann -> Runtime Symbol -> Server UnisonAPI
-backendHandler :: Backend IO a -> Handler a
+serveUnison :: BackendEnv -> Codebase IO Symbol Ann -> Runtime Symbol -> Server UnisonAPI
+backendHandler :: BackendEnv -> Backend IO a -> Handler a
 instance GHC.Classes.Eq Unison.Server.CodebaseServer.CodebaseServerOpts
 instance GHC.Show.Show Unison.Server.CodebaseServer.CodebaseServerOpts
 instance GHC.Show.Show Unison.Server.CodebaseServer.BaseUrl

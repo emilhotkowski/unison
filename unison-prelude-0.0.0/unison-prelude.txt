@@ -1075,6 +1075,11 @@ newtype ZipList a
 ZipList :: [a] -> ZipList a
 [getZipList] :: ZipList a -> [a]
 
+-- | Identity functor and monad. (a non-strict monad)
+newtype Identity a
+Identity :: a -> Identity a
+[runIdentity] :: Identity a -> a
+
 -- | Exceptions that occur in the <tt>IO</tt> monad. An
 --   <tt>IOException</tt> records a more specific error type, a descriptive
 --   string and maybe the handle that was used when the error was flagged.

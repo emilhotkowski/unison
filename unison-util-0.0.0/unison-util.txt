@@ -71,6 +71,11 @@ module U.Util.Hash
 newtype Hash
 Hash :: ShortByteString -> Hash
 [toShort] :: Hash -> ShortByteString
+
+-- | Constructs a hash from base32 checks without any validation. Note that
+--   this converts Text -&gt; ByteString -&gt; ShortByteString and so is
+--   slower than we'd prefer.
+unsafeFromBase32HexText :: Text -> Hash
 fromBase32Hex :: Base32Hex -> Hash
 fromByteString :: ByteString -> Hash
 toBase32Hex :: Hash -> Base32Hex

@@ -2294,9 +2294,9 @@ Env :: [Type v loc] -> TypeLookup v loc -> Map Name [NamedReference v loc] -> En
 [_ambientAbilities] :: Env v loc -> [Type v loc]
 [_typeLookup] :: Env v loc -> TypeLookup v loc
 [_termsByShortname] :: Env v loc -> Map Name [NamedReference v loc]
-typeLookup :: forall v_a3CHH loc_a3CHI. Lens' (Env v_a3CHH loc_a3CHI) (TypeLookup v_a3CHH loc_a3CHI)
-termsByShortname :: forall v_a3CHH loc_a3CHI. Lens' (Env v_a3CHH loc_a3CHI) (Map Name [NamedReference v_a3CHH loc_a3CHI])
-ambientAbilities :: forall v_a3CHH loc_a3CHI. Lens' (Env v_a3CHH loc_a3CHI) [Type v_a3CHH loc_a3CHI]
+typeLookup :: forall v_a3CIM loc_a3CIN. Lens' (Env v_a3CIM loc_a3CIN) (TypeLookup v_a3CIM loc_a3CIN)
+termsByShortname :: forall v_a3CIM loc_a3CIN. Lens' (Env v_a3CIM loc_a3CIN) (Map Name [NamedReference v_a3CIM loc_a3CIN])
+ambientAbilities :: forall v_a3CIM loc_a3CIN. Lens' (Env v_a3CIM loc_a3CIN) [Type v_a3CIM loc_a3CIN]
 
 -- | Infer the type of a <a>Term</a>, using a function to resolve the type
 --   of <tt>Ref</tt> constructors contained in that term.
@@ -3101,7 +3101,7 @@ module Unison.Codebase.Type
 
 -- | Abstract interface to a user's codebase.
 data Codebase m v a
-Codebase :: (Id -> m (Maybe (Term v a))) -> (Id -> m (Maybe (Type v a))) -> (Id -> m (Maybe (Decl v a))) -> (Reference -> m ConstructorType) -> (Id -> Term v a -> Type v a -> m ()) -> (Id -> Decl v a -> m ()) -> (Hash -> m (Maybe [(Term v a, Type v a)])) -> (Hash -> m (Maybe [Decl v a])) -> (Hash -> m (Maybe CycleSize)) -> m CausalHash -> m (Branch m) -> m Bool -> (Branch m -> m ()) -> m (IO (), IO (Set Hash)) -> (CausalHash -> m (CausalBranch m)) -> (Hash -> m (Maybe (Branch m))) -> (Branch m -> m ()) -> (Hash -> m Bool) -> (EditHash -> m (Maybe Patch)) -> (EditHash -> Patch -> m ()) -> (EditHash -> m Bool) -> (Reference -> m (Set Id)) -> (Hash -> m (Set Id)) -> (CodebasePath -> SyncMode -> Branch m -> m ()) -> (CodebasePath -> SyncMode -> Branch m -> m ()) -> (forall r. ReadRemoteNamespace -> GitBranchBehavior -> ((Branch m, CodebasePath) -> m r) -> m (Either GitError r)) -> (forall e. WriteRepo -> PushGitBranchOpts -> (Branch m -> m (Either e (Branch m))) -> m (Either GitError (Either e (Branch m)))) -> (WatchKind -> m [Id]) -> (WatchKind -> Id -> m (Maybe (Term v a))) -> (WatchKind -> Id -> Term v a -> m ()) -> m () -> m [Entry Hash] -> (Text -> Branch m -> Branch m -> m ()) -> (Reference -> m (Set Id)) -> (Reference -> m (Set Id)) -> m Int -> (ShortHash -> m (Set Id)) -> (ShortHash -> m (Set Id)) -> (ShortHash -> m (Set Id)) -> m Int -> (ShortBranchHash -> m (Set Hash)) -> Maybe (Hash -> Hash -> m (Maybe Hash)) -> Maybe (Hash -> Hash -> m Bool) -> Codebase m v a
+Codebase :: (Id -> m (Maybe (Term v a))) -> (Id -> m (Maybe (Type v a))) -> (Id -> m (Maybe (Decl v a))) -> (Reference -> m ConstructorType) -> (Id -> Term v a -> Type v a -> m ()) -> (Id -> Decl v a -> m ()) -> (Hash -> m (Maybe [(Term v a, Type v a)])) -> (Hash -> m (Maybe [Decl v a])) -> (Hash -> m (Maybe CycleSize)) -> m CausalHash -> m (Branch m) -> m Bool -> (Branch m -> m ()) -> m (IO (), IO (Set Hash)) -> (CausalHash -> m (CausalBranch m)) -> (Hash -> m (Maybe (Branch m))) -> (Branch m -> m ()) -> (Hash -> m Bool) -> (EditHash -> m (Maybe Patch)) -> (EditHash -> Patch -> m ()) -> (EditHash -> m Bool) -> (Reference -> m (Set Id)) -> (Hash -> m (Set Id)) -> (CodebasePath -> SyncMode -> Branch m -> m ()) -> (CodebasePath -> SyncMode -> Branch m -> m ()) -> (forall r. ReadRemoteNamespace -> GitBranchBehavior -> ((Branch m, CodebasePath) -> m r) -> m (Either GitError r)) -> (forall e. WriteRepo -> PushGitBranchOpts -> (Branch m -> m (Either e (Branch m))) -> m (Either GitError (Either e (Branch m)))) -> (WatchKind -> m [Id]) -> (WatchKind -> Id -> m (Maybe (Term v a))) -> (WatchKind -> Id -> Term v a -> m ()) -> m () -> m [Entry Hash] -> (Text -> Branch m -> Branch m -> m ()) -> (Reference -> m (Set Id)) -> (Reference -> m (Set Id)) -> m Int -> (ShortHash -> m (Set Id)) -> (ShortHash -> m (Set Id)) -> (ShortHash -> m (Set Id)) -> m Int -> (ShortBranchHash -> m (Set Hash)) -> Maybe (Hash -> Hash -> m (Maybe Hash)) -> Maybe (Hash -> Hash -> m Bool) -> (Path -> m ScopedNames) -> m () -> Codebase m v a
 
 -- | Get a user-defined term from the codebase.
 --   
@@ -3264,6 +3264,8 @@ Codebase :: (Id -> m (Maybe (Term v a))) -> (Id -> m (Maybe (Type v a))) -> (Id 
 [branchHashesByPrefix] :: Codebase m v a -> ShortBranchHash -> m (Set Hash)
 [lcaImpl] :: Codebase m v a -> Maybe (Hash -> Hash -> m (Maybe Hash))
 [beforeImpl] :: Codebase m v a -> Maybe (Hash -> Hash -> m Bool)
+[namesAtPath] :: Codebase m v a -> Path -> m ScopedNames
+[updateNameLookup] :: Codebase m v a -> m ()
 
 -- | A directory that contains a codebase.
 type CodebasePath = FilePath
@@ -3322,6 +3324,8 @@ rreferent1to2 :: Hash -> Referent -> ReferentH
 referent2to1 :: Applicative m => (Reference -> m ConstructorType) -> Referent -> m Referent
 referent1to2 :: Referent -> Referent
 referentid2to1 :: Applicative m => (Reference -> m ConstructorType) -> Id -> m Id
+constructorType1to2 :: ConstructorType -> ConstructorType
+constructorType2to1 :: ConstructorType -> ConstructorType
 hash2to1 :: Hash -> Hash
 causalHash2to1 :: CausalHash -> RawHash Raw
 causalHash1to2 :: RawHash Raw -> CausalHash
@@ -3410,6 +3414,11 @@ sqlLca :: Hash -> Hash -> Transaction (Maybe Hash)
 termExists :: Hash -> Transaction Bool
 declExists :: Hash -> Transaction Bool
 before :: Hash -> Hash -> Transaction (Maybe Bool)
+
+-- | Construct a <a>ScopedNames</a> which can produce names which are
+--   relative to the provided Path.
+namesAtPath :: Path -> Transaction ScopedNames
+saveRootNamesIndex :: Names -> Transaction ()
 instance GHC.Show.Show a => GHC.Show.Show (Unison.Codebase.SqliteCodebase.Operations.BufferEntry a)
 instance GHC.Classes.Eq a => GHC.Classes.Eq (Unison.Codebase.SqliteCodebase.Operations.BufferEntry a)
 
@@ -3649,10 +3658,14 @@ getRootBranch :: Codebase m v a -> m (Branch m)
 -- | Get whether the root branch exists.
 getRootBranchExists :: Codebase m v a -> m Bool
 
+-- | Get the root branch Hash.
+getRootBranchHash :: Codebase m v a -> m CausalHash
+
 -- | Like <a>putBranch</a>, but also adjusts the root branch pointer
 --   afterwards.
 putRootBranch :: Codebase m v a -> Branch m -> m ()
 rootBranchUpdates :: Codebase m v a -> m (IO (), IO (Set Hash))
+namesAtPath :: Codebase m v a -> Path -> m ScopedNames
 
 -- | Check whether the given patch exists in the codebase.
 patchExists :: Codebase m v a -> EditHash -> m Bool

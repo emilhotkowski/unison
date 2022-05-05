@@ -181,6 +181,9 @@ instance Data.Foldable.Foldable U.Codebase.Decl.F
 instance GHC.Base.Functor U.Codebase.Decl.F
 
 module U.Codebase.Referent
+data ConstructorType
+DataConstructor :: ConstructorType
+EffectConstructor :: ConstructorType
 type Referent = Referent' Reference Reference
 type ReferentH = Referent' (Reference' Text (Maybe Hash)) (Reference' Text Hash)
 data Referent' termRef typeRef
@@ -195,6 +198,9 @@ type Id = Id' Hash Hash
 data Id' hTm hTp
 RefId :: Id' hTm -> Id' hTm hTp
 ConId :: Id' hTp -> ConstructorId -> Id' hTm hTp
+instance GHC.Classes.Ord U.Codebase.Referent.ConstructorType
+instance GHC.Classes.Eq U.Codebase.Referent.ConstructorType
+instance GHC.Show.Show U.Codebase.Referent.ConstructorType
 instance Data.Traversable.Traversable (U.Codebase.Referent.Referent' termRef)
 instance Data.Foldable.Foldable (U.Codebase.Referent.Referent' termRef)
 instance GHC.Base.Functor (U.Codebase.Referent.Referent' termRef)

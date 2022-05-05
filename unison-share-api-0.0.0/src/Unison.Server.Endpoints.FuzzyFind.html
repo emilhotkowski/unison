@@ -29,22 +29,22 @@
 </span><span id="line-29"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Text.FuzzyFind</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">FZF</span></span><span>
 </span><span id="line-30"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Codebase</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Codebase</span></span><span class="hs-special">)</span><span>
 </span><span id="line-31"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Codebase</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Codebase</span></span><span>
-</span><span id="line-32"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Codebase.Branch</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Branch</span></span><span>
-</span><span id="line-33"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Codebase.Editor.DisplayObject</span></span><span>
-</span><span id="line-34"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Codebase.Path</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Path</span></span><span>
-</span><span id="line-35"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Codebase.Path.Parse</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Path</span></span><span>
-</span><span id="line-36"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Codebase.ShortBranchHash</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">SBH</span></span><span>
-</span><span id="line-37"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Unison.HashQualified'</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">HQ'</span></span><span>
-</span><span id="line-38"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.NameSegment</span></span><span>
-</span><span id="line-39"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Parser.Ann</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Ann</span></span><span class="hs-special">)</span><span>
-</span><span id="line-40"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Prelude</span></span><span>
-</span><span id="line-41"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Server.Backend.html"><span class="hs-identifier">Unison.Server.Backend</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Backend</span></span><span>
-</span><span id="line-42"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Unison.Server.Syntax.html"><span class="hs-identifier">Unison.Server.Syntax</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Server.Syntax.html#SyntaxText"><span class="hs-identifier">SyntaxText</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-43"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Unison.Server.Types.html"><span class="hs-identifier">Unison.Server.Types</span></a></span><span>
-</span><span id="line-44"></span><span>  </span><span class="hs-special">(</span><span> </span><span class="annot"><a href="Unison.Server.Types.html#APIGet"><span class="hs-identifier">APIGet</span></a></span><span class="hs-special">,</span><span>
-</span><span id="line-45"></span><span>    </span><span class="annot"><a href="Unison.Server.Types.html#HashQualifiedName"><span class="hs-identifier">HashQualifiedName</span></a></span><span class="hs-special">,</span><span>
-</span><span id="line-46"></span><span>    </span><span class="annot"><a href="Unison.Server.Types.html#NamedTerm"><span class="hs-identifier">NamedTerm</span></a></span><span class="hs-special">,</span><span>
-</span><span id="line-47"></span><span>    </span><span class="annot"><a href="Unison.Server.Types.html#NamedType"><span class="hs-identifier">NamedType</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-32"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Codebase.Editor.DisplayObject</span></span><span>
+</span><span id="line-33"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Codebase.Path</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Path</span></span><span>
+</span><span id="line-34"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Codebase.Path.Parse</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Path</span></span><span>
+</span><span id="line-35"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Codebase.ShortBranchHash</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">SBH</span></span><span>
+</span><span id="line-36"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Unison.HashQualified'</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">HQ'</span></span><span>
+</span><span id="line-37"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.NameSegment</span></span><span>
+</span><span id="line-38"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Parser.Ann</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Ann</span></span><span class="hs-special">)</span><span>
+</span><span id="line-39"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Prelude</span></span><span>
+</span><span id="line-40"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.Server.Backend.html"><span class="hs-identifier">Unison.Server.Backend</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Backend</span></span><span>
+</span><span id="line-41"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Unison.Server.Syntax.html"><span class="hs-identifier">Unison.Server.Syntax</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Server.Syntax.html#SyntaxText"><span class="hs-identifier">SyntaxText</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-42"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Unison.Server.Types.html"><span class="hs-identifier">Unison.Server.Types</span></a></span><span>
+</span><span id="line-43"></span><span>  </span><span class="hs-special">(</span><span> </span><span class="annot"><a href="Unison.Server.Types.html#APIGet"><span class="hs-identifier">APIGet</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-44"></span><span>    </span><span class="annot"><a href="Unison.Server.Types.html#HashQualifiedName"><span class="hs-identifier">HashQualifiedName</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-45"></span><span>    </span><span class="annot"><a href="Unison.Server.Types.html#NamedTerm"><span class="hs-identifier">NamedTerm</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-46"></span><span>    </span><span class="annot"><a href="Unison.Server.Types.html#NamedType"><span class="hs-identifier">NamedType</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-47"></span><span>    </span><span class="annot"><a href="Unison.Server.Types.html#UnisonName"><span class="hs-identifier">UnisonName</span></a></span><span class="hs-special">,</span><span>
 </span><span id="line-48"></span><span>    </span><span class="annot"><a href="Unison.Server.Types.html#mayDefaultWidth"><span class="hs-identifier">mayDefaultWidth</span></a></span><span class="hs-special">,</span><span>
 </span><span id="line-49"></span><span>  </span><span class="hs-special">)</span><span>
 </span><span id="line-50"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Symbol</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Symbol</span></span><span class="hs-special">)</span><span>
@@ -59,14 +59,14 @@
 </span><span id="line-59"></span><span>    </span><span class="annot"><span class="hs-operator hs-type">:&gt;</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#APIGet"><span class="hs-identifier hs-type">APIGet</span></a></span><span> </span><span class="hs-special">[</span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">FZF.Alignment</span></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundResult"><span class="hs-identifier hs-type">FoundResult</span></a></span><span class="hs-special">)</span><span class="hs-special">]</span><span>
 </span><span id="line-60"></span><span>
 </span><span id="line-61"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSample</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FZF.Alignment</span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-62"></span><span>  </span><span id="local-6989586621679274820"><span class="annot"><span class="annottext">toSamples :: Proxy Alignment -&gt; [(Text, Alignment)]
+</span><span id="line-62"></span><span>  </span><span id="local-6989586621679276845"><span class="annot"><span class="annottext">toSamples :: Proxy Alignment -&gt; [(Text, Alignment)]
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var">toSamples</span></span></span><span> </span><span class="annot"><span class="annottext">Proxy Alignment
 </span><span class="hs-identifier">_</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[(Text, Alignment)]
 forall a. [(Text, a)]
 </span><span class="hs-identifier hs-var">noSamples</span></span><span>
 </span><span id="line-63"></span><span>
 </span><span id="line-64"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToParam</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">QueryParam</span></span><span> </span><span class="annot"><span class="hs-string">&quot;limit&quot;</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Int</span></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-65"></span><span>  </span><span id="local-6989586621679274816"><span class="annot"><span class="annottext">toParam :: Proxy (QueryParam &quot;limit&quot; Int) -&gt; DocQueryParam
+</span><span id="line-65"></span><span>  </span><span id="local-6989586621679276841"><span class="annot"><span class="annottext">toParam :: Proxy (QueryParam &quot;limit&quot; Int) -&gt; DocQueryParam
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var">toParam</span></span></span><span> </span><span class="annot"><span class="annottext">Proxy (QueryParam &quot;limit&quot; Int)
 </span><span class="hs-identifier">_</span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-66"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; [String] -&gt; String -&gt; ParamKind -&gt; DocQueryParam
@@ -83,8 +83,8 @@ forall a. [(Text, a)]
 </span><span class="hs-identifier hs-var">Normal</span></span><span>
 </span><span id="line-71"></span><span>
 </span><span id="line-72"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToParam</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">QueryParam</span></span><span> </span><span class="annot"><span class="hs-string">&quot;query&quot;</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-73"></span><span>  </span><span id="local-6989586621679274812"><span class="annot"><span class="annottext">toParam :: Proxy (QueryParam &quot;query&quot; String) -&gt; DocQueryParam
-</span><a href="#local-6989586621679274812"><span class="hs-identifier hs-var hs-var hs-var hs-var">toParam</span></a></span></span><span> </span><span class="annot"><span class="annottext">Proxy (QueryParam &quot;query&quot; String)
+</span><span id="line-73"></span><span>  </span><span id="local-6989586621679276837"><span class="annot"><span class="annottext">toParam :: Proxy (QueryParam &quot;query&quot; String) -&gt; DocQueryParam
+</span><a href="#local-6989586621679276837"><span class="hs-identifier hs-var hs-var hs-var hs-var">toParam</span></a></span></span><span> </span><span class="annot"><span class="annottext">Proxy (QueryParam &quot;query&quot; String)
 </span><span class="hs-identifier">_</span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-74"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; [String] -&gt; String -&gt; ParamKind -&gt; DocQueryParam
 </span><span class="hs-identifier hs-var">DocQueryParam</span></span><span>
@@ -99,40 +99,40 @@ forall a. [(Text, a)]
 </span><span id="line-78"></span><span>      </span><span class="annot"><span class="annottext">ParamKind
 </span><span class="hs-identifier hs-var">Normal</span></span><span>
 </span><span id="line-79"></span><span>
-</span><span id="line-80"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679274805"><span id="local-6989586621679274807"><span id="local-6989586621679274810"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FZF.Alignment</span></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-81"></span><span>  </span><span id="local-6989586621679274803"><span class="annot"><span class="annottext">toEncoding :: Alignment -&gt; Encoding
-</span><a href="#local-6989586621679274803"><span class="hs-identifier hs-var hs-var hs-var hs-var">toEncoding</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Options -&gt; Alignment -&gt; Encoding
+</span><span id="line-80"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679276830"><span id="local-6989586621679276832"><span id="local-6989586621679276835"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FZF.Alignment</span></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-81"></span><span>  </span><span id="local-6989586621679276828"><span class="annot"><span class="annottext">toEncoding :: Alignment -&gt; Encoding
+</span><a href="#local-6989586621679276828"><span class="hs-identifier hs-var hs-var hs-var hs-var">toEncoding</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Options -&gt; Alignment -&gt; Encoding
 forall a.
 (Generic a, GToJSON' Encoding Zero (Rep a)) =&gt;
 Options -&gt; a -&gt; Encoding
 </span><span class="hs-identifier hs-var">genericToEncoding</span></span><span> </span><span class="annot"><span class="annottext">Options
 </span><span class="hs-identifier hs-var">defaultOptions</span></span><span>
 </span><span id="line-82"></span><span>
-</span><span id="line-83"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679274796"><span id="local-6989586621679274798"><span id="local-6989586621679274801"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FZF.Result</span></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-84"></span><span>  </span><span id="local-6989586621679274795"><span class="annot"><span class="annottext">toEncoding :: Result -&gt; Encoding
-</span><a href="#local-6989586621679274795"><span class="hs-identifier hs-var hs-var hs-var hs-var">toEncoding</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Options -&gt; Result -&gt; Encoding
+</span><span id="line-83"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679276821"><span id="local-6989586621679276823"><span id="local-6989586621679276826"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FZF.Result</span></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-84"></span><span>  </span><span id="local-6989586621679276820"><span class="annot"><span class="annottext">toEncoding :: Result -&gt; Encoding
+</span><a href="#local-6989586621679276820"><span class="hs-identifier hs-var hs-var hs-var hs-var">toEncoding</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Options -&gt; Result -&gt; Encoding
 forall a.
 (Generic a, GToJSON' Encoding Zero (Rep a)) =&gt;
 Options -&gt; a -&gt; Encoding
 </span><span class="hs-identifier hs-var">genericToEncoding</span></span><span> </span><span class="annot"><span class="annottext">Options
 </span><span class="hs-identifier hs-var">defaultOptions</span></span><span>
 </span><span id="line-85"></span><span>
-</span><span id="line-86"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679274788"><span id="local-6989586621679274790"><span id="local-6989586621679274793"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FZF.ResultSegment</span></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-87"></span><span>  </span><span id="local-6989586621679274787"><span class="annot"><span class="annottext">toEncoding :: ResultSegment -&gt; Encoding
-</span><a href="#local-6989586621679274787"><span class="hs-identifier hs-var hs-var hs-var hs-var">toEncoding</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Options -&gt; ResultSegment -&gt; Encoding
+</span><span id="line-86"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679276813"><span id="local-6989586621679276815"><span id="local-6989586621679276818"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FZF.ResultSegment</span></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-87"></span><span>  </span><span id="local-6989586621679276812"><span class="annot"><span class="annottext">toEncoding :: ResultSegment -&gt; Encoding
+</span><a href="#local-6989586621679276812"><span class="hs-identifier hs-var hs-var hs-var hs-var">toEncoding</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Options -&gt; ResultSegment -&gt; Encoding
 forall a.
 (Generic a, GToJSON' Encoding Zero (Rep a)) =&gt;
 Options -&gt; a -&gt; Encoding
 </span><span class="hs-identifier hs-var">genericToEncoding</span></span><span> </span><span class="annot"><span class="annottext">Options
 </span><span class="hs-identifier hs-var">defaultOptions</span></span><span>
 </span><span id="line-88"></span><span>
-</span><span id="line-89"></span><span id="local-6989586621679274784"><span class="hs-keyword">deriving</span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSchema</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FZF.Alignment</span></span></span><span>
+</span><span id="line-89"></span><span id="local-6989586621679276809"><span class="hs-keyword">deriving</span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSchema</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FZF.Alignment</span></span></span><span>
 </span><span id="line-90"></span><span>
-</span><span id="line-91"></span><span id="local-6989586621679274780"><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">anyclass</span></span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSchema</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FZF.Result</span></span></span><span>
+</span><span id="line-91"></span><span id="local-6989586621679276805"><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">anyclass</span></span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSchema</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FZF.Result</span></span></span><span>
 </span><span id="line-92"></span><span>
-</span><span id="line-93"></span><span id="local-6989586621679274777"><span class="hs-keyword">deriving</span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSchema</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FZF.ResultSegment</span></span></span><span>
+</span><span id="line-93"></span><span id="local-6989586621679276802"><span class="hs-keyword">deriving</span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSchema</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FZF.ResultSegment</span></span></span><span>
 </span><span id="line-94"></span><span>
-</span><span id="line-95"></span><span id="local-6989586621679274775"><span id="local-6989586621679274776"></span></span><span class="hs-keyword">data</span><span> </span><span id="FoundTerm"><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundTerm"><span class="hs-identifier hs-var">FoundTerm</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="FoundTerm"><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundTerm"><span class="hs-identifier hs-var">FoundTerm</span></a></span></span><span>
+</span><span id="line-95"></span><span id="local-6989586621679276800"><span id="local-6989586621679276801"></span></span><span class="hs-keyword">data</span><span> </span><span id="FoundTerm"><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundTerm"><span class="hs-identifier hs-var">FoundTerm</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="FoundTerm"><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundTerm"><span class="hs-identifier hs-var">FoundTerm</span></a></span></span><span>
 </span><span id="line-96"></span><span>  </span><span class="hs-special">{</span><span> </span><span id="%24sel%3AbestFoundTermName%3AFoundTerm"><span class="annot"><span class="annottext">FoundTerm -&gt; Text
 </span><a href="Unison.Server.Endpoints.FuzzyFind.html#%24sel%3AbestFoundTermName%3AFoundTerm"><span class="hs-identifier hs-var hs-var">bestFoundTermName</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Server.Types.html#HashQualifiedName"><span class="hs-identifier hs-type">HashQualifiedName</span></a></span><span class="hs-special">,</span><span>
 </span><span id="line-97"></span><span>    </span><span id="%24sel%3AnamedTerm%3AFoundTerm"><span class="annot"><span class="annottext">FoundTerm -&gt; NamedTerm
@@ -146,7 +146,7 @@ forall a.
 (forall x. a -&gt; Rep a x) -&gt; (forall x. Rep a x -&gt; a) -&gt; Generic a
 $cto :: forall x. Rep FoundTerm x -&gt; FoundTerm
 $cfrom :: forall x. FoundTerm -&gt; Rep FoundTerm x
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var">Generic</span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679274763"><span id="local-6989586621679274765"><span id="local-6989586621679274767"><span class="annot"><span class="annottext">Int -&gt; FoundTerm -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">Generic</span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679276788"><span id="local-6989586621679276790"><span id="local-6989586621679276792"><span class="annot"><span class="annottext">Int -&gt; FoundTerm -&gt; ShowS
 [FoundTerm] -&gt; ShowS
 FoundTerm -&gt; String
 (Int -&gt; FoundTerm -&gt; ShowS)
@@ -163,7 +163,7 @@ showsPrec :: Int -&gt; FoundTerm -&gt; ShowS
 $cshowsPrec :: Int -&gt; FoundTerm -&gt; ShowS
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
 </span><span id="line-100"></span><span>
-</span><span id="line-101"></span><span id="local-6989586621679274760"><span id="local-6989586621679274761"></span></span><span class="hs-keyword">data</span><span> </span><span id="FoundType"><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundType"><span class="hs-identifier hs-var">FoundType</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="FoundType"><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundType"><span class="hs-identifier hs-var">FoundType</span></a></span></span><span>
+</span><span id="line-101"></span><span id="local-6989586621679276785"><span id="local-6989586621679276786"></span></span><span class="hs-keyword">data</span><span> </span><span id="FoundType"><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundType"><span class="hs-identifier hs-var">FoundType</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="FoundType"><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundType"><span class="hs-identifier hs-var">FoundType</span></a></span></span><span>
 </span><span id="line-102"></span><span>  </span><span class="hs-special">{</span><span> </span><span id="%24sel%3AbestFoundTypeName%3AFoundType"><span class="annot"><span class="annottext">FoundType -&gt; Text
 </span><a href="Unison.Server.Endpoints.FuzzyFind.html#%24sel%3AbestFoundTypeName%3AFoundType"><span class="hs-identifier hs-var hs-var">bestFoundTypeName</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Server.Types.html#HashQualifiedName"><span class="hs-identifier hs-type">HashQualifiedName</span></a></span><span class="hs-special">,</span><span>
 </span><span id="line-103"></span><span>    </span><span id="%24sel%3AtypeDef%3AFoundType"><span class="annot"><span class="annottext">FoundType -&gt; DisplayObject SyntaxText SyntaxText
@@ -179,7 +179,7 @@ forall a.
 (forall x. a -&gt; Rep a x) -&gt; (forall x. Rep a x -&gt; a) -&gt; Generic a
 $cto :: forall x. Rep FoundType x -&gt; FoundType
 $cfrom :: forall x. FoundType -&gt; Rep FoundType x
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var">Generic</span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679274748"><span id="local-6989586621679274750"><span id="local-6989586621679274752"><span class="annot"><span class="annottext">Int -&gt; FoundType -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">Generic</span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679276773"><span id="local-6989586621679276775"><span id="local-6989586621679276777"><span class="annot"><span class="annottext">Int -&gt; FoundType -&gt; ShowS
 [FoundType] -&gt; ShowS
 FoundType -&gt; String
 (Int -&gt; FoundType -&gt; ShowS)
@@ -196,15 +196,15 @@ showsPrec :: Int -&gt; FoundType -&gt; ShowS
 $cshowsPrec :: Int -&gt; FoundType -&gt; ShowS
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
 </span><span id="line-107"></span><span>
-</span><span id="line-108"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679274740"><span id="local-6989586621679274742"><span id="local-6989586621679274744"><span id="local-6989586621679274746"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundType"><span class="hs-identifier hs-type">FoundType</span></a></span></span></span></span></span><span>
+</span><span id="line-108"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679276765"><span id="local-6989586621679276767"><span id="local-6989586621679276769"><span id="local-6989586621679276771"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundType"><span class="hs-identifier hs-type">FoundType</span></a></span></span></span></span></span><span>
 </span><span id="line-109"></span><span>
-</span><span id="line-110"></span><span id="local-6989586621679274737"><span class="hs-keyword">deriving</span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSchema</span></span><span> </span><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundType"><span class="hs-identifier hs-type">FoundType</span></a></span></span><span>
+</span><span id="line-110"></span><span id="local-6989586621679276762"><span class="hs-keyword">deriving</span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSchema</span></span><span> </span><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundType"><span class="hs-identifier hs-type">FoundType</span></a></span></span><span>
 </span><span id="line-111"></span><span>
-</span><span id="line-112"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679274729"><span id="local-6989586621679274731"><span id="local-6989586621679274733"><span id="local-6989586621679274735"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundTerm"><span class="hs-identifier hs-type">FoundTerm</span></a></span></span></span></span></span><span>
+</span><span id="line-112"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679276754"><span id="local-6989586621679276756"><span id="local-6989586621679276758"><span id="local-6989586621679276760"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundTerm"><span class="hs-identifier hs-type">FoundTerm</span></a></span></span></span></span></span><span>
 </span><span id="line-113"></span><span>
-</span><span id="line-114"></span><span id="local-6989586621679274726"><span class="hs-keyword">deriving</span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSchema</span></span><span> </span><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundTerm"><span class="hs-identifier hs-type">FoundTerm</span></a></span></span><span>
+</span><span id="line-114"></span><span id="local-6989586621679276751"><span class="hs-keyword">deriving</span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSchema</span></span><span> </span><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundTerm"><span class="hs-identifier hs-type">FoundTerm</span></a></span></span><span>
 </span><span id="line-115"></span><span>
-</span><span id="line-116"></span><span id="local-6989586621679274724"><span id="local-6989586621679274725"></span></span><span class="hs-keyword">data</span><span> </span><span id="FoundResult"><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundResult"><span class="hs-identifier hs-var">FoundResult</span></a></span></span><span>
+</span><span id="line-116"></span><span id="local-6989586621679276749"><span id="local-6989586621679276750"></span></span><span class="hs-keyword">data</span><span> </span><span id="FoundResult"><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundResult"><span class="hs-identifier hs-var">FoundResult</span></a></span></span><span>
 </span><span id="line-117"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="FoundTermResult"><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundTermResult"><span class="hs-identifier hs-var">FoundTermResult</span></a></span></span><span> </span><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundTerm"><span class="hs-identifier hs-type">FoundTerm</span></a></span><span>
 </span><span id="line-118"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="FoundTypeResult"><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundTypeResult"><span class="hs-identifier hs-var">FoundTypeResult</span></a></span></span><span> </span><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundType"><span class="hs-identifier hs-type">FoundType</span></a></span><span>
 </span><span id="line-119"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(forall x. FoundResult -&gt; Rep FoundResult x)
@@ -216,7 +216,7 @@ forall a.
 (forall x. a -&gt; Rep a x) -&gt; (forall x. Rep a x -&gt; a) -&gt; Generic a
 $cto :: forall x. Rep FoundResult x -&gt; FoundResult
 $cfrom :: forall x. FoundResult -&gt; Rep FoundResult x
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var">Generic</span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679274714"><span id="local-6989586621679274716"><span id="local-6989586621679274718"><span class="annot"><span class="annottext">Int -&gt; FoundResult -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">Generic</span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679276739"><span id="local-6989586621679276741"><span id="local-6989586621679276743"><span class="annot"><span class="annottext">Int -&gt; FoundResult -&gt; ShowS
 [FoundResult] -&gt; ShowS
 FoundResult -&gt; String
 (Int -&gt; FoundResult -&gt; ShowS)
@@ -233,27 +233,27 @@ showsPrec :: Int -&gt; FoundResult -&gt; ShowS
 $cshowsPrec :: Int -&gt; FoundResult -&gt; ShowS
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
 </span><span id="line-120"></span><span>
-</span><span id="line-121"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679274706"><span id="local-6989586621679274708"><span id="local-6989586621679274710"><span id="local-6989586621679274712"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundResult"><span class="hs-identifier hs-type">FoundResult</span></a></span></span></span></span></span><span>
+</span><span id="line-121"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679276731"><span id="local-6989586621679276733"><span id="local-6989586621679276735"><span id="local-6989586621679276737"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundResult"><span class="hs-identifier hs-type">FoundResult</span></a></span></span></span></span></span><span>
 </span><span id="line-122"></span><span>
-</span><span id="line-123"></span><span id="local-6989586621679274703"><span class="hs-keyword">deriving</span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSchema</span></span><span> </span><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundResult"><span class="hs-identifier hs-type">FoundResult</span></a></span></span><span>
+</span><span id="line-123"></span><span id="local-6989586621679276728"><span class="hs-keyword">deriving</span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSchema</span></span><span> </span><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundResult"><span class="hs-identifier hs-type">FoundResult</span></a></span></span><span>
 </span><span id="line-124"></span><span>
 </span><span id="line-125"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSample</span></span><span> </span><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundResult"><span class="hs-identifier hs-type">FoundResult</span></a></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-126"></span><span>  </span><span id="local-6989586621679274701"><span class="annot"><span class="annottext">toSamples :: Proxy FoundResult -&gt; [(Text, FoundResult)]
-</span><a href="#local-6989586621679274701"><span class="hs-identifier hs-var hs-var hs-var hs-var">toSamples</span></a></span></span><span> </span><span class="annot"><span class="annottext">Proxy FoundResult
+</span><span id="line-126"></span><span>  </span><span id="local-6989586621679276726"><span class="annot"><span class="annottext">toSamples :: Proxy FoundResult -&gt; [(Text, FoundResult)]
+</span><a href="#local-6989586621679276726"><span class="hs-identifier hs-var hs-var hs-var hs-var">toSamples</span></a></span></span><span> </span><span class="annot"><span class="annottext">Proxy FoundResult
 </span><span class="hs-identifier">_</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[(Text, FoundResult)]
 forall a. [(Text, a)]
 </span><span class="hs-identifier hs-var">noSamples</span></span><span>
 </span><span id="line-127"></span><span>
 </span><span id="line-128"></span><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#serveFuzzyFind"><span class="hs-identifier hs-type">serveFuzzyFind</span></a></span><span> </span><span class="hs-glyph">::</span><span>
-</span><span id="line-129"></span><span>  </span><span class="hs-keyword">forall</span><span> </span><span id="local-6989586621679274699"><span class="annot"><a href="#local-6989586621679274699"><span class="hs-identifier hs-type">m</span></a></span></span><span class="hs-operator">.</span><span>
-</span><span id="line-130"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">MonadIO</span></span><span> </span><span class="annot"><a href="#local-6989586621679274699"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span>
-</span><span id="line-131"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">Codebase</span></span><span> </span><span class="annot"><a href="#local-6989586621679274699"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Symbol</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Ann</span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
+</span><span id="line-129"></span><span>  </span><span class="hs-keyword">forall</span><span> </span><span id="local-6989586621679276724"><span class="annot"><a href="#local-6989586621679276724"><span class="hs-identifier hs-type">m</span></a></span></span><span class="hs-operator">.</span><span>
+</span><span id="line-130"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">MonadIO</span></span><span> </span><span class="annot"><a href="#local-6989586621679276724"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span>
+</span><span id="line-131"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">Codebase</span></span><span> </span><span class="annot"><a href="#local-6989586621679276724"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Symbol</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Ann</span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
 </span><span id="line-132"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">SBH.ShortBranchHash</span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
 </span><span id="line-133"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#HashQualifiedName"><span class="hs-identifier hs-type">HashQualifiedName</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span>
 </span><span id="line-134"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Int</span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
 </span><span id="line-135"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Width</span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
 </span><span id="line-136"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
-</span><span id="line-137"></span><span>  </span><span class="annot"><a href="Unison.Server.Backend.html#Backend"><span class="hs-identifier hs-type">Backend.Backend</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679274699"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">[</span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">FZF.Alignment</span></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundResult"><span class="hs-identifier hs-type">FoundResult</span></a></span><span class="hs-special">)</span><span class="hs-special">]</span><span>
+</span><span id="line-137"></span><span>  </span><span class="annot"><a href="Unison.Server.Backend.html#Backend"><span class="hs-identifier hs-type">Backend.Backend</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679276724"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">[</span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">FZF.Alignment</span></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundResult"><span class="hs-identifier hs-type">FoundResult</span></a></span><span class="hs-special">)</span><span class="hs-special">]</span><span>
 </span><span id="line-138"></span><span id="serveFuzzyFind"><span class="annot"><span class="annottext">serveFuzzyFind :: Codebase m Symbol Ann
 -&gt; Maybe ShortBranchHash
 -&gt; Maybe Text
@@ -261,110 +261,83 @@ forall a. [(Text, a)]
 -&gt; Maybe Width
 -&gt; Maybe String
 -&gt; Backend m [(Alignment, FoundResult)]
-</span><a href="Unison.Server.Endpoints.FuzzyFind.html#serveFuzzyFind"><span class="hs-identifier hs-var hs-var">serveFuzzyFind</span></a></span></span><span> </span><span id="local-6989586621679274697"><span class="annot"><span class="annottext">Codebase m Symbol Ann
-</span><a href="#local-6989586621679274697"><span class="hs-identifier hs-var">codebase</span></a></span></span><span> </span><span id="local-6989586621679274696"><span class="annot"><span class="annottext">Maybe ShortBranchHash
-</span><a href="#local-6989586621679274696"><span class="hs-identifier hs-var">mayRoot</span></a></span></span><span> </span><span id="local-6989586621679274695"><span class="annot"><span class="annottext">Maybe Text
-</span><a href="#local-6989586621679274695"><span class="hs-identifier hs-var">relativePath</span></a></span></span><span> </span><span id="local-6989586621679274694"><span class="annot"><span class="annottext">Maybe Int
-</span><a href="#local-6989586621679274694"><span class="hs-identifier hs-var">limit</span></a></span></span><span> </span><span id="local-6989586621679274693"><span class="annot"><span class="annottext">Maybe Width
-</span><a href="#local-6989586621679274693"><span class="hs-identifier hs-var">typeWidth</span></a></span></span><span> </span><span id="local-6989586621679274692"><span class="annot"><span class="annottext">Maybe String
-</span><a href="#local-6989586621679274692"><span class="hs-identifier hs-var">query</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><a href="Unison.Server.Endpoints.FuzzyFind.html#serveFuzzyFind"><span class="hs-identifier hs-var hs-var">serveFuzzyFind</span></a></span></span><span> </span><span id="local-6989586621679276722"><span class="annot"><span class="annottext">Codebase m Symbol Ann
+</span><a href="#local-6989586621679276722"><span class="hs-identifier hs-var">codebase</span></a></span></span><span> </span><span id="local-6989586621679276721"><span class="annot"><span class="annottext">Maybe ShortBranchHash
+</span><a href="#local-6989586621679276721"><span class="hs-identifier hs-var">mayRoot</span></a></span></span><span> </span><span id="local-6989586621679276720"><span class="annot"><span class="annottext">Maybe Text
+</span><a href="#local-6989586621679276720"><span class="hs-identifier hs-var">relativePath</span></a></span></span><span> </span><span id="local-6989586621679276719"><span class="annot"><span class="annottext">Maybe Int
+</span><a href="#local-6989586621679276719"><span class="hs-identifier hs-var">limit</span></a></span></span><span> </span><span id="local-6989586621679276718"><span class="annot"><span class="annottext">Maybe Width
+</span><a href="#local-6989586621679276718"><span class="hs-identifier hs-var">typeWidth</span></a></span></span><span> </span><span id="local-6989586621679276717"><span class="annot"><span class="annottext">Maybe String
+</span><a href="#local-6989586621679276717"><span class="hs-identifier hs-var">query</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-139"></span><span>  </span><span class="hs-keyword">do</span><span>
-</span><span id="line-140"></span><span>    </span><span id="local-6989586621679274691"><span class="annot"><span class="annottext">Path
-</span><a href="#local-6989586621679274691"><span class="hs-identifier hs-var">rel</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span>
+</span><span id="line-140"></span><span>    </span><span id="local-6989586621679276716"><span class="annot"><span class="annottext">Path
+</span><a href="#local-6989586621679276716"><span class="hs-identifier hs-var">rel</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span>
 </span><span id="line-141"></span><span>      </span><span class="annot"><span class="annottext">Path -&gt; (Path' -&gt; Path) -&gt; Maybe Path' -&gt; Path
 forall b a. b -&gt; (a -&gt; b) -&gt; Maybe a -&gt; b
 </span><span class="hs-identifier hs-var">maybe</span></span><span> </span><span class="annot"><span class="annottext">Path
 forall a. Monoid a =&gt; a
 </span><span class="hs-identifier hs-var">mempty</span></span><span> </span><span class="annot"><span class="annottext">Path' -&gt; Path
 </span><span class="hs-identifier hs-var">Path.fromPath'</span></span><span>
-</span><span id="line-142"></span><span>        </span><span class="annot"><span class="annottext">(Maybe Path' -&gt; Path)
--&gt; ExceptT BackendError m (Maybe Path')
--&gt; ExceptT BackendError m Path
+</span><span id="line-142"></span><span>        </span><span class="annot"><span class="annottext">(Maybe Path' -&gt; Path) -&gt; Backend m (Maybe Path') -&gt; Backend m Path
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
-</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">(Text -&gt; ExceptT BackendError m Path')
--&gt; Maybe Text -&gt; ExceptT BackendError m (Maybe Path')
+</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">(Text -&gt; Backend m Path') -&gt; Maybe Text -&gt; Backend m (Maybe Path')
 forall (t :: * -&gt; *) (f :: * -&gt; *) a b.
 (Traversable t, Applicative f) =&gt;
 (a -&gt; f b) -&gt; t a -&gt; f (t b)
-</span><span class="hs-identifier hs-var">traverse</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; ExceptT BackendError m Path'
+</span><span class="hs-identifier hs-var">traverse</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; Backend m Path'
 forall (m :: * -&gt; *).
 MonadError BackendError m =&gt;
 String -&gt; m Path'
-</span><a href="#local-6989586621679274686"><span class="hs-identifier hs-var">parsePath</span></a></span><span> </span><span class="annot"><span class="annottext">(String -&gt; ExceptT BackendError m Path')
--&gt; (Text -&gt; String) -&gt; Text -&gt; ExceptT BackendError m Path'
+</span><a href="#local-6989586621679276711"><span class="hs-identifier hs-var">parsePath</span></a></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Backend m Path')
+-&gt; (Text -&gt; String) -&gt; Text -&gt; Backend m Path'
 forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; String
 </span><span class="hs-identifier hs-var">Text.unpack</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Maybe Text
-</span><a href="#local-6989586621679274695"><span class="hs-identifier hs-var">relativePath</span></a></span><span>
-</span><span id="line-143"></span><span>    </span><span id="local-6989586621679274683"><span class="annot"><span class="annottext">Int
-</span><a href="#local-6989586621679274683"><span class="hs-identifier hs-var">hashLength</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">m Int -&gt; ExceptT BackendError m Int
+</span><a href="#local-6989586621679276720"><span class="hs-identifier hs-var">relativePath</span></a></span><span>
+</span><span id="line-143"></span><span>    </span><span id="local-6989586621679276708"><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679276708"><span class="hs-identifier hs-var">hashLength</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">m Int -&gt; Backend m Int
 forall (t :: (* -&gt; *) -&gt; * -&gt; *) (m :: * -&gt; *) a.
 (MonadTrans t, Monad m) =&gt;
 m a -&gt; t m a
-</span><span class="hs-identifier hs-var">lift</span></span><span> </span><span class="annot"><span class="annottext">(m Int -&gt; ExceptT BackendError m Int)
--&gt; m Int -&gt; ExceptT BackendError m Int
+</span><span class="hs-identifier hs-var">lift</span></span><span> </span><span class="annot"><span class="annottext">(m Int -&gt; Backend m Int) -&gt; m Int -&gt; Backend m Int
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Codebase m Symbol Ann -&gt; m Int
 forall (m :: * -&gt; *) v a. Codebase m v a -&gt; m Int
 </span><span class="hs-identifier hs-var hs-var">Codebase.hashLength</span></span><span> </span><span class="annot"><span class="annottext">Codebase m Symbol Ann
-</span><a href="#local-6989586621679274697"><span class="hs-identifier hs-var">codebase</span></a></span><span>
-</span><span id="line-144"></span><span>    </span><span id="local-6989586621679274680"><span class="annot"><span class="annottext">Either BackendError [(Alignment, FoundResult)]
-</span><a href="#local-6989586621679274680"><span class="hs-identifier hs-var">ea</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">m (Either BackendError [(Alignment, FoundResult)])
--&gt; ExceptT
-     BackendError m (Either BackendError [(Alignment, FoundResult)])
-forall (t :: (* -&gt; *) -&gt; * -&gt; *) (m :: * -&gt; *) a.
-(MonadTrans t, Monad m) =&gt;
-m a -&gt; t m a
-</span><span class="hs-identifier hs-var">lift</span></span><span> </span><span class="annot"><span class="annottext">(m (Either BackendError [(Alignment, FoundResult)])
- -&gt; ExceptT
-      BackendError m (Either BackendError [(Alignment, FoundResult)]))
--&gt; (Backend m [(Alignment, FoundResult)]
-    -&gt; m (Either BackendError [(Alignment, FoundResult)]))
--&gt; Backend m [(Alignment, FoundResult)]
--&gt; ExceptT
-     BackendError m (Either BackendError [(Alignment, FoundResult)])
-forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
-</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">Backend m [(Alignment, FoundResult)]
--&gt; m (Either BackendError [(Alignment, FoundResult)])
-forall e (m :: * -&gt; *) a. ExceptT e m a -&gt; m (Either e a)
-</span><span class="hs-identifier hs-var">runExceptT</span></span><span> </span><span class="annot"><span class="annottext">(Backend m [(Alignment, FoundResult)]
- -&gt; ExceptT
-      BackendError m (Either BackendError [(Alignment, FoundResult)]))
--&gt; Backend m [(Alignment, FoundResult)]
--&gt; ExceptT
-     BackendError m (Either BackendError [(Alignment, FoundResult)])
-forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-145"></span><span>      </span><span id="local-6989586621679274678"><span class="annot"><span class="annottext">Maybe Hash
-</span><a href="#local-6989586621679274678"><span class="hs-identifier hs-var">root</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(ShortBranchHash -&gt; ExceptT BackendError m Hash)
--&gt; Maybe ShortBranchHash -&gt; ExceptT BackendError m (Maybe Hash)
+</span><a href="#local-6989586621679276722"><span class="hs-identifier hs-var">codebase</span></a></span><span>
+</span><span id="line-144"></span><span>    </span><span id="local-6989586621679276705"><span class="annot"><span class="annottext">Maybe Hash
+</span><a href="#local-6989586621679276705"><span class="hs-identifier hs-var">rootHash</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(ShortBranchHash -&gt; Backend m Hash)
+-&gt; Maybe ShortBranchHash -&gt; Backend m (Maybe Hash)
 forall (t :: * -&gt; *) (f :: * -&gt; *) a b.
 (Traversable t, Applicative f) =&gt;
 (a -&gt; f b) -&gt; t a -&gt; f (t b)
-</span><span class="hs-identifier hs-var">traverse</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Codebase m Symbol Ann
--&gt; ShortBranchHash -&gt; ExceptT BackendError m Hash
+</span><span class="hs-identifier hs-var">traverse</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Codebase m Symbol Ann -&gt; ShortBranchHash -&gt; Backend m Hash
 forall (m :: * -&gt; *) v a.
 Monad m =&gt;
 Codebase m v a -&gt; ShortBranchHash -&gt; Backend m Hash
 </span><a href="Unison.Server.Backend.html#expandShortBranchHash"><span class="hs-identifier hs-var">Backend.expandShortBranchHash</span></a></span><span> </span><span class="annot"><span class="annottext">Codebase m Symbol Ann
-</span><a href="#local-6989586621679274697"><span class="hs-identifier hs-var">codebase</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Maybe ShortBranchHash
-</span><a href="#local-6989586621679274696"><span class="hs-identifier hs-var">mayRoot</span></a></span><span>
-</span><span id="line-146"></span><span>      </span><span id="local-6989586621679274676"><span class="annot"><span class="annottext">Branch m
-</span><a href="#local-6989586621679274676"><span class="hs-identifier hs-var">branch</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Maybe Hash -&gt; Codebase m Symbol Ann -&gt; Backend m (Branch m)
-forall (m :: * -&gt; *) v.
+</span><a href="#local-6989586621679276722"><span class="hs-identifier hs-var">codebase</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Maybe ShortBranchHash
+</span><a href="#local-6989586621679276721"><span class="hs-identifier hs-var">mayRoot</span></a></span><span>
+</span><span id="line-145"></span><span>    </span><span class="hs-special">(</span><span id="local-6989586621679276703"><span class="annot"><span class="annottext">Names
+</span><a href="#local-6989586621679276703"><span class="hs-identifier hs-var">_parseNames</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679276702"><span class="annot"><span class="annottext">Names
+</span><a href="#local-6989586621679276702"><span class="hs-identifier hs-var">prettyNames</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Codebase m Symbol Ann
+-&gt; Maybe Hash -&gt; Path -&gt; Backend m (Names, Names)
+forall (m :: * -&gt; *) v a.
 Monad m =&gt;
-Maybe Hash -&gt; Codebase m v Ann -&gt; Backend m (Branch m)
-</span><a href="Unison.Server.Backend.html#resolveBranchHash"><span class="hs-identifier hs-var">Backend.resolveBranchHash</span></a></span><span> </span><span class="annot"><span class="annottext">Maybe Hash
-</span><a href="#local-6989586621679274678"><span class="hs-identifier hs-var">root</span></a></span><span> </span><span class="annot"><span class="annottext">Codebase m Symbol Ann
-</span><a href="#local-6989586621679274697"><span class="hs-identifier hs-var">codebase</span></a></span><span>
-</span><span id="line-147"></span><span>      </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679274674"><span class="annot"><span class="annottext">b0 :: Branch0 m
-</span><a href="#local-6989586621679274674"><span class="hs-identifier hs-var hs-var">b0</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Branch m -&gt; Branch0 m
-forall (m :: * -&gt; *). Branch m -&gt; Branch0 m
-</span><span class="hs-identifier hs-var">Branch.head</span></span><span> </span><span class="annot"><span class="annottext">Branch m
-</span><a href="#local-6989586621679274676"><span class="hs-identifier hs-var">branch</span></a></span><span>
-</span><span id="line-148"></span><span>          </span><span id="local-6989586621679274672"><span class="annot"><span class="annottext">alignments :: [(Alignment, Text, [FoundRef])]
-</span><a href="#local-6989586621679274672"><span class="hs-identifier hs-var hs-var">alignments</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-149"></span><span>            </span><span class="annot"><span class="annottext">Int
+Codebase m v a -&gt; Maybe Hash -&gt; Path -&gt; Backend m (Names, Names)
+</span><a href="Unison.Server.Backend.html#scopedNamesForBranchHash"><span class="hs-identifier hs-var">Backend.scopedNamesForBranchHash</span></a></span><span> </span><span class="annot"><span class="annottext">Codebase m Symbol Ann
+</span><a href="#local-6989586621679276722"><span class="hs-identifier hs-var">codebase</span></a></span><span> </span><span class="annot"><span class="annottext">Maybe Hash
+</span><a href="#local-6989586621679276705"><span class="hs-identifier hs-var">rootHash</span></a></span><span> </span><span class="annot"><span class="annottext">Path
+</span><a href="#local-6989586621679276716"><span class="hs-identifier hs-var">rel</span></a></span><span>
+</span><span id="line-146"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span class="annot"><a href="#local-6989586621679276700"><span class="hs-identifier hs-type">alignments</span></a></span><span> </span><span class="hs-glyph">::</span><span>
+</span><span id="line-147"></span><span>          </span><span class="hs-special">(</span><span> </span><span class="hs-special">[</span><span> </span><span class="hs-special">(</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FZF.Alignment</span></span><span class="hs-special">,</span><span>
+</span><span id="line-148"></span><span>                </span><span class="annot"><a href="Unison.Server.Types.html#UnisonName"><span class="hs-identifier hs-type">UnisonName</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-149"></span><span>                </span><span class="hs-special">[</span><span class="annot"><a href="Unison.Server.Backend.html#FoundRef"><span class="hs-identifier hs-type">Backend.FoundRef</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-150"></span><span>              </span><span class="hs-special">)</span><span>
+</span><span id="line-151"></span><span>            </span><span class="hs-special">]</span><span>
+</span><span id="line-152"></span><span>          </span><span class="hs-special">)</span><span>
+</span><span id="line-153"></span><span>        </span><span id="local-6989586621679276700"><span class="annot"><span class="annottext">alignments :: [(Alignment, Text, [FoundRef])]
+</span><a href="#local-6989586621679276700"><span class="hs-identifier hs-var hs-var">alignments</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-154"></span><span>          </span><span class="annot"><span class="annottext">Int
 -&gt; [(Alignment, Text, [FoundRef])]
 -&gt; [(Alignment, Text, [FoundRef])]
 forall a. Int -&gt; [a] -&gt; [a]
@@ -372,33 +345,24 @@ forall a. Int -&gt; [a] -&gt; [a]
 forall a. a -&gt; Maybe a -&gt; a
 </span><span class="hs-identifier hs-var">fromMaybe</span></span><span> </span><span class="annot"><span class="annottext">Int
 </span><span class="hs-number">10</span></span><span> </span><span class="annot"><span class="annottext">Maybe Int
-</span><a href="#local-6989586621679274694"><span class="hs-identifier hs-var">limit</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">([(Alignment, Text, [FoundRef])]
+</span><a href="#local-6989586621679276719"><span class="hs-identifier hs-var">limit</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">([(Alignment, Text, [FoundRef])]
  -&gt; [(Alignment, Text, [FoundRef])])
 -&gt; [(Alignment, Text, [FoundRef])]
 -&gt; [(Alignment, Text, [FoundRef])]
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Path -&gt; Branch m -&gt; String -&gt; [(Alignment, Text, [FoundRef])]
-forall (m :: * -&gt; *).
-Monad m =&gt;
-Path -&gt; Branch m -&gt; String -&gt; [(Alignment, Text, [FoundRef])]
-</span><a href="Unison.Server.Backend.html#fuzzyFind"><span class="hs-identifier hs-var">Backend.fuzzyFind</span></a></span><span> </span><span class="annot"><span class="annottext">Path
-</span><a href="#local-6989586621679274691"><span class="hs-identifier hs-var">rel</span></a></span><span> </span><span class="annot"><span class="annottext">Branch m
-</span><a href="#local-6989586621679274676"><span class="hs-identifier hs-var">branch</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; Maybe String -&gt; String
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Names -&gt; String -&gt; [(Alignment, Text, [FoundRef])]
+</span><a href="Unison.Server.Backend.html#fuzzyFind"><span class="hs-identifier hs-var">Backend.fuzzyFind</span></a></span><span> </span><span class="annot"><span class="annottext">Names
+</span><a href="#local-6989586621679276702"><span class="hs-identifier hs-var">prettyNames</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; Maybe String -&gt; String
 forall a. a -&gt; Maybe a -&gt; a
 </span><span class="hs-identifier hs-var">fromMaybe</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;&quot;</span></span><span> </span><span class="annot"><span class="annottext">Maybe String
-</span><a href="#local-6989586621679274692"><span class="hs-identifier hs-var">query</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-150"></span><span>          </span><span class="hs-comment">-- Use AllNames to render source</span><span>
-</span><span id="line-151"></span><span>          </span><span id="local-6989586621679274668"><span class="annot"><span class="annottext">ppe :: PrettyPrintEnv
-</span><a href="#local-6989586621679274668"><span class="hs-identifier hs-var hs-var">ppe</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Int -&gt; Branch m -&gt; NameScoping -&gt; PrettyPrintEnv
-forall (m :: * -&gt; *).
-Int -&gt; Branch m -&gt; NameScoping -&gt; PrettyPrintEnv
-</span><a href="Unison.Server.Backend.html#basicSuffixifiedNames"><span class="hs-identifier hs-var">Backend.basicSuffixifiedNames</span></a></span><span> </span><span class="annot"><span class="annottext">Int
-</span><a href="#local-6989586621679274683"><span class="hs-identifier hs-var">hashLength</span></a></span><span> </span><span class="annot"><span class="annottext">Branch m
-</span><a href="#local-6989586621679274676"><span class="hs-identifier hs-var">branch</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Path -&gt; NameScoping
-</span><a href="Unison.Server.Backend.html#AllNames"><span class="hs-identifier hs-var">Backend.AllNames</span></a></span><span> </span><span class="annot"><span class="annottext">Path
-</span><a href="#local-6989586621679274691"><span class="hs-identifier hs-var">rel</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-152"></span><span>      </span><span class="annot"><span class="annottext">m [(Alignment, FoundResult)]
+</span><a href="#local-6989586621679276717"><span class="hs-identifier hs-var">query</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-155"></span><span>        </span><span id="local-6989586621679276696"><span class="annot"><span class="annottext">ppe :: PrettyPrintEnv
+</span><a href="#local-6989586621679276696"><span class="hs-identifier hs-var hs-var">ppe</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Int -&gt; Names -&gt; PrettyPrintEnv
+</span><a href="Unison.Server.Backend.html#suffixifyNames"><span class="hs-identifier hs-var">Backend.suffixifyNames</span></a></span><span> </span><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679276708"><span class="hs-identifier hs-var">hashLength</span></a></span><span> </span><span class="annot"><span class="annottext">Names
+</span><a href="#local-6989586621679276702"><span class="hs-identifier hs-var">prettyNames</span></a></span><span>
+</span><span id="line-156"></span><span>    </span><span class="annot"><span class="annottext">m [(Alignment, FoundResult)]
 -&gt; Backend m [(Alignment, FoundResult)]
 forall (t :: (* -&gt; *) -&gt; * -&gt; *) (m :: * -&gt; *) a.
 (MonadTrans t, Monad m) =&gt;
@@ -415,131 +379,114 @@ forall (t :: * -&gt; *) (f :: * -&gt; *) a b.
 (Traversable t, Applicative f) =&gt;
 (a -&gt; f b) -&gt; t a -&gt; f (t b)
 </span><span class="hs-identifier hs-var">traverse</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">PrettyPrintEnv
--&gt; Branch0 m
--&gt; (Alignment, Text, [FoundRef])
--&gt; m [(Alignment, FoundResult)]
-</span><a href="#local-6989586621679274665"><span class="hs-identifier hs-var">loadEntry</span></a></span><span> </span><span class="annot"><span class="annottext">PrettyPrintEnv
-</span><a href="#local-6989586621679274668"><span class="hs-identifier hs-var">ppe</span></a></span><span> </span><span class="annot"><span class="annottext">Branch0 m
-</span><a href="#local-6989586621679274674"><span class="hs-identifier hs-var">b0</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">[(Alignment, Text, [FoundRef])]
-</span><a href="#local-6989586621679274672"><span class="hs-identifier hs-var">alignments</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-153"></span><span>    </span><span class="annot"><span class="annottext">Either BackendError [(Alignment, FoundResult)]
--&gt; Backend m [(Alignment, FoundResult)]
-forall e (m :: * -&gt; *) a. MonadError e m =&gt; Either e a -&gt; m a
-</span><span class="hs-identifier hs-var">liftEither</span></span><span> </span><span class="annot"><span class="annottext">Either BackendError [(Alignment, FoundResult)]
-</span><a href="#local-6989586621679274680"><span class="hs-identifier hs-var">ea</span></a></span><span>
-</span><span id="line-154"></span><span>  </span><span class="hs-keyword">where</span><span>
-</span><span id="line-155"></span><span>    </span><span id="local-6989586621679274665"><span class="annot"><span class="annottext">loadEntry :: PrettyPrintEnv
--&gt; Branch0 m
--&gt; (Alignment, Text, [FoundRef])
--&gt; m [(Alignment, FoundResult)]
-</span><a href="#local-6989586621679274665"><span class="hs-identifier hs-var hs-var">loadEntry</span></a></span></span><span> </span><span id="local-6989586621679274663"><span class="annot"><span class="annottext">PrettyPrintEnv
-</span><a href="#local-6989586621679274663"><span class="hs-identifier hs-var">ppe</span></a></span></span><span> </span><span id="local-6989586621679274662"><span class="annot"><span class="annottext">Branch0 m
-</span><a href="#local-6989586621679274662"><span class="hs-identifier hs-var">b0</span></a></span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679274661"><span class="annot"><span class="annottext">Alignment
-</span><a href="#local-6989586621679274661"><span class="hs-identifier hs-var">a</span></a></span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">NameSegment -&gt; HashQualified NameSegment
+-&gt; (Alignment, Text, [FoundRef]) -&gt; m [(Alignment, FoundResult)]
+</span><a href="#local-6989586621679276694"><span class="hs-identifier hs-var">loadEntry</span></a></span><span> </span><span class="annot"><span class="annottext">PrettyPrintEnv
+</span><a href="#local-6989586621679276696"><span class="hs-identifier hs-var">ppe</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">[(Alignment, Text, [FoundRef])]
+</span><a href="#local-6989586621679276700"><span class="hs-identifier hs-var">alignments</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-157"></span><span>  </span><span class="hs-keyword">where</span><span>
+</span><span id="line-158"></span><span>    </span><span id="local-6989586621679276694"><span class="annot"><span class="annottext">loadEntry :: PrettyPrintEnv
+-&gt; (Alignment, Text, [FoundRef]) -&gt; m [(Alignment, FoundResult)]
+</span><a href="#local-6989586621679276694"><span class="hs-identifier hs-var hs-var">loadEntry</span></a></span></span><span> </span><span id="local-6989586621679276693"><span class="annot"><span class="annottext">PrettyPrintEnv
+</span><a href="#local-6989586621679276693"><span class="hs-identifier hs-var">ppe</span></a></span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679276692"><span class="annot"><span class="annottext">Alignment
+</span><a href="#local-6989586621679276692"><span class="hs-identifier hs-var">a</span></a></span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">NameSegment -&gt; HashQualified NameSegment
 forall n. n -&gt; HashQualified n
 </span><span class="hs-identifier hs-var">HQ'.NameOnly</span></span><span> </span><span class="annot"><span class="annottext">(NameSegment -&gt; HashQualified NameSegment)
 -&gt; (Text -&gt; NameSegment) -&gt; Text -&gt; HashQualified NameSegment
 forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; NameSegment
-</span><span class="hs-identifier hs-var">NameSegment</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span id="local-6989586621679274658"><span class="annot"><span class="annottext">HashQualified NameSegment
-</span><a href="#local-6989586621679274658"><span class="hs-identifier hs-var">n</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679274657"><span class="annot"><span class="annottext">[FoundRef]
-</span><a href="#local-6989586621679274657"><span class="hs-identifier hs-var">refs</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-156"></span><span>      </span><span class="annot"><span class="annottext">[FoundRef]
+</span><span class="hs-identifier hs-var">NameSegment</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span id="local-6989586621679276689"><span class="annot"><span class="annottext">HashQualified NameSegment
+</span><a href="#local-6989586621679276689"><span class="hs-identifier hs-var">n</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679276688"><span class="annot"><span class="annottext">[FoundRef]
+</span><a href="#local-6989586621679276688"><span class="hs-identifier hs-var">refs</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-159"></span><span>      </span><span class="annot"><span class="annottext">[FoundRef]
 -&gt; (FoundRef -&gt; m (Alignment, FoundResult))
 -&gt; m [(Alignment, FoundResult)]
 forall (t :: * -&gt; *) (f :: * -&gt; *) a b.
 (Traversable t, Applicative f) =&gt;
 t a -&gt; (a -&gt; f b) -&gt; f (t b)
 </span><span class="hs-identifier hs-var">for</span></span><span> </span><span class="annot"><span class="annottext">[FoundRef]
-</span><a href="#local-6989586621679274657"><span class="hs-identifier hs-var">refs</span></a></span><span> </span><span class="annot"><span class="annottext">((FoundRef -&gt; m (Alignment, FoundResult))
+</span><a href="#local-6989586621679276688"><span class="hs-identifier hs-var">refs</span></a></span><span> </span><span class="annot"><span class="annottext">((FoundRef -&gt; m (Alignment, FoundResult))
  -&gt; m [(Alignment, FoundResult)])
 -&gt; (FoundRef -&gt; m (Alignment, FoundResult))
 -&gt; m [(Alignment, FoundResult)]
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span>
-</span><span id="line-157"></span><span>        </span><span class="hs-glyph">\</span><span class="hs-glyph">case</span><span>
-</span><span id="line-158"></span><span>          </span><span class="annot"><a href="Unison.Server.Backend.html#FoundTermRef"><span class="hs-identifier hs-type">Backend.FoundTermRef</span></a></span><span> </span><span id="local-6989586621679274654"><span class="annot"><span class="annottext">Referent
-</span><a href="#local-6989586621679274654"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
-</span><span id="line-159"></span><span>            </span><span class="hs-special">(</span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679274653"><span class="annot"><span class="annottext">TermEntry Symbol Ann
-</span><a href="#local-6989586621679274653"><span class="hs-identifier hs-var">te</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
-</span><span id="line-160"></span><span>                </span><span class="hs-special">(</span><span> </span><span class="annot"><span class="annottext">Alignment
-</span><a href="#local-6989586621679274661"><span class="hs-identifier hs-var">a</span></a></span><span class="hs-special">,</span><span>
-</span><span id="line-161"></span><span>                  </span><span class="annot"><span class="annottext">FoundTerm -&gt; FoundResult
+</span><span id="line-160"></span><span>        </span><span class="hs-glyph">\</span><span class="hs-glyph">case</span><span>
+</span><span id="line-161"></span><span>          </span><span class="annot"><a href="Unison.Server.Backend.html#FoundTermRef"><span class="hs-identifier hs-type">Backend.FoundTermRef</span></a></span><span> </span><span id="local-6989586621679276685"><span class="annot"><span class="annottext">Referent
+</span><a href="#local-6989586621679276685"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
+</span><span id="line-162"></span><span>            </span><span class="hs-special">(</span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679276684"><span class="annot"><span class="annottext">TermEntry Symbol Ann
+</span><a href="#local-6989586621679276684"><span class="hs-identifier hs-var">te</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
+</span><span id="line-163"></span><span>                </span><span class="hs-special">(</span><span> </span><span class="annot"><span class="annottext">Alignment
+</span><a href="#local-6989586621679276692"><span class="hs-identifier hs-var">a</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-164"></span><span>                  </span><span class="annot"><span class="annottext">FoundTerm -&gt; FoundResult
 </span><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundTermResult"><span class="hs-identifier hs-var">FoundTermResult</span></a></span><span>
-</span><span id="line-162"></span><span>                    </span><span class="annot"><span class="annottext">(FoundTerm -&gt; FoundResult)
+</span><span id="line-165"></span><span>                    </span><span class="annot"><span class="annottext">(FoundTerm -&gt; FoundResult)
 -&gt; (NamedTerm -&gt; FoundTerm) -&gt; NamedTerm -&gt; FoundResult
 forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; NamedTerm -&gt; FoundTerm
 </span><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundTerm"><span class="hs-identifier hs-var">FoundTerm</span></a></span><span>
-</span><span id="line-163"></span><span>                      </span><span class="hs-special">(</span><span class="annot"><span class="annottext">PrettyPrintEnv -&gt; Width -&gt; Referent -&gt; Text
+</span><span id="line-166"></span><span>                      </span><span class="hs-special">(</span><span class="annot"><span class="annottext">PrettyPrintEnv -&gt; Width -&gt; Referent -&gt; Text
 forall v. Var v =&gt; PrettyPrintEnv -&gt; Width -&gt; Referent -&gt; Text
 </span><a href="Unison.Server.Backend.html#bestNameForTerm"><span class="hs-identifier hs-var">Backend.bestNameForTerm</span></a></span><span> </span><span class="hs-glyph">@</span><span class="annot"><span class="hs-identifier hs-type">Symbol</span></span><span> </span><span class="annot"><span class="annottext">PrettyPrintEnv
-</span><a href="#local-6989586621679274663"><span class="hs-identifier hs-var">ppe</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Maybe Width -&gt; Width
+</span><a href="#local-6989586621679276693"><span class="hs-identifier hs-var">ppe</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Maybe Width -&gt; Width
 </span><a href="Unison.Server.Types.html#mayDefaultWidth"><span class="hs-identifier hs-var">mayDefaultWidth</span></a></span><span> </span><span class="annot"><span class="annottext">Maybe Width
-</span><a href="#local-6989586621679274693"><span class="hs-identifier hs-var">typeWidth</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Referent
-</span><a href="#local-6989586621679274654"><span class="hs-identifier hs-var">r</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-164"></span><span>                    </span><span class="annot"><span class="annottext">(NamedTerm -&gt; FoundResult) -&gt; NamedTerm -&gt; FoundResult
+</span><a href="#local-6989586621679276718"><span class="hs-identifier hs-var">typeWidth</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Referent
+</span><a href="#local-6989586621679276685"><span class="hs-identifier hs-var">r</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-167"></span><span>                    </span><span class="annot"><span class="annottext">(NamedTerm -&gt; FoundResult) -&gt; NamedTerm -&gt; FoundResult
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">PrettyPrintEnv -&gt; Maybe Width -&gt; TermEntry Symbol Ann -&gt; NamedTerm
 forall v a.
 Var v =&gt;
 PrettyPrintEnv -&gt; Maybe Width -&gt; TermEntry v a -&gt; NamedTerm
 </span><a href="Unison.Server.Backend.html#termEntryToNamedTerm"><span class="hs-identifier hs-var">Backend.termEntryToNamedTerm</span></a></span><span> </span><span class="annot"><span class="annottext">PrettyPrintEnv
-</span><a href="#local-6989586621679274663"><span class="hs-identifier hs-var">ppe</span></a></span><span> </span><span class="annot"><span class="annottext">Maybe Width
-</span><a href="#local-6989586621679274693"><span class="hs-identifier hs-var">typeWidth</span></a></span><span> </span><span class="annot"><span class="annottext">TermEntry Symbol Ann
-</span><a href="#local-6989586621679274653"><span class="hs-identifier hs-var">te</span></a></span><span>
-</span><span id="line-165"></span><span>                </span><span class="hs-special">)</span><span>
-</span><span id="line-166"></span><span>            </span><span class="hs-special">)</span><span>
-</span><span id="line-167"></span><span>              </span><span class="annot"><span class="annottext">(TermEntry Symbol Ann -&gt; (Alignment, FoundResult))
+</span><a href="#local-6989586621679276693"><span class="hs-identifier hs-var">ppe</span></a></span><span> </span><span class="annot"><span class="annottext">Maybe Width
+</span><a href="#local-6989586621679276718"><span class="hs-identifier hs-var">typeWidth</span></a></span><span> </span><span class="annot"><span class="annottext">TermEntry Symbol Ann
+</span><a href="#local-6989586621679276684"><span class="hs-identifier hs-var">te</span></a></span><span>
+</span><span id="line-168"></span><span>                </span><span class="hs-special">)</span><span>
+</span><span id="line-169"></span><span>            </span><span class="hs-special">)</span><span>
+</span><span id="line-170"></span><span>              </span><span class="annot"><span class="annottext">(TermEntry Symbol Ann -&gt; (Alignment, FoundResult))
 -&gt; m (TermEntry Symbol Ann) -&gt; m (Alignment, FoundResult)
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Codebase m Symbol Ann
--&gt; Bool
 -&gt; Referent
 -&gt; HashQualified NameSegment
 -&gt; m (TermEntry Symbol Ann)
 forall (m :: * -&gt; *).
 Monad m =&gt;
 Codebase m Symbol Ann
--&gt; Bool
 -&gt; Referent
 -&gt; HashQualified NameSegment
 -&gt; m (TermEntry Symbol Ann)
 </span><a href="Unison.Server.Backend.html#termListEntry"><span class="hs-identifier hs-var">Backend.termListEntry</span></a></span><span> </span><span class="annot"><span class="annottext">Codebase m Symbol Ann
-</span><a href="#local-6989586621679274697"><span class="hs-identifier hs-var">codebase</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Branch0 m -&gt; Referent -&gt; Bool
-forall (m :: * -&gt; *). Branch0 m -&gt; Referent -&gt; Bool
-</span><a href="Unison.Server.Backend.html#checkIsTestForBranch"><span class="hs-identifier hs-var">Backend.checkIsTestForBranch</span></a></span><span> </span><span class="annot"><span class="annottext">Branch0 m
-</span><a href="#local-6989586621679274662"><span class="hs-identifier hs-var">b0</span></a></span><span> </span><span class="annot"><span class="annottext">Referent
-</span><a href="#local-6989586621679274654"><span class="hs-identifier hs-var">r</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Referent
-</span><a href="#local-6989586621679274654"><span class="hs-identifier hs-var">r</span></a></span><span> </span><span class="annot"><span class="annottext">HashQualified NameSegment
-</span><a href="#local-6989586621679274658"><span class="hs-identifier hs-var">n</span></a></span><span>
-</span><span id="line-168"></span><span>          </span><span class="annot"><a href="Unison.Server.Backend.html#FoundTypeRef"><span class="hs-identifier hs-type">Backend.FoundTypeRef</span></a></span><span> </span><span id="local-6989586621679274647"><span class="annot"><span class="annottext">Reference
-</span><a href="#local-6989586621679274647"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-169"></span><span>            </span><span id="local-6989586621679274646"><span class="annot"><span class="annottext">TypeEntry
-</span><a href="#local-6989586621679274646"><span class="hs-identifier hs-var">te</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Codebase m Symbol Ann
+</span><a href="#local-6989586621679276722"><span class="hs-identifier hs-var">codebase</span></a></span><span> </span><span class="annot"><span class="annottext">Referent
+</span><a href="#local-6989586621679276685"><span class="hs-identifier hs-var">r</span></a></span><span> </span><span class="annot"><span class="annottext">HashQualified NameSegment
+</span><a href="#local-6989586621679276689"><span class="hs-identifier hs-var">n</span></a></span><span>
+</span><span id="line-171"></span><span>          </span><span class="annot"><a href="Unison.Server.Backend.html#FoundTypeRef"><span class="hs-identifier hs-type">Backend.FoundTypeRef</span></a></span><span> </span><span id="local-6989586621679276679"><span class="annot"><span class="annottext">Reference
+</span><a href="#local-6989586621679276679"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-172"></span><span>            </span><span id="local-6989586621679276678"><span class="annot"><span class="annottext">TypeEntry
+</span><a href="#local-6989586621679276678"><span class="hs-identifier hs-var">te</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Codebase m Symbol Ann
 -&gt; Reference -&gt; HashQualified NameSegment -&gt; m TypeEntry
 forall (m :: * -&gt; *) v.
 (Monad m, Var v) =&gt;
 Codebase m v Ann
 -&gt; Reference -&gt; HashQualified NameSegment -&gt; m TypeEntry
 </span><a href="Unison.Server.Backend.html#typeListEntry"><span class="hs-identifier hs-var">Backend.typeListEntry</span></a></span><span> </span><span class="annot"><span class="annottext">Codebase m Symbol Ann
-</span><a href="#local-6989586621679274697"><span class="hs-identifier hs-var">codebase</span></a></span><span> </span><span class="annot"><span class="annottext">Reference
-</span><a href="#local-6989586621679274647"><span class="hs-identifier hs-var">r</span></a></span><span> </span><span class="annot"><span class="annottext">HashQualified NameSegment
-</span><a href="#local-6989586621679274658"><span class="hs-identifier hs-var">n</span></a></span><span>
-</span><span id="line-170"></span><span>            </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679274644"><span class="annot"><span class="annottext">namedType :: NamedType
-</span><a href="#local-6989586621679274644"><span class="hs-identifier hs-var hs-var">namedType</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">TypeEntry -&gt; NamedType
+</span><a href="#local-6989586621679276722"><span class="hs-identifier hs-var">codebase</span></a></span><span> </span><span class="annot"><span class="annottext">Reference
+</span><a href="#local-6989586621679276679"><span class="hs-identifier hs-var">r</span></a></span><span> </span><span class="annot"><span class="annottext">HashQualified NameSegment
+</span><a href="#local-6989586621679276689"><span class="hs-identifier hs-var">n</span></a></span><span>
+</span><span id="line-173"></span><span>            </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679276676"><span class="annot"><span class="annottext">namedType :: NamedType
+</span><a href="#local-6989586621679276676"><span class="hs-identifier hs-var hs-var">namedType</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">TypeEntry -&gt; NamedType
 </span><a href="Unison.Server.Backend.html#typeEntryToNamedType"><span class="hs-identifier hs-var">Backend.typeEntryToNamedType</span></a></span><span> </span><span class="annot"><span class="annottext">TypeEntry
-</span><a href="#local-6989586621679274646"><span class="hs-identifier hs-var">te</span></a></span><span>
-</span><span id="line-171"></span><span>            </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679274642"><span class="annot"><span class="annottext">typeName :: Text
-</span><a href="#local-6989586621679274642"><span class="hs-identifier hs-var hs-var">typeName</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">PrettyPrintEnv -&gt; Width -&gt; Reference -&gt; Text
+</span><a href="#local-6989586621679276678"><span class="hs-identifier hs-var">te</span></a></span><span>
+</span><span id="line-174"></span><span>            </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679276674"><span class="annot"><span class="annottext">typeName :: Text
+</span><a href="#local-6989586621679276674"><span class="hs-identifier hs-var hs-var">typeName</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">PrettyPrintEnv -&gt; Width -&gt; Reference -&gt; Text
 forall v. Var v =&gt; PrettyPrintEnv -&gt; Width -&gt; Reference -&gt; Text
 </span><a href="Unison.Server.Backend.html#bestNameForType"><span class="hs-identifier hs-var">Backend.bestNameForType</span></a></span><span> </span><span class="hs-glyph">@</span><span class="annot"><span class="hs-identifier hs-type">Symbol</span></span><span> </span><span class="annot"><span class="annottext">PrettyPrintEnv
-</span><a href="#local-6989586621679274663"><span class="hs-identifier hs-var">ppe</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Maybe Width -&gt; Width
+</span><a href="#local-6989586621679276693"><span class="hs-identifier hs-var">ppe</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Maybe Width -&gt; Width
 </span><a href="Unison.Server.Types.html#mayDefaultWidth"><span class="hs-identifier hs-var">mayDefaultWidth</span></a></span><span> </span><span class="annot"><span class="annottext">Maybe Width
-</span><a href="#local-6989586621679274693"><span class="hs-identifier hs-var">typeWidth</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Reference
-</span><a href="#local-6989586621679274647"><span class="hs-identifier hs-var">r</span></a></span><span>
-</span><span id="line-172"></span><span>            </span><span id="local-6989586621679274640"><span class="annot"><span class="annottext">DisplayObject SyntaxText SyntaxText
-</span><a href="#local-6989586621679274640"><span class="hs-identifier hs-var">typeHeader</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Codebase m Symbol Ann
+</span><a href="#local-6989586621679276718"><span class="hs-identifier hs-var">typeWidth</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Reference
+</span><a href="#local-6989586621679276679"><span class="hs-identifier hs-var">r</span></a></span><span>
+</span><span id="line-175"></span><span>            </span><span id="local-6989586621679276672"><span class="annot"><span class="annottext">DisplayObject SyntaxText SyntaxText
+</span><a href="#local-6989586621679276672"><span class="hs-identifier hs-var">typeHeader</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Codebase m Symbol Ann
 -&gt; PrettyPrintEnv
 -&gt; Reference
 -&gt; m (DisplayObject SyntaxText SyntaxText)
@@ -550,46 +497,46 @@ Codebase m v Ann
 -&gt; Reference
 -&gt; m (DisplayObject SyntaxText SyntaxText)
 </span><a href="Unison.Server.Backend.html#typeDeclHeader"><span class="hs-identifier hs-var">Backend.typeDeclHeader</span></a></span><span> </span><span class="annot"><span class="annottext">Codebase m Symbol Ann
-</span><a href="#local-6989586621679274697"><span class="hs-identifier hs-var">codebase</span></a></span><span> </span><span class="annot"><span class="annottext">PrettyPrintEnv
-</span><a href="#local-6989586621679274663"><span class="hs-identifier hs-var">ppe</span></a></span><span> </span><span class="annot"><span class="annottext">Reference
-</span><a href="#local-6989586621679274647"><span class="hs-identifier hs-var">r</span></a></span><span>
-</span><span id="line-173"></span><span>            </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679274638"><span class="annot"><span class="annottext">ft :: FoundType
-</span><a href="#local-6989586621679274638"><span class="hs-identifier hs-var hs-var">ft</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679276722"><span class="hs-identifier hs-var">codebase</span></a></span><span> </span><span class="annot"><span class="annottext">PrettyPrintEnv
+</span><a href="#local-6989586621679276693"><span class="hs-identifier hs-var">ppe</span></a></span><span> </span><span class="annot"><span class="annottext">Reference
+</span><a href="#local-6989586621679276679"><span class="hs-identifier hs-var">r</span></a></span><span>
+</span><span id="line-176"></span><span>            </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679276670"><span class="annot"><span class="annottext">ft :: FoundType
+</span><a href="#local-6989586621679276670"><span class="hs-identifier hs-var hs-var">ft</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Text
 -&gt; DisplayObject SyntaxText SyntaxText -&gt; NamedType -&gt; FoundType
 </span><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundType"><span class="hs-identifier hs-var">FoundType</span></a></span><span> </span><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679274642"><span class="hs-identifier hs-var">typeName</span></a></span><span> </span><span class="annot"><span class="annottext">DisplayObject SyntaxText SyntaxText
-</span><a href="#local-6989586621679274640"><span class="hs-identifier hs-var">typeHeader</span></a></span><span> </span><span class="annot"><span class="annottext">NamedType
-</span><a href="#local-6989586621679274644"><span class="hs-identifier hs-var">namedType</span></a></span><span>
-</span><span id="line-174"></span><span>            </span><span class="annot"><span class="annottext">(Alignment, FoundResult) -&gt; m (Alignment, FoundResult)
+</span><a href="#local-6989586621679276674"><span class="hs-identifier hs-var">typeName</span></a></span><span> </span><span class="annot"><span class="annottext">DisplayObject SyntaxText SyntaxText
+</span><a href="#local-6989586621679276672"><span class="hs-identifier hs-var">typeHeader</span></a></span><span> </span><span class="annot"><span class="annottext">NamedType
+</span><a href="#local-6989586621679276676"><span class="hs-identifier hs-var">namedType</span></a></span><span>
+</span><span id="line-177"></span><span>            </span><span class="annot"><span class="annottext">(Alignment, FoundResult) -&gt; m (Alignment, FoundResult)
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Alignment
-</span><a href="#local-6989586621679274661"><span class="hs-identifier hs-var">a</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">FoundType -&gt; FoundResult
+</span><a href="#local-6989586621679276692"><span class="hs-identifier hs-var">a</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">FoundType -&gt; FoundResult
 </span><a href="Unison.Server.Endpoints.FuzzyFind.html#FoundTypeResult"><span class="hs-identifier hs-var">FoundTypeResult</span></a></span><span> </span><span class="annot"><span class="annottext">FoundType
-</span><a href="#local-6989586621679274638"><span class="hs-identifier hs-var">ft</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-175"></span><span>
-</span><span id="line-176"></span><span>    </span><span id="local-6989586621679274686"><span class="annot"><span class="annottext">parsePath :: String -&gt; m Path'
-</span><a href="#local-6989586621679274686"><span class="hs-identifier hs-var hs-var">parsePath</span></a></span></span><span> </span><span id="local-6989586621679274637"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679274637"><span class="hs-identifier hs-var">p</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(String -&gt; BackendError) -&gt; Either String Path' -&gt; m Path'
+</span><a href="#local-6989586621679276670"><span class="hs-identifier hs-var">ft</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-178"></span><span>
+</span><span id="line-179"></span><span>    </span><span id="local-6989586621679276711"><span class="annot"><span class="annottext">parsePath :: String -&gt; m Path'
+</span><a href="#local-6989586621679276711"><span class="hs-identifier hs-var hs-var">parsePath</span></a></span></span><span> </span><span id="local-6989586621679276669"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679276669"><span class="hs-identifier hs-var">p</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(String -&gt; BackendError) -&gt; Either String Path' -&gt; m Path'
 forall e (m :: * -&gt; *) a a.
 MonadError e m =&gt;
 (a -&gt; e) -&gt; Either a a -&gt; m a
-</span><a href="#local-6989586621679274636"><span class="hs-identifier hs-var">errFromEither</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; String -&gt; BackendError
+</span><a href="#local-6989586621679276668"><span class="hs-identifier hs-var">errFromEither</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; String -&gt; BackendError
 </span><a href="Unison.Server.Backend.html#BadNamespace"><span class="hs-operator hs-var">`Backend.BadNamespace`</span></a></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679274637"><span class="hs-identifier hs-var">p</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(Either String Path' -&gt; m Path') -&gt; Either String Path' -&gt; m Path'
+</span><a href="#local-6989586621679276669"><span class="hs-identifier hs-var">p</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(Either String Path' -&gt; m Path') -&gt; Either String Path' -&gt; m Path'
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Either String Path'
 </span><span class="hs-identifier hs-var">Path.parsePath'</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679274637"><span class="hs-identifier hs-var">p</span></a></span><span>
-</span><span id="line-177"></span><span>    </span><span id="local-6989586621679274636"><span class="annot"><span class="annottext">errFromEither :: (a -&gt; e) -&gt; Either a a -&gt; m a
-</span><a href="#local-6989586621679274636"><span class="hs-identifier hs-var hs-var">errFromEither</span></a></span></span><span> </span><span id="local-6989586621679274633"><span class="annot"><span class="annottext">a -&gt; e
-</span><a href="#local-6989586621679274633"><span class="hs-identifier hs-var">f</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(a -&gt; m a) -&gt; (a -&gt; m a) -&gt; Either a a -&gt; m a
+</span><a href="#local-6989586621679276669"><span class="hs-identifier hs-var">p</span></a></span><span>
+</span><span id="line-180"></span><span>    </span><span id="local-6989586621679276668"><span class="annot"><span class="annottext">errFromEither :: (a -&gt; e) -&gt; Either a a -&gt; m a
+</span><a href="#local-6989586621679276668"><span class="hs-identifier hs-var hs-var">errFromEither</span></a></span></span><span> </span><span id="local-6989586621679276665"><span class="annot"><span class="annottext">a -&gt; e
+</span><a href="#local-6989586621679276665"><span class="hs-identifier hs-var">f</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(a -&gt; m a) -&gt; (a -&gt; m a) -&gt; Either a a -&gt; m a
 forall a c b. (a -&gt; c) -&gt; (b -&gt; c) -&gt; Either a b -&gt; c
 </span><span class="hs-identifier hs-var">either</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">e -&gt; m a
 forall e (m :: * -&gt; *) a. MonadError e m =&gt; e -&gt; m a
 </span><span class="hs-identifier hs-var">throwError</span></span><span> </span><span class="annot"><span class="annottext">(e -&gt; m a) -&gt; (a -&gt; e) -&gt; a -&gt; m a
 forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">a -&gt; e
-</span><a href="#local-6989586621679274633"><span class="hs-identifier hs-var">f</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">a -&gt; m a
+</span><a href="#local-6989586621679276665"><span class="hs-identifier hs-var">f</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">a -&gt; m a
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span>
-</span><span id="line-178"></span></pre></body></html>
+</span><span id="line-181"></span></pre></body></html>

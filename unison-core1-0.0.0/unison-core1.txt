@@ -231,8 +231,8 @@ toTermReference :: Referent' r -> Maybe r
 toTypeReference :: Referent' r -> Maybe r
 instance GHC.Generics.Generic (Unison.Referent'.Referent' r)
 instance GHC.Base.Functor Unison.Referent'.Referent'
-instance GHC.Classes.Eq r => GHC.Classes.Eq (Unison.Referent'.Referent' r)
 instance GHC.Classes.Ord r => GHC.Classes.Ord (Unison.Referent'.Referent' r)
+instance GHC.Classes.Eq r => GHC.Classes.Eq (Unison.Referent'.Referent' r)
 instance GHC.Show.Show r => GHC.Show.Show (Unison.Referent'.Referent' r)
 
 module Unison.Referent
@@ -673,6 +673,17 @@ fromSegment :: NameSegment -> Name
 --   <i>O(n)</i>, where <i>n</i> is the number of name segments.
 fromSegments :: NonEmpty NameSegment -> Name
 
+-- | Construct a relative name from a list of name segments which are in
+--   reverse order
+--   
+--   <pre>
+--   &gt;&gt;&gt; fromReverseSegments ("c" :| ["b", "a"])
+--   a.b.c
+--   </pre>
+--   
+--   <i>O(1)</i>
+fromReverseSegments :: NonEmpty NameSegment -> Name
+
 -- | Unsafely parse a name from a string literal.
 --   
 --   See <a>unsafeFromText</a>.
@@ -727,6 +738,11 @@ isPrefixOf :: Name -> Name -> Bool
 --   reverse order.
 --   
 --   Slightly more efficient than <a>endsWithSegments</a>.
+--   
+--   <pre>
+--   &gt;&gt;&gt; endsWithReverseSegments "a.b.c" ["c", "b"]
+--   True
+--   </pre>
 endsWithReverseSegments :: Name -> [NameSegment] -> Bool
 
 -- | <tt>endsWithSegments x y</tt> returns whether <tt>x</tt> ends with
@@ -749,6 +765,7 @@ endsWithReverseSegments :: Name -> [NameSegment] -> Bool
 --   
 --   <i>O(n)</i>, where <i>n</i> is the number of name segments.
 endsWithSegments :: Name -> [NameSegment] -> Bool
+stripReversedPrefix :: Name -> [NameSegment] -> Maybe Name
 
 -- | Return the name segments of a name, in reverse order.
 --   
@@ -1047,6 +1064,7 @@ filterBySHs :: Set ShortHash -> Names -> Names
 filterTypes :: (Name -> Bool) -> Names -> Names
 map :: (Name -> Name) -> Names -> Names
 makeAbsolute :: Names -> Names
+makeRelative :: Names -> Names
 fuzzyFind :: [String] -> Names -> [(Alignment, Name, Set (Either Referent Reference))]
 
 -- | Like hqTermName and hqTypeName, but considers term and type names to
@@ -1159,6 +1177,7 @@ NamesWithHistory :: Names -> Names -> NamesWithHistory
 --   may allow us to show more helpful context to users rather than just a
 --   hash.
 [oldNames] :: NamesWithHistory -> Names
+fromCurrentNames :: Names -> NamesWithHistory
 filterTypes :: (Name -> Bool) -> Names -> Names
 diff :: Names -> Names -> Diff
 data Diff
@@ -1213,6 +1232,26 @@ lookupHQPattern :: HashQualified Name -> ConstructorType -> NamesWithHistory -> 
 importing :: [(Name, Name)] -> NamesWithHistory -> NamesWithHistory
 instance GHC.Show.Show Unison.NamesWithHistory.NamesWithHistory
 instance GHC.Show.Show Unison.NamesWithHistory.Diff
+
+module Unison.Names.Scoped
+
+-- | Contains all useful permutations of names scoped to a given branch.
+data ScopedNames
+ScopedNames :: Names -> Names -> Names -> ScopedNames
+[absoluteExternalNames] :: ScopedNames -> Names
+[relativeScopedNames] :: ScopedNames -> Names
+[absoluteRootNames] :: ScopedNames -> Names
+
+-- | Return all names contained in the path, relative to that path.
+namesAtPath :: ScopedNames -> Names
+
+-- | Includes ALL absolute names AND includes relative names for anything
+--   in the path.
+parseNames :: ScopedNames -> Names
+
+-- | Includes includes relative names for anything in the path, and
+--   absolute names for everything else.
+prettyNames :: ScopedNames -> Names
 
 module Unison.Names.ResolutionResult
 data ResolutionError ref

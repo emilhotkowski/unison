@@ -327,6 +327,24 @@ localToDbDiff :: BranchLocalIds -> LocalDiff -> Diff
 instance GHC.Show.Show U.Codebase.Sqlite.Branch.Format.BranchLocalIds
 instance GHC.Show.Show U.Codebase.Sqlite.Branch.Format.BranchFormat
 
+module U.Codebase.Sqlite.NamedRef
+type ReversedSegments = NonEmpty Text
+data ConstructorType
+DataConstructor :: ConstructorType
+EffectConstructor :: ConstructorType
+data NamedRef ref
+NamedRef :: ReversedSegments -> ref -> NamedRef ref
+[reversedSegments] :: NamedRef ref -> ReversedSegments
+[ref] :: NamedRef ref -> ref
+instance Data.Traversable.Traversable U.Codebase.Sqlite.NamedRef.NamedRef
+instance Data.Foldable.Foldable U.Codebase.Sqlite.NamedRef.NamedRef
+instance GHC.Base.Functor U.Codebase.Sqlite.NamedRef.NamedRef
+instance GHC.Show.Show ref => GHC.Show.Show (U.Codebase.Sqlite.NamedRef.NamedRef ref)
+instance Database.SQLite.Simple.ToRow.ToRow ref => Database.SQLite.Simple.ToRow.ToRow (U.Codebase.Sqlite.NamedRef.NamedRef ref)
+instance Database.SQLite.Simple.FromRow.FromRow ref => Database.SQLite.Simple.FromRow.FromRow (U.Codebase.Sqlite.NamedRef.NamedRef ref)
+instance Database.SQLite.Simple.ToField.ToField U.Codebase.Sqlite.NamedRef.ConstructorType
+instance Database.SQLite.Simple.FromField.FromField U.Codebase.Sqlite.NamedRef.ConstructorType
+
 module U.Codebase.Sqlite.ObjectType
 
 -- | Don't reorder these, they are part of the database, and the ToField
@@ -343,6 +361,22 @@ instance GHC.Classes.Ord U.Codebase.Sqlite.ObjectType.ObjectType
 instance GHC.Classes.Eq U.Codebase.Sqlite.ObjectType.ObjectType
 instance Database.SQLite.Simple.ToField.ToField U.Codebase.Sqlite.ObjectType.ObjectType
 instance Database.SQLite.Simple.FromField.FromField U.Codebase.Sqlite.ObjectType.ObjectType
+
+module U.Codebase.Sqlite.Orphans
+newtype AsSqlite a
+AsSqlite :: a -> AsSqlite a
+[fromSQLite] :: AsSqlite a -> a
+instance GHC.Show.Show a => GHC.Show.Show (U.Codebase.Sqlite.Orphans.AsSqlite a)
+instance Database.SQLite.Simple.ToField.ToField U.Util.Base32Hex.Base32Hex
+instance Database.SQLite.Simple.FromField.FromField U.Util.Base32Hex.Base32Hex
+instance Database.SQLite.Simple.ToRow.ToRow (U.Codebase.Sqlite.Orphans.AsSqlite U.Codebase.Reference.Reference)
+instance Database.SQLite.Simple.ToRow.ToRow (U.Codebase.Sqlite.Orphans.AsSqlite U.Codebase.Referent.Referent)
+instance Database.SQLite.Simple.FromRow.FromRow (U.Codebase.Sqlite.Orphans.AsSqlite U.Codebase.Referent.Referent)
+instance Database.SQLite.Simple.FromRow.FromRow (U.Codebase.Sqlite.Orphans.AsSqlite U.Codebase.Reference.Reference)
+instance Database.SQLite.Simple.ToField.ToField (U.Codebase.Sqlite.Orphans.AsSqlite U.Util.Hash.Hash)
+instance Database.SQLite.Simple.FromField.FromField (U.Codebase.Sqlite.Orphans.AsSqlite U.Util.Hash.Hash)
+instance Database.SQLite.Simple.ToField.ToField U.Codebase.WatchKind.WatchKind
+instance Database.SQLite.Simple.FromField.FromField U.Codebase.WatchKind.WatchKind
 
 module U.Codebase.Sqlite.Patch.TermEdit
 type TermEdit = TermEdit' TextId ObjectId
@@ -449,28 +483,43 @@ localPatchDiffToPatchDiff :: PatchLocalIds -> LocalPatchDiff -> PatchDiff
 
 module U.Codebase.Sqlite.Reference
 type Reference = Reference' TextId ObjectId
+
+-- | The name lookup table uses this because normalizing/denormalizing
+--   hashes to ids is slower than we'd like when writing/reading the entire
+--   name lookup table.
+type TextReference = Reference' Text Base32Hex
 type Id = Id' ObjectId
 type LocalReferenceH = Reference' LocalTextId LocalHashId
 type LocalReference = Reference' LocalTextId LocalDefnId
 type LocalId = Id' LocalDefnId
 type ReferenceH = Reference' TextId HashId
 type IdH = Id' HashId
+referenceToRow :: (ToField t, ToField h) => Reference' t h -> [SQLData]
 referenceFromRow' :: (FromField t, FromField h, Show t, Show h) => RowParser (Reference' t h)
+instance Database.SQLite.Simple.ToRow.ToRow U.Codebase.Sqlite.Reference.Reference
+instance Database.SQLite.Simple.FromRow.FromRow U.Codebase.Sqlite.Reference.Reference
+instance Database.SQLite.Simple.ToRow.ToRow (U.Codebase.Reference.Reference' Data.Text.Internal.Text U.Util.Base32Hex.Base32Hex)
 instance Database.SQLite.Simple.ToRow.ToRow (U.Codebase.Reference.Reference' U.Codebase.Sqlite.DbId.TextId U.Codebase.Sqlite.DbId.HashId)
 instance Database.SQLite.Simple.FromRow.FromRow (U.Codebase.Reference.Reference' U.Codebase.Sqlite.DbId.TextId U.Codebase.Sqlite.DbId.HashId)
-instance Database.SQLite.Simple.FromRow.FromRow (U.Codebase.Reference.Reference' U.Codebase.Sqlite.DbId.TextId U.Codebase.Sqlite.DbId.ObjectId)
-instance Database.SQLite.Simple.ToRow.ToRow (U.Codebase.Reference.Reference' U.Codebase.Sqlite.DbId.TextId U.Codebase.Sqlite.DbId.ObjectId)
+instance Database.SQLite.Simple.FromRow.FromRow (U.Codebase.Reference.Reference' Data.Text.Internal.Text U.Util.Base32Hex.Base32Hex)
 instance Database.SQLite.Simple.ToField.ToField h => Database.SQLite.Simple.ToRow.ToRow (U.Codebase.Reference.Id' h)
 instance Database.SQLite.Simple.FromField.FromField h => Database.SQLite.Simple.FromRow.FromRow (U.Codebase.Reference.Id' h)
 
 module U.Codebase.Sqlite.Referent
 type Referent = Referent' Reference Reference
+
+-- | The name lookup table uses this because normalizing/denormalizing
+--   hashes to ids is slower than we'd like when writing/reading the entire
+--   name lookup table.
+type TextReferent = Referent' TextReference TextReference
 type ReferentH = Referent' ReferenceH ReferenceH
 type Id = Id' ObjectId ObjectId
 type LocalReferent = Referent' LocalReference LocalReference
 type LocalReferentH = Referent' LocalReferenceH LocalReferenceH
 instance Database.SQLite.Simple.ToRow.ToRow U.Codebase.Sqlite.Referent.Id
 instance Database.SQLite.Simple.FromRow.FromRow U.Codebase.Sqlite.Referent.Id
+instance Database.SQLite.Simple.ToRow.ToRow (U.Codebase.Reference.Reference' t h) => Database.SQLite.Simple.ToRow.ToRow (U.Codebase.Referent.Referent' (U.Codebase.Reference.Reference' t h) (U.Codebase.Reference.Reference' t h))
+instance Database.SQLite.Simple.FromRow.FromRow (U.Codebase.Reference.Reference' t h) => Database.SQLite.Simple.FromRow.FromRow (U.Codebase.Referent.Referent' (U.Codebase.Reference.Reference' t h) (U.Codebase.Reference.Reference' t h))
 
 
 -- | Some naming conventions used in this module:
@@ -611,6 +660,24 @@ objectIdByBase32Prefix :: ObjectType -> Text -> Transaction [ObjectId]
 namespaceHashIdByBase32Prefix :: Text -> Transaction [BranchHashId]
 causalHashIdByBase32Prefix :: Text -> Transaction [CausalHashId]
 
+-- | Drop and recreate the name lookup tables. Use this when resetting
+--   names to a new branch.
+resetNameLookupTables :: Transaction ()
+
+-- | Insert the given set of term names into the name lookup table
+insertTermNames :: [NamedRef (TextReferent, Maybe ConstructorType)] -> Transaction ()
+
+-- | Insert the given set of type names into the name lookup table
+insertTypeNames :: [NamedRef TextReference] -> Transaction ()
+
+-- | Get the list of a term names in the root namespace according to the
+--   name lookup index
+rootTermNames :: Transaction [NamedRef (TextReferent, Maybe ConstructorType)]
+
+-- | Get the list of a type names in the root namespace according to the
+--   name lookup index
+rootTypeNames :: Transaction [NamedRef TextReference]
+
 -- | Delete objects without hashes. An object typically *would* have a
 --   hash, but (for example) during a migration in which an object's hash
 --   may change, its corresponding hash_object row may be updated to point
@@ -629,10 +696,6 @@ expectSchemaVersion :: SchemaVersion -> Transaction ()
 setSchemaVersion :: SchemaVersion -> Transaction ()
 instance Unison.Sqlite.Exception.SqliteExceptionReason U.Codebase.Sqlite.Queries.UnexpectedSchemaVersion
 instance GHC.Show.Show U.Codebase.Sqlite.Queries.UnexpectedSchemaVersion
-instance Database.SQLite.Simple.ToField.ToField U.Util.Base32Hex.Base32Hex
-instance Database.SQLite.Simple.FromField.FromField U.Util.Base32Hex.Base32Hex
-instance Database.SQLite.Simple.ToField.ToField U.Codebase.WatchKind.WatchKind
-instance Database.SQLite.Simple.FromField.FromField U.Codebase.WatchKind.WatchKind
 
 
 -- | This module facilitates the creation of "localized" versions of
@@ -899,6 +962,14 @@ addTypeToIndexForTerm :: Id -> Reference -> Transaction ()
 termsHavingType :: Reference -> Transaction (Set Id)
 addTypeMentionsToIndexForTerm :: Id -> Set Reference -> Transaction ()
 termsMentioningType :: Reference -> Transaction (Set Id)
+
+-- | Given the list of term and type names from the root branch, rebuild
+--   the name lookup table.
+rebuildNameIndex :: [NamedRef (Referent, Maybe ConstructorType)] -> [NamedRef Reference] -> Transaction ()
+
+-- | Get all the term and type names for the root namespace from the lookup
+--   table.
+rootBranchNames :: Transaction ([NamedRef (Referent, Maybe ConstructorType)], [NamedRef Reference])
 expectDbBranch :: BranchObjectId -> Transaction DbBranch
 expectDbPatch :: PatchObjectId -> Transaction Patch
 saveBranchObject :: BranchHashId -> BranchLocalIds -> LocalBranch -> Transaction BranchObjectId
