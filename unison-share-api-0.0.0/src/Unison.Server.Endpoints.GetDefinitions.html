@@ -51,7 +51,7 @@
 </span><span id="line-51"></span><span>    </span><span class="annot"><span class="hs-operator hs-type">:&gt;</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#APIGet"><span class="hs-identifier hs-type">APIGet</span></a></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#DefinitionDisplayResults"><span class="hs-identifier hs-type">DefinitionDisplayResults</span></a></span><span>
 </span><span id="line-52"></span><span>
 </span><span id="line-53"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToParam</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">QueryParam</span></span><span> </span><span class="annot"><span class="hs-string">&quot;renderWidth&quot;</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Width</span></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-54"></span><span>  </span><span id="local-6989586621679276590"><span class="annot"><span class="annottext">toParam :: Proxy (QueryParam &quot;renderWidth&quot; Width) -&gt; DocQueryParam
+</span><span id="line-54"></span><span>  </span><span id="local-6989586621679280588"><span class="annot"><span class="annottext">toParam :: Proxy (QueryParam &quot;renderWidth&quot; Width) -&gt; DocQueryParam
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var">toParam</span></span></span><span> </span><span class="annot"><span class="annottext">Proxy (QueryParam &quot;renderWidth&quot; Width)
 </span><span class="hs-identifier">_</span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-55"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; [String] -&gt; String -&gt; ParamKind -&gt; DocQueryParam
@@ -87,8 +87,8 @@ forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-identifier hs-var">Normal</span></span><span>
 </span><span id="line-65"></span><span>
 </span><span id="line-66"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToParam</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">QueryParam</span></span><span> </span><span class="annot"><span class="hs-string">&quot;suffixifyBindings&quot;</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#Suffixify"><span class="hs-identifier hs-type">Suffixify</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-67"></span><span>  </span><span id="local-6989586621679276584"><span class="annot"><span class="annottext">toParam :: Proxy (QueryParam &quot;suffixifyBindings&quot; Suffixify) -&gt; DocQueryParam
-</span><a href="#local-6989586621679276584"><span class="hs-identifier hs-var hs-var hs-var hs-var">toParam</span></a></span></span><span> </span><span class="annot"><span class="annottext">Proxy (QueryParam &quot;suffixifyBindings&quot; Suffixify)
+</span><span id="line-67"></span><span>  </span><span id="local-6989586621679280582"><span class="annot"><span class="annottext">toParam :: Proxy (QueryParam &quot;suffixifyBindings&quot; Suffixify) -&gt; DocQueryParam
+</span><a href="#local-6989586621679280582"><span class="hs-identifier hs-var hs-var hs-var hs-var">toParam</span></a></span></span><span> </span><span class="annot"><span class="annottext">Proxy (QueryParam &quot;suffixifyBindings&quot; Suffixify)
 </span><span class="hs-identifier">_</span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-68"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; [String] -&gt; String -&gt; ParamKind -&gt; DocQueryParam
 </span><span class="hs-identifier hs-var">DocQueryParam</span></span><span>
@@ -108,8 +108,8 @@ forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-identifier hs-var">Normal</span></span><span>
 </span><span id="line-75"></span><span>
 </span><span id="line-76"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToParam</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">QueryParam</span></span><span> </span><span class="annot"><span class="hs-string">&quot;relativeTo&quot;</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#NamespaceFQN"><span class="hs-identifier hs-type">NamespaceFQN</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-77"></span><span>  </span><span id="local-6989586621679276582"><span class="annot"><span class="annottext">toParam :: Proxy (QueryParam &quot;relativeTo&quot; NamespaceFQN) -&gt; DocQueryParam
-</span><a href="#local-6989586621679276582"><span class="hs-identifier hs-var hs-var hs-var hs-var">toParam</span></a></span></span><span> </span><span class="annot"><span class="annottext">Proxy (QueryParam &quot;relativeTo&quot; NamespaceFQN)
+</span><span id="line-77"></span><span>  </span><span id="local-6989586621679280580"><span class="annot"><span class="annottext">toParam :: Proxy (QueryParam &quot;relativeTo&quot; NamespaceFQN) -&gt; DocQueryParam
+</span><a href="#local-6989586621679280580"><span class="hs-identifier hs-var hs-var hs-var hs-var">toParam</span></a></span></span><span> </span><span class="annot"><span class="annottext">Proxy (QueryParam &quot;relativeTo&quot; NamespaceFQN)
 </span><span class="hs-identifier">_</span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-78"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; [String] -&gt; String -&gt; ParamKind -&gt; DocQueryParam
 </span><span class="hs-identifier hs-var">DocQueryParam</span></span><span>
@@ -130,8 +130,8 @@ forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-identifier hs-var">Normal</span></span><span>
 </span><span id="line-85"></span><span>
 </span><span id="line-86"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToParam</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">QueryParam</span></span><span> </span><span class="annot"><span class="hs-string">&quot;rootBranch&quot;</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">ShortBranchHash</span></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-87"></span><span>  </span><span id="local-6989586621679276580"><span class="annot"><span class="annottext">toParam :: Proxy (QueryParam &quot;rootBranch&quot; ShortBranchHash) -&gt; DocQueryParam
-</span><a href="#local-6989586621679276580"><span class="hs-identifier hs-var hs-var hs-var hs-var">toParam</span></a></span></span><span> </span><span class="annot"><span class="annottext">Proxy (QueryParam &quot;rootBranch&quot; ShortBranchHash)
+</span><span id="line-87"></span><span>  </span><span id="local-6989586621679280578"><span class="annot"><span class="annottext">toParam :: Proxy (QueryParam &quot;rootBranch&quot; ShortBranchHash) -&gt; DocQueryParam
+</span><a href="#local-6989586621679280578"><span class="hs-identifier hs-var hs-var hs-var hs-var">toParam</span></a></span></span><span> </span><span class="annot"><span class="annottext">Proxy (QueryParam &quot;rootBranch&quot; ShortBranchHash)
 </span><span class="hs-identifier">_</span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-88"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; [String] -&gt; String -&gt; ParamKind -&gt; DocQueryParam
 </span><span class="hs-identifier hs-var">DocQueryParam</span></span><span>
@@ -150,8 +150,8 @@ forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-identifier hs-var">Normal</span></span><span>
 </span><span id="line-95"></span><span>
 </span><span id="line-96"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToParam</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">QueryParams</span></span><span> </span><span class="annot"><span class="hs-string">&quot;names&quot;</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-97"></span><span>  </span><span id="local-6989586621679276577"><span class="annot"><span class="annottext">toParam :: Proxy (QueryParams &quot;names&quot; NamespaceFQN) -&gt; DocQueryParam
-</span><a href="#local-6989586621679276577"><span class="hs-identifier hs-var hs-var hs-var hs-var">toParam</span></a></span></span><span> </span><span class="annot"><span class="annottext">Proxy (QueryParams &quot;names&quot; NamespaceFQN)
+</span><span id="line-97"></span><span>  </span><span id="local-6989586621679280575"><span class="annot"><span class="annottext">toParam :: Proxy (QueryParams &quot;names&quot; NamespaceFQN) -&gt; DocQueryParam
+</span><a href="#local-6989586621679280575"><span class="hs-identifier hs-var hs-var hs-var hs-var">toParam</span></a></span></span><span> </span><span class="annot"><span class="annottext">Proxy (QueryParams &quot;names&quot; NamespaceFQN)
 </span><span class="hs-identifier">_</span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-98"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; [String] -&gt; String -&gt; ParamKind -&gt; DocQueryParam
 </span><span class="hs-identifier hs-var">DocQueryParam</span></span><span>
@@ -170,7 +170,7 @@ forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-identifier hs-var">List</span></span><span>
 </span><span id="line-103"></span><span>
 </span><span id="line-104"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSample</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#DefinitionDisplayResults"><span class="hs-identifier hs-type">DefinitionDisplayResults</span></a></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-105"></span><span>  </span><span id="local-6989586621679276573"><span class="annot"><span class="annottext">toSamples :: Proxy DefinitionDisplayResults
+</span><span id="line-105"></span><span>  </span><span id="local-6989586621679280571"><span class="annot"><span class="annottext">toSamples :: Proxy DefinitionDisplayResults
 -&gt; [(NamespaceFQN, DefinitionDisplayResults)]
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var">toSamples</span></span></span><span> </span><span class="annot"><span class="annottext">Proxy DefinitionDisplayResults
 </span><span class="hs-identifier">_</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[(NamespaceFQN, DefinitionDisplayResults)]
@@ -194,17 +194,17 @@ forall a. [(NamespaceFQN, a)]
 -&gt; Maybe Width
 -&gt; Maybe Suffixify
 -&gt; Backend IO DefinitionDisplayResults
-</span><a href="Unison.Server.Endpoints.GetDefinitions.html#serveDefinitions"><span class="hs-identifier hs-var hs-var">serveDefinitions</span></a></span></span><span> </span><span id="local-6989586621679276570"><span class="annot"><span class="annottext">Runtime Symbol
-</span><a href="#local-6989586621679276570"><span class="hs-identifier hs-var">rt</span></a></span></span><span> </span><span id="local-6989586621679276569"><span class="annot"><span class="annottext">Codebase IO Symbol Ann
-</span><a href="#local-6989586621679276569"><span class="hs-identifier hs-var">codebase</span></a></span></span><span> </span><span id="local-6989586621679276568"><span class="annot"><span class="annottext">Maybe ShortBranchHash
-</span><a href="#local-6989586621679276568"><span class="hs-identifier hs-var">mayRoot</span></a></span></span><span> </span><span id="local-6989586621679276567"><span class="annot"><span class="annottext">Maybe NamespaceFQN
-</span><a href="#local-6989586621679276567"><span class="hs-identifier hs-var">relativePath</span></a></span></span><span> </span><span id="local-6989586621679276566"><span class="annot"><span class="annottext">[NamespaceFQN]
-</span><a href="#local-6989586621679276566"><span class="hs-identifier hs-var">rawHqns</span></a></span></span><span> </span><span id="local-6989586621679276565"><span class="annot"><span class="annottext">Maybe Width
-</span><a href="#local-6989586621679276565"><span class="hs-identifier hs-var">width</span></a></span></span><span> </span><span id="local-6989586621679276564"><span class="annot"><span class="annottext">Maybe Suffixify
-</span><a href="#local-6989586621679276564"><span class="hs-identifier hs-var">suff</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><a href="Unison.Server.Endpoints.GetDefinitions.html#serveDefinitions"><span class="hs-identifier hs-var hs-var">serveDefinitions</span></a></span></span><span> </span><span id="local-6989586621679280568"><span class="annot"><span class="annottext">Runtime Symbol
+</span><a href="#local-6989586621679280568"><span class="hs-identifier hs-var">rt</span></a></span></span><span> </span><span id="local-6989586621679280567"><span class="annot"><span class="annottext">Codebase IO Symbol Ann
+</span><a href="#local-6989586621679280567"><span class="hs-identifier hs-var">codebase</span></a></span></span><span> </span><span id="local-6989586621679280566"><span class="annot"><span class="annottext">Maybe ShortBranchHash
+</span><a href="#local-6989586621679280566"><span class="hs-identifier hs-var">mayRoot</span></a></span></span><span> </span><span id="local-6989586621679280565"><span class="annot"><span class="annottext">Maybe NamespaceFQN
+</span><a href="#local-6989586621679280565"><span class="hs-identifier hs-var">relativePath</span></a></span></span><span> </span><span id="local-6989586621679280564"><span class="annot"><span class="annottext">[NamespaceFQN]
+</span><a href="#local-6989586621679280564"><span class="hs-identifier hs-var">rawHqns</span></a></span></span><span> </span><span id="local-6989586621679280563"><span class="annot"><span class="annottext">Maybe Width
+</span><a href="#local-6989586621679280563"><span class="hs-identifier hs-var">width</span></a></span></span><span> </span><span id="local-6989586621679280562"><span class="annot"><span class="annottext">Maybe Suffixify
+</span><a href="#local-6989586621679280562"><span class="hs-identifier hs-var">suff</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-117"></span><span>  </span><span class="hs-keyword">do</span><span>
-</span><span id="line-118"></span><span>    </span><span id="local-6989586621679276563"><span class="annot"><span class="annottext">Maybe Path
-</span><a href="#local-6989586621679276563"><span class="hs-identifier hs-var">rel</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span>
+</span><span id="line-118"></span><span>    </span><span id="local-6989586621679280561"><span class="annot"><span class="annottext">Maybe Path
+</span><a href="#local-6989586621679280561"><span class="hs-identifier hs-var">rel</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span>
 </span><span id="line-119"></span><span>      </span><span class="annot"><span class="annottext">(Path' -&gt; Path) -&gt; Maybe Path' -&gt; Maybe Path
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-identifier hs-var">fmap</span></span><span> </span><span class="annot"><span class="annottext">Path' -&gt; Path
@@ -220,14 +220,14 @@ forall (t :: * -&gt; *) (f :: * -&gt; *) a b.
 forall (m :: * -&gt; *).
 MonadError BackendError m =&gt;
 String -&gt; m Path'
-</span><a href="#local-6989586621679276559"><span class="hs-identifier hs-var">parsePath</span></a></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Backend IO Path')
+</span><a href="#local-6989586621679280557"><span class="hs-identifier hs-var">parsePath</span></a></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Backend IO Path')
 -&gt; (NamespaceFQN -&gt; String) -&gt; NamespaceFQN -&gt; Backend IO Path'
 forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">NamespaceFQN -&gt; String
 </span><span class="hs-identifier hs-var">Text.unpack</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Maybe NamespaceFQN
-</span><a href="#local-6989586621679276567"><span class="hs-identifier hs-var">relativePath</span></a></span><span>
-</span><span id="line-120"></span><span>    </span><span id="local-6989586621679276556"><span class="annot"><span class="annottext">Maybe Hash
-</span><a href="#local-6989586621679276556"><span class="hs-identifier hs-var">root</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(ShortBranchHash -&gt; Backend IO Hash)
+</span><a href="#local-6989586621679280565"><span class="hs-identifier hs-var">relativePath</span></a></span><span>
+</span><span id="line-120"></span><span>    </span><span id="local-6989586621679280554"><span class="annot"><span class="annottext">Maybe Hash
+</span><a href="#local-6989586621679280554"><span class="hs-identifier hs-var">root</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(ShortBranchHash -&gt; Backend IO Hash)
 -&gt; Maybe ShortBranchHash -&gt; Backend IO (Maybe Hash)
 forall (t :: * -&gt; *) (f :: * -&gt; *) a b.
 (Traversable t, Applicative f) =&gt;
@@ -237,15 +237,15 @@ forall (m :: * -&gt; *) v a.
 Monad m =&gt;
 Codebase m v a -&gt; ShortBranchHash -&gt; Backend m Hash
 </span><a href="Unison.Server.Backend.html#expandShortBranchHash"><span class="hs-identifier hs-var">Backend.expandShortBranchHash</span></a></span><span> </span><span class="annot"><span class="annottext">Codebase IO Symbol Ann
-</span><a href="#local-6989586621679276569"><span class="hs-identifier hs-var">codebase</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Maybe ShortBranchHash
-</span><a href="#local-6989586621679276568"><span class="hs-identifier hs-var">mayRoot</span></a></span><span>
-</span><span id="line-121"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679276554"><span class="annot"><span class="annottext">hqns :: [HashQualified Name]
-</span><a href="#local-6989586621679276554"><span class="hs-identifier hs-var hs-var">hqns</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">NamespaceFQN -&gt; HashQualified Name
+</span><a href="#local-6989586621679280567"><span class="hs-identifier hs-var">codebase</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Maybe ShortBranchHash
+</span><a href="#local-6989586621679280566"><span class="hs-identifier hs-var">mayRoot</span></a></span><span>
+</span><span id="line-121"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679280552"><span class="annot"><span class="annottext">hqns :: [HashQualified Name]
+</span><a href="#local-6989586621679280552"><span class="hs-identifier hs-var hs-var">hqns</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">NamespaceFQN -&gt; HashQualified Name
 </span><span class="hs-identifier hs-var">HQ.unsafeFromText</span></span><span> </span><span class="annot"><span class="annottext">(NamespaceFQN -&gt; HashQualified Name)
 -&gt; [NamespaceFQN] -&gt; [HashQualified Name]
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">[NamespaceFQN]
-</span><a href="#local-6989586621679276566"><span class="hs-identifier hs-var">rawHqns</span></a></span><span>
+</span><a href="#local-6989586621679280564"><span class="hs-identifier hs-var">rawHqns</span></a></span><span>
 </span><span id="line-122"></span><span>    </span><span class="annot"><span class="annottext">Path
 -&gt; Maybe Hash
 -&gt; Maybe Width
@@ -259,47 +259,47 @@ forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 forall a. a -&gt; Maybe a -&gt; a
 </span><span class="hs-identifier hs-var">fromMaybe</span></span><span> </span><span class="annot"><span class="annottext">Path
 </span><span class="hs-identifier hs-var">Path.empty</span></span><span> </span><span class="annot"><span class="annottext">Maybe Path
-</span><a href="#local-6989586621679276563"><span class="hs-identifier hs-var">rel</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679280561"><span class="hs-identifier hs-var">rel</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-124"></span><span>      </span><span class="annot"><span class="annottext">Maybe Hash
-</span><a href="#local-6989586621679276556"><span class="hs-identifier hs-var">root</span></a></span><span>
+</span><a href="#local-6989586621679280554"><span class="hs-identifier hs-var">root</span></a></span><span>
 </span><span id="line-125"></span><span>      </span><span class="annot"><span class="annottext">Maybe Width
-</span><a href="#local-6989586621679276565"><span class="hs-identifier hs-var">width</span></a></span><span>
+</span><a href="#local-6989586621679280563"><span class="hs-identifier hs-var">width</span></a></span><span>
 </span><span id="line-126"></span><span>      </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Suffixify -&gt; Maybe Suffixify -&gt; Suffixify
 forall a. a -&gt; Maybe a -&gt; a
 </span><span class="hs-identifier hs-var">fromMaybe</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Bool -&gt; Suffixify
 </span><a href="Unison.Server.Types.html#Suffixify"><span class="hs-identifier hs-var">Suffixify</span></a></span><span> </span><span class="annot"><span class="annottext">Bool
 </span><span class="hs-identifier hs-var">True</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Maybe Suffixify
-</span><a href="#local-6989586621679276564"><span class="hs-identifier hs-var">suff</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679280562"><span class="hs-identifier hs-var">suff</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-127"></span><span>      </span><span class="annot"><span class="annottext">Runtime Symbol
-</span><a href="#local-6989586621679276570"><span class="hs-identifier hs-var">rt</span></a></span><span>
+</span><a href="#local-6989586621679280568"><span class="hs-identifier hs-var">rt</span></a></span><span>
 </span><span id="line-128"></span><span>      </span><span class="annot"><span class="annottext">Codebase IO Symbol Ann
-</span><a href="#local-6989586621679276569"><span class="hs-identifier hs-var">codebase</span></a></span><span>
+</span><a href="#local-6989586621679280567"><span class="hs-identifier hs-var">codebase</span></a></span><span>
 </span><span id="line-129"></span><span>      </span><span class="annot"><span class="annottext">[HashQualified Name]
-</span><a href="#local-6989586621679276554"><span class="hs-identifier hs-var">hqns</span></a></span><span>
+</span><a href="#local-6989586621679280552"><span class="hs-identifier hs-var">hqns</span></a></span><span>
 </span><span id="line-130"></span><span>  </span><span class="hs-keyword">where</span><span>
-</span><span id="line-131"></span><span>    </span><span id="local-6989586621679276559"><span class="annot"><span class="annottext">parsePath :: String -&gt; m Path'
-</span><a href="#local-6989586621679276559"><span class="hs-identifier hs-var hs-var">parsePath</span></a></span></span><span> </span><span id="local-6989586621679276548"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679276548"><span class="hs-identifier hs-var">p</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(String -&gt; BackendError) -&gt; Either String Path' -&gt; m Path'
+</span><span id="line-131"></span><span>    </span><span id="local-6989586621679280557"><span class="annot"><span class="annottext">parsePath :: String -&gt; m Path'
+</span><a href="#local-6989586621679280557"><span class="hs-identifier hs-var hs-var">parsePath</span></a></span></span><span> </span><span id="local-6989586621679280546"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679280546"><span class="hs-identifier hs-var">p</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(String -&gt; BackendError) -&gt; Either String Path' -&gt; m Path'
 forall e (m :: * -&gt; *) a a.
 MonadError e m =&gt;
 (a -&gt; e) -&gt; Either a a -&gt; m a
-</span><a href="#local-6989586621679276547"><span class="hs-identifier hs-var">errFromEither</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; String -&gt; BackendError
+</span><a href="#local-6989586621679280545"><span class="hs-identifier hs-var">errFromEither</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; String -&gt; BackendError
 </span><a href="Unison.Server.Backend.html#BadNamespace"><span class="hs-operator hs-var">`Backend.BadNamespace`</span></a></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679276548"><span class="hs-identifier hs-var">p</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(Either String Path' -&gt; m Path') -&gt; Either String Path' -&gt; m Path'
+</span><a href="#local-6989586621679280546"><span class="hs-identifier hs-var">p</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(Either String Path' -&gt; m Path') -&gt; Either String Path' -&gt; m Path'
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Either String Path'
 </span><span class="hs-identifier hs-var">Path.parsePath'</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679276548"><span class="hs-identifier hs-var">p</span></a></span><span>
-</span><span id="line-132"></span><span>    </span><span id="local-6989586621679276547"><span class="annot"><span class="annottext">errFromEither :: (a -&gt; e) -&gt; Either a a -&gt; m a
-</span><a href="#local-6989586621679276547"><span class="hs-identifier hs-var hs-var">errFromEither</span></a></span></span><span> </span><span id="local-6989586621679276544"><span class="annot"><span class="annottext">a -&gt; e
-</span><a href="#local-6989586621679276544"><span class="hs-identifier hs-var">f</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(a -&gt; m a) -&gt; (a -&gt; m a) -&gt; Either a a -&gt; m a
+</span><a href="#local-6989586621679280546"><span class="hs-identifier hs-var">p</span></a></span><span>
+</span><span id="line-132"></span><span>    </span><span id="local-6989586621679280545"><span class="annot"><span class="annottext">errFromEither :: (a -&gt; e) -&gt; Either a a -&gt; m a
+</span><a href="#local-6989586621679280545"><span class="hs-identifier hs-var hs-var">errFromEither</span></a></span></span><span> </span><span id="local-6989586621679280542"><span class="annot"><span class="annottext">a -&gt; e
+</span><a href="#local-6989586621679280542"><span class="hs-identifier hs-var">f</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(a -&gt; m a) -&gt; (a -&gt; m a) -&gt; Either a a -&gt; m a
 forall a c b. (a -&gt; c) -&gt; (b -&gt; c) -&gt; Either a b -&gt; c
 </span><span class="hs-identifier hs-var">either</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">e -&gt; m a
 forall e (m :: * -&gt; *) a. MonadError e m =&gt; e -&gt; m a
 </span><span class="hs-identifier hs-var">throwError</span></span><span> </span><span class="annot"><span class="annottext">(e -&gt; m a) -&gt; (a -&gt; e) -&gt; a -&gt; m a
 forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">a -&gt; e
-</span><a href="#local-6989586621679276544"><span class="hs-identifier hs-var">f</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">a -&gt; m a
+</span><a href="#local-6989586621679280542"><span class="hs-identifier hs-var">f</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">a -&gt; m a
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span>
 </span><span id="line-133"></span></pre></body></html>

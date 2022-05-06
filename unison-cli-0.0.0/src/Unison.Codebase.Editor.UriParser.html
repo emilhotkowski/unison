@@ -49,25 +49,25 @@ String -&gt; m a -&gt; m a
 -&gt; P ReadRemoteNamespace -&gt; P ReadRemoteNamespace
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-43"></span><span>  </span><span id="local-6989586621679959525"><span class="annot"><span class="annottext">GitProtocol
-</span><a href="#local-6989586621679959525"><span class="hs-identifier hs-var">protocol</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">P GitProtocol
+</span><span id="line-43"></span><span>  </span><span id="local-6989586621679959529"><span class="annot"><span class="annottext">GitProtocol
+</span><a href="#local-6989586621679959529"><span class="hs-identifier hs-var">protocol</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">P GitProtocol
 </span><a href="Unison.Codebase.Editor.UriParser.html#parseProtocol"><span class="hs-identifier hs-var">parseProtocol</span></a></span><span>
-</span><span id="line-44"></span><span>  </span><span id="local-6989586621679959523"><span class="annot"><span class="annottext">Maybe Text
-</span><a href="#local-6989586621679959523"><span class="hs-identifier hs-var">treeish</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
+</span><span id="line-44"></span><span>  </span><span id="local-6989586621679959527"><span class="annot"><span class="annottext">Maybe Text
+</span><a href="#local-6989586621679959527"><span class="hs-identifier hs-var">treeish</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
 -&gt; ParsecT Void Text Identity (Maybe Text)
 forall (f :: * -&gt; *) a. Alternative f =&gt; f a -&gt; f (Maybe a)
 </span><span class="hs-identifier hs-var">P.optional</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
 </span><a href="Unison.Codebase.Editor.UriParser.html#treeishSuffix"><span class="hs-identifier hs-var">treeishSuffix</span></a></span><span>
-</span><span id="line-45"></span><span>  </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679959520"><span class="annot"><span class="annottext">repo :: ReadRepo
-</span><a href="#local-6989586621679959520"><span class="hs-identifier hs-var hs-var">repo</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ReadGitRepo :: Text -&gt; Maybe Text -&gt; ReadRepo
+</span><span id="line-45"></span><span>  </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679959524"><span class="annot"><span class="annottext">repo :: ReadRepo
+</span><a href="#local-6989586621679959524"><span class="hs-identifier hs-var hs-var">repo</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ReadGitRepo :: Text -&gt; Maybe Text -&gt; ReadRepo
 </span><span class="hs-identifier hs-type">ReadGitRepo</span></span><span> </span><span class="hs-special">{</span><span class="annot"><span class="annottext">url :: Text
 </span><span class="hs-identifier hs-var">url</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">GitProtocol -&gt; Text
 </span><a href="Unison.Codebase.Editor.UriParser.html#printProtocol"><span class="hs-identifier hs-var">printProtocol</span></a></span><span> </span><span class="annot"><span class="annottext">GitProtocol
-</span><a href="#local-6989586621679959525"><span class="hs-identifier hs-var">protocol</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">ref :: Maybe Text
+</span><a href="#local-6989586621679959529"><span class="hs-identifier hs-var">protocol</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">ref :: Maybe Text
 </span><span class="hs-identifier hs-var">ref</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Maybe Text
-</span><a href="#local-6989586621679959523"><span class="hs-identifier hs-var">treeish</span></a></span><span class="hs-special">}</span><span>
-</span><span id="line-46"></span><span>  </span><span id="local-6989586621679959515"><span class="annot"><span class="annottext">Maybe (Maybe ShortBranchHash, Path)
-</span><a href="#local-6989586621679959515"><span class="hs-identifier hs-var">nshashPath</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity (Maybe ShortBranchHash, Path)
+</span><a href="#local-6989586621679959527"><span class="hs-identifier hs-var">treeish</span></a></span><span class="hs-special">}</span><span>
+</span><span id="line-46"></span><span>  </span><span id="local-6989586621679959519"><span class="annot"><span class="annottext">Maybe (Maybe ShortBranchHash, Path)
+</span><a href="#local-6989586621679959519"><span class="hs-identifier hs-var">nshashPath</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity (Maybe ShortBranchHash, Path)
 -&gt; ParsecT Void Text Identity (Maybe (Maybe ShortBranchHash, Path))
 forall (f :: * -&gt; *) a. Alternative f =&gt; f a -&gt; f (Maybe a)
 </span><span class="hs-identifier hs-var">P.optional</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Token Text -&gt; ParsecT Void Text Identity (Token Text)
@@ -83,23 +83,23 @@ forall (f :: * -&gt; *) a b. Applicative f =&gt; f a -&gt; f b -&gt; f b
 </span><span class="hs-operator hs-var">*&gt;</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity (Maybe ShortBranchHash, Path)
 </span><a href="Unison.Codebase.Editor.UriParser.html#namespaceHashPath"><span class="hs-identifier hs-var">namespaceHashPath</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-47"></span><span>  </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">Maybe (Maybe ShortBranchHash, Path)
-</span><a href="#local-6989586621679959515"><span class="hs-identifier hs-var">nshashPath</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><a href="#local-6989586621679959519"><span class="hs-identifier hs-var">nshashPath</span></a></span><span> </span><span class="hs-keyword">of</span><span>
 </span><span id="line-48"></span><span>    </span><span class="annot"><span class="annottext">Maybe (Maybe ShortBranchHash, Path)
 </span><span class="hs-identifier hs-var">Nothing</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">ReadRemoteNamespace -&gt; P ReadRemoteNamespace
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ReadRepo
-</span><a href="#local-6989586621679959520"><span class="hs-identifier hs-var">repo</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Maybe ShortBranchHash
+</span><a href="#local-6989586621679959524"><span class="hs-identifier hs-var">repo</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Maybe ShortBranchHash
 forall a. Maybe a
 </span><span class="hs-identifier hs-var">Nothing</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Path
 </span><span class="hs-identifier hs-var">Path.empty</span></span><span class="hs-special">)</span><span>
-</span><span id="line-49"></span><span>    </span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679959511"><span class="annot"><span class="annottext">Maybe ShortBranchHash
-</span><a href="#local-6989586621679959511"><span class="hs-identifier hs-var">sbh</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679959510"><span class="annot"><span class="annottext">Path
-</span><a href="#local-6989586621679959510"><span class="hs-identifier hs-var">p</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">ReadRemoteNamespace -&gt; P ReadRemoteNamespace
+</span><span id="line-49"></span><span>    </span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679959515"><span class="annot"><span class="annottext">Maybe ShortBranchHash
+</span><a href="#local-6989586621679959515"><span class="hs-identifier hs-var">sbh</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679959514"><span class="annot"><span class="annottext">Path
+</span><a href="#local-6989586621679959514"><span class="hs-identifier hs-var">p</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">ReadRemoteNamespace -&gt; P ReadRemoteNamespace
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ReadRepo
-</span><a href="#local-6989586621679959520"><span class="hs-identifier hs-var">repo</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Maybe ShortBranchHash
-</span><a href="#local-6989586621679959511"><span class="hs-identifier hs-var">sbh</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Path
-</span><a href="#local-6989586621679959510"><span class="hs-identifier hs-var">p</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679959524"><span class="hs-identifier hs-var">repo</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Maybe ShortBranchHash
+</span><a href="#local-6989586621679959515"><span class="hs-identifier hs-var">sbh</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Path
+</span><a href="#local-6989586621679959514"><span class="hs-identifier hs-var">p</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-50"></span><span>
 </span><span id="line-51"></span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#writeRepo"><span class="hs-identifier hs-type">writeRepo</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#P"><span class="hs-identifier hs-type">P</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">WriteRepo</span></span><span>
 </span><span id="line-52"></span><span id="writeRepo"><span class="annot"><span class="annottext">writeRepo :: P WriteRepo
@@ -111,11 +111,11 @@ String -&gt; m a -&gt; m a
 </span><span class="hs-string">&quot;repo root for writing&quot;</span></span><span> </span><span class="annot"><span class="annottext">(P WriteRepo -&gt; P WriteRepo) -&gt; P WriteRepo -&gt; P WriteRepo
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-53"></span><span>  </span><span id="local-6989586621679959509"><span class="annot"><span class="annottext">GitProtocol
-</span><a href="#local-6989586621679959509"><span class="hs-identifier hs-var">uri</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">P GitProtocol
+</span><span id="line-53"></span><span>  </span><span id="local-6989586621679959513"><span class="annot"><span class="annottext">GitProtocol
+</span><a href="#local-6989586621679959513"><span class="hs-identifier hs-var">uri</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">P GitProtocol
 </span><a href="Unison.Codebase.Editor.UriParser.html#parseProtocol"><span class="hs-identifier hs-var">parseProtocol</span></a></span><span>
-</span><span id="line-54"></span><span>  </span><span id="local-6989586621679959508"><span class="annot"><span class="annottext">Maybe Text
-</span><a href="#local-6989586621679959508"><span class="hs-identifier hs-var">treeish</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
+</span><span id="line-54"></span><span>  </span><span id="local-6989586621679959512"><span class="annot"><span class="annottext">Maybe Text
+</span><a href="#local-6989586621679959512"><span class="hs-identifier hs-var">treeish</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
 -&gt; ParsecT Void Text Identity (Maybe Text)
 forall (f :: * -&gt; *) a. Alternative f =&gt; f a -&gt; f (Maybe a)
 </span><span class="hs-identifier hs-var">P.optional</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
@@ -124,9 +124,9 @@ forall (f :: * -&gt; *) a. Alternative f =&gt; f a -&gt; f (Maybe a)
 </span><span class="hs-identifier hs-type">WriteGitRepo</span></span><span> </span><span class="hs-special">{</span><span class="annot"><span class="annottext">url' :: Text
 </span><span class="hs-identifier hs-var">url'</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">GitProtocol -&gt; Text
 </span><a href="Unison.Codebase.Editor.UriParser.html#printProtocol"><span class="hs-identifier hs-var">printProtocol</span></a></span><span> </span><span class="annot"><span class="annottext">GitProtocol
-</span><a href="#local-6989586621679959509"><span class="hs-identifier hs-var">uri</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">branch :: Maybe Text
+</span><a href="#local-6989586621679959513"><span class="hs-identifier hs-var">uri</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">branch :: Maybe Text
 </span><span class="hs-identifier hs-var">branch</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Maybe Text
-</span><a href="#local-6989586621679959508"><span class="hs-identifier hs-var">treeish</span></a></span><span class="hs-special">}</span><span>
+</span><a href="#local-6989586621679959512"><span class="hs-identifier hs-var">treeish</span></a></span><span class="hs-special">}</span><span>
 </span><span id="line-56"></span><span>
 </span><span id="line-57"></span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#writeRepoPath"><span class="hs-identifier hs-type">writeRepoPath</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#P"><span class="hs-identifier hs-type">P</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">WriteRemotePath</span></span><span>
 </span><span id="line-58"></span><span id="writeRepoPath"><span class="annot"><span class="annottext">writeRepoPath :: P WriteRemotePath
@@ -139,11 +139,11 @@ String -&gt; m a -&gt; m a
 -&gt; P WriteRemotePath -&gt; P WriteRemotePath
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-59"></span><span>  </span><span id="local-6989586621679959504"><span class="annot"><span class="annottext">WriteRepo
-</span><a href="#local-6989586621679959504"><span class="hs-identifier hs-var">repo</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">P WriteRepo
+</span><span id="line-59"></span><span>  </span><span id="local-6989586621679959508"><span class="annot"><span class="annottext">WriteRepo
+</span><a href="#local-6989586621679959508"><span class="hs-identifier hs-var">repo</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">P WriteRepo
 </span><a href="Unison.Codebase.Editor.UriParser.html#writeRepo"><span class="hs-identifier hs-var">writeRepo</span></a></span><span>
-</span><span id="line-60"></span><span>  </span><span id="local-6989586621679959503"><span class="annot"><span class="annottext">Maybe Path
-</span><a href="#local-6989586621679959503"><span class="hs-identifier hs-var">path</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Path
+</span><span id="line-60"></span><span>  </span><span id="local-6989586621679959507"><span class="annot"><span class="annottext">Maybe Path
+</span><a href="#local-6989586621679959507"><span class="hs-identifier hs-var">path</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Path
 -&gt; ParsecT Void Text Identity (Maybe Path)
 forall (f :: * -&gt; *) a. Alternative f =&gt; f a -&gt; f (Maybe a)
 </span><span class="hs-identifier hs-var">P.optional</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Token Text -&gt; ParsecT Void Text Identity (Token Text)
@@ -159,11 +159,11 @@ forall (f :: * -&gt; *) a b. Applicative f =&gt; f a -&gt; f b -&gt; f b
 </span><span class="hs-operator hs-var">*&gt;</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Path
 </span><a href="Unison.Codebase.Editor.UriParser.html#absolutePath"><span class="hs-identifier hs-var">absolutePath</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-61"></span><span>  </span><span class="hs-identifier">pure</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">WriteRepo
-</span><a href="#local-6989586621679959504"><span class="hs-identifier hs-var">repo</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Path -&gt; Maybe Path -&gt; Path
+</span><a href="#local-6989586621679959508"><span class="hs-identifier hs-var">repo</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Path -&gt; Maybe Path -&gt; Path
 forall a. a -&gt; Maybe a -&gt; a
 </span><span class="hs-identifier hs-var">fromMaybe</span></span><span> </span><span class="annot"><span class="annottext">Path
 </span><span class="hs-identifier hs-var">Path.empty</span></span><span> </span><span class="annot"><span class="annottext">Maybe Path
-</span><a href="#local-6989586621679959503"><span class="hs-identifier hs-var">path</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679959507"><span class="hs-identifier hs-var">path</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-62"></span><span>
 </span><span id="line-63"></span><span class="hs-comment">-- does this not exist somewhere in megaparsec? yes in 7.0</span><span>
 </span><span id="line-64"></span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#symbol"><span class="hs-identifier hs-type">symbol</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#P"><span class="hs-identifier hs-type">P</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span>
@@ -183,7 +183,7 @@ forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span id="line-70"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="ScpProtocol"><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#ScpProtocol"><span class="hs-identifier hs-var">ScpProtocol</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#User"><span class="hs-identifier hs-type">User</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#Host"><span class="hs-identifier hs-type">Host</span></a></span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#UrlPath"><span class="hs-identifier hs-type">UrlPath</span></a></span><span>
 </span><span id="line-71"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="FileProtocol"><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#FileProtocol"><span class="hs-identifier hs-var">FileProtocol</span></a></span></span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#UrlPath"><span class="hs-identifier hs-type">UrlPath</span></a></span><span>
 </span><span id="line-72"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="LocalProtocol"><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#LocalProtocol"><span class="hs-identifier hs-var">LocalProtocol</span></a></span></span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#UrlPath"><span class="hs-identifier hs-type">UrlPath</span></a></span><span>
-</span><span id="line-73"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679959488"><span id="local-6989586621679959490"><span class="annot"><span class="annottext">GitProtocol -&gt; GitProtocol -&gt; Bool
+</span><span id="line-73"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679959492"><span id="local-6989586621679959494"><span class="annot"><span class="annottext">GitProtocol -&gt; GitProtocol -&gt; Bool
 (GitProtocol -&gt; GitProtocol -&gt; Bool)
 -&gt; (GitProtocol -&gt; GitProtocol -&gt; Bool) -&gt; Eq GitProtocol
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -191,7 +191,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: GitProtocol -&gt; GitProtocol -&gt; Bool
 == :: GitProtocol -&gt; GitProtocol -&gt; Bool
 $c== :: GitProtocol -&gt; GitProtocol -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679959472"><span id="local-6989586621679959474"><span id="local-6989586621679959476"><span id="local-6989586621679959478"><span id="local-6989586621679959480"><span id="local-6989586621679959482"><span id="local-6989586621679959484"><span class="annot"><span class="annottext">Eq GitProtocol
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679959476"><span id="local-6989586621679959478"><span id="local-6989586621679959480"><span id="local-6989586621679959482"><span id="local-6989586621679959484"><span id="local-6989586621679959486"><span id="local-6989586621679959488"><span class="annot"><span class="annottext">Eq GitProtocol
 Eq GitProtocol
 -&gt; (GitProtocol -&gt; GitProtocol -&gt; Ordering)
 -&gt; (GitProtocol -&gt; GitProtocol -&gt; Bool)
@@ -229,7 +229,7 @@ $c&lt; :: GitProtocol -&gt; GitProtocol -&gt; Bool
 compare :: GitProtocol -&gt; GitProtocol -&gt; Ordering
 $ccompare :: GitProtocol -&gt; GitProtocol -&gt; Ordering
 $cp1Ord :: Eq GitProtocol
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679959465"><span id="local-6989586621679959467"><span id="local-6989586621679959469"><span class="annot"><span class="annottext">Int -&gt; GitProtocol -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679959469"><span id="local-6989586621679959471"><span id="local-6989586621679959473"><span class="annot"><span class="annottext">Int -&gt; GitProtocol -&gt; ShowS
 [GitProtocol] -&gt; ShowS
 GitProtocol -&gt; String
 (Int -&gt; GitProtocol -&gt; ShowS)
@@ -249,92 +249,92 @@ $cshowsPrec :: Int -&gt; GitProtocol -&gt; ShowS
 </span><span id="line-75"></span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#printProtocol"><span class="hs-identifier hs-type">printProtocol</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#GitProtocol"><span class="hs-identifier hs-type">GitProtocol</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span>
 </span><span id="line-76"></span><span class="hs-comment">-- printProtocol x | traceShow x False = undefined</span><span>
 </span><span id="line-77"></span><span id="printProtocol"><span class="annot"><span class="annottext">printProtocol :: GitProtocol -&gt; Text
-</span><a href="Unison.Codebase.Editor.UriParser.html#printProtocol"><span class="hs-identifier hs-var hs-var">printProtocol</span></a></span></span><span> </span><span id="local-6989586621679959463"><span class="annot"><span class="annottext">GitProtocol
-</span><a href="#local-6989586621679959463"><span class="hs-identifier hs-var">x</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">GitProtocol
-</span><a href="#local-6989586621679959463"><span class="hs-identifier hs-var">x</span></a></span><span> </span><span class="hs-keyword">of</span><span>
-</span><span id="line-78"></span><span>  </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#HttpsProtocol"><span class="hs-identifier hs-type">HttpsProtocol</span></a></span><span> </span><span id="local-6989586621679959462"><span class="annot"><span class="annottext">Maybe User
-</span><a href="#local-6989586621679959462"><span class="hs-identifier hs-var">muser</span></a></span></span><span> </span><span id="local-6989586621679959461"><span class="annot"><span class="annottext">HostInfo
-</span><a href="#local-6989586621679959461"><span class="hs-identifier hs-var">hostInfo</span></a></span></span><span> </span><span id="local-6989586621679959460"><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679959460"><span class="hs-identifier hs-var">path</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
+</span><a href="Unison.Codebase.Editor.UriParser.html#printProtocol"><span class="hs-identifier hs-var hs-var">printProtocol</span></a></span></span><span> </span><span id="local-6989586621679959467"><span class="annot"><span class="annottext">GitProtocol
+</span><a href="#local-6989586621679959467"><span class="hs-identifier hs-var">x</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">GitProtocol
+</span><a href="#local-6989586621679959467"><span class="hs-identifier hs-var">x</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-78"></span><span>  </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#HttpsProtocol"><span class="hs-identifier hs-type">HttpsProtocol</span></a></span><span> </span><span id="local-6989586621679959466"><span class="annot"><span class="annottext">Maybe User
+</span><a href="#local-6989586621679959466"><span class="hs-identifier hs-var">muser</span></a></span></span><span> </span><span id="local-6989586621679959465"><span class="annot"><span class="annottext">HostInfo
+</span><a href="#local-6989586621679959465"><span class="hs-identifier hs-var">hostInfo</span></a></span></span><span> </span><span id="local-6989586621679959464"><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679959464"><span class="hs-identifier hs-var">path</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
 </span><span id="line-79"></span><span>    </span><span class="annot"><span class="annottext">Text
 </span><span class="hs-string">&quot;https://&quot;</span></span><span>
 </span><span id="line-80"></span><span>      </span><span class="annot"><span class="annottext">Text -&gt; Text -&gt; Text
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Maybe User -&gt; Text
-</span><a href="#local-6989586621679959459"><span class="hs-identifier hs-var">printUser</span></a></span><span> </span><span class="annot"><span class="annottext">Maybe User
-</span><a href="#local-6989586621679959462"><span class="hs-identifier hs-var">muser</span></a></span><span>
+</span><a href="#local-6989586621679959463"><span class="hs-identifier hs-var">printUser</span></a></span><span> </span><span class="annot"><span class="annottext">Maybe User
+</span><a href="#local-6989586621679959466"><span class="hs-identifier hs-var">muser</span></a></span><span>
 </span><span id="line-81"></span><span>      </span><span class="annot"><span class="annottext">Text -&gt; Text -&gt; Text
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">HostInfo -&gt; Text
-</span><a href="#local-6989586621679959458"><span class="hs-identifier hs-var">printHostInfo</span></a></span><span> </span><span class="annot"><span class="annottext">HostInfo
-</span><a href="#local-6989586621679959461"><span class="hs-identifier hs-var">hostInfo</span></a></span><span>
+</span><a href="#local-6989586621679959462"><span class="hs-identifier hs-var">printHostInfo</span></a></span><span> </span><span class="annot"><span class="annottext">HostInfo
+</span><a href="#local-6989586621679959465"><span class="hs-identifier hs-var">hostInfo</span></a></span><span>
 </span><span id="line-82"></span><span>      </span><span class="annot"><span class="annottext">Text -&gt; Text -&gt; Text
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679959460"><span class="hs-identifier hs-var">path</span></a></span><span>
-</span><span id="line-83"></span><span>  </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#SshProtocol"><span class="hs-identifier hs-type">SshProtocol</span></a></span><span> </span><span id="local-6989586621679959457"><span class="annot"><span class="annottext">Maybe User
-</span><a href="#local-6989586621679959457"><span class="hs-identifier hs-var">muser</span></a></span></span><span> </span><span id="local-6989586621679959456"><span class="annot"><span class="annottext">HostInfo
-</span><a href="#local-6989586621679959456"><span class="hs-identifier hs-var">hostInfo</span></a></span></span><span> </span><span id="local-6989586621679959455"><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679959455"><span class="hs-identifier hs-var">path</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
+</span><a href="#local-6989586621679959464"><span class="hs-identifier hs-var">path</span></a></span><span>
+</span><span id="line-83"></span><span>  </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#SshProtocol"><span class="hs-identifier hs-type">SshProtocol</span></a></span><span> </span><span id="local-6989586621679959461"><span class="annot"><span class="annottext">Maybe User
+</span><a href="#local-6989586621679959461"><span class="hs-identifier hs-var">muser</span></a></span></span><span> </span><span id="local-6989586621679959460"><span class="annot"><span class="annottext">HostInfo
+</span><a href="#local-6989586621679959460"><span class="hs-identifier hs-var">hostInfo</span></a></span></span><span> </span><span id="local-6989586621679959459"><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679959459"><span class="hs-identifier hs-var">path</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
 </span><span id="line-84"></span><span>    </span><span class="annot"><span class="annottext">Text
 </span><span class="hs-string">&quot;ssh://&quot;</span></span><span>
 </span><span id="line-85"></span><span>      </span><span class="annot"><span class="annottext">Text -&gt; Text -&gt; Text
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Maybe User -&gt; Text
-</span><a href="#local-6989586621679959459"><span class="hs-identifier hs-var">printUser</span></a></span><span> </span><span class="annot"><span class="annottext">Maybe User
-</span><a href="#local-6989586621679959457"><span class="hs-identifier hs-var">muser</span></a></span><span>
+</span><a href="#local-6989586621679959463"><span class="hs-identifier hs-var">printUser</span></a></span><span> </span><span class="annot"><span class="annottext">Maybe User
+</span><a href="#local-6989586621679959461"><span class="hs-identifier hs-var">muser</span></a></span><span>
 </span><span id="line-86"></span><span>      </span><span class="annot"><span class="annottext">Text -&gt; Text -&gt; Text
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">HostInfo -&gt; Text
-</span><a href="#local-6989586621679959458"><span class="hs-identifier hs-var">printHostInfo</span></a></span><span> </span><span class="annot"><span class="annottext">HostInfo
-</span><a href="#local-6989586621679959456"><span class="hs-identifier hs-var">hostInfo</span></a></span><span>
+</span><a href="#local-6989586621679959462"><span class="hs-identifier hs-var">printHostInfo</span></a></span><span> </span><span class="annot"><span class="annottext">HostInfo
+</span><a href="#local-6989586621679959460"><span class="hs-identifier hs-var">hostInfo</span></a></span><span>
 </span><span id="line-87"></span><span>      </span><span class="annot"><span class="annottext">Text -&gt; Text -&gt; Text
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679959455"><span class="hs-identifier hs-var">path</span></a></span><span>
-</span><span id="line-88"></span><span>  </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#ScpProtocol"><span class="hs-identifier hs-type">ScpProtocol</span></a></span><span> </span><span id="local-6989586621679959454"><span class="annot"><span class="annottext">Maybe User
-</span><a href="#local-6989586621679959454"><span class="hs-identifier hs-var">muser</span></a></span></span><span> </span><span id="local-6989586621679959453"><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679959453"><span class="hs-identifier hs-var">host</span></a></span></span><span> </span><span id="local-6989586621679959452"><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679959452"><span class="hs-identifier hs-var">path</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Maybe User -&gt; Text
-</span><a href="#local-6989586621679959459"><span class="hs-identifier hs-var">printUser</span></a></span><span> </span><span class="annot"><span class="annottext">Maybe User
-</span><a href="#local-6989586621679959454"><span class="hs-identifier hs-var">muser</span></a></span><span> </span><span class="annot"><span class="annottext">Text -&gt; Text -&gt; Text
+</span><a href="#local-6989586621679959459"><span class="hs-identifier hs-var">path</span></a></span><span>
+</span><span id="line-88"></span><span>  </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#ScpProtocol"><span class="hs-identifier hs-type">ScpProtocol</span></a></span><span> </span><span id="local-6989586621679959458"><span class="annot"><span class="annottext">Maybe User
+</span><a href="#local-6989586621679959458"><span class="hs-identifier hs-var">muser</span></a></span></span><span> </span><span id="local-6989586621679959457"><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679959457"><span class="hs-identifier hs-var">host</span></a></span></span><span> </span><span id="local-6989586621679959456"><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679959456"><span class="hs-identifier hs-var">path</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Maybe User -&gt; Text
+</span><a href="#local-6989586621679959463"><span class="hs-identifier hs-var">printUser</span></a></span><span> </span><span class="annot"><span class="annottext">Maybe User
+</span><a href="#local-6989586621679959458"><span class="hs-identifier hs-var">muser</span></a></span><span> </span><span class="annot"><span class="annottext">Text -&gt; Text -&gt; Text
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679959453"><span class="hs-identifier hs-var">host</span></a></span><span> </span><span class="annot"><span class="annottext">Text -&gt; Text -&gt; Text
+</span><a href="#local-6989586621679959457"><span class="hs-identifier hs-var">host</span></a></span><span> </span><span class="annot"><span class="annottext">Text -&gt; Text -&gt; Text
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Text
 </span><span class="hs-string">&quot;:&quot;</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; Text -&gt; Text
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679959452"><span class="hs-identifier hs-var">path</span></a></span><span>
-</span><span id="line-89"></span><span>  </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#FileProtocol"><span class="hs-identifier hs-type">FileProtocol</span></a></span><span> </span><span id="local-6989586621679959451"><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679959451"><span class="hs-identifier hs-var">path</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679959456"><span class="hs-identifier hs-var">path</span></a></span><span>
+</span><span id="line-89"></span><span>  </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#FileProtocol"><span class="hs-identifier hs-type">FileProtocol</span></a></span><span> </span><span id="local-6989586621679959455"><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679959455"><span class="hs-identifier hs-var">path</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Text
 </span><span class="hs-string">&quot;file://&quot;</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; Text -&gt; Text
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679959451"><span class="hs-identifier hs-var">path</span></a></span><span>
-</span><span id="line-90"></span><span>  </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#LocalProtocol"><span class="hs-identifier hs-type">LocalProtocol</span></a></span><span> </span><span id="local-6989586621679959450"><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679959450"><span class="hs-identifier hs-var">path</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679959450"><span class="hs-identifier hs-var">path</span></a></span><span>
+</span><a href="#local-6989586621679959455"><span class="hs-identifier hs-var">path</span></a></span><span>
+</span><span id="line-90"></span><span>  </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#LocalProtocol"><span class="hs-identifier hs-type">LocalProtocol</span></a></span><span> </span><span id="local-6989586621679959454"><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679959454"><span class="hs-identifier hs-var">path</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679959454"><span class="hs-identifier hs-var">path</span></a></span><span>
 </span><span id="line-91"></span><span>  </span><span class="hs-keyword">where</span><span>
-</span><span id="line-92"></span><span>    </span><span id="local-6989586621679959459"><span class="annot"><span class="annottext">printUser :: Maybe User -&gt; Text
-</span><a href="#local-6989586621679959459"><span class="hs-identifier hs-var hs-var">printUser</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Text -&gt; (User -&gt; Text) -&gt; Maybe User -&gt; Text
+</span><span id="line-92"></span><span>    </span><span id="local-6989586621679959463"><span class="annot"><span class="annottext">printUser :: Maybe User -&gt; Text
+</span><a href="#local-6989586621679959463"><span class="hs-identifier hs-var hs-var">printUser</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Text -&gt; (User -&gt; Text) -&gt; Maybe User -&gt; Text
 forall b a. b -&gt; (a -&gt; b) -&gt; Maybe a -&gt; b
 </span><span class="hs-identifier hs-var">maybe</span></span><span> </span><span class="annot"><span class="annottext">Text
 forall a. Monoid a =&gt; a
-</span><span class="hs-identifier hs-var">mempty</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">\</span><span class="hs-special">(</span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#User"><span class="hs-identifier hs-type">User</span></a></span><span> </span><span id="local-6989586621679959447"><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679959447"><span class="hs-identifier hs-var">u</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679959447"><span class="hs-identifier hs-var">u</span></a></span><span> </span><span class="annot"><span class="annottext">Text -&gt; Text -&gt; Text
+</span><span class="hs-identifier hs-var">mempty</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">\</span><span class="hs-special">(</span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#User"><span class="hs-identifier hs-type">User</span></a></span><span> </span><span id="local-6989586621679959451"><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679959451"><span class="hs-identifier hs-var">u</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679959451"><span class="hs-identifier hs-var">u</span></a></span><span> </span><span class="annot"><span class="annottext">Text -&gt; Text -&gt; Text
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Text
 </span><span class="hs-string">&quot;@&quot;</span></span><span class="hs-special">)</span><span>
-</span><span id="line-93"></span><span>    </span><span class="annot"><a href="#local-6989586621679959458"><span class="hs-identifier hs-type">printHostInfo</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#HostInfo"><span class="hs-identifier hs-type">HostInfo</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span>
-</span><span id="line-94"></span><span>    </span><span id="local-6989586621679959458"><span class="annot"><span class="annottext">printHostInfo :: HostInfo -&gt; Text
-</span><a href="#local-6989586621679959458"><span class="hs-identifier hs-var hs-var">printHostInfo</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#HostInfo"><span class="hs-identifier hs-type">HostInfo</span></a></span><span> </span><span id="local-6989586621679959445"><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679959445"><span class="hs-identifier hs-var">hostname</span></a></span></span><span> </span><span id="local-6989586621679959444"><span class="annot"><span class="annottext">Maybe Text
-</span><a href="#local-6989586621679959444"><span class="hs-identifier hs-var">mport</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-93"></span><span>    </span><span class="annot"><a href="#local-6989586621679959462"><span class="hs-identifier hs-type">printHostInfo</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#HostInfo"><span class="hs-identifier hs-type">HostInfo</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span>
+</span><span id="line-94"></span><span>    </span><span id="local-6989586621679959462"><span class="annot"><span class="annottext">printHostInfo :: HostInfo -&gt; Text
+</span><a href="#local-6989586621679959462"><span class="hs-identifier hs-var hs-var">printHostInfo</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#HostInfo"><span class="hs-identifier hs-type">HostInfo</span></a></span><span> </span><span id="local-6989586621679959449"><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679959449"><span class="hs-identifier hs-var">hostname</span></a></span></span><span> </span><span id="local-6989586621679959448"><span class="annot"><span class="annottext">Maybe Text
+</span><a href="#local-6989586621679959448"><span class="hs-identifier hs-var">mport</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-95"></span><span>      </span><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679959445"><span class="hs-identifier hs-var">hostname</span></a></span><span> </span><span class="annot"><span class="annottext">Text -&gt; Text -&gt; Text
+</span><a href="#local-6989586621679959449"><span class="hs-identifier hs-var">hostname</span></a></span><span> </span><span class="annot"><span class="annottext">Text -&gt; Text -&gt; Text
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; (Text -&gt; Text) -&gt; Maybe Text -&gt; Text
 forall b a. b -&gt; (a -&gt; b) -&gt; Maybe a -&gt; b
@@ -343,10 +343,10 @@ forall a. Monoid a =&gt; a
 </span><span class="hs-identifier hs-var">mempty</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Char -&gt; Text -&gt; Text
 </span><span class="hs-identifier hs-var">Text.cons</span></span><span> </span><span class="annot"><span class="annottext">Char
 </span><span class="hs-char">':'</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Maybe Text
-</span><a href="#local-6989586621679959444"><span class="hs-identifier hs-var">mport</span></a></span><span>
+</span><a href="#local-6989586621679959448"><span class="hs-identifier hs-var">mport</span></a></span><span>
 </span><span id="line-96"></span><span>
 </span><span id="line-97"></span><span class="hs-keyword">data</span><span> </span><span id="Scheme"><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#Scheme"><span class="hs-identifier hs-var">Scheme</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Ssh"><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#Ssh"><span class="hs-identifier hs-var">Ssh</span></a></span></span><span> </span><span class="hs-glyph">|</span><span> </span><span id="Https"><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#Https"><span class="hs-identifier hs-var">Https</span></a></span></span><span>
-</span><span id="line-98"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679959437"><span id="local-6989586621679959439"><span class="annot"><span class="annottext">Scheme -&gt; Scheme -&gt; Bool
+</span><span id="line-98"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679959441"><span id="local-6989586621679959443"><span class="annot"><span class="annottext">Scheme -&gt; Scheme -&gt; Bool
 (Scheme -&gt; Scheme -&gt; Bool)
 -&gt; (Scheme -&gt; Scheme -&gt; Bool) -&gt; Eq Scheme
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -354,7 +354,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: Scheme -&gt; Scheme -&gt; Bool
 == :: Scheme -&gt; Scheme -&gt; Bool
 $c== :: Scheme -&gt; Scheme -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679959422"><span id="local-6989586621679959424"><span id="local-6989586621679959426"><span id="local-6989586621679959428"><span id="local-6989586621679959430"><span id="local-6989586621679959432"><span id="local-6989586621679959434"><span class="annot"><span class="annottext">Eq Scheme
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679959426"><span id="local-6989586621679959428"><span id="local-6989586621679959430"><span id="local-6989586621679959432"><span id="local-6989586621679959434"><span id="local-6989586621679959436"><span id="local-6989586621679959438"><span class="annot"><span class="annottext">Eq Scheme
 Eq Scheme
 -&gt; (Scheme -&gt; Scheme -&gt; Ordering)
 -&gt; (Scheme -&gt; Scheme -&gt; Bool)
@@ -392,7 +392,7 @@ $c&lt; :: Scheme -&gt; Scheme -&gt; Bool
 compare :: Scheme -&gt; Scheme -&gt; Ordering
 $ccompare :: Scheme -&gt; Scheme -&gt; Ordering
 $cp1Ord :: Eq Scheme
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679959416"><span id="local-6989586621679959418"><span id="local-6989586621679959420"><span class="annot"><span class="annottext">Int -&gt; Scheme -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679959420"><span id="local-6989586621679959422"><span id="local-6989586621679959424"><span class="annot"><span class="annottext">Int -&gt; Scheme -&gt; ShowS
 [Scheme] -&gt; ShowS
 Scheme -&gt; String
 (Int -&gt; Scheme -&gt; ShowS)
@@ -408,14 +408,14 @@ $cshowsPrec :: Int -&gt; Scheme -&gt; ShowS
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
 </span><span id="line-99"></span><span>
 </span><span id="line-100"></span><span class="hs-keyword">data</span><span> </span><span id="User"><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#User"><span class="hs-identifier hs-var">User</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="User"><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#User"><span class="hs-identifier hs-var">User</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span>
-</span><span id="line-101"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679959412"><span id="local-6989586621679959414"><span class="annot"><span class="annottext">User -&gt; User -&gt; Bool
+</span><span id="line-101"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679959416"><span id="local-6989586621679959418"><span class="annot"><span class="annottext">User -&gt; User -&gt; Bool
 (User -&gt; User -&gt; Bool) -&gt; (User -&gt; User -&gt; Bool) -&gt; Eq User
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 /= :: User -&gt; User -&gt; Bool
 $c/= :: User -&gt; User -&gt; Bool
 == :: User -&gt; User -&gt; Bool
 $c== :: User -&gt; User -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679959397"><span id="local-6989586621679959399"><span id="local-6989586621679959401"><span id="local-6989586621679959403"><span id="local-6989586621679959405"><span id="local-6989586621679959407"><span id="local-6989586621679959409"><span class="annot"><span class="annottext">Eq User
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679959401"><span id="local-6989586621679959403"><span id="local-6989586621679959405"><span id="local-6989586621679959407"><span id="local-6989586621679959409"><span id="local-6989586621679959411"><span id="local-6989586621679959413"><span class="annot"><span class="annottext">Eq User
 Eq User
 -&gt; (User -&gt; User -&gt; Ordering)
 -&gt; (User -&gt; User -&gt; Bool)
@@ -453,7 +453,7 @@ $c&lt; :: User -&gt; User -&gt; Bool
 compare :: User -&gt; User -&gt; Ordering
 $ccompare :: User -&gt; User -&gt; Ordering
 $cp1Ord :: Eq User
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679959391"><span id="local-6989586621679959393"><span id="local-6989586621679959395"><span class="annot"><span class="annottext">Int -&gt; User -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679959395"><span id="local-6989586621679959397"><span id="local-6989586621679959399"><span class="annot"><span class="annottext">Int -&gt; User -&gt; ShowS
 [User] -&gt; ShowS
 User -&gt; String
 (Int -&gt; User -&gt; ShowS)
@@ -471,7 +471,7 @@ $cshowsPrec :: Int -&gt; User -&gt; ShowS
 </span><span id="line-103"></span><span class="hs-keyword">type</span><span> </span><span id="UrlPath"><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#UrlPath"><span class="hs-identifier hs-var">UrlPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span>
 </span><span id="line-104"></span><span>
 </span><span id="line-105"></span><span class="hs-keyword">data</span><span> </span><span id="HostInfo"><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#HostInfo"><span class="hs-identifier hs-var">HostInfo</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="HostInfo"><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#HostInfo"><span class="hs-identifier hs-var">HostInfo</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span class="hs-special">)</span><span>
-</span><span id="line-106"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679959387"><span id="local-6989586621679959389"><span class="annot"><span class="annottext">HostInfo -&gt; HostInfo -&gt; Bool
+</span><span id="line-106"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679959391"><span id="local-6989586621679959393"><span class="annot"><span class="annottext">HostInfo -&gt; HostInfo -&gt; Bool
 (HostInfo -&gt; HostInfo -&gt; Bool)
 -&gt; (HostInfo -&gt; HostInfo -&gt; Bool) -&gt; Eq HostInfo
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -479,7 +479,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: HostInfo -&gt; HostInfo -&gt; Bool
 == :: HostInfo -&gt; HostInfo -&gt; Bool
 $c== :: HostInfo -&gt; HostInfo -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679959372"><span id="local-6989586621679959374"><span id="local-6989586621679959376"><span id="local-6989586621679959378"><span id="local-6989586621679959380"><span id="local-6989586621679959382"><span id="local-6989586621679959384"><span class="annot"><span class="annottext">Eq HostInfo
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679959376"><span id="local-6989586621679959378"><span id="local-6989586621679959380"><span id="local-6989586621679959382"><span id="local-6989586621679959384"><span id="local-6989586621679959386"><span id="local-6989586621679959388"><span class="annot"><span class="annottext">Eq HostInfo
 Eq HostInfo
 -&gt; (HostInfo -&gt; HostInfo -&gt; Ordering)
 -&gt; (HostInfo -&gt; HostInfo -&gt; Bool)
@@ -517,7 +517,7 @@ $c&lt; :: HostInfo -&gt; HostInfo -&gt; Bool
 compare :: HostInfo -&gt; HostInfo -&gt; Ordering
 $ccompare :: HostInfo -&gt; HostInfo -&gt; Ordering
 $cp1Ord :: Eq HostInfo
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679959366"><span id="local-6989586621679959368"><span id="local-6989586621679959370"><span class="annot"><span class="annottext">Int -&gt; HostInfo -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679959370"><span id="local-6989586621679959372"><span id="local-6989586621679959374"><span class="annot"><span class="annottext">Int -&gt; HostInfo -&gt; ShowS
 [HostInfo] -&gt; ShowS
 HostInfo -&gt; String
 (Int -&gt; HostInfo -&gt; ShowS)
@@ -549,23 +549,23 @@ String -&gt; m a -&gt; m a
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span>
 </span><span id="line-116"></span><span>    </span><span class="annot"><span class="annottext">P GitProtocol
-</span><a href="#local-6989586621679959365"><span class="hs-identifier hs-var">fileRepo</span></a></span><span> </span><span class="annot"><span class="annottext">P GitProtocol -&gt; P GitProtocol -&gt; P GitProtocol
+</span><a href="#local-6989586621679959369"><span class="hs-identifier hs-var">fileRepo</span></a></span><span> </span><span class="annot"><span class="annottext">P GitProtocol -&gt; P GitProtocol -&gt; P GitProtocol
 forall (f :: * -&gt; *) a. Alternative f =&gt; f a -&gt; f a -&gt; f a
 </span><span class="hs-operator hs-var">&lt;|&gt;</span></span><span> </span><span class="annot"><span class="annottext">P GitProtocol
-</span><a href="#local-6989586621679959363"><span class="hs-identifier hs-var">httpsRepo</span></a></span><span> </span><span class="annot"><span class="annottext">P GitProtocol -&gt; P GitProtocol -&gt; P GitProtocol
+</span><a href="#local-6989586621679959367"><span class="hs-identifier hs-var">httpsRepo</span></a></span><span> </span><span class="annot"><span class="annottext">P GitProtocol -&gt; P GitProtocol -&gt; P GitProtocol
 forall (f :: * -&gt; *) a. Alternative f =&gt; f a -&gt; f a -&gt; f a
 </span><span class="hs-operator hs-var">&lt;|&gt;</span></span><span> </span><span class="annot"><span class="annottext">P GitProtocol
-</span><a href="#local-6989586621679959362"><span class="hs-identifier hs-var">sshRepo</span></a></span><span> </span><span class="annot"><span class="annottext">P GitProtocol -&gt; P GitProtocol -&gt; P GitProtocol
+</span><a href="#local-6989586621679959366"><span class="hs-identifier hs-var">sshRepo</span></a></span><span> </span><span class="annot"><span class="annottext">P GitProtocol -&gt; P GitProtocol -&gt; P GitProtocol
 forall (f :: * -&gt; *) a. Alternative f =&gt; f a -&gt; f a -&gt; f a
 </span><span class="hs-operator hs-var">&lt;|&gt;</span></span><span> </span><span class="annot"><span class="annottext">P GitProtocol
-</span><a href="#local-6989586621679959361"><span class="hs-identifier hs-var">scpRepo</span></a></span><span> </span><span class="annot"><span class="annottext">P GitProtocol -&gt; P GitProtocol -&gt; P GitProtocol
+</span><a href="#local-6989586621679959365"><span class="hs-identifier hs-var">scpRepo</span></a></span><span> </span><span class="annot"><span class="annottext">P GitProtocol -&gt; P GitProtocol -&gt; P GitProtocol
 forall (f :: * -&gt; *) a. Alternative f =&gt; f a -&gt; f a -&gt; f a
 </span><span class="hs-operator hs-var">&lt;|&gt;</span></span><span> </span><span class="annot"><span class="annottext">P GitProtocol
-</span><a href="#local-6989586621679959360"><span class="hs-identifier hs-var">localRepo</span></a></span><span>
+</span><a href="#local-6989586621679959364"><span class="hs-identifier hs-var">localRepo</span></a></span><span>
 </span><span id="line-117"></span><span>  </span><span class="hs-keyword">where</span><span>
-</span><span id="line-118"></span><span>    </span><span class="annot"><a href="#local-6989586621679959360"><span class="hs-identifier hs-type">localRepo</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="#local-6989586621679959365"><span class="hs-identifier hs-type">fileRepo</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="#local-6989586621679959363"><span class="hs-identifier hs-type">httpsRepo</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="#local-6989586621679959362"><span class="hs-identifier hs-type">sshRepo</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="#local-6989586621679959361"><span class="hs-identifier hs-type">scpRepo</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#P"><span class="hs-identifier hs-type">P</span></a></span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#GitProtocol"><span class="hs-identifier hs-type">GitProtocol</span></a></span><span>
-</span><span id="line-119"></span><span>    </span><span id="local-6989586621679959359"><span class="annot"><span class="annottext">parsePath :: ParsecT Void Text Identity (Tokens Text)
-</span><a href="#local-6989586621679959359"><span class="hs-identifier hs-var hs-var">parsePath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-118"></span><span>    </span><span class="annot"><a href="#local-6989586621679959364"><span class="hs-identifier hs-type">localRepo</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="#local-6989586621679959369"><span class="hs-identifier hs-type">fileRepo</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="#local-6989586621679959367"><span class="hs-identifier hs-type">httpsRepo</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="#local-6989586621679959366"><span class="hs-identifier hs-type">sshRepo</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="#local-6989586621679959365"><span class="hs-identifier hs-type">scpRepo</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#P"><span class="hs-identifier hs-type">P</span></a></span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#GitProtocol"><span class="hs-identifier hs-type">GitProtocol</span></a></span><span>
+</span><span id="line-119"></span><span>    </span><span id="local-6989586621679959363"><span class="annot"><span class="annottext">parsePath :: ParsecT Void Text Identity (Tokens Text)
+</span><a href="#local-6989586621679959363"><span class="hs-identifier hs-var hs-var">parsePath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-120"></span><span>      </span><span class="annot"><span class="annottext">Maybe String
 -&gt; (Token Text -&gt; Bool) -&gt; ParsecT Void Text Identity (Tokens Text)
 forall e s (m :: * -&gt; *).
@@ -576,28 +576,28 @@ Maybe String -&gt; (Token s -&gt; Bool) -&gt; m (Tokens s)
 forall a. a -&gt; Maybe a
 </span><span class="hs-identifier hs-var">Just</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;repo path character&quot;</span></span><span class="hs-special">)</span><span>
-</span><span id="line-122"></span><span>        </span><span class="hs-special">(</span><span class="hs-glyph">\</span><span id="local-6989586621679959357"><span class="annot"><span class="annottext">Token Text
-</span><a href="#local-6989586621679959357"><span class="hs-identifier hs-var">c</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Bool -&gt; Bool
+</span><span id="line-122"></span><span>        </span><span class="hs-special">(</span><span class="hs-glyph">\</span><span id="local-6989586621679959361"><span class="annot"><span class="annottext">Token Text
+</span><a href="#local-6989586621679959361"><span class="hs-identifier hs-var">c</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Bool -&gt; Bool
 </span><span class="hs-identifier hs-var">not</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Char -&gt; Bool
 </span><span class="hs-identifier hs-var">isSpace</span></span><span> </span><span class="annot"><span class="annottext">Char
 Token Text
-</span><a href="#local-6989586621679959357"><span class="hs-identifier hs-var">c</span></a></span><span> </span><span class="annot"><span class="annottext">Bool -&gt; Bool -&gt; Bool
+</span><a href="#local-6989586621679959361"><span class="hs-identifier hs-var">c</span></a></span><span> </span><span class="annot"><span class="annottext">Bool -&gt; Bool -&gt; Bool
 </span><span class="hs-operator hs-var">||</span></span><span> </span><span class="annot"><span class="annottext">Char
 Token Text
-</span><a href="#local-6989586621679959357"><span class="hs-identifier hs-var">c</span></a></span><span> </span><span class="annot"><span class="annottext">Char -&gt; Char -&gt; Bool
+</span><a href="#local-6989586621679959361"><span class="hs-identifier hs-var">c</span></a></span><span> </span><span class="annot"><span class="annottext">Char -&gt; Char -&gt; Bool
 forall a. Eq a =&gt; a -&gt; a -&gt; Bool
 </span><span class="hs-operator hs-var">==</span></span><span> </span><span class="annot"><span class="annottext">Char
 </span><span class="hs-char">':'</span></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
-</span><span id="line-123"></span><span>    </span><span id="local-6989586621679959360"><span class="annot"><span class="annottext">localRepo :: P GitProtocol
-</span><a href="#local-6989586621679959360"><span class="hs-identifier hs-var hs-var">localRepo</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Text -&gt; GitProtocol
+</span><span id="line-123"></span><span>    </span><span id="local-6989586621679959364"><span class="annot"><span class="annottext">localRepo :: P GitProtocol
+</span><a href="#local-6989586621679959364"><span class="hs-identifier hs-var hs-var">localRepo</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Text -&gt; GitProtocol
 </span><a href="Unison.Codebase.Editor.UriParser.html#LocalProtocol"><span class="hs-identifier hs-var">LocalProtocol</span></a></span><span> </span><span class="annot"><span class="annottext">(Text -&gt; GitProtocol)
 -&gt; ParsecT Void Text Identity Text -&gt; P GitProtocol
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
 ParsecT Void Text Identity (Tokens Text)
-</span><a href="#local-6989586621679959359"><span class="hs-identifier hs-var">parsePath</span></a></span><span>
-</span><span id="line-124"></span><span>    </span><span id="local-6989586621679959365"><span class="annot"><span class="annottext">fileRepo :: P GitProtocol
-</span><a href="#local-6989586621679959365"><span class="hs-identifier hs-var hs-var">fileRepo</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; P GitProtocol -&gt; P GitProtocol
+</span><a href="#local-6989586621679959363"><span class="hs-identifier hs-var">parsePath</span></a></span><span>
+</span><span id="line-124"></span><span>    </span><span id="local-6989586621679959369"><span class="annot"><span class="annottext">fileRepo :: P GitProtocol
+</span><a href="#local-6989586621679959369"><span class="hs-identifier hs-var hs-var">fileRepo</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; P GitProtocol -&gt; P GitProtocol
 forall e s (m :: * -&gt; *) a.
 MonadParsec e s m =&gt;
 String -&gt; m a -&gt; m a
@@ -619,9 +619,9 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
 ParsecT Void Text Identity (Tokens Text)
-</span><a href="#local-6989586621679959359"><span class="hs-identifier hs-var">parsePath</span></a></span><span>
-</span><span id="line-127"></span><span>    </span><span id="local-6989586621679959363"><span class="annot"><span class="annottext">httpsRepo :: P GitProtocol
-</span><a href="#local-6989586621679959363"><span class="hs-identifier hs-var hs-var">httpsRepo</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; P GitProtocol -&gt; P GitProtocol
+</span><a href="#local-6989586621679959363"><span class="hs-identifier hs-var">parsePath</span></a></span><span>
+</span><span id="line-127"></span><span>    </span><span id="local-6989586621679959367"><span class="annot"><span class="annottext">httpsRepo :: P GitProtocol
+</span><a href="#local-6989586621679959367"><span class="hs-identifier hs-var hs-var">httpsRepo</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; P GitProtocol -&gt; P GitProtocol
 forall e s (m :: * -&gt; *) a.
 MonadParsec e s m =&gt;
 String -&gt; m a -&gt; m a
@@ -646,19 +646,19 @@ forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 -&gt; ParsecT Void Text Identity (Maybe User)
 forall (f :: * -&gt; *) a. Alternative f =&gt; f a -&gt; f (Maybe a)
 </span><span class="hs-identifier hs-var">P.optional</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity User
-</span><a href="#local-6989586621679959352"><span class="hs-identifier hs-var">userInfo</span></a></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity (HostInfo -&gt; Text -&gt; GitProtocol)
+</span><a href="#local-6989586621679959356"><span class="hs-identifier hs-var">userInfo</span></a></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity (HostInfo -&gt; Text -&gt; GitProtocol)
 -&gt; ParsecT Void Text Identity HostInfo
 -&gt; ParsecT Void Text Identity (Text -&gt; GitProtocol)
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity HostInfo
-</span><a href="#local-6989586621679959351"><span class="hs-identifier hs-var">parseHostInfo</span></a></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity (Text -&gt; GitProtocol)
+</span><a href="#local-6989586621679959355"><span class="hs-identifier hs-var">parseHostInfo</span></a></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity (Text -&gt; GitProtocol)
 -&gt; ParsecT Void Text Identity Text -&gt; P GitProtocol
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
 ParsecT Void Text Identity (Tokens Text)
-</span><a href="#local-6989586621679959359"><span class="hs-identifier hs-var">parsePath</span></a></span><span>
-</span><span id="line-130"></span><span>    </span><span id="local-6989586621679959362"><span class="annot"><span class="annottext">sshRepo :: P GitProtocol
-</span><a href="#local-6989586621679959362"><span class="hs-identifier hs-var hs-var">sshRepo</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; P GitProtocol -&gt; P GitProtocol
+</span><a href="#local-6989586621679959363"><span class="hs-identifier hs-var">parsePath</span></a></span><span>
+</span><span id="line-130"></span><span>    </span><span id="local-6989586621679959366"><span class="annot"><span class="annottext">sshRepo :: P GitProtocol
+</span><a href="#local-6989586621679959366"><span class="hs-identifier hs-var hs-var">sshRepo</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; P GitProtocol -&gt; P GitProtocol
 forall e s (m :: * -&gt; *) a.
 MonadParsec e s m =&gt;
 String -&gt; m a -&gt; m a
@@ -683,19 +683,19 @@ forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 -&gt; ParsecT Void Text Identity (Maybe User)
 forall (f :: * -&gt; *) a. Alternative f =&gt; f a -&gt; f (Maybe a)
 </span><span class="hs-identifier hs-var">P.optional</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity User
-</span><a href="#local-6989586621679959352"><span class="hs-identifier hs-var">userInfo</span></a></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity (HostInfo -&gt; Text -&gt; GitProtocol)
+</span><a href="#local-6989586621679959356"><span class="hs-identifier hs-var">userInfo</span></a></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity (HostInfo -&gt; Text -&gt; GitProtocol)
 -&gt; ParsecT Void Text Identity HostInfo
 -&gt; ParsecT Void Text Identity (Text -&gt; GitProtocol)
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity HostInfo
-</span><a href="#local-6989586621679959351"><span class="hs-identifier hs-var">parseHostInfo</span></a></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity (Text -&gt; GitProtocol)
+</span><a href="#local-6989586621679959355"><span class="hs-identifier hs-var">parseHostInfo</span></a></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity (Text -&gt; GitProtocol)
 -&gt; ParsecT Void Text Identity Text -&gt; P GitProtocol
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
 ParsecT Void Text Identity (Tokens Text)
-</span><a href="#local-6989586621679959359"><span class="hs-identifier hs-var">parsePath</span></a></span><span>
-</span><span id="line-133"></span><span>    </span><span id="local-6989586621679959361"><span class="annot"><span class="annottext">scpRepo :: P GitProtocol
-</span><a href="#local-6989586621679959361"><span class="hs-identifier hs-var hs-var">scpRepo</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><a href="#local-6989586621679959363"><span class="hs-identifier hs-var">parsePath</span></a></span><span>
+</span><span id="line-133"></span><span>    </span><span id="local-6989586621679959365"><span class="annot"><span class="annottext">scpRepo :: P GitProtocol
+</span><a href="#local-6989586621679959365"><span class="hs-identifier hs-var hs-var">scpRepo</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-134"></span><span>      </span><span class="annot"><span class="annottext">String -&gt; P GitProtocol -&gt; P GitProtocol
 forall e s (m :: * -&gt; *) a.
 MonadParsec e s m =&gt;
@@ -720,12 +720,12 @@ forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 -&gt; ParsecT Void Text Identity (Maybe User)
 forall (f :: * -&gt; *) a. Alternative f =&gt; f a -&gt; f (Maybe a)
 </span><span class="hs-identifier hs-var">P.optional</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity User
-</span><a href="#local-6989586621679959352"><span class="hs-identifier hs-var">userInfo</span></a></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity (Text -&gt; Text -&gt; GitProtocol)
+</span><a href="#local-6989586621679959356"><span class="hs-identifier hs-var">userInfo</span></a></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity (Text -&gt; Text -&gt; GitProtocol)
 -&gt; ParsecT Void Text Identity Text
 -&gt; ParsecT Void Text Identity (Text -&gt; GitProtocol)
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
-</span><a href="#local-6989586621679959348"><span class="hs-identifier hs-var">parseHost</span></a></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity (Text -&gt; GitProtocol)
+</span><a href="#local-6989586621679959352"><span class="hs-identifier hs-var">parseHost</span></a></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity (Text -&gt; GitProtocol)
 -&gt; ParsecT Void Text Identity Text
 -&gt; ParsecT Void Text Identity (Text -&gt; GitProtocol)
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f a -&gt; f b -&gt; f a
@@ -736,10 +736,10 @@ forall (f :: * -&gt; *) a b. Applicative f =&gt; f a -&gt; f b -&gt; f a
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
 ParsecT Void Text Identity (Tokens Text)
-</span><a href="#local-6989586621679959359"><span class="hs-identifier hs-var">parsePath</span></a></span><span>
-</span><span id="line-136"></span><span>    </span><span class="annot"><a href="#local-6989586621679959352"><span class="hs-identifier hs-type">userInfo</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#P"><span class="hs-identifier hs-type">P</span></a></span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#User"><span class="hs-identifier hs-type">User</span></a></span><span>
-</span><span id="line-137"></span><span>    </span><span id="local-6989586621679959352"><span class="annot"><span class="annottext">userInfo :: ParsecT Void Text Identity User
-</span><a href="#local-6989586621679959352"><span class="hs-identifier hs-var hs-var">userInfo</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679959363"><span class="hs-identifier hs-var">parsePath</span></a></span><span>
+</span><span id="line-136"></span><span>    </span><span class="annot"><a href="#local-6989586621679959356"><span class="hs-identifier hs-type">userInfo</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#P"><span class="hs-identifier hs-type">P</span></a></span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#User"><span class="hs-identifier hs-type">User</span></a></span><span>
+</span><span id="line-137"></span><span>    </span><span id="local-6989586621679959356"><span class="annot"><span class="annottext">userInfo :: ParsecT Void Text Identity User
+</span><a href="#local-6989586621679959356"><span class="hs-identifier hs-var hs-var">userInfo</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
 -&gt; ParsecT Void Text Identity User
 -&gt; ParsecT Void Text Identity User
 forall e s (m :: * -&gt; *) a.
@@ -761,8 +761,8 @@ forall e s (m :: * -&gt; *) a. MonadParsec e s m =&gt; m a -&gt; m a
 -&gt; ParsecT Void Text Identity User
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-138"></span><span>      </span><span id="local-6989586621679959346"><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679959346"><span class="hs-identifier hs-var">username</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Maybe String
+</span><span id="line-138"></span><span>      </span><span id="local-6989586621679959350"><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679959350"><span class="hs-identifier hs-var">username</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Maybe String
 -&gt; (Token Text -&gt; Bool) -&gt; ParsecT Void Text Identity (Tokens Text)
 forall e s (m :: * -&gt; *).
 MonadParsec e s m =&gt;
@@ -788,10 +788,10 @@ Token Text
 </span><span class="hs-char">'@'</span></span><span>
 </span><span id="line-140"></span><span>      </span><span class="hs-identifier">pure</span><span> </span><span class="hs-operator">$</span><span> </span><span class="annot"><span class="annottext">Text -&gt; User
 </span><a href="Unison.Codebase.Editor.UriParser.html#User"><span class="hs-identifier hs-var">User</span></a></span><span> </span><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679959346"><span class="hs-identifier hs-var">username</span></a></span><span>
-</span><span id="line-141"></span><span>    </span><span class="annot"><a href="#local-6989586621679959351"><span class="hs-identifier hs-type">parseHostInfo</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#P"><span class="hs-identifier hs-type">P</span></a></span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#HostInfo"><span class="hs-identifier hs-type">HostInfo</span></a></span><span>
-</span><span id="line-142"></span><span>    </span><span id="local-6989586621679959351"><span class="annot"><span class="annottext">parseHostInfo :: ParsecT Void Text Identity HostInfo
-</span><a href="#local-6989586621679959351"><span class="hs-identifier hs-var hs-var">parseHostInfo</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><a href="#local-6989586621679959350"><span class="hs-identifier hs-var">username</span></a></span><span>
+</span><span id="line-141"></span><span>    </span><span class="annot"><a href="#local-6989586621679959355"><span class="hs-identifier hs-type">parseHostInfo</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#P"><span class="hs-identifier hs-type">P</span></a></span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#HostInfo"><span class="hs-identifier hs-type">HostInfo</span></a></span><span>
+</span><span id="line-142"></span><span>    </span><span id="local-6989586621679959355"><span class="annot"><span class="annottext">parseHostInfo :: ParsecT Void Text Identity HostInfo
+</span><a href="#local-6989586621679959355"><span class="hs-identifier hs-var hs-var">parseHostInfo</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-143"></span><span>      </span><span class="annot"><span class="annottext">String
 -&gt; ParsecT Void Text Identity HostInfo
 -&gt; ParsecT Void Text Identity HostInfo
@@ -811,7 +811,7 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 -&gt; ParsecT Void Text Identity (Maybe Text -&gt; HostInfo)
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
-</span><a href="#local-6989586621679959348"><span class="hs-identifier hs-var">parseHost</span></a></span><span>
+</span><a href="#local-6989586621679959352"><span class="hs-identifier hs-var">parseHost</span></a></span><span>
 </span><span id="line-145"></span><span>          </span><span class="annot"><span class="annottext">ParsecT Void Text Identity (Maybe Text -&gt; HostInfo)
 -&gt; ParsecT Void Text Identity (Maybe Text)
 -&gt; ParsecT Void Text Identity HostInfo
@@ -846,8 +846,8 @@ Token Text -&gt; Bool
 </span><span class="hs-identifier hs-var">isDigit</span></span><span>
 </span><span id="line-148"></span><span>              </span><span class="hs-special">)</span><span>
 </span><span id="line-149"></span><span>
-</span><span id="line-150"></span><span>    </span><span id="local-6989586621679959348"><span class="annot"><span class="annottext">parseHost :: ParsecT Void Text Identity Text
-</span><a href="#local-6989586621679959348"><span class="hs-identifier hs-var hs-var">parseHost</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span id="line-150"></span><span>    </span><span id="local-6989586621679959352"><span class="annot"><span class="annottext">parseHost :: ParsecT Void Text Identity Text
+</span><a href="#local-6989586621679959352"><span class="hs-identifier hs-var hs-var">parseHost</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
 -&gt; ParsecT Void Text Identity Text
 -&gt; ParsecT Void Text Identity Text
 forall e s (m :: * -&gt; *) a.
@@ -861,15 +861,15 @@ String -&gt; m a -&gt; m a
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
 ParsecT Void Text Identity (Tokens Text)
-</span><a href="#local-6989586621679959344"><span class="hs-identifier hs-var">hostname</span></a></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
+</span><a href="#local-6989586621679959348"><span class="hs-identifier hs-var">hostname</span></a></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
 -&gt; ParsecT Void Text Identity Text
 -&gt; ParsecT Void Text Identity Text
 forall (f :: * -&gt; *) a. Alternative f =&gt; f a -&gt; f a -&gt; f a
 </span><span class="hs-operator hs-var">&lt;|&gt;</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
-</span><a href="#local-6989586621679959343"><span class="hs-identifier hs-var">ipv4</span></a></span><span> </span><span class="hs-comment">-- &lt;|&gt; ipv6</span><span>
+</span><a href="#local-6989586621679959347"><span class="hs-identifier hs-var">ipv4</span></a></span><span> </span><span class="hs-comment">-- &lt;|&gt; ipv6</span><span>
 </span><span id="line-151"></span><span>      </span><span class="hs-keyword">where</span><span>
-</span><span id="line-152"></span><span>        </span><span id="local-6989586621679959344"><span class="annot"><span class="annottext">hostname :: ParsecT Void Text Identity (Tokens Text)
-</span><a href="#local-6989586621679959344"><span class="hs-identifier hs-var hs-var">hostname</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-152"></span><span>        </span><span id="local-6989586621679959348"><span class="annot"><span class="annottext">hostname :: ParsecT Void Text Identity (Tokens Text)
+</span><a href="#local-6989586621679959348"><span class="hs-identifier hs-var hs-var">hostname</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-153"></span><span>          </span><span class="annot"><span class="annottext">Maybe String
 -&gt; (Token Text -&gt; Bool) -&gt; ParsecT Void Text Identity (Tokens Text)
 forall e s (m :: * -&gt; *).
@@ -880,25 +880,25 @@ Maybe String -&gt; (Token s -&gt; Bool) -&gt; m (Tokens s)
 forall a. a -&gt; Maybe a
 </span><span class="hs-identifier hs-var">Just</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;hostname character&quot;</span></span><span class="hs-special">)</span><span>
-</span><span id="line-155"></span><span>            </span><span class="hs-special">(</span><span class="hs-glyph">\</span><span id="local-6989586621679959342"><span class="annot"><span class="annottext">Token Text
-</span><a href="#local-6989586621679959342"><span class="hs-identifier hs-var">c</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Char -&gt; Bool
+</span><span id="line-155"></span><span>            </span><span class="hs-special">(</span><span class="hs-glyph">\</span><span id="local-6989586621679959346"><span class="annot"><span class="annottext">Token Text
+</span><a href="#local-6989586621679959346"><span class="hs-identifier hs-var">c</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Char -&gt; Bool
 </span><span class="hs-identifier hs-var">isAlphaNum</span></span><span> </span><span class="annot"><span class="annottext">Char
 Token Text
-</span><a href="#local-6989586621679959342"><span class="hs-identifier hs-var">c</span></a></span><span> </span><span class="annot"><span class="annottext">Bool -&gt; Bool -&gt; Bool
+</span><a href="#local-6989586621679959346"><span class="hs-identifier hs-var">c</span></a></span><span> </span><span class="annot"><span class="annottext">Bool -&gt; Bool -&gt; Bool
 </span><span class="hs-operator hs-var">||</span></span><span> </span><span class="annot"><span class="annottext">Char
 Token Text
-</span><a href="#local-6989586621679959342"><span class="hs-identifier hs-var">c</span></a></span><span> </span><span class="annot"><span class="annottext">Char -&gt; Char -&gt; Bool
+</span><a href="#local-6989586621679959346"><span class="hs-identifier hs-var">c</span></a></span><span> </span><span class="annot"><span class="annottext">Char -&gt; Char -&gt; Bool
 forall a. Eq a =&gt; a -&gt; a -&gt; Bool
 </span><span class="hs-operator hs-var">==</span></span><span> </span><span class="annot"><span class="annottext">Char
 </span><span class="hs-char">'.'</span></span><span> </span><span class="annot"><span class="annottext">Bool -&gt; Bool -&gt; Bool
 </span><span class="hs-operator hs-var">||</span></span><span> </span><span class="annot"><span class="annottext">Char
 Token Text
-</span><a href="#local-6989586621679959342"><span class="hs-identifier hs-var">c</span></a></span><span> </span><span class="annot"><span class="annottext">Char -&gt; Char -&gt; Bool
+</span><a href="#local-6989586621679959346"><span class="hs-identifier hs-var">c</span></a></span><span> </span><span class="annot"><span class="annottext">Char -&gt; Char -&gt; Bool
 forall a. Eq a =&gt; a -&gt; a -&gt; Bool
 </span><span class="hs-operator hs-var">==</span></span><span> </span><span class="annot"><span class="annottext">Char
 </span><span class="hs-char">'-'</span></span><span class="hs-special">)</span><span>
-</span><span id="line-156"></span><span>        </span><span id="local-6989586621679959343"><span class="annot"><span class="annottext">ipv4 :: ParsecT Void Text Identity Text
-</span><a href="#local-6989586621679959343"><span class="hs-identifier hs-var hs-var">ipv4</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span id="line-156"></span><span>        </span><span id="local-6989586621679959347"><span class="annot"><span class="annottext">ipv4 :: ParsecT Void Text Identity Text
+</span><a href="#local-6989586621679959347"><span class="hs-identifier hs-var hs-var">ipv4</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
 -&gt; ParsecT Void Text Identity Text
 -&gt; ParsecT Void Text Identity Text
 forall e s (m :: * -&gt; *) a.
@@ -911,9 +911,9 @@ String -&gt; m a -&gt; m a
 -&gt; ParsecT Void Text Identity Text
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-157"></span><span>          </span><span id="local-6989586621679959341"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679959341"><span class="hs-identifier hs-var">o1</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity String
-</span><a href="#local-6989586621679959340"><span class="hs-identifier hs-var">decOctet</span></a></span><span>
+</span><span id="line-157"></span><span>          </span><span id="local-6989586621679959345"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679959345"><span class="hs-identifier hs-var">o1</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity String
+</span><a href="#local-6989586621679959344"><span class="hs-identifier hs-var">decOctet</span></a></span><span>
 </span><span id="line-158"></span><span>          </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Char -&gt; ParsecT Void Text Identity ()
 forall (f :: * -&gt; *) a. Functor f =&gt; f a -&gt; f ()
 </span><span class="hs-identifier hs-var">void</span></span><span> </span><span class="annot"><span class="annottext">(ParsecT Void Text Identity Char -&gt; ParsecT Void Text Identity ())
@@ -926,9 +926,9 @@ Token s -&gt; m (Token s)
 </span><span class="hs-identifier hs-var">C.char</span></span><span> </span><span class="annot"><span class="annottext">Char
 Token Text
 </span><span class="hs-char">'.'</span></span><span>
-</span><span id="line-159"></span><span>          </span><span id="local-6989586621679959339"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679959339"><span class="hs-identifier hs-var">o2</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity String
-</span><a href="#local-6989586621679959340"><span class="hs-identifier hs-var">decOctet</span></a></span><span>
+</span><span id="line-159"></span><span>          </span><span id="local-6989586621679959343"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679959343"><span class="hs-identifier hs-var">o2</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity String
+</span><a href="#local-6989586621679959344"><span class="hs-identifier hs-var">decOctet</span></a></span><span>
 </span><span id="line-160"></span><span>          </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Char -&gt; ParsecT Void Text Identity ()
 forall (f :: * -&gt; *) a. Functor f =&gt; f a -&gt; f ()
 </span><span class="hs-identifier hs-var">void</span></span><span> </span><span class="annot"><span class="annottext">(ParsecT Void Text Identity Char -&gt; ParsecT Void Text Identity ())
@@ -941,9 +941,9 @@ Token s -&gt; m (Token s)
 </span><span class="hs-identifier hs-var">C.char</span></span><span> </span><span class="annot"><span class="annottext">Char
 Token Text
 </span><span class="hs-char">'.'</span></span><span>
-</span><span id="line-161"></span><span>          </span><span id="local-6989586621679959338"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679959338"><span class="hs-identifier hs-var">o3</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity String
-</span><a href="#local-6989586621679959340"><span class="hs-identifier hs-var">decOctet</span></a></span><span>
+</span><span id="line-161"></span><span>          </span><span id="local-6989586621679959342"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679959342"><span class="hs-identifier hs-var">o3</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity String
+</span><a href="#local-6989586621679959344"><span class="hs-identifier hs-var">decOctet</span></a></span><span>
 </span><span id="line-162"></span><span>          </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Char -&gt; ParsecT Void Text Identity ()
 forall (f :: * -&gt; *) a. Functor f =&gt; f a -&gt; f ()
 </span><span class="hs-identifier hs-var">void</span></span><span> </span><span class="annot"><span class="annottext">(ParsecT Void Text Identity Char -&gt; ParsecT Void Text Identity ())
@@ -956,34 +956,34 @@ Token s -&gt; m (Token s)
 </span><span class="hs-identifier hs-var">C.char</span></span><span> </span><span class="annot"><span class="annottext">Char
 Token Text
 </span><span class="hs-char">'.'</span></span><span>
-</span><span id="line-163"></span><span>          </span><span id="local-6989586621679959337"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679959337"><span class="hs-identifier hs-var">o4</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity String
-</span><a href="#local-6989586621679959340"><span class="hs-identifier hs-var">decOctet</span></a></span><span>
+</span><span id="line-163"></span><span>          </span><span id="local-6989586621679959341"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679959341"><span class="hs-identifier hs-var">o4</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity String
+</span><a href="#local-6989586621679959344"><span class="hs-identifier hs-var">decOctet</span></a></span><span>
 </span><span id="line-164"></span><span>          </span><span class="hs-identifier">pure</span><span> </span><span class="hs-operator">$</span><span> </span><span class="annot"><span class="annottext">String -&gt; Text
 </span><span class="hs-identifier hs-var">Text.pack</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Text) -&gt; String -&gt; Text
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679959341"><span class="hs-identifier hs-var">o1</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+</span><a href="#local-6989586621679959345"><span class="hs-identifier hs-var">o1</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;.&quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679959339"><span class="hs-identifier hs-var">o2</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+</span><a href="#local-6989586621679959343"><span class="hs-identifier hs-var">o2</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;.&quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679959338"><span class="hs-identifier hs-var">o3</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+</span><a href="#local-6989586621679959342"><span class="hs-identifier hs-var">o3</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;.&quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679959337"><span class="hs-identifier hs-var">o4</span></a></span><span>
-</span><span id="line-165"></span><span>        </span><span id="local-6989586621679959340"><span class="annot"><span class="annottext">decOctet :: ParsecT Void Text Identity String
-</span><a href="#local-6989586621679959340"><span class="hs-identifier hs-var hs-var">decOctet</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679959341"><span class="hs-identifier hs-var">o4</span></a></span><span>
+</span><span id="line-165"></span><span>        </span><span id="local-6989586621679959344"><span class="annot"><span class="annottext">decOctet :: ParsecT Void Text Identity String
+</span><a href="#local-6989586621679959344"><span class="hs-identifier hs-var hs-var">decOctet</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Int
 -&gt; Int
 -&gt; ParsecT Void Text Identity Char
 -&gt; ParsecT Void Text Identity String
@@ -1000,24 +1000,24 @@ m (Token s)
 </span><span id="line-168"></span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#namespaceHashPath"><span class="hs-identifier hs-type">namespaceHashPath</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#P"><span class="hs-identifier hs-type">P</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">ShortBranchHash</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Path</span></span><span class="hs-special">)</span><span>
 </span><span id="line-169"></span><span id="namespaceHashPath"><span class="annot"><span class="annottext">namespaceHashPath :: ParsecT Void Text Identity (Maybe ShortBranchHash, Path)
 </span><a href="Unison.Codebase.Editor.UriParser.html#namespaceHashPath"><span class="hs-identifier hs-var hs-var">namespaceHashPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-170"></span><span>  </span><span id="local-6989586621679959333"><span class="annot"><span class="annottext">Maybe ShortBranchHash
-</span><a href="#local-6989586621679959333"><span class="hs-identifier hs-var">sbh</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity ShortBranchHash
+</span><span id="line-170"></span><span>  </span><span id="local-6989586621679959337"><span class="annot"><span class="annottext">Maybe ShortBranchHash
+</span><a href="#local-6989586621679959337"><span class="hs-identifier hs-var">sbh</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity ShortBranchHash
 -&gt; ParsecT Void Text Identity (Maybe ShortBranchHash)
 forall (f :: * -&gt; *) a. Alternative f =&gt; f a -&gt; f (Maybe a)
 </span><span class="hs-identifier hs-var">P.optional</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity ShortBranchHash
 </span><a href="Unison.Codebase.Editor.UriParser.html#shortBranchHash"><span class="hs-identifier hs-var">shortBranchHash</span></a></span><span>
-</span><span id="line-171"></span><span>  </span><span id="local-6989586621679959331"><span class="annot"><span class="annottext">Maybe Path
-</span><a href="#local-6989586621679959331"><span class="hs-identifier hs-var">p</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Path
+</span><span id="line-171"></span><span>  </span><span id="local-6989586621679959335"><span class="annot"><span class="annottext">Maybe Path
+</span><a href="#local-6989586621679959335"><span class="hs-identifier hs-var">p</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Path
 -&gt; ParsecT Void Text Identity (Maybe Path)
 forall (f :: * -&gt; *) a. Alternative f =&gt; f a -&gt; f (Maybe a)
 </span><span class="hs-identifier hs-var">P.optional</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Path
 </span><a href="Unison.Codebase.Editor.UriParser.html#absolutePath"><span class="hs-identifier hs-var">absolutePath</span></a></span><span>
 </span><span id="line-172"></span><span>  </span><span class="hs-identifier">pure</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Maybe ShortBranchHash
-</span><a href="#local-6989586621679959333"><span class="hs-identifier hs-var">sbh</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Path -&gt; Maybe Path -&gt; Path
+</span><a href="#local-6989586621679959337"><span class="hs-identifier hs-var">sbh</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Path -&gt; Maybe Path -&gt; Path
 forall a. a -&gt; Maybe a -&gt; a
 </span><span class="hs-identifier hs-var">fromMaybe</span></span><span> </span><span class="annot"><span class="annottext">Path
 </span><span class="hs-identifier hs-var">Path.empty</span></span><span> </span><span class="annot"><span class="annottext">Maybe Path
-</span><a href="#local-6989586621679959331"><span class="hs-identifier hs-var">p</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679959335"><span class="hs-identifier hs-var">p</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-173"></span><span>
 </span><span id="line-174"></span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#absolutePath"><span class="hs-identifier hs-type">absolutePath</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#P"><span class="hs-identifier hs-type">P</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Path</span></span><span>
 </span><span id="line-175"></span><span id="absolutePath"><span class="annot"><span class="annottext">absolutePath :: ParsecT Void Text Identity Path
@@ -1129,15 +1129,15 @@ Token s -&gt; m (Token s)
 </span><span class="hs-identifier hs-var">C.char</span></span><span> </span><span class="annot"><span class="annottext">Char
 Token Text
 </span><span class="hs-char">':'</span></span><span>
-</span><span id="line-187"></span><span>  </span><span id="local-6989586621679959322"><span class="annot"><span class="annottext">Char
-</span><a href="#local-6989586621679959322"><span class="hs-identifier hs-var">notdothash</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">[Token Text] -&gt; ParsecT Void Text Identity (Token Text)
+</span><span id="line-187"></span><span>  </span><span id="local-6989586621679959326"><span class="annot"><span class="annottext">Char
+</span><a href="#local-6989586621679959326"><span class="hs-identifier hs-var">notdothash</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">[Token Text] -&gt; ParsecT Void Text Identity (Token Text)
 forall (f :: * -&gt; *) e s (m :: * -&gt; *).
 (Foldable f, MonadParsec e s m) =&gt;
 f (Token s) -&gt; m (Token s)
 </span><span class="hs-identifier hs-var">C.noneOf</span></span><span> </span><span class="hs-glyph">@</span><span class="hs-special">[</span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">[Token Text]
 </span><span class="hs-string">&quot;.#:&quot;</span></span><span>
-</span><span id="line-188"></span><span>  </span><span id="local-6989586621679959320"><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679959320"><span class="hs-identifier hs-var">rest</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Maybe String
+</span><span id="line-188"></span><span>  </span><span id="local-6989586621679959324"><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679959324"><span class="hs-identifier hs-var">rest</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Maybe String
 -&gt; (Token Text -&gt; Bool) -&gt; ParsecT Void Text Identity (Tokens Text)
 forall e s (m :: * -&gt; *).
 MonadParsec e s m =&gt;
@@ -1151,8 +1151,8 @@ forall a. Eq a =&gt; a -&gt; a -&gt; Bool
 </span><span class="hs-char">':'</span></span><span class="hs-special">)</span><span>
 </span><span id="line-189"></span><span>  </span><span class="hs-identifier">pure</span><span> </span><span class="hs-operator">$</span><span> </span><span class="annot"><span class="annottext">Char -&gt; Text -&gt; Text
 </span><span class="hs-identifier hs-var">Text.cons</span></span><span> </span><span class="annot"><span class="annottext">Char
-</span><a href="#local-6989586621679959322"><span class="hs-identifier hs-var">notdothash</span></a></span><span> </span><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679959320"><span class="hs-identifier hs-var">rest</span></a></span><span>
+</span><a href="#local-6989586621679959326"><span class="hs-identifier hs-var">notdothash</span></a></span><span> </span><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679959324"><span class="hs-identifier hs-var">rest</span></a></span><span>
 </span><span id="line-190"></span><span>
 </span><span id="line-191"></span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#shortBranchHash"><span class="hs-identifier hs-type">shortBranchHash</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.UriParser.html#P"><span class="hs-identifier hs-type">P</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">ShortBranchHash</span></span><span>
 </span><span id="line-192"></span><span id="shortBranchHash"><span class="annot"><span class="annottext">shortBranchHash :: ParsecT Void Text Identity ShortBranchHash
