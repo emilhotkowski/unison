@@ -24,7 +24,7 @@
 </span><span id="line-24"></span><span>
 </span><span id="line-25"></span><span class="hs-keyword">data</span><span> </span><span id="SyncError"><span class="annot"><a href="Unison.Sync.HTTP.html#SyncError"><span class="hs-identifier hs-var">SyncError</span></a></span></span><span>
 </span><span id="line-26"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="ClientErr"><span class="annot"><a href="Unison.Sync.HTTP.html#ClientErr"><span class="hs-identifier hs-var">ClientErr</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">ClientError</span></span><span>
-</span><span id="line-27"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">stock</span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679972745"><span id="local-6989586621679972747"><span id="local-6989586621679972749"><span class="annot"><span class="annottext">Int -&gt; SyncError -&gt; ShowS
+</span><span id="line-27"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">stock</span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679972747"><span id="local-6989586621679972749"><span id="local-6989586621679972751"><span class="annot"><span class="annottext">Int -&gt; SyncError -&gt; ShowS
 [SyncError] -&gt; ShowS
 SyncError -&gt; String
 (Int -&gt; SyncError -&gt; ShowS)
@@ -40,7 +40,7 @@ $cshow :: SyncError -&gt; String
 showsPrec :: Int -&gt; SyncError -&gt; ShowS
 $cshowsPrec :: Int -&gt; SyncError -&gt; ShowS
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-28"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">anyclass</span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679972736"><span id="local-6989586621679972738"><span id="local-6989586621679972740"><span class="annot"><span class="annottext">Show SyncError
+</span><span id="line-28"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">anyclass</span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679972738"><span id="local-6989586621679972740"><span id="local-6989586621679972742"><span class="annot"><span class="annottext">Show SyncError
 Typeable SyncError
 Typeable SyncError
 -&gt; Show SyncError
@@ -89,21 +89,21 @@ $cp1Exception :: Typeable SyncError
 -&gt; BaseUrl -&gt; UploadEntitiesRequest -&gt; IO UploadEntitiesResponse
 </span><a href="Unison.Sync.HTTP.html#uploadEntitiesHandler"><span class="hs-identifier hs-var">uploadEntitiesHandler</span></a></span></span><span>
 </span><span id="line-38"></span><span>  </span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-39"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span class="hs-special">(</span><span> </span><span id="local-6989586621679972734"><span class="annot"><span class="annottext">GetCausalHashByPathRequest
+</span><span id="line-39"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span class="hs-special">(</span><span> </span><span id="local-6989586621679972736"><span class="annot"><span class="annottext">GetCausalHashByPathRequest
 -&gt; ReaderT
      (AuthorizedHttpClient, BaseUrl) IO GetCausalHashByPathResponse
-</span><a href="#local-6989586621679972734"><span class="hs-identifier hs-var">getPathHandler</span></a></span></span><span>
-</span><span id="line-40"></span><span>            </span><span class="annot"><span class="hs-operator hs-type">:&lt;|&gt;</span></span><span> </span><span id="local-6989586621679972732"><span class="annot"><span class="annottext">UpdatePathRequest
+</span><a href="#local-6989586621679972736"><span class="hs-identifier hs-var">getPathHandler</span></a></span></span><span>
+</span><span id="line-40"></span><span>            </span><span class="annot"><span class="hs-operator hs-type">:&lt;|&gt;</span></span><span> </span><span id="local-6989586621679972734"><span class="annot"><span class="annottext">UpdatePathRequest
 -&gt; ReaderT (AuthorizedHttpClient, BaseUrl) IO UpdatePathResponse
-</span><a href="#local-6989586621679972732"><span class="hs-identifier hs-var">updatePathHandler</span></a></span></span><span>
-</span><span id="line-41"></span><span>            </span><span class="annot"><span class="hs-operator hs-type">:&lt;|&gt;</span></span><span> </span><span id="local-6989586621679972731"><span class="annot"><span class="annottext">DownloadEntitiesRequest
+</span><a href="#local-6989586621679972734"><span class="hs-identifier hs-var">updatePathHandler</span></a></span></span><span>
+</span><span id="line-41"></span><span>            </span><span class="annot"><span class="hs-operator hs-type">:&lt;|&gt;</span></span><span> </span><span id="local-6989586621679972733"><span class="annot"><span class="annottext">DownloadEntitiesRequest
 -&gt; ReaderT
      (AuthorizedHttpClient, BaseUrl) IO DownloadEntitiesResponse
-</span><a href="#local-6989586621679972731"><span class="hs-identifier hs-var">downloadEntitiesHandler</span></a></span></span><span>
-</span><span id="line-42"></span><span>            </span><span class="annot"><span class="hs-operator hs-type">:&lt;|&gt;</span></span><span> </span><span id="local-6989586621679972730"><span class="annot"><span class="annottext">UploadEntitiesRequest
+</span><a href="#local-6989586621679972733"><span class="hs-identifier hs-var">downloadEntitiesHandler</span></a></span></span><span>
+</span><span id="line-42"></span><span>            </span><span class="annot"><span class="hs-operator hs-type">:&lt;|&gt;</span></span><span> </span><span id="local-6989586621679972732"><span class="annot"><span class="annottext">UploadEntitiesRequest
 -&gt; ReaderT
      (AuthorizedHttpClient, BaseUrl) IO UploadEntitiesResponse
-</span><a href="#local-6989586621679972730"><span class="hs-identifier hs-var">uploadEntitiesHandler</span></a></span></span><span>
+</span><a href="#local-6989586621679972732"><span class="hs-identifier hs-var">uploadEntitiesHandler</span></a></span></span><span>
 </span><span id="line-43"></span><span>          </span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Proxy API
 -&gt; (forall a.
     ClientM a -&gt; ReaderT (AuthorizedHttpClient, BaseUrl) IO a)
@@ -114,7 +114,7 @@ HasClient ClientM api =&gt;
 Proxy api -&gt; (forall a. m a -&gt; n a) -&gt; Client m api -&gt; Client n api
 </span><span class="hs-identifier hs-var">hoistClient</span></span><span> </span><span class="annot"><span class="annottext">Proxy API
 </span><span class="hs-identifier hs-var">Sync.api</span></span><span> </span><span class="annot"><span class="annottext">forall a. ClientM a -&gt; ReaderT (AuthorizedHttpClient, BaseUrl) IO a
-</span><a href="#local-6989586621679972727"><span class="hs-identifier hs-var">hoist</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Proxy API -&gt; Client ClientM API
+</span><a href="#local-6989586621679972729"><span class="hs-identifier hs-var">hoist</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Proxy API -&gt; Client ClientM API
 forall api.
 HasClient ClientM api =&gt;
 Proxy api -&gt; Client ClientM api
@@ -130,10 +130,10 @@ Proxy api -&gt; Client ClientM api
 forall req resp.
 (req -&gt; ReaderT (AuthorizedHttpClient, BaseUrl) IO resp)
 -&gt; AuthorizedHttpClient -&gt; BaseUrl -&gt; req -&gt; IO resp
-</span><a href="#local-6989586621679972725"><span class="hs-identifier hs-var">uncurryReaderT</span></a></span><span> </span><span class="annot"><span class="annottext">GetCausalHashByPathRequest
+</span><a href="#local-6989586621679972727"><span class="hs-identifier hs-var">uncurryReaderT</span></a></span><span> </span><span class="annot"><span class="annottext">GetCausalHashByPathRequest
 -&gt; ReaderT
      (AuthorizedHttpClient, BaseUrl) IO GetCausalHashByPathResponse
-</span><a href="#local-6989586621679972734"><span class="hs-identifier hs-var">getPathHandler</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">(UpdatePathRequest
+</span><a href="#local-6989586621679972736"><span class="hs-identifier hs-var">getPathHandler</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">(UpdatePathRequest
  -&gt; ReaderT (AuthorizedHttpClient, BaseUrl) IO UpdatePathResponse)
 -&gt; AuthorizedHttpClient
 -&gt; BaseUrl
@@ -142,9 +142,9 @@ forall req resp.
 forall req resp.
 (req -&gt; ReaderT (AuthorizedHttpClient, BaseUrl) IO resp)
 -&gt; AuthorizedHttpClient -&gt; BaseUrl -&gt; req -&gt; IO resp
-</span><a href="#local-6989586621679972725"><span class="hs-identifier hs-var">uncurryReaderT</span></a></span><span> </span><span class="annot"><span class="annottext">UpdatePathRequest
+</span><a href="#local-6989586621679972727"><span class="hs-identifier hs-var">uncurryReaderT</span></a></span><span> </span><span class="annot"><span class="annottext">UpdatePathRequest
 -&gt; ReaderT (AuthorizedHttpClient, BaseUrl) IO UpdatePathResponse
-</span><a href="#local-6989586621679972732"><span class="hs-identifier hs-var">updatePathHandler</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">(DownloadEntitiesRequest
+</span><a href="#local-6989586621679972734"><span class="hs-identifier hs-var">updatePathHandler</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">(DownloadEntitiesRequest
  -&gt; ReaderT
       (AuthorizedHttpClient, BaseUrl) IO DownloadEntitiesResponse)
 -&gt; AuthorizedHttpClient
@@ -154,10 +154,10 @@ forall req resp.
 forall req resp.
 (req -&gt; ReaderT (AuthorizedHttpClient, BaseUrl) IO resp)
 -&gt; AuthorizedHttpClient -&gt; BaseUrl -&gt; req -&gt; IO resp
-</span><a href="#local-6989586621679972725"><span class="hs-identifier hs-var">uncurryReaderT</span></a></span><span> </span><span class="annot"><span class="annottext">DownloadEntitiesRequest
+</span><a href="#local-6989586621679972727"><span class="hs-identifier hs-var">uncurryReaderT</span></a></span><span> </span><span class="annot"><span class="annottext">DownloadEntitiesRequest
 -&gt; ReaderT
      (AuthorizedHttpClient, BaseUrl) IO DownloadEntitiesResponse
-</span><a href="#local-6989586621679972731"><span class="hs-identifier hs-var">downloadEntitiesHandler</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">(UploadEntitiesRequest
+</span><a href="#local-6989586621679972733"><span class="hs-identifier hs-var">downloadEntitiesHandler</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">(UploadEntitiesRequest
  -&gt; ReaderT
       (AuthorizedHttpClient, BaseUrl) IO UploadEntitiesResponse)
 -&gt; AuthorizedHttpClient
@@ -167,28 +167,28 @@ forall req resp.
 forall req resp.
 (req -&gt; ReaderT (AuthorizedHttpClient, BaseUrl) IO resp)
 -&gt; AuthorizedHttpClient -&gt; BaseUrl -&gt; req -&gt; IO resp
-</span><a href="#local-6989586621679972725"><span class="hs-identifier hs-var">uncurryReaderT</span></a></span><span> </span><span class="annot"><span class="annottext">UploadEntitiesRequest
+</span><a href="#local-6989586621679972727"><span class="hs-identifier hs-var">uncurryReaderT</span></a></span><span> </span><span class="annot"><span class="annottext">UploadEntitiesRequest
 -&gt; ReaderT
      (AuthorizedHttpClient, BaseUrl) IO UploadEntitiesResponse
-</span><a href="#local-6989586621679972730"><span class="hs-identifier hs-var">uploadEntitiesHandler</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679972732"><span class="hs-identifier hs-var">uploadEntitiesHandler</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-45"></span><span>    </span><span class="hs-keyword">where</span><span>
-</span><span id="line-46"></span><span>      </span><span class="annot"><a href="#local-6989586621679972727"><span class="hs-identifier hs-type">hoist</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-keyword">forall</span><span> </span><span id="local-6989586621679972724"><span class="annot"><a href="#local-6989586621679972724"><span class="hs-identifier hs-type">a</span></a></span></span><span class="hs-operator">.</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ClientM</span></span><span> </span><span class="annot"><a href="#local-6989586621679972724"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ReaderT</span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Auth.HTTPClient.html#AuthorizedHttpClient"><span class="hs-identifier hs-type">Auth.AuthorizedHttpClient</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-type">BaseUrl</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="annot"><a href="#local-6989586621679972724"><span class="hs-identifier hs-type">a</span></a></span><span>
-</span><span id="line-47"></span><span>      </span><span id="local-6989586621679972727"><span class="annot"><span class="annottext">hoist :: ClientM a -&gt; ReaderT (AuthorizedHttpClient, BaseUrl) IO a
-</span><a href="#local-6989586621679972727"><span class="hs-identifier hs-var hs-var">hoist</span></a></span></span><span> </span><span id="local-6989586621679972723"><span class="annot"><span class="annottext">ClientM a
-</span><a href="#local-6989586621679972723"><span class="hs-identifier hs-var">m</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-48"></span><span>        </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Auth.HTTPClient.html#AuthorizedHttpClient"><span class="hs-identifier hs-type">Auth.AuthorizedHttpClient</span></a></span><span> </span><span id="local-6989586621679972721"><span class="annot"><span class="annottext">Manager
-</span><a href="#local-6989586621679972721"><span class="hs-identifier hs-var">manager</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679972720"><span class="annot"><span class="annottext">BaseUrl
-</span><a href="#local-6989586621679972720"><span class="hs-identifier hs-var">baseUrl</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">ReaderT
+</span><span id="line-46"></span><span>      </span><span class="annot"><a href="#local-6989586621679972729"><span class="hs-identifier hs-type">hoist</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-keyword">forall</span><span> </span><span id="local-6989586621679972726"><span class="annot"><a href="#local-6989586621679972726"><span class="hs-identifier hs-type">a</span></a></span></span><span class="hs-operator">.</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ClientM</span></span><span> </span><span class="annot"><a href="#local-6989586621679972726"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ReaderT</span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Auth.HTTPClient.html#AuthorizedHttpClient"><span class="hs-identifier hs-type">Auth.AuthorizedHttpClient</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-type">BaseUrl</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="annot"><a href="#local-6989586621679972726"><span class="hs-identifier hs-type">a</span></a></span><span>
+</span><span id="line-47"></span><span>      </span><span id="local-6989586621679972729"><span class="annot"><span class="annottext">hoist :: ClientM a -&gt; ReaderT (AuthorizedHttpClient, BaseUrl) IO a
+</span><a href="#local-6989586621679972729"><span class="hs-identifier hs-var hs-var">hoist</span></a></span></span><span> </span><span id="local-6989586621679972725"><span class="annot"><span class="annottext">ClientM a
+</span><a href="#local-6989586621679972725"><span class="hs-identifier hs-var">m</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-48"></span><span>        </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Auth.HTTPClient.html#AuthorizedHttpClient"><span class="hs-identifier hs-type">Auth.AuthorizedHttpClient</span></a></span><span> </span><span id="local-6989586621679972723"><span class="annot"><span class="annottext">Manager
+</span><a href="#local-6989586621679972723"><span class="hs-identifier hs-var">manager</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679972722"><span class="annot"><span class="annottext">BaseUrl
+</span><a href="#local-6989586621679972722"><span class="hs-identifier hs-var">baseUrl</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">ReaderT
   (AuthorizedHttpClient, BaseUrl) IO (AuthorizedHttpClient, BaseUrl)
 forall r (m :: * -&gt; *). MonadReader r m =&gt; m r
 </span><span class="hs-identifier hs-var">ask</span></span><span>
-</span><span id="line-49"></span><span>        </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679972718"><span class="annot"><span class="annottext">clientEnv :: ClientEnv
-</span><a href="#local-6989586621679972718"><span class="hs-identifier hs-var hs-var">clientEnv</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Manager -&gt; BaseUrl -&gt; ClientEnv
+</span><span id="line-49"></span><span>        </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679972720"><span class="annot"><span class="annottext">clientEnv :: ClientEnv
+</span><a href="#local-6989586621679972720"><span class="hs-identifier hs-var hs-var">clientEnv</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Manager -&gt; BaseUrl -&gt; ClientEnv
 </span><span class="hs-identifier hs-var">mkClientEnv</span></span><span> </span><span class="annot"><span class="annottext">Manager
-</span><a href="#local-6989586621679972721"><span class="hs-identifier hs-var">manager</span></a></span><span> </span><span class="annot"><span class="annottext">BaseUrl
-</span><a href="#local-6989586621679972720"><span class="hs-identifier hs-var">baseUrl</span></a></span><span>
-</span><span id="line-50"></span><span>        </span><span id="local-6989586621679972716"><span class="annot"><span class="annottext">a
-</span><a href="#local-6989586621679972716"><span class="hs-identifier hs-var">resp</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IO a -&gt; ReaderT (AuthorizedHttpClient, BaseUrl) IO a
+</span><a href="#local-6989586621679972723"><span class="hs-identifier hs-var">manager</span></a></span><span> </span><span class="annot"><span class="annottext">BaseUrl
+</span><a href="#local-6989586621679972722"><span class="hs-identifier hs-var">baseUrl</span></a></span><span>
+</span><span id="line-50"></span><span>        </span><span id="local-6989586621679972718"><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679972718"><span class="hs-identifier hs-var">resp</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IO a -&gt; ReaderT (AuthorizedHttpClient, BaseUrl) IO a
 forall (m :: * -&gt; *) a. MonadIO m =&gt; IO a -&gt; m a
 </span><span class="hs-identifier hs-var">liftIO</span></span><span> </span><span class="annot"><span class="annottext">(IO a -&gt; ReaderT (AuthorizedHttpClient, BaseUrl) IO a)
 -&gt; (IO (Either ClientError a) -&gt; IO a)
@@ -208,25 +208,25 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ClientM a -&gt; ClientEnv -&gt; IO (Either ClientError a)
 forall a. ClientM a -&gt; ClientEnv -&gt; IO (Either ClientError a)
 </span><span class="hs-identifier hs-var">runClientM</span></span><span> </span><span class="annot"><span class="annottext">ClientM a
-</span><a href="#local-6989586621679972723"><span class="hs-identifier hs-var">m</span></a></span><span> </span><span class="annot"><span class="annottext">ClientEnv
-</span><a href="#local-6989586621679972718"><span class="hs-identifier hs-var">clientEnv</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679972725"><span class="hs-identifier hs-var">m</span></a></span><span> </span><span class="annot"><span class="annottext">ClientEnv
+</span><a href="#local-6989586621679972720"><span class="hs-identifier hs-var">clientEnv</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-51"></span><span>        </span><span class="hs-identifier">pure</span><span> </span><span class="annot"><span class="annottext">a
-</span><a href="#local-6989586621679972716"><span class="hs-identifier hs-var">resp</span></a></span><span>
+</span><a href="#local-6989586621679972718"><span class="hs-identifier hs-var">resp</span></a></span><span>
 </span><span id="line-52"></span><span>
-</span><span id="line-53"></span><span>      </span><span class="annot"><a href="#local-6989586621679972725"><span class="hs-identifier hs-type">uncurryReaderT</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-keyword">forall</span><span> </span><span id="local-6989586621679972783"><span class="annot"><a href="#local-6989586621679972783"><span class="hs-identifier hs-type">req</span></a></span></span><span> </span><span id="local-6989586621679972782"><span class="annot"><a href="#local-6989586621679972782"><span class="hs-identifier hs-type">resp</span></a></span></span><span class="hs-operator">.</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="#local-6989586621679972783"><span class="hs-identifier hs-type">req</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ReaderT</span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Auth.HTTPClient.html#AuthorizedHttpClient"><span class="hs-identifier hs-type">Auth.AuthorizedHttpClient</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-type">BaseUrl</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="annot"><a href="#local-6989586621679972782"><span class="hs-identifier hs-type">resp</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Unison.Auth.HTTPClient.html#AuthorizedHttpClient"><span class="hs-identifier hs-type">Auth.AuthorizedHttpClient</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">BaseUrl</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679972783"><span class="hs-identifier hs-type">req</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="annot"><a href="#local-6989586621679972782"><span class="hs-identifier hs-type">resp</span></a></span><span>
-</span><span id="line-54"></span><span>      </span><span id="local-6989586621679972725"><span class="annot"><span class="annottext">uncurryReaderT :: (req -&gt; ReaderT (AuthorizedHttpClient, BaseUrl) IO resp)
+</span><span id="line-53"></span><span>      </span><span class="annot"><a href="#local-6989586621679972727"><span class="hs-identifier hs-type">uncurryReaderT</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-keyword">forall</span><span> </span><span id="local-6989586621679972785"><span class="annot"><a href="#local-6989586621679972785"><span class="hs-identifier hs-type">req</span></a></span></span><span> </span><span id="local-6989586621679972784"><span class="annot"><a href="#local-6989586621679972784"><span class="hs-identifier hs-type">resp</span></a></span></span><span class="hs-operator">.</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="#local-6989586621679972785"><span class="hs-identifier hs-type">req</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ReaderT</span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Auth.HTTPClient.html#AuthorizedHttpClient"><span class="hs-identifier hs-type">Auth.AuthorizedHttpClient</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-type">BaseUrl</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="annot"><a href="#local-6989586621679972784"><span class="hs-identifier hs-type">resp</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Unison.Auth.HTTPClient.html#AuthorizedHttpClient"><span class="hs-identifier hs-type">Auth.AuthorizedHttpClient</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">BaseUrl</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679972785"><span class="hs-identifier hs-type">req</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="annot"><a href="#local-6989586621679972784"><span class="hs-identifier hs-type">resp</span></a></span><span>
+</span><span id="line-54"></span><span>      </span><span id="local-6989586621679972727"><span class="annot"><span class="annottext">uncurryReaderT :: (req -&gt; ReaderT (AuthorizedHttpClient, BaseUrl) IO resp)
 -&gt; AuthorizedHttpClient -&gt; BaseUrl -&gt; req -&gt; IO resp
-</span><a href="#local-6989586621679972725"><span class="hs-identifier hs-var hs-var">uncurryReaderT</span></a></span></span><span> </span><span id="local-6989586621679972711"><span class="annot"><span class="annottext">req -&gt; ReaderT (AuthorizedHttpClient, BaseUrl) IO resp
-</span><a href="#local-6989586621679972711"><span class="hs-identifier hs-var">f</span></a></span></span><span> </span><span id="local-6989586621679972710"><span class="annot"><span class="annottext">AuthorizedHttpClient
-</span><a href="#local-6989586621679972710"><span class="hs-identifier hs-var">httpClient</span></a></span></span><span> </span><span id="local-6989586621679972709"><span class="annot"><span class="annottext">BaseUrl
-</span><a href="#local-6989586621679972709"><span class="hs-identifier hs-var">baseURL</span></a></span></span><span> </span><span id="local-6989586621679972708"><span class="annot"><span class="annottext">req
-</span><a href="#local-6989586621679972708"><span class="hs-identifier hs-var">req</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><a href="#local-6989586621679972727"><span class="hs-identifier hs-var hs-var">uncurryReaderT</span></a></span></span><span> </span><span id="local-6989586621679972713"><span class="annot"><span class="annottext">req -&gt; ReaderT (AuthorizedHttpClient, BaseUrl) IO resp
+</span><a href="#local-6989586621679972713"><span class="hs-identifier hs-var">f</span></a></span></span><span> </span><span id="local-6989586621679972712"><span class="annot"><span class="annottext">AuthorizedHttpClient
+</span><a href="#local-6989586621679972712"><span class="hs-identifier hs-var">httpClient</span></a></span></span><span> </span><span id="local-6989586621679972711"><span class="annot"><span class="annottext">BaseUrl
+</span><a href="#local-6989586621679972711"><span class="hs-identifier hs-var">baseURL</span></a></span></span><span> </span><span id="local-6989586621679972710"><span class="annot"><span class="annottext">req
+</span><a href="#local-6989586621679972710"><span class="hs-identifier hs-var">req</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-55"></span><span>        </span><span class="annot"><span class="annottext">ReaderT (AuthorizedHttpClient, BaseUrl) IO resp
 -&gt; (AuthorizedHttpClient, BaseUrl) -&gt; IO resp
 forall r (m :: * -&gt; *) a. ReaderT r m a -&gt; r -&gt; m a
 </span><span class="hs-identifier hs-var hs-var">runReaderT</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">req -&gt; ReaderT (AuthorizedHttpClient, BaseUrl) IO resp
-</span><a href="#local-6989586621679972711"><span class="hs-identifier hs-var">f</span></a></span><span> </span><span class="annot"><span class="annottext">req
-</span><a href="#local-6989586621679972708"><span class="hs-identifier hs-var">req</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">AuthorizedHttpClient
-</span><a href="#local-6989586621679972710"><span class="hs-identifier hs-var">httpClient</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">BaseUrl
-</span><a href="#local-6989586621679972709"><span class="hs-identifier hs-var">baseURL</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679972713"><span class="hs-identifier hs-var">f</span></a></span><span> </span><span class="annot"><span class="annottext">req
+</span><a href="#local-6989586621679972710"><span class="hs-identifier hs-var">req</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">AuthorizedHttpClient
+</span><a href="#local-6989586621679972712"><span class="hs-identifier hs-var">httpClient</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">BaseUrl
+</span><a href="#local-6989586621679972711"><span class="hs-identifier hs-var">baseURL</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-56"></span></pre></body></html>
