@@ -1,37 +1,57 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-pragma">{-# LANGUAGE RecordWildCards #-}</span><span>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Unison.Codebase.Editor.HandleInput.AuthLogin</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Codebase.Editor.HandleInput.AuthLogin.html#authLogin"><span class="hs-identifier">authLogin</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
 </span><span id="line-2"></span><span>
-</span><span id="line-3"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Unison.Codebase.Editor.HandleInput.AuthLogin</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Codebase.Editor.HandleInput.AuthLogin.html#authLogin"><span class="hs-identifier">authLogin</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-4"></span><span>
-</span><span id="line-5"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Control.Monad.Reader</span></span><span>
+</span><span id="line-3"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Control.Monad.Reader</span></span><span>
+</span><span id="line-4"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Text</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Text</span></span><span>
+</span><span id="line-5"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">System.IO.Unsafe</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">unsafePerformIO</span></span><span class="hs-special">)</span><span>
 </span><span id="line-6"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Unison.Auth.OAuth.html"><span class="hs-identifier">Unison.Auth.OAuth</span></a></span><span>
 </span><span id="line-7"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Unison.Auth.Types.html"><span class="hs-identifier">Unison.Auth.Types</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Auth.Types.html#Host"><span class="hs-identifier">Host</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
 </span><span id="line-8"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.HandleInput.LoopState.html"><span class="hs-identifier">Unison.Codebase.Editor.HandleInput.LoopState</span></a></span><span>
 </span><span id="line-9"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.Output.html"><span class="hs-identifier">Unison.Codebase.Editor.Output</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Codebase.Editor.Output.html#Output"><span class="hs-identifier">Output</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Codebase.Editor.Output.html#CredentialFailureMsg"><span class="hs-identifier">CredentialFailureMsg</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.Output.html#Success"><span class="hs-identifier">Success</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
 </span><span id="line-10"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Prelude</span></span><span>
 </span><span id="line-11"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">UnliftIO</span></span><span>
-</span><span id="line-12"></span><span>
-</span><span id="line-13"></span><span class="annot"><a href="Unison.Codebase.Editor.HandleInput.AuthLogin.html#defaultShareHost"><span class="hs-identifier hs-type">defaultShareHost</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Host"><span class="hs-identifier hs-type">Host</span></a></span><span>
-</span><span id="line-14"></span><span id="defaultShareHost"><span class="annot"><span class="annottext">defaultShareHost :: Host
-</span><a href="Unison.Codebase.Editor.HandleInput.AuthLogin.html#defaultShareHost"><span class="hs-identifier hs-var hs-var">defaultShareHost</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Text -&gt; Host
+</span><span id="line-12"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">UnliftIO.Environment</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">lookupEnv</span></span><span class="hs-special">)</span><span>
+</span><span id="line-13"></span><span>
+</span><span id="line-14"></span><span class="annot"><a href="Unison.Codebase.Editor.HandleInput.AuthLogin.html#defaultShareHost"><span class="hs-identifier hs-type">defaultShareHost</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Host"><span class="hs-identifier hs-type">Host</span></a></span><span>
+</span><span id="line-15"></span><span id="defaultShareHost"><span class="annot"><span class="annottext">defaultShareHost :: Host
+</span><a href="Unison.Codebase.Editor.HandleInput.AuthLogin.html#defaultShareHost"><span class="hs-identifier hs-var hs-var">defaultShareHost</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">IO Host -&gt; Host
+forall a. IO a -&gt; a
+</span><span class="hs-identifier hs-var">unsafePerformIO</span></span><span> </span><span class="annot"><span class="annottext">(IO Host -&gt; Host) -&gt; IO Host -&gt; Host
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-16"></span><span>  </span><span class="annot"><span class="annottext">String -&gt; IO (Maybe String)
+forall (m :: * -&gt; *). MonadIO m =&gt; String -&gt; m (Maybe String)
+</span><span class="hs-identifier hs-var">lookupEnv</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;UNISON_SHARE_HOST&quot;</span></span><span> </span><span class="annot"><span class="annottext">IO (Maybe String) -&gt; (Maybe String -&gt; Host) -&gt; IO Host
+forall (f :: * -&gt; *) a b. Functor f =&gt; f a -&gt; (a -&gt; b) -&gt; f b
+</span><span class="hs-operator hs-var">&lt;&amp;&gt;</span></span><span> </span><span class="hs-glyph">\</span><span class="hs-glyph">case</span><span>
+</span><span id="line-17"></span><span>    </span><span class="hs-comment">-- TODO: swap to production share before release.</span><span>
+</span><span id="line-18"></span><span>    </span><span class="annot"><span class="annottext">Maybe String
+</span><span class="hs-identifier hs-var">Nothing</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Text -&gt; Host
 </span><a href="Unison.Auth.Types.html#Host"><span class="hs-identifier hs-var">Host</span></a></span><span> </span><span class="annot"><span class="annottext">Text
-</span><span class="hs-string">&quot;enlil.unison-lang.org&quot;</span></span><span>
-</span><span id="line-15"></span><span>
-</span><span id="line-16"></span><span id="local-6989586621679963801"><span id="local-6989586621679963802"><span id="local-6989586621679963803"><span class="annot"><a href="Unison.Codebase.Editor.HandleInput.AuthLogin.html#authLogin"><span class="hs-identifier hs-type">authLogin</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">UnliftIO.MonadUnliftIO</span></span><span> </span><span class="annot"><a href="#local-6989586621679963803"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Host"><span class="hs-identifier hs-type">Host</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.HandleInput.LoopState.html#Action"><span class="hs-identifier hs-type">Action</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679963803"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679963802"><span class="hs-identifier hs-type">i</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679963801"><span class="hs-identifier hs-type">v</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span></span></span></span><span>
-</span><span id="line-17"></span><span id="authLogin"><span class="annot"><span class="annottext">authLogin :: Maybe Host -&gt; Action m i v ()
-</span><a href="Unison.Codebase.Editor.HandleInput.AuthLogin.html#authLogin"><span class="hs-identifier hs-var hs-var">authLogin</span></a></span></span><span> </span><span id="local-6989586621679963800"><span class="annot"><span class="annottext">Maybe Host
-</span><a href="#local-6989586621679963800"><span class="hs-identifier hs-var">mayHost</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-18"></span><span>  </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679963799"><span class="annot"><span class="annottext">host :: Host
-</span><a href="#local-6989586621679963799"><span class="hs-identifier hs-var hs-var">host</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Host -&gt; Maybe Host -&gt; Host
+</span><span class="hs-string">&quot;share-next.us-west-2.unison-lang.org&quot;</span></span><span>
+</span><span id="line-19"></span><span>    </span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679963997"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679963997"><span class="hs-identifier hs-var">shareHost</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Text -&gt; Host
+</span><a href="Unison.Auth.Types.html#Host"><span class="hs-identifier hs-var">Host</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; Text
+</span><span class="hs-identifier hs-var">Text.pack</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679963997"><span class="hs-identifier hs-var">shareHost</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-20"></span><span class="hs-pragma">{-# NOINLINE</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.HandleInput.AuthLogin.html#defaultShareHost"><span class="hs-pragma hs-type">defaultShareHost</span></a></span><span> </span><span class="hs-pragma">#-}</span><span>
+</span><span id="line-21"></span><span>
+</span><span id="line-22"></span><span id="local-6989586621679963993"><span id="local-6989586621679963994"><span id="local-6989586621679963995"><span class="annot"><a href="Unison.Codebase.Editor.HandleInput.AuthLogin.html#authLogin"><span class="hs-identifier hs-type">authLogin</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">UnliftIO.MonadUnliftIO</span></span><span> </span><span class="annot"><a href="#local-6989586621679963995"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Host"><span class="hs-identifier hs-type">Host</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.HandleInput.LoopState.html#Action"><span class="hs-identifier hs-type">Action</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679963995"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679963994"><span class="hs-identifier hs-type">i</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679963993"><span class="hs-identifier hs-type">v</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span></span></span></span><span>
+</span><span id="line-23"></span><span id="authLogin"><span class="annot"><span class="annottext">authLogin :: Maybe Host -&gt; Action m i v ()
+</span><a href="Unison.Codebase.Editor.HandleInput.AuthLogin.html#authLogin"><span class="hs-identifier hs-var hs-var">authLogin</span></a></span></span><span> </span><span id="local-6989586621679963992"><span class="annot"><span class="annottext">Maybe Host
+</span><a href="#local-6989586621679963992"><span class="hs-identifier hs-var">mayHost</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-24"></span><span>  </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679963991"><span class="annot"><span class="annottext">host :: Host
+</span><a href="#local-6989586621679963991"><span class="hs-identifier hs-var hs-var">host</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Host -&gt; Maybe Host -&gt; Host
 forall a. a -&gt; Maybe a -&gt; a
 </span><span class="hs-identifier hs-var">fromMaybe</span></span><span> </span><span class="annot"><span class="annottext">Host
 </span><a href="Unison.Codebase.Editor.HandleInput.AuthLogin.html#defaultShareHost"><span class="hs-identifier hs-var">defaultShareHost</span></a></span><span> </span><span class="annot"><span class="annottext">Maybe Host
-</span><a href="#local-6989586621679963800"><span class="hs-identifier hs-var">mayHost</span></a></span><span>
-</span><span id="line-19"></span><span>  </span><span id="local-6989586621679963797"><span class="annot"><span class="annottext">CredentialManager
-</span><a href="#local-6989586621679963797"><span class="hs-identifier hs-var">credsMan</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(Env -&gt; CredentialManager) -&gt; Action m i v CredentialManager
+</span><a href="#local-6989586621679963992"><span class="hs-identifier hs-var">mayHost</span></a></span><span>
+</span><span id="line-25"></span><span>  </span><span id="local-6989586621679963989"><span class="annot"><span class="annottext">CredentialManager
+</span><a href="#local-6989586621679963989"><span class="hs-identifier hs-var">credsMan</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(Env -&gt; CredentialManager) -&gt; Action m i v CredentialManager
 forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
 </span><span class="hs-identifier hs-var">asks</span></span><span> </span><span class="annot"><span class="annottext">Env -&gt; CredentialManager
 </span><a href="Unison.Codebase.Editor.HandleInput.LoopState.html#credentialManager"><span class="hs-identifier hs-var hs-var">credentialManager</span></a></span><span>
-</span><span id="line-20"></span><span>  </span><span class="hs-special">(</span><span class="annot"><span class="annottext">MaybeT
+</span><span id="line-26"></span><span>  </span><span class="hs-special">(</span><span class="annot"><span class="annottext">MaybeT
   (ReaderT Env (StateT (LoopState m v) (F m i v)))
   (Either CredentialFailure ())
 -&gt; Action m i v (Either CredentialFailure ())
@@ -112,26 +132,26 @@ forall (m :: * -&gt; *) (n :: * -&gt; *) i v.
 (MonadUnliftIO m, MonadCommand m n i v) =&gt;
 CredentialManager -&gt; Host -&gt; m (Either CredentialFailure ())
 </span><a href="Unison.Auth.OAuth.html#authenticateHost"><span class="hs-identifier hs-var">authenticateHost</span></a></span><span> </span><span class="annot"><span class="annottext">CredentialManager
-</span><a href="#local-6989586621679963797"><span class="hs-identifier hs-var">credsMan</span></a></span><span> </span><span class="annot"><span class="annottext">Host
-</span><a href="#local-6989586621679963799"><span class="hs-identifier hs-var">host</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Action m i v (Either CredentialFailure ())
+</span><a href="#local-6989586621679963989"><span class="hs-identifier hs-var">credsMan</span></a></span><span> </span><span class="annot"><span class="annottext">Host
+</span><a href="#local-6989586621679963991"><span class="hs-identifier hs-var">host</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Action m i v (Either CredentialFailure ())
 -&gt; (Either CredentialFailure () -&gt; Action m i v ())
 -&gt; Action m i v ()
 forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
 </span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="hs-glyph">\</span><span class="hs-glyph">case</span><span>
-</span><span id="line-21"></span><span>    </span><span class="annot"><span class="hs-identifier hs-type">Left</span></span><span> </span><span id="local-6989586621679963790"><span class="annot"><span class="annottext">CredentialFailure
-</span><a href="#local-6989586621679963790"><span class="hs-identifier hs-var">err</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Output v -&gt; Action m i v ()
+</span><span id="line-27"></span><span>    </span><span class="annot"><span class="hs-identifier hs-type">Left</span></span><span> </span><span id="local-6989586621679963982"><span class="annot"><span class="annottext">CredentialFailure
+</span><a href="#local-6989586621679963982"><span class="hs-identifier hs-var">err</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Output v -&gt; Action m i v ()
 forall (n :: * -&gt; *) (m :: * -&gt; *) i v.
 MonadCommand n m i v =&gt;
 Output v -&gt; n ()
 </span><a href="Unison.Codebase.Editor.HandleInput.LoopState.html#respond"><span class="hs-identifier hs-var">respond</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">CredentialFailure -&gt; Output v
 forall v. CredentialFailure -&gt; Output v
 </span><a href="Unison.Codebase.Editor.Output.html#CredentialFailureMsg"><span class="hs-identifier hs-var">CredentialFailureMsg</span></a></span><span> </span><span class="annot"><span class="annottext">CredentialFailure
-</span><a href="#local-6989586621679963790"><span class="hs-identifier hs-var">err</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-22"></span><span>    </span><span class="annot"><span class="hs-identifier hs-type">Right</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Output v -&gt; Action m i v ()
+</span><a href="#local-6989586621679963982"><span class="hs-identifier hs-var">err</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-28"></span><span>    </span><span class="annot"><span class="hs-identifier hs-type">Right</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Output v -&gt; Action m i v ()
 forall (n :: * -&gt; *) (m :: * -&gt; *) i v.
 MonadCommand n m i v =&gt;
 Output v -&gt; n ()
 </span><a href="Unison.Codebase.Editor.HandleInput.LoopState.html#respond"><span class="hs-identifier hs-var">respond</span></a></span><span> </span><span class="annot"><span class="annottext">Output v
 forall v. Output v
 </span><a href="Unison.Codebase.Editor.Output.html#Success"><span class="hs-identifier hs-var">Success</span></a></span><span>
-</span><span id="line-23"></span></pre></body></html>
+</span><span id="line-29"></span></pre></body></html>

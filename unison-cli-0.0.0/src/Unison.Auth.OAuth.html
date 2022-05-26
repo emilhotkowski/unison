@@ -40,40 +40,40 @@
 -&gt; Request
 -&gt; (Response -&gt; IO ResponseReceived)
 -&gt; IO ResponseReceived
-</span><a href="Unison.Auth.OAuth.html#authTransferServer"><span class="hs-identifier hs-var hs-var">authTransferServer</span></a></span></span><span> </span><span id="local-6989586621679963670"><span class="annot"><span class="annottext">Code -&gt; IO Response
-</span><a href="#local-6989586621679963670"><span class="hs-identifier hs-var">callback</span></a></span></span><span> </span><span id="local-6989586621679963669"><span class="annot"><span class="annottext">Request
-</span><a href="#local-6989586621679963669"><span class="hs-identifier hs-var">req</span></a></span></span><span> </span><span id="local-6989586621679963668"><span class="annot"><span class="annottext">Response -&gt; IO ResponseReceived
-</span><a href="#local-6989586621679963668"><span class="hs-identifier hs-var">respond</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><a href="Unison.Auth.OAuth.html#authTransferServer"><span class="hs-identifier hs-var hs-var">authTransferServer</span></a></span></span><span> </span><span id="local-6989586621679963862"><span class="annot"><span class="annottext">Code -&gt; IO Response
+</span><a href="#local-6989586621679963862"><span class="hs-identifier hs-var">callback</span></a></span></span><span> </span><span id="local-6989586621679963861"><span class="annot"><span class="annottext">Request
+</span><a href="#local-6989586621679963861"><span class="hs-identifier hs-var">req</span></a></span></span><span> </span><span id="local-6989586621679963860"><span class="annot"><span class="annottext">Response -&gt; IO ResponseReceived
+</span><a href="#local-6989586621679963860"><span class="hs-identifier hs-var">respond</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-38"></span><span>  </span><span class="hs-keyword">case</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Request -&gt; ByteString
 </span><span class="hs-identifier hs-var hs-var">requestMethod</span></span><span> </span><span class="annot"><span class="annottext">Request
-</span><a href="#local-6989586621679963669"><span class="hs-identifier hs-var">req</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Request -&gt; [Code]
+</span><a href="#local-6989586621679963861"><span class="hs-identifier hs-var">req</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Request -&gt; [Code]
 </span><span class="hs-identifier hs-var hs-var">pathInfo</span></span><span> </span><span class="annot"><span class="annottext">Request
-</span><a href="#local-6989586621679963669"><span class="hs-identifier hs-var">req</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Request -&gt; Maybe Code
-</span><a href="#local-6989586621679963665"><span class="hs-identifier hs-var">getCodeQuery</span></a></span><span> </span><span class="annot"><span class="annottext">Request
-</span><a href="#local-6989586621679963669"><span class="hs-identifier hs-var">req</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">of</span><span>
+</span><a href="#local-6989586621679963861"><span class="hs-identifier hs-var">req</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Request -&gt; Maybe Code
+</span><a href="#local-6989586621679963857"><span class="hs-identifier hs-var">getCodeQuery</span></a></span><span> </span><span class="annot"><span class="annottext">Request
+</span><a href="#local-6989586621679963861"><span class="hs-identifier hs-var">req</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">of</span><span>
 </span><span id="line-39"></span><span>    </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ByteString
 </span><span class="hs-string">&quot;GET&quot;</span></span><span class="hs-special">,</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Code
-</span><span class="hs-string">&quot;redirect&quot;</span></span><span class="hs-special">]</span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679963664"><span class="annot"><span class="annottext">Code
-</span><a href="#local-6989586621679963664"><span class="hs-identifier hs-var">code</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span class="hs-string">&quot;redirect&quot;</span></span><span class="hs-special">]</span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679963856"><span class="annot"><span class="annottext">Code
+</span><a href="#local-6989586621679963856"><span class="hs-identifier hs-var">code</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
 </span><span id="line-40"></span><span>      </span><span class="annot"><span class="annottext">Code -&gt; IO Response
-</span><a href="#local-6989586621679963670"><span class="hs-identifier hs-var">callback</span></a></span><span> </span><span class="annot"><span class="annottext">Code
-</span><a href="#local-6989586621679963664"><span class="hs-identifier hs-var">code</span></a></span><span> </span><span class="annot"><span class="annottext">IO Response
+</span><a href="#local-6989586621679963862"><span class="hs-identifier hs-var">callback</span></a></span><span> </span><span class="annot"><span class="annottext">Code
+</span><a href="#local-6989586621679963856"><span class="hs-identifier hs-var">code</span></a></span><span> </span><span class="annot"><span class="annottext">IO Response
 -&gt; (Response -&gt; IO ResponseReceived) -&gt; IO ResponseReceived
 forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
 </span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="annottext">Response -&gt; IO ResponseReceived
-</span><a href="#local-6989586621679963668"><span class="hs-identifier hs-var">respond</span></a></span><span>
+</span><a href="#local-6989586621679963860"><span class="hs-identifier hs-var">respond</span></a></span><span>
 </span><span id="line-41"></span><span>    </span><span class="annot"><span class="annottext">(ByteString, [Code], Maybe Code)
 </span><span class="hs-identifier">_</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Response -&gt; IO ResponseReceived
-</span><a href="#local-6989586621679963668"><span class="hs-identifier hs-var">respond</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Status -&gt; ResponseHeaders -&gt; ByteString -&gt; Response
+</span><a href="#local-6989586621679963860"><span class="hs-identifier hs-var">respond</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Status -&gt; ResponseHeaders -&gt; ByteString -&gt; Response
 </span><span class="hs-identifier hs-var">responseLBS</span></span><span> </span><span class="annot"><span class="annottext">Status
 </span><span class="hs-identifier hs-var">status404</span></span><span> </span><span class="hs-special">[</span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">ByteString
 </span><span class="hs-string">&quot;Not Found&quot;</span></span><span class="hs-special">)</span><span>
 </span><span id="line-42"></span><span>  </span><span class="hs-keyword">where</span><span>
-</span><span id="line-43"></span><span>    </span><span id="local-6989586621679963665"><span class="annot"><span class="annottext">getCodeQuery :: Request -&gt; Maybe Code
-</span><a href="#local-6989586621679963665"><span class="hs-identifier hs-var hs-var">getCodeQuery</span></a></span></span><span> </span><span id="local-6989586621679963661"><span class="annot"><span class="annottext">Request
-</span><a href="#local-6989586621679963661"><span class="hs-identifier hs-var">req</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-44"></span><span>      </span><span id="local-6989586621679963660"><span class="annot"><span class="annottext">ByteString
-</span><a href="#local-6989586621679963660"><span class="hs-identifier hs-var">code</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Maybe (Maybe ByteString) -&gt; Maybe ByteString
+</span><span id="line-43"></span><span>    </span><span id="local-6989586621679963857"><span class="annot"><span class="annottext">getCodeQuery :: Request -&gt; Maybe Code
+</span><a href="#local-6989586621679963857"><span class="hs-identifier hs-var hs-var">getCodeQuery</span></a></span></span><span> </span><span id="local-6989586621679963853"><span class="annot"><span class="annottext">Request
+</span><a href="#local-6989586621679963853"><span class="hs-identifier hs-var">req</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-44"></span><span>      </span><span id="local-6989586621679963852"><span class="annot"><span class="annottext">ByteString
+</span><a href="#local-6989586621679963852"><span class="hs-identifier hs-var">code</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Maybe (Maybe ByteString) -&gt; Maybe ByteString
 forall (m :: * -&gt; *) a. Monad m =&gt; m (m a) -&gt; m a
 </span><span class="hs-identifier hs-var">join</span></span><span> </span><span class="annot"><span class="annottext">(Maybe (Maybe ByteString) -&gt; Maybe ByteString)
 -&gt; Maybe (Maybe ByteString) -&gt; Maybe ByteString
@@ -84,18 +84,18 @@ forall a b. Eq a =&gt; a -&gt; [(a, b)] -&gt; Maybe b
 </span><span class="hs-identifier hs-var">Prelude.lookup</span></span><span> </span><span class="annot"><span class="annottext">ByteString
 </span><span class="hs-string">&quot;code&quot;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Request -&gt; [(ByteString, Maybe ByteString)]
 </span><span class="hs-identifier hs-var hs-var">queryString</span></span><span> </span><span class="annot"><span class="annottext">Request
-</span><a href="#local-6989586621679963661"><span class="hs-identifier hs-var">req</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679963853"><span class="hs-identifier hs-var">req</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-45"></span><span>      </span><span class="hs-identifier">pure</span><span> </span><span class="hs-operator">$</span><span> </span><span class="annot"><span class="annottext">ByteString -&gt; Code
 </span><span class="hs-identifier hs-var">Text.decodeUtf8</span></span><span> </span><span class="annot"><span class="annottext">ByteString
-</span><a href="#local-6989586621679963660"><span class="hs-identifier hs-var">code</span></a></span><span>
+</span><a href="#local-6989586621679963852"><span class="hs-identifier hs-var">code</span></a></span><span>
 </span><span id="line-46"></span><span>
 </span><span id="line-47"></span><span class="hs-comment">-- | Direct the user through an authentication flow with the given server and store the</span><span>
 </span><span id="line-48"></span><span class="hs-comment">-- credentials in the provided credential manager.</span><span>
-</span><span id="line-49"></span><span class="annot"><a href="Unison.Auth.OAuth.html#authenticateHost"><span class="hs-identifier hs-type">authenticateHost</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-keyword">forall</span><span> </span><span id="local-6989586621679963656"><span class="annot"><a href="#local-6989586621679963656"><span class="hs-identifier hs-type">m</span></a></span></span><span> </span><span id="local-6989586621679963655"><span class="annot"><a href="#local-6989586621679963655"><span class="hs-identifier hs-type">n</span></a></span></span><span> </span><span id="local-6989586621679963654"><span class="annot"><a href="#local-6989586621679963654"><span class="hs-identifier hs-type">i</span></a></span></span><span> </span><span id="local-6989586621679963653"><span class="annot"><a href="#local-6989586621679963653"><span class="hs-identifier hs-type">v</span></a></span></span><span class="hs-operator">.</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">UnliftIO.MonadUnliftIO</span></span><span> </span><span class="annot"><a href="#local-6989586621679963656"><span class="hs-identifier hs-type">m</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.HandleInput.LoopState.html#MonadCommand"><span class="hs-identifier hs-type">MonadCommand</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679963656"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679963655"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679963654"><span class="hs-identifier hs-type">i</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679963653"><span class="hs-identifier hs-type">v</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Unison.Auth.CredentialManager.html#CredentialManager"><span class="hs-identifier hs-type">CredentialManager</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Host"><span class="hs-identifier hs-type">Host</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679963656"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#CredentialFailure"><span class="hs-identifier hs-type">CredentialFailure</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-49"></span><span class="annot"><a href="Unison.Auth.OAuth.html#authenticateHost"><span class="hs-identifier hs-type">authenticateHost</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-keyword">forall</span><span> </span><span id="local-6989586621679963848"><span class="annot"><a href="#local-6989586621679963848"><span class="hs-identifier hs-type">m</span></a></span></span><span> </span><span id="local-6989586621679963847"><span class="annot"><a href="#local-6989586621679963847"><span class="hs-identifier hs-type">n</span></a></span></span><span> </span><span id="local-6989586621679963846"><span class="annot"><a href="#local-6989586621679963846"><span class="hs-identifier hs-type">i</span></a></span></span><span> </span><span id="local-6989586621679963845"><span class="annot"><a href="#local-6989586621679963845"><span class="hs-identifier hs-type">v</span></a></span></span><span class="hs-operator">.</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">UnliftIO.MonadUnliftIO</span></span><span> </span><span class="annot"><a href="#local-6989586621679963848"><span class="hs-identifier hs-type">m</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.HandleInput.LoopState.html#MonadCommand"><span class="hs-identifier hs-type">MonadCommand</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679963848"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679963847"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679963846"><span class="hs-identifier hs-type">i</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679963845"><span class="hs-identifier hs-type">v</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Unison.Auth.CredentialManager.html#CredentialManager"><span class="hs-identifier hs-type">CredentialManager</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Host"><span class="hs-identifier hs-type">Host</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679963848"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#CredentialFailure"><span class="hs-identifier hs-type">CredentialFailure</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
 </span><span id="line-50"></span><span id="authenticateHost"><span class="annot"><span class="annottext">authenticateHost :: CredentialManager -&gt; Host -&gt; m (Either CredentialFailure ())
-</span><a href="Unison.Auth.OAuth.html#authenticateHost"><span class="hs-identifier hs-var hs-var">authenticateHost</span></a></span></span><span> </span><span id="local-6989586621679963652"><span class="annot"><span class="annottext">CredentialManager
-</span><a href="#local-6989586621679963652"><span class="hs-identifier hs-var">credsManager</span></a></span></span><span> </span><span id="local-6989586621679963651"><span class="annot"><span class="annottext">Host
-</span><a href="#local-6989586621679963651"><span class="hs-identifier hs-var">host</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">forall a.
+</span><a href="Unison.Auth.OAuth.html#authenticateHost"><span class="hs-identifier hs-var hs-var">authenticateHost</span></a></span></span><span> </span><span id="local-6989586621679963844"><span class="annot"><span class="annottext">CredentialManager
+</span><a href="#local-6989586621679963844"><span class="hs-identifier hs-var">credsManager</span></a></span></span><span> </span><span id="local-6989586621679963843"><span class="annot"><span class="annottext">Host
+</span><a href="#local-6989586621679963843"><span class="hs-identifier hs-var">host</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">forall a.
 (MonadUnliftIO m, Exception CredentialFailure) =&gt;
 m a -&gt; m (Either CredentialFailure a)
 forall (m :: * -&gt; *) e a.
@@ -105,21 +105,21 @@ m a -&gt; m (Either e a)
 -&gt; m () -&gt; m (Either CredentialFailure ())
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-51"></span><span>  </span><span id="local-6989586621679963649"><span class="annot"><span class="annottext">Manager
-</span><a href="#local-6989586621679963649"><span class="hs-identifier hs-var">httpClient</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IO Manager -&gt; m Manager
+</span><span id="line-51"></span><span>  </span><span id="local-6989586621679963841"><span class="annot"><span class="annottext">Manager
+</span><a href="#local-6989586621679963841"><span class="hs-identifier hs-var">httpClient</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IO Manager -&gt; m Manager
 forall (m :: * -&gt; *) a. MonadIO m =&gt; IO a -&gt; m a
 </span><span class="hs-identifier hs-var">liftIO</span></span><span> </span><span class="annot"><span class="annottext">IO Manager
 </span><span class="hs-identifier hs-var">HTTP.getGlobalManager</span></span><span>
-</span><span id="line-52"></span><span>  </span><span id="local-6989586621679963646"><span class="annot"><span class="annottext">doc :: DiscoveryDoc
-</span><a href="#local-6989586621679963646"><span class="hs-identifier hs-var">doc</span></a></span></span><span class="hs-glyph">@</span><span class="hs-special">(</span><span class="annot"><a href="Unison.Auth.Types.html#DiscoveryDoc"><span class="hs-identifier hs-type">DiscoveryDoc</span></a></span><span> </span><span class="hs-special">{</span><span id="local-6989586621679963644"><span class="annot"><span class="annottext">URI
+</span><span id="line-52"></span><span>  </span><span id="local-6989586621679963838"><span class="annot"><span class="annottext">doc :: DiscoveryDoc
+</span><a href="#local-6989586621679963838"><span class="hs-identifier hs-var">doc</span></a></span></span><span class="hs-glyph">@</span><span class="hs-special">(</span><span class="annot"><a href="Unison.Auth.Types.html#DiscoveryDoc"><span class="hs-identifier hs-type">DiscoveryDoc</span></a></span><span> </span><span class="hs-special">{</span><span id="local-6989586621679963836"><span class="annot"><span class="annottext">URI
 authorizationEndpoint :: DiscoveryDoc -&gt; URI
 authorizationEndpoint :: URI
-</span><a href="Unison.Auth.Types.html#authorizationEndpoint"><span class="hs-identifier hs-var hs-var">authorizationEndpoint</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679963642"><span class="annot"><span class="annottext">URI
+</span><a href="Unison.Auth.Types.html#authorizationEndpoint"><span class="hs-identifier hs-var hs-var">authorizationEndpoint</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679963834"><span class="annot"><span class="annottext">URI
 tokenEndpoint :: DiscoveryDoc -&gt; URI
 tokenEndpoint :: URI
 </span><a href="Unison.Auth.Types.html#tokenEndpoint"><span class="hs-identifier hs-var hs-var">tokenEndpoint</span></a></span></span><span class="hs-special">}</span><span class="hs-special">)</span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">m (Either CredentialFailure DiscoveryDoc) -&gt; m DiscoveryDoc
 forall a. m (Either CredentialFailure a) -&gt; m a
-</span><a href="#local-6989586621679963640"><span class="hs-identifier hs-var">throwCredFailure</span></a></span><span> </span><span class="annot"><span class="annottext">(m (Either CredentialFailure DiscoveryDoc) -&gt; m DiscoveryDoc)
+</span><a href="#local-6989586621679963832"><span class="hs-identifier hs-var">throwCredFailure</span></a></span><span> </span><span class="annot"><span class="annottext">(m (Either CredentialFailure DiscoveryDoc) -&gt; m DiscoveryDoc)
 -&gt; m (Either CredentialFailure DiscoveryDoc) -&gt; m DiscoveryDoc
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Manager -&gt; Host -&gt; m (Either CredentialFailure DiscoveryDoc)
@@ -127,8 +127,8 @@ forall (m :: * -&gt; *).
 MonadIO m =&gt;
 Manager -&gt; Host -&gt; m (Either CredentialFailure DiscoveryDoc)
 </span><a href="Unison.Auth.Discovery.html#discoveryForHost"><span class="hs-identifier hs-var">discoveryForHost</span></a></span><span> </span><span class="annot"><span class="annottext">Manager
-</span><a href="#local-6989586621679963649"><span class="hs-identifier hs-var">httpClient</span></a></span><span> </span><span class="annot"><span class="annottext">Host
-</span><a href="#local-6989586621679963651"><span class="hs-identifier hs-var">host</span></a></span><span>
+</span><a href="#local-6989586621679963841"><span class="hs-identifier hs-var">httpClient</span></a></span><span> </span><span class="annot"><span class="annottext">Host
+</span><a href="#local-6989586621679963843"><span class="hs-identifier hs-var">host</span></a></span><span>
 </span><span id="line-53"></span><span>  </span><span class="annot"><span class="annottext">DebugFlag -&gt; String -&gt; DiscoveryDoc -&gt; m ()
 forall a (m :: * -&gt; *).
 (Show a, Monad m) =&gt;
@@ -136,37 +136,37 @@ DebugFlag -&gt; String -&gt; a -&gt; m ()
 </span><span class="hs-identifier hs-var">debugM</span></span><span> </span><span class="annot"><span class="annottext">DebugFlag
 </span><span class="hs-identifier hs-var">Auth</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;Discovery Doc&quot;</span></span><span> </span><span class="annot"><span class="annottext">DiscoveryDoc
-</span><a href="#local-6989586621679963646"><span class="hs-identifier hs-var">doc</span></a></span><span>
-</span><span id="line-54"></span><span>  </span><span id="local-6989586621679963637"><span class="annot"><span class="annottext">MVar (Either CredentialFailure Tokens)
-</span><a href="#local-6989586621679963637"><span class="hs-identifier hs-var">authResultVar</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">MonadIO m =&gt; m (MVar (Either CredentialFailure Tokens))
+</span><a href="#local-6989586621679963838"><span class="hs-identifier hs-var">doc</span></a></span><span>
+</span><span id="line-54"></span><span>  </span><span id="local-6989586621679963829"><span class="annot"><span class="annottext">MVar (Either CredentialFailure Tokens)
+</span><a href="#local-6989586621679963829"><span class="hs-identifier hs-var">authResultVar</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">MonadIO m =&gt; m (MVar (Either CredentialFailure Tokens))
 forall (m :: * -&gt; *) a. MonadIO m =&gt; m (MVar a)
 </span><span class="hs-identifier hs-var">UnliftIO.newEmptyMVar</span></span><span> </span><span class="hs-glyph">@</span><span class="annot"><span class="hs-identifier">_</span></span><span> </span><span class="hs-glyph">@</span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#CredentialFailure"><span class="hs-identifier hs-type">CredentialFailure</span></a></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Tokens"><span class="hs-identifier hs-type">Tokens</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-55"></span><span>  </span><span class="hs-comment">-- The redirect_uri depends on the port, so we need to spin up the server first, but</span><span>
 </span><span id="line-56"></span><span>  </span><span class="hs-comment">-- we can't spin up the server without the code-handler which depends on the redirect_uri.</span><span>
 </span><span id="line-57"></span><span>  </span><span class="hs-comment">-- So, annoyingly we just embed an MVar which will be filled as soon as the server boots up,</span><span>
 </span><span id="line-58"></span><span>  </span><span class="hs-comment">-- and it all works out fine.</span><span>
-</span><span id="line-59"></span><span>  </span><span id="local-6989586621679963635"><span class="annot"><span class="annottext">MVar String
-</span><a href="#local-6989586621679963635"><span class="hs-identifier hs-var">redirectURIVar</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">m (MVar String)
+</span><span id="line-59"></span><span>  </span><span id="local-6989586621679963827"><span class="annot"><span class="annottext">MVar String
+</span><a href="#local-6989586621679963827"><span class="hs-identifier hs-var">redirectURIVar</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">m (MVar String)
 forall (m :: * -&gt; *) a. MonadIO m =&gt; m (MVar a)
 </span><span class="hs-identifier hs-var">UnliftIO.newEmptyMVar</span></span><span>
-</span><span id="line-60"></span><span>  </span><span class="hs-special">(</span><span id="local-6989586621679963634"><span class="annot"><span class="annottext">ByteString
-</span><a href="#local-6989586621679963634"><span class="hs-identifier hs-var">verifier</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679963633"><span class="annot"><span class="annottext">ByteString
-</span><a href="#local-6989586621679963633"><span class="hs-identifier hs-var">challenge</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679963632"><span class="annot"><span class="annottext">ByteString
-</span><a href="#local-6989586621679963632"><span class="hs-identifier hs-var">state</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">m (ByteString, ByteString, ByteString)
+</span><span id="line-60"></span><span>  </span><span class="hs-special">(</span><span id="local-6989586621679963826"><span class="annot"><span class="annottext">ByteString
+</span><a href="#local-6989586621679963826"><span class="hs-identifier hs-var">verifier</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679963825"><span class="annot"><span class="annottext">ByteString
+</span><a href="#local-6989586621679963825"><span class="hs-identifier hs-var">challenge</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679963824"><span class="annot"><span class="annottext">ByteString
+</span><a href="#local-6989586621679963824"><span class="hs-identifier hs-var">state</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">m (ByteString, ByteString, ByteString)
 forall (m :: * -&gt; *).
 MonadIO m =&gt;
 m (ByteString, ByteString, ByteString)
 </span><a href="Unison.Auth.OAuth.html#generateParams"><span class="hs-identifier hs-var">generateParams</span></a></span><span>
-</span><span id="line-61"></span><span>  </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679963630"><span class="annot"><span class="annottext">codeHandler :: Code -&gt; m Response
-</span><a href="#local-6989586621679963630"><span class="hs-identifier hs-var hs-var">codeHandler</span></a></span></span><span> </span><span id="local-6989586621679963629"><span class="annot"><span class="annottext">Code
-</span><a href="#local-6989586621679963629"><span class="hs-identifier hs-var">code</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-62"></span><span>        </span><span id="local-6989586621679963628"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679963628"><span class="hs-identifier hs-var">redirectURI</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">MVar String -&gt; m String
+</span><span id="line-61"></span><span>  </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679963822"><span class="annot"><span class="annottext">codeHandler :: Code -&gt; m Response
+</span><a href="#local-6989586621679963822"><span class="hs-identifier hs-var hs-var">codeHandler</span></a></span></span><span> </span><span id="local-6989586621679963821"><span class="annot"><span class="annottext">Code
+</span><a href="#local-6989586621679963821"><span class="hs-identifier hs-var">code</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-62"></span><span>        </span><span id="local-6989586621679963820"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679963820"><span class="hs-identifier hs-var">redirectURI</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">MVar String -&gt; m String
 forall (m :: * -&gt; *) a. MonadIO m =&gt; MVar a -&gt; m a
 </span><span class="hs-identifier hs-var">UnliftIO.readMVar</span></span><span> </span><span class="annot"><span class="annottext">MVar String
-</span><a href="#local-6989586621679963635"><span class="hs-identifier hs-var">redirectURIVar</span></a></span><span>
-</span><span id="line-63"></span><span>        </span><span id="local-6989586621679963626"><span class="annot"><span class="annottext">Either CredentialFailure Tokens
-</span><a href="#local-6989586621679963626"><span class="hs-identifier hs-var">result</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Manager
+</span><a href="#local-6989586621679963827"><span class="hs-identifier hs-var">redirectURIVar</span></a></span><span>
+</span><span id="line-63"></span><span>        </span><span id="local-6989586621679963818"><span class="annot"><span class="annottext">Either CredentialFailure Tokens
+</span><a href="#local-6989586621679963818"><span class="hs-identifier hs-var">result</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Manager
 -&gt; URI
 -&gt; Code
 -&gt; ByteString
@@ -181,21 +181,21 @@ Manager
 -&gt; String
 -&gt; m (Either CredentialFailure Tokens)
 </span><a href="Unison.Auth.OAuth.html#exchangeCode"><span class="hs-identifier hs-var">exchangeCode</span></a></span><span> </span><span class="annot"><span class="annottext">Manager
-</span><a href="#local-6989586621679963649"><span class="hs-identifier hs-var">httpClient</span></a></span><span> </span><span class="annot"><span class="annottext">URI
-</span><a href="#local-6989586621679963642"><span class="hs-identifier hs-var">tokenEndpoint</span></a></span><span> </span><span class="annot"><span class="annottext">Code
-</span><a href="#local-6989586621679963629"><span class="hs-identifier hs-var">code</span></a></span><span> </span><span class="annot"><span class="annottext">ByteString
-</span><a href="#local-6989586621679963634"><span class="hs-identifier hs-var">verifier</span></a></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679963628"><span class="hs-identifier hs-var">redirectURI</span></a></span><span>
+</span><a href="#local-6989586621679963841"><span class="hs-identifier hs-var">httpClient</span></a></span><span> </span><span class="annot"><span class="annottext">URI
+</span><a href="#local-6989586621679963834"><span class="hs-identifier hs-var">tokenEndpoint</span></a></span><span> </span><span class="annot"><span class="annottext">Code
+</span><a href="#local-6989586621679963821"><span class="hs-identifier hs-var">code</span></a></span><span> </span><span class="annot"><span class="annottext">ByteString
+</span><a href="#local-6989586621679963826"><span class="hs-identifier hs-var">verifier</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679963820"><span class="hs-identifier hs-var">redirectURI</span></a></span><span>
 </span><span id="line-64"></span><span>        </span><span class="annot"><span class="annottext">MVar (Either CredentialFailure Tokens)
 -&gt; Either CredentialFailure Tokens -&gt; m ()
 forall (m :: * -&gt; *) a. MonadIO m =&gt; MVar a -&gt; a -&gt; m ()
 </span><span class="hs-identifier hs-var">UnliftIO.putMVar</span></span><span> </span><span class="annot"><span class="annottext">MVar (Either CredentialFailure Tokens)
-</span><a href="#local-6989586621679963637"><span class="hs-identifier hs-var">authResultVar</span></a></span><span> </span><span class="annot"><span class="annottext">Either CredentialFailure Tokens
-</span><a href="#local-6989586621679963626"><span class="hs-identifier hs-var">result</span></a></span><span>
+</span><a href="#local-6989586621679963829"><span class="hs-identifier hs-var">authResultVar</span></a></span><span> </span><span class="annot"><span class="annottext">Either CredentialFailure Tokens
+</span><a href="#local-6989586621679963818"><span class="hs-identifier hs-var">result</span></a></span><span>
 </span><span id="line-65"></span><span>        </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">Either CredentialFailure Tokens
-</span><a href="#local-6989586621679963626"><span class="hs-identifier hs-var">result</span></a></span><span> </span><span class="hs-keyword">of</span><span>
-</span><span id="line-66"></span><span>          </span><span class="annot"><span class="hs-identifier hs-type">Left</span></span><span> </span><span id="local-6989586621679963623"><span class="annot"><span class="annottext">CredentialFailure
-</span><a href="#local-6989586621679963623"><span class="hs-identifier hs-var">err</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
+</span><a href="#local-6989586621679963818"><span class="hs-identifier hs-var">result</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-66"></span><span>          </span><span class="annot"><span class="hs-identifier hs-type">Left</span></span><span> </span><span id="local-6989586621679963815"><span class="annot"><span class="annottext">CredentialFailure
+</span><a href="#local-6989586621679963815"><span class="hs-identifier hs-var">err</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
 </span><span id="line-67"></span><span>            </span><span class="annot"><span class="annottext">DebugFlag -&gt; String -&gt; CredentialFailure -&gt; m ()
 forall a (m :: * -&gt; *).
 (Show a, Monad m) =&gt;
@@ -203,7 +203,7 @@ DebugFlag -&gt; String -&gt; a -&gt; m ()
 </span><span class="hs-identifier hs-var">debugM</span></span><span> </span><span class="annot"><span class="annottext">DebugFlag
 </span><span class="hs-identifier hs-var">Auth</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;Auth Error&quot;</span></span><span> </span><span class="annot"><span class="annottext">CredentialFailure
-</span><a href="#local-6989586621679963623"><span class="hs-identifier hs-var">err</span></a></span><span>
+</span><a href="#local-6989586621679963815"><span class="hs-identifier hs-var">err</span></a></span><span>
 </span><span id="line-68"></span><span>            </span><span class="hs-identifier">pure</span><span> </span><span class="hs-operator">$</span><span> </span><span class="annot"><span class="annottext">Status -&gt; ResponseHeaders -&gt; ByteString -&gt; Response
 </span><span class="hs-identifier hs-var">Wai.responseLBS</span></span><span> </span><span class="annot"><span class="annottext">Status
 </span><span class="hs-identifier hs-var">internalServerError500</span></span><span> </span><span class="hs-special">[</span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">ByteString
@@ -218,8 +218,8 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-identifier hs-var">Wai.responseLBS</span></span><span> </span><span class="annot"><span class="annottext">Status
 </span><span class="hs-identifier hs-var">ok200</span></span><span> </span><span class="hs-special">[</span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">ByteString
 </span><span class="hs-string">&quot;Authorization successful. You may close this page and return to UCM.&quot;</span></span><span>
-</span><span id="line-71"></span><span>  </span><span id="local-6989586621679963620"><span class="annot"><span class="annottext">m () -&gt; IO ()
-</span><a href="#local-6989586621679963620"><span class="hs-identifier hs-var">toIO</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">m (m () -&gt; IO ())
+</span><span id="line-71"></span><span>  </span><span id="local-6989586621679963812"><span class="annot"><span class="annottext">m () -&gt; IO ()
+</span><a href="#local-6989586621679963812"><span class="hs-identifier hs-var">toIO</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">m (m () -&gt; IO ())
 forall (m :: * -&gt; *) a. MonadUnliftIO m =&gt; m (m a -&gt; IO a)
 </span><span class="hs-identifier hs-var">UnliftIO.askRunInIO</span></span><span>
 </span><span id="line-72"></span><span>  </span><span class="annot"><span class="annottext">IO () -&gt; m ()
@@ -258,36 +258,36 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 -&gt; (Response -&gt; IO ResponseReceived)
 -&gt; IO ResponseReceived
 </span><a href="Unison.Auth.OAuth.html#authTransferServer"><span class="hs-identifier hs-var">authTransferServer</span></a></span><span> </span><span class="annot"><span class="annottext">Code -&gt; IO Response
-</span><a href="#local-6989586621679963630"><span class="hs-identifier hs-var">codeHandler</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">((Port -&gt; IO ()) -&gt; m ()) -&gt; (Port -&gt; IO ()) -&gt; m ()
+</span><a href="#local-6989586621679963822"><span class="hs-identifier hs-var">codeHandler</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">((Port -&gt; IO ()) -&gt; m ()) -&gt; (Port -&gt; IO ()) -&gt; m ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679963616"><span class="annot"><span class="annottext">Port
-</span><a href="#local-6989586621679963616"><span class="hs-identifier hs-var">port</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">m () -&gt; IO ()
-</span><a href="#local-6989586621679963620"><span class="hs-identifier hs-var">toIO</span></a></span><span> </span><span class="annot"><span class="annottext">(m () -&gt; IO ()) -&gt; m () -&gt; IO ()
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679963808"><span class="annot"><span class="annottext">Port
+</span><a href="#local-6989586621679963808"><span class="hs-identifier hs-var">port</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">m () -&gt; IO ()
+</span><a href="#local-6989586621679963812"><span class="hs-identifier hs-var">toIO</span></a></span><span> </span><span class="annot"><span class="annottext">(m () -&gt; IO ()) -&gt; m () -&gt; IO ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-73"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679963615"><span class="annot"><span class="annottext">redirectURI :: String
-</span><a href="#local-6989586621679963615"><span class="hs-identifier hs-var hs-var">redirectURI</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span id="line-73"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679963807"><span class="annot"><span class="annottext">redirectURI :: String
+</span><a href="#local-6989586621679963807"><span class="hs-identifier hs-var hs-var">redirectURI</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;http://localhost:&quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Port -&gt; String
 forall a. Show a =&gt; a -&gt; String
 </span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="annot"><span class="annottext">Port
-</span><a href="#local-6989586621679963616"><span class="hs-identifier hs-var">port</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
+</span><a href="#local-6989586621679963808"><span class="hs-identifier hs-var">port</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;/redirect&quot;</span></span><span>
 </span><span id="line-74"></span><span>    </span><span class="annot"><span class="annottext">MVar String -&gt; String -&gt; m ()
 forall (m :: * -&gt; *) a. MonadIO m =&gt; MVar a -&gt; a -&gt; m ()
 </span><span class="hs-identifier hs-var">UnliftIO.putMVar</span></span><span> </span><span class="annot"><span class="annottext">MVar String
-</span><a href="#local-6989586621679963635"><span class="hs-identifier hs-var">redirectURIVar</span></a></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679963615"><span class="hs-identifier hs-var">redirectURI</span></a></span><span>
-</span><span id="line-75"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679963613"><span class="annot"><span class="annottext">authorizationKickoff :: URI
-</span><a href="#local-6989586621679963613"><span class="hs-identifier hs-var hs-var">authorizationKickoff</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">URI -&gt; String -&gt; ByteString -&gt; ByteString -&gt; URI
+</span><a href="#local-6989586621679963827"><span class="hs-identifier hs-var">redirectURIVar</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679963807"><span class="hs-identifier hs-var">redirectURI</span></a></span><span>
+</span><span id="line-75"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679963805"><span class="annot"><span class="annottext">authorizationKickoff :: URI
+</span><a href="#local-6989586621679963805"><span class="hs-identifier hs-var hs-var">authorizationKickoff</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">URI -&gt; String -&gt; ByteString -&gt; ByteString -&gt; URI
 </span><a href="Unison.Auth.OAuth.html#authURI"><span class="hs-identifier hs-var">authURI</span></a></span><span> </span><span class="annot"><span class="annottext">URI
-</span><a href="#local-6989586621679963644"><span class="hs-identifier hs-var">authorizationEndpoint</span></a></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679963615"><span class="hs-identifier hs-var">redirectURI</span></a></span><span> </span><span class="annot"><span class="annottext">ByteString
-</span><a href="#local-6989586621679963632"><span class="hs-identifier hs-var">state</span></a></span><span> </span><span class="annot"><span class="annottext">ByteString
-</span><a href="#local-6989586621679963633"><span class="hs-identifier hs-var">challenge</span></a></span><span>
+</span><a href="#local-6989586621679963836"><span class="hs-identifier hs-var">authorizationEndpoint</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679963807"><span class="hs-identifier hs-var">redirectURI</span></a></span><span> </span><span class="annot"><span class="annottext">ByteString
+</span><a href="#local-6989586621679963824"><span class="hs-identifier hs-var">state</span></a></span><span> </span><span class="annot"><span class="annottext">ByteString
+</span><a href="#local-6989586621679963825"><span class="hs-identifier hs-var">challenge</span></a></span><span>
 </span><span id="line-76"></span><span>    </span><span class="annot"><span class="annottext">m Bool -&gt; m ()
 forall (f :: * -&gt; *) a. Functor f =&gt; f a -&gt; f ()
 </span><span class="hs-identifier hs-var">void</span></span><span> </span><span class="annot"><span class="annottext">(m Bool -&gt; m ()) -&gt; (IO Bool -&gt; m Bool) -&gt; IO Bool -&gt; m ()
@@ -300,7 +300,7 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-identifier hs-var">Web.openBrowser</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">URI -&gt; String
 forall a. Show a =&gt; a -&gt; String
 </span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="annot"><span class="annottext">URI
-</span><a href="#local-6989586621679963613"><span class="hs-identifier hs-var">authorizationKickoff</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679963805"><span class="hs-identifier hs-var">authorizationKickoff</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-77"></span><span>    </span><span class="annot"><span class="annottext">Output v -&gt; m ()
 forall (n :: * -&gt; *) (m :: * -&gt; *) i v.
 MonadCommand n m i v =&gt;
@@ -312,30 +312,30 @@ forall v. URI -&gt; Output v
 </span><a href="Unison.Codebase.Editor.Output.html#InitiateAuthFlow"><span class="hs-identifier hs-var">Output.InitiateAuthFlow</span></a></span><span> </span><span class="annot"><span class="annottext">(URI -&gt; m ()) -&gt; URI -&gt; m ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">URI
-</span><a href="#local-6989586621679963613"><span class="hs-identifier hs-var">authorizationKickoff</span></a></span><span>
-</span><span id="line-78"></span><span>    </span><span id="local-6989586621679963608"><span class="annot"><span class="annottext">Tokens
-</span><a href="#local-6989586621679963608"><span class="hs-identifier hs-var">tokens</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">m (Either CredentialFailure Tokens) -&gt; m Tokens
+</span><a href="#local-6989586621679963805"><span class="hs-identifier hs-var">authorizationKickoff</span></a></span><span>
+</span><span id="line-78"></span><span>    </span><span id="local-6989586621679963800"><span class="annot"><span class="annottext">Tokens
+</span><a href="#local-6989586621679963800"><span class="hs-identifier hs-var">tokens</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">m (Either CredentialFailure Tokens) -&gt; m Tokens
 forall a. m (Either CredentialFailure a) -&gt; m a
-</span><a href="#local-6989586621679963640"><span class="hs-identifier hs-var">throwCredFailure</span></a></span><span> </span><span class="annot"><span class="annottext">(m (Either CredentialFailure Tokens) -&gt; m Tokens)
+</span><a href="#local-6989586621679963832"><span class="hs-identifier hs-var">throwCredFailure</span></a></span><span> </span><span class="annot"><span class="annottext">(m (Either CredentialFailure Tokens) -&gt; m Tokens)
 -&gt; m (Either CredentialFailure Tokens) -&gt; m Tokens
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">MVar (Either CredentialFailure Tokens)
 -&gt; m (Either CredentialFailure Tokens)
 forall (m :: * -&gt; *) a. MonadIO m =&gt; MVar a -&gt; m a
 </span><span class="hs-identifier hs-var">UnliftIO.readMVar</span></span><span> </span><span class="annot"><span class="annottext">MVar (Either CredentialFailure Tokens)
-</span><a href="#local-6989586621679963637"><span class="hs-identifier hs-var">authResultVar</span></a></span><span>
+</span><a href="#local-6989586621679963829"><span class="hs-identifier hs-var">authResultVar</span></a></span><span>
 </span><span id="line-79"></span><span>    </span><span class="annot"><span class="annottext">CredentialManager -&gt; Host -&gt; Tokens -&gt; m ()
 forall (m :: * -&gt; *).
 MonadUnliftIO m =&gt;
 CredentialManager -&gt; Host -&gt; Tokens -&gt; m ()
 </span><a href="Unison.Auth.CredentialManager.html#saveTokens"><span class="hs-identifier hs-var">saveTokens</span></a></span><span> </span><span class="annot"><span class="annottext">CredentialManager
-</span><a href="#local-6989586621679963652"><span class="hs-identifier hs-var">credsManager</span></a></span><span> </span><span class="annot"><span class="annottext">Host
-</span><a href="#local-6989586621679963651"><span class="hs-identifier hs-var">host</span></a></span><span> </span><span class="annot"><span class="annottext">Tokens
-</span><a href="#local-6989586621679963608"><span class="hs-identifier hs-var">tokens</span></a></span><span>
+</span><a href="#local-6989586621679963844"><span class="hs-identifier hs-var">credsManager</span></a></span><span> </span><span class="annot"><span class="annottext">Host
+</span><a href="#local-6989586621679963843"><span class="hs-identifier hs-var">host</span></a></span><span> </span><span class="annot"><span class="annottext">Tokens
+</span><a href="#local-6989586621679963800"><span class="hs-identifier hs-var">tokens</span></a></span><span>
 </span><span id="line-80"></span><span>  </span><span class="hs-keyword">where</span><span>
-</span><span id="line-81"></span><span>    </span><span id="local-6989586621679963754"><span class="annot"><a href="#local-6989586621679963640"><span class="hs-identifier hs-type">throwCredFailure</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="#local-6989586621679963656"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#CredentialFailure"><span class="hs-identifier hs-type">CredentialFailure</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679963754"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679963656"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679963754"><span class="hs-identifier hs-type">a</span></a></span></span><span>
-</span><span id="line-82"></span><span>    </span><span id="local-6989586621679963640"><span class="annot"><span class="annottext">throwCredFailure :: m (Either CredentialFailure a) -&gt; m a
-</span><a href="#local-6989586621679963640"><span class="hs-identifier hs-var hs-var">throwCredFailure</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">m (Either CredentialFailure a) -&gt; m a
+</span><span id="line-81"></span><span>    </span><span id="local-6989586621679963946"><span class="annot"><a href="#local-6989586621679963832"><span class="hs-identifier hs-type">throwCredFailure</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="#local-6989586621679963848"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#CredentialFailure"><span class="hs-identifier hs-type">CredentialFailure</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679963946"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679963848"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679963946"><span class="hs-identifier hs-type">a</span></a></span></span><span>
+</span><span id="line-82"></span><span>    </span><span id="local-6989586621679963832"><span class="annot"><span class="annottext">throwCredFailure :: m (Either CredentialFailure a) -&gt; m a
+</span><a href="#local-6989586621679963832"><span class="hs-identifier hs-var hs-var">throwCredFailure</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">m (Either CredentialFailure a) -&gt; m a
 forall e (m :: * -&gt; *) a.
 (MonadIO m, Exception e) =&gt;
 m (Either e a) -&gt; m a
@@ -344,26 +344,26 @@ m (Either e a) -&gt; m a
 </span><span id="line-84"></span><span class="hs-comment">-- | Construct an authorization URL from the parameters required.</span><span>
 </span><span id="line-85"></span><span class="annot"><a href="Unison.Auth.OAuth.html#authURI"><span class="hs-identifier hs-type">authURI</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">URI</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#OAuthState"><span class="hs-identifier hs-type">OAuthState</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#PKCEChallenge"><span class="hs-identifier hs-type">PKCEChallenge</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">URI</span></span><span>
 </span><span id="line-86"></span><span id="authURI"><span class="annot"><span class="annottext">authURI :: URI -&gt; String -&gt; ByteString -&gt; ByteString -&gt; URI
-</span><a href="Unison.Auth.OAuth.html#authURI"><span class="hs-identifier hs-var hs-var">authURI</span></a></span></span><span> </span><span id="local-6989586621679963604"><span class="annot"><span class="annottext">URI
-</span><a href="#local-6989586621679963604"><span class="hs-identifier hs-var">authEndpoint</span></a></span></span><span> </span><span id="local-6989586621679963603"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679963603"><span class="hs-identifier hs-var">redirectURI</span></a></span></span><span> </span><span id="local-6989586621679963602"><span class="annot"><span class="annottext">ByteString
-</span><a href="#local-6989586621679963602"><span class="hs-identifier hs-var">state</span></a></span></span><span> </span><span id="local-6989586621679963601"><span class="annot"><span class="annottext">ByteString
-</span><a href="#local-6989586621679963601"><span class="hs-identifier hs-var">challenge</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><a href="Unison.Auth.OAuth.html#authURI"><span class="hs-identifier hs-var hs-var">authURI</span></a></span></span><span> </span><span id="local-6989586621679963796"><span class="annot"><span class="annottext">URI
+</span><a href="#local-6989586621679963796"><span class="hs-identifier hs-var">authEndpoint</span></a></span></span><span> </span><span id="local-6989586621679963795"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679963795"><span class="hs-identifier hs-var">redirectURI</span></a></span></span><span> </span><span id="local-6989586621679963794"><span class="annot"><span class="annottext">ByteString
+</span><a href="#local-6989586621679963794"><span class="hs-identifier hs-var">state</span></a></span></span><span> </span><span id="local-6989586621679963793"><span class="annot"><span class="annottext">ByteString
+</span><a href="#local-6989586621679963793"><span class="hs-identifier hs-var">challenge</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-87"></span><span>  </span><span class="annot"><span class="annottext">URI
-</span><a href="#local-6989586621679963604"><span class="hs-identifier hs-var">authEndpoint</span></a></span><span>
+</span><a href="#local-6989586621679963796"><span class="hs-identifier hs-var">authEndpoint</span></a></span><span>
 </span><span id="line-88"></span><span>    </span><span class="annot"><span class="annottext">URI -&gt; (URI -&gt; URI) -&gt; URI
 forall a b. a -&gt; (a -&gt; b) -&gt; b
 </span><span class="hs-operator hs-var">&amp;</span></span><span> </span><span class="annot"><span class="annottext">ByteString -&gt; ByteString -&gt; URI -&gt; URI
 </span><a href="Unison.Auth.OAuth.html#addQueryParam"><span class="hs-identifier hs-var">addQueryParam</span></a></span><span> </span><span class="annot"><span class="annottext">ByteString
 </span><span class="hs-string">&quot;state&quot;</span></span><span> </span><span class="annot"><span class="annottext">ByteString
-</span><a href="#local-6989586621679963602"><span class="hs-identifier hs-var">state</span></a></span><span>
+</span><a href="#local-6989586621679963794"><span class="hs-identifier hs-var">state</span></a></span><span>
 </span><span id="line-89"></span><span>    </span><span class="annot"><span class="annottext">URI -&gt; (URI -&gt; URI) -&gt; URI
 forall a b. a -&gt; (a -&gt; b) -&gt; b
 </span><span class="hs-operator hs-var">&amp;</span></span><span> </span><span class="annot"><span class="annottext">ByteString -&gt; ByteString -&gt; URI -&gt; URI
 </span><a href="Unison.Auth.OAuth.html#addQueryParam"><span class="hs-identifier hs-var">addQueryParam</span></a></span><span> </span><span class="annot"><span class="annottext">ByteString
 </span><span class="hs-string">&quot;redirect_uri&quot;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; ByteString
 </span><span class="hs-identifier hs-var">BSC.pack</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679963603"><span class="hs-identifier hs-var">redirectURI</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679963795"><span class="hs-identifier hs-var">redirectURI</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-90"></span><span>    </span><span class="annot"><span class="annottext">URI -&gt; (URI -&gt; URI) -&gt; URI
 forall a b. a -&gt; (a -&gt; b) -&gt; b
 </span><span class="hs-operator hs-var">&amp;</span></span><span> </span><span class="annot"><span class="annottext">ByteString -&gt; ByteString -&gt; URI -&gt; URI
@@ -387,7 +387,7 @@ forall a b. a -&gt; (a -&gt; b) -&gt; b
 </span><span class="hs-operator hs-var">&amp;</span></span><span> </span><span class="annot"><span class="annottext">ByteString -&gt; ByteString -&gt; URI -&gt; URI
 </span><a href="Unison.Auth.OAuth.html#addQueryParam"><span class="hs-identifier hs-var">addQueryParam</span></a></span><span> </span><span class="annot"><span class="annottext">ByteString
 </span><span class="hs-string">&quot;code_challenge&quot;</span></span><span> </span><span class="annot"><span class="annottext">ByteString
-</span><a href="#local-6989586621679963601"><span class="hs-identifier hs-var">challenge</span></a></span><span>
+</span><a href="#local-6989586621679963793"><span class="hs-identifier hs-var">challenge</span></a></span><span>
 </span><span id="line-94"></span><span>    </span><span class="annot"><span class="annottext">URI -&gt; (URI -&gt; URI) -&gt; URI
 forall a b. a -&gt; (a -&gt; b) -&gt; b
 </span><span class="hs-operator hs-var">&amp;</span></span><span> </span><span class="annot"><span class="annottext">ByteString -&gt; ByteString -&gt; URI -&gt; URI
@@ -396,26 +396,26 @@ forall a b. a -&gt; (a -&gt; b) -&gt; b
 </span><span class="hs-string">&quot;S256&quot;</span></span><span>
 </span><span id="line-95"></span><span>
 </span><span id="line-96"></span><span class="hs-comment">-- | Exchange an authorization code for tokens.</span><span>
-</span><span id="line-97"></span><span id="local-6989586621679963740"><span class="annot"><a href="Unison.Auth.OAuth.html#exchangeCode"><span class="hs-identifier hs-type">exchangeCode</span></a></span><span> </span><span class="hs-glyph">::</span><span>
-</span><span id="line-98"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">MonadIO</span></span><span> </span><span class="annot"><a href="#local-6989586621679963740"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span>
+</span><span id="line-97"></span><span id="local-6989586621679963932"><span class="annot"><a href="Unison.Auth.OAuth.html#exchangeCode"><span class="hs-identifier hs-type">exchangeCode</span></a></span><span> </span><span class="hs-glyph">::</span><span>
+</span><span id="line-98"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">MonadIO</span></span><span> </span><span class="annot"><a href="#local-6989586621679963932"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span>
 </span><span id="line-99"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">HTTP.Manager</span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
 </span><span id="line-100"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">URI</span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
 </span><span id="line-101"></span><span>  </span><span class="annot"><a href="Unison.Auth.Types.html#Code"><span class="hs-identifier hs-type">Code</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span>
 </span><span id="line-102"></span><span>  </span><span class="annot"><a href="Unison.Auth.Types.html#PKCEVerifier"><span class="hs-identifier hs-type">PKCEVerifier</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span>
 </span><span id="line-103"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
-</span><span id="line-104"></span><span>  </span><span class="annot"><a href="#local-6989586621679963740"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#CredentialFailure"><span class="hs-identifier hs-type">CredentialFailure</span></a></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Tokens"><span class="hs-identifier hs-type">Tokens</span></a></span><span class="hs-special">)</span></span><span>
+</span><span id="line-104"></span><span>  </span><span class="annot"><a href="#local-6989586621679963932"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#CredentialFailure"><span class="hs-identifier hs-type">CredentialFailure</span></a></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Tokens"><span class="hs-identifier hs-type">Tokens</span></a></span><span class="hs-special">)</span></span><span>
 </span><span id="line-105"></span><span id="exchangeCode"><span class="annot"><span class="annottext">exchangeCode :: Manager
 -&gt; URI
 -&gt; Code
 -&gt; ByteString
 -&gt; String
 -&gt; m (Either CredentialFailure Tokens)
-</span><a href="Unison.Auth.OAuth.html#exchangeCode"><span class="hs-identifier hs-var hs-var">exchangeCode</span></a></span></span><span> </span><span id="local-6989586621679963596"><span class="annot"><span class="annottext">Manager
-</span><a href="#local-6989586621679963596"><span class="hs-identifier hs-var">httpClient</span></a></span></span><span> </span><span id="local-6989586621679963595"><span class="annot"><span class="annottext">URI
-</span><a href="#local-6989586621679963595"><span class="hs-identifier hs-var">tokenEndpoint</span></a></span></span><span> </span><span id="local-6989586621679963594"><span class="annot"><span class="annottext">Code
-</span><a href="#local-6989586621679963594"><span class="hs-identifier hs-var">code</span></a></span></span><span> </span><span id="local-6989586621679963593"><span class="annot"><span class="annottext">ByteString
-</span><a href="#local-6989586621679963593"><span class="hs-identifier hs-var">verifier</span></a></span></span><span> </span><span id="local-6989586621679963592"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679963592"><span class="hs-identifier hs-var">redirectURI</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">IO (Either CredentialFailure Tokens)
+</span><a href="Unison.Auth.OAuth.html#exchangeCode"><span class="hs-identifier hs-var hs-var">exchangeCode</span></a></span></span><span> </span><span id="local-6989586621679963788"><span class="annot"><span class="annottext">Manager
+</span><a href="#local-6989586621679963788"><span class="hs-identifier hs-var">httpClient</span></a></span></span><span> </span><span id="local-6989586621679963787"><span class="annot"><span class="annottext">URI
+</span><a href="#local-6989586621679963787"><span class="hs-identifier hs-var">tokenEndpoint</span></a></span></span><span> </span><span id="local-6989586621679963786"><span class="annot"><span class="annottext">Code
+</span><a href="#local-6989586621679963786"><span class="hs-identifier hs-var">code</span></a></span></span><span> </span><span id="local-6989586621679963785"><span class="annot"><span class="annottext">ByteString
+</span><a href="#local-6989586621679963785"><span class="hs-identifier hs-var">verifier</span></a></span></span><span> </span><span id="local-6989586621679963784"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679963784"><span class="hs-identifier hs-var">redirectURI</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">IO (Either CredentialFailure Tokens)
 -&gt; m (Either CredentialFailure Tokens)
 forall (m :: * -&gt; *) a. MonadIO m =&gt; IO a -&gt; m a
 </span><span class="hs-identifier hs-var">liftIO</span></span><span> </span><span class="annot"><span class="annottext">(IO (Either CredentialFailure Tokens)
@@ -424,65 +424,65 @@ forall (m :: * -&gt; *) a. MonadIO m =&gt; IO a -&gt; m a
 -&gt; m (Either CredentialFailure Tokens)
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-106"></span><span>  </span><span id="local-6989586621679963591"><span class="annot"><span class="annottext">Request
-</span><a href="#local-6989586621679963591"><span class="hs-identifier hs-var">req</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">URI -&gt; IO Request
+</span><span id="line-106"></span><span>  </span><span id="local-6989586621679963783"><span class="annot"><span class="annottext">Request
+</span><a href="#local-6989586621679963783"><span class="hs-identifier hs-var">req</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">URI -&gt; IO Request
 forall (m :: * -&gt; *). MonadThrow m =&gt; URI -&gt; m Request
 </span><span class="hs-identifier hs-var">HTTP.requestFromURI</span></span><span> </span><span class="annot"><span class="annottext">URI
-</span><a href="#local-6989586621679963595"><span class="hs-identifier hs-var">tokenEndpoint</span></a></span><span>
-</span><span id="line-107"></span><span>  </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679963589"><span class="annot"><span class="annottext">addFormData :: Request -&gt; Request
-</span><a href="#local-6989586621679963589"><span class="hs-identifier hs-var hs-var">addFormData</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><a href="#local-6989586621679963787"><span class="hs-identifier hs-var">tokenEndpoint</span></a></span><span>
+</span><span id="line-107"></span><span>  </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679963781"><span class="annot"><span class="annottext">addFormData :: Request -&gt; Request
+</span><a href="#local-6989586621679963781"><span class="hs-identifier hs-var hs-var">addFormData</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-108"></span><span>        </span><span class="annot"><span class="annottext">[(ByteString, ByteString)] -&gt; Request -&gt; Request
 </span><span class="hs-identifier hs-var">urlEncodedBody</span></span><span>
 </span><span id="line-109"></span><span>          </span><span class="hs-special">[</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ByteString
 </span><span class="hs-string">&quot;code&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Code -&gt; ByteString
 </span><span class="hs-identifier hs-var">Text.encodeUtf8</span></span><span> </span><span class="annot"><span class="annottext">Code
-</span><a href="#local-6989586621679963594"><span class="hs-identifier hs-var">code</span></a></span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><a href="#local-6989586621679963786"><span class="hs-identifier hs-var">code</span></a></span><span class="hs-special">)</span><span class="hs-special">,</span><span>
 </span><span id="line-110"></span><span>            </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ByteString
 </span><span class="hs-string">&quot;code_verifier&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">ByteString
-</span><a href="#local-6989586621679963593"><span class="hs-identifier hs-var">verifier</span></a></span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><a href="#local-6989586621679963785"><span class="hs-identifier hs-var">verifier</span></a></span><span class="hs-special">)</span><span class="hs-special">,</span><span>
 </span><span id="line-111"></span><span>            </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ByteString
 </span><span class="hs-string">&quot;grant_type&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">ByteString
 </span><span class="hs-string">&quot;authorization_code&quot;</span></span><span class="hs-special">)</span><span class="hs-special">,</span><span>
 </span><span id="line-112"></span><span>            </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ByteString
 </span><span class="hs-string">&quot;redirect_uri&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String -&gt; ByteString
 </span><span class="hs-identifier hs-var">BSC.pack</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679963592"><span class="hs-identifier hs-var">redirectURI</span></a></span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><a href="#local-6989586621679963784"><span class="hs-identifier hs-var">redirectURI</span></a></span><span class="hs-special">)</span><span class="hs-special">,</span><span>
 </span><span id="line-113"></span><span>            </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ByteString
 </span><span class="hs-string">&quot;client_id&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">ByteString
 </span><a href="Unison.Auth.OAuth.html#ucmOAuthClientID"><span class="hs-identifier hs-var">ucmOAuthClientID</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-114"></span><span>          </span><span class="hs-special">]</span><span>
-</span><span id="line-115"></span><span>  </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679963587"><span class="annot"><span class="annottext">fullReq :: Request
-</span><a href="#local-6989586621679963587"><span class="hs-identifier hs-var hs-var">fullReq</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Request -&gt; Request
-</span><a href="#local-6989586621679963589"><span class="hs-identifier hs-var">addFormData</span></a></span><span> </span><span class="annot"><span class="annottext">(Request -&gt; Request) -&gt; Request -&gt; Request
+</span><span id="line-115"></span><span>  </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679963779"><span class="annot"><span class="annottext">fullReq :: Request
+</span><a href="#local-6989586621679963779"><span class="hs-identifier hs-var hs-var">fullReq</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Request -&gt; Request
+</span><a href="#local-6989586621679963781"><span class="hs-identifier hs-var">addFormData</span></a></span><span> </span><span class="annot"><span class="annottext">(Request -&gt; Request) -&gt; Request -&gt; Request
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Request
-</span><a href="#local-6989586621679963591"><span class="hs-identifier hs-var">req</span></a></span><span> </span><span class="hs-special">{</span><span class="annot"><span class="annottext">method :: ByteString
+</span><a href="#local-6989586621679963783"><span class="hs-identifier hs-var">req</span></a></span><span> </span><span class="hs-special">{</span><span class="annot"><span class="annottext">method :: ByteString
 </span><span class="hs-identifier hs-var">HTTP.method</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ByteString
 </span><span class="hs-string">&quot;POST&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">requestHeaders :: ResponseHeaders
 </span><span class="hs-identifier hs-var">HTTP.requestHeaders</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="hs-special">(</span><span class="annot"><span class="annottext">HeaderName
 </span><span class="hs-string">&quot;Accept&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">ByteString
 </span><span class="hs-string">&quot;application/json&quot;</span></span><span class="hs-special">)</span><span class="hs-special">]</span><span class="hs-special">}</span><span>
-</span><span id="line-116"></span><span>  </span><span id="local-6989586621679963584"><span class="annot"><span class="annottext">Response ByteString
-</span><a href="#local-6989586621679963584"><span class="hs-identifier hs-var">resp</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Request -&gt; Manager -&gt; IO (Response ByteString)
+</span><span id="line-116"></span><span>  </span><span id="local-6989586621679963776"><span class="annot"><span class="annottext">Response ByteString
+</span><a href="#local-6989586621679963776"><span class="hs-identifier hs-var">resp</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Request -&gt; Manager -&gt; IO (Response ByteString)
 </span><span class="hs-identifier hs-var">HTTP.httpLbs</span></span><span> </span><span class="annot"><span class="annottext">Request
-</span><a href="#local-6989586621679963587"><span class="hs-identifier hs-var">fullReq</span></a></span><span> </span><span class="annot"><span class="annottext">Manager
-</span><a href="#local-6989586621679963596"><span class="hs-identifier hs-var">httpClient</span></a></span><span>
+</span><a href="#local-6989586621679963779"><span class="hs-identifier hs-var">fullReq</span></a></span><span> </span><span class="annot"><span class="annottext">Manager
+</span><a href="#local-6989586621679963788"><span class="hs-identifier hs-var">httpClient</span></a></span><span>
 </span><span id="line-117"></span><span>  </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">Response ByteString -&gt; Status
 forall body. Response body -&gt; Status
 </span><span class="hs-identifier hs-var hs-var">HTTP.responseStatus</span></span><span> </span><span class="annot"><span class="annottext">Response ByteString
-</span><a href="#local-6989586621679963584"><span class="hs-identifier hs-var">resp</span></a></span><span> </span><span class="hs-keyword">of</span><span>
-</span><span id="line-118"></span><span>    </span><span id="local-6989586621679963581"><span class="annot"><span class="annottext">Status
-</span><a href="#local-6989586621679963581"><span class="hs-identifier hs-var">status</span></a></span></span><span>
+</span><a href="#local-6989586621679963776"><span class="hs-identifier hs-var">resp</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-118"></span><span>    </span><span id="local-6989586621679963773"><span class="annot"><span class="annottext">Status
+</span><a href="#local-6989586621679963773"><span class="hs-identifier hs-var">status</span></a></span></span><span>
 </span><span id="line-119"></span><span>      </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">Status
-</span><a href="#local-6989586621679963581"><span class="hs-identifier hs-var">status</span></a></span><span> </span><span class="annot"><span class="annottext">Status -&gt; Status -&gt; Bool
+</span><a href="#local-6989586621679963773"><span class="hs-identifier hs-var">status</span></a></span><span> </span><span class="annot"><span class="annottext">Status -&gt; Status -&gt; Bool
 forall a. Ord a =&gt; a -&gt; a -&gt; Bool
 </span><span class="hs-operator hs-var">&lt;</span></span><span> </span><span class="annot"><span class="annottext">Status
 </span><span class="hs-identifier hs-var">status300</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-120"></span><span>        </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679963578"><span class="annot"><span class="annottext">respBytes :: ByteString
-</span><a href="#local-6989586621679963578"><span class="hs-identifier hs-var hs-var">respBytes</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Response ByteString -&gt; ByteString
+</span><span id="line-120"></span><span>        </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679963770"><span class="annot"><span class="annottext">respBytes :: ByteString
+</span><a href="#local-6989586621679963770"><span class="hs-identifier hs-var hs-var">respBytes</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Response ByteString -&gt; ByteString
 forall body. Response body -&gt; body
 </span><span class="hs-identifier hs-var hs-var">HTTP.responseBody</span></span><span> </span><span class="annot"><span class="annottext">Response ByteString
-</span><a href="#local-6989586621679963584"><span class="hs-identifier hs-var">resp</span></a></span><span>
+</span><a href="#local-6989586621679963776"><span class="hs-identifier hs-var">resp</span></a></span><span>
 </span><span id="line-121"></span><span>        </span><span class="annot"><span class="annottext">Either CredentialFailure Tokens
 -&gt; IO (Either CredentialFailure Tokens)
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
@@ -494,20 +494,20 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">ByteString -&gt; Either String Tokens
 forall a. FromJSON a =&gt; ByteString -&gt; Either String a
 </span><span class="hs-identifier hs-var">Aeson.eitherDecode</span></span><span> </span><span class="hs-glyph">@</span><span class="annot"><a href="Unison.Auth.Types.html#Tokens"><span class="hs-identifier hs-type">Tokens</span></a></span><span> </span><span class="annot"><span class="annottext">ByteString
-</span><a href="#local-6989586621679963578"><span class="hs-identifier hs-var">respBytes</span></a></span><span> </span><span class="hs-keyword">of</span><span>
-</span><span id="line-122"></span><span>          </span><span class="annot"><span class="hs-identifier hs-type">Left</span></span><span> </span><span id="local-6989586621679963575"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679963575"><span class="hs-identifier hs-var">err</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">CredentialFailure -&gt; Either CredentialFailure Tokens
+</span><a href="#local-6989586621679963770"><span class="hs-identifier hs-var">respBytes</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-122"></span><span>          </span><span class="annot"><span class="hs-identifier hs-type">Left</span></span><span> </span><span id="local-6989586621679963767"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679963767"><span class="hs-identifier hs-var">err</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">CredentialFailure -&gt; Either CredentialFailure Tokens
 forall a b. a -&gt; Either a b
 </span><span class="hs-identifier hs-var">Left</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">URI -&gt; Code -&gt; CredentialFailure
 </span><a href="Unison.Auth.Types.html#InvalidTokenResponse"><span class="hs-identifier hs-var">InvalidTokenResponse</span></a></span><span> </span><span class="annot"><span class="annottext">URI
-</span><a href="#local-6989586621679963595"><span class="hs-identifier hs-var">tokenEndpoint</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; Code
+</span><a href="#local-6989586621679963787"><span class="hs-identifier hs-var">tokenEndpoint</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; Code
 </span><span class="hs-identifier hs-var">Text.pack</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679963575"><span class="hs-identifier hs-var">err</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
-</span><span id="line-123"></span><span>          </span><span class="annot"><span class="hs-identifier hs-type">Right</span></span><span> </span><span id="local-6989586621679963572"><span class="annot"><span class="annottext">Tokens
-</span><a href="#local-6989586621679963572"><span class="hs-identifier hs-var">a</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Tokens -&gt; Either CredentialFailure Tokens
+</span><a href="#local-6989586621679963767"><span class="hs-identifier hs-var">err</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-123"></span><span>          </span><span class="annot"><span class="hs-identifier hs-type">Right</span></span><span> </span><span id="local-6989586621679963764"><span class="annot"><span class="annottext">Tokens
+</span><a href="#local-6989586621679963764"><span class="hs-identifier hs-var">a</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Tokens -&gt; Either CredentialFailure Tokens
 forall a b. b -&gt; Either a b
 </span><span class="hs-identifier hs-var">Right</span></span><span> </span><span class="annot"><span class="annottext">Tokens
-</span><a href="#local-6989586621679963572"><span class="hs-identifier hs-var">a</span></a></span><span>
+</span><a href="#local-6989586621679963764"><span class="hs-identifier hs-var">a</span></a></span><span>
 </span><span id="line-124"></span><span>      </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">Bool
 </span><span class="hs-identifier hs-var">otherwise</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Either CredentialFailure Tokens
 -&gt; IO (Either CredentialFailure Tokens)
@@ -521,7 +521,7 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 forall a b. a -&gt; Either a b
 </span><span class="hs-identifier hs-var">Left</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">URI -&gt; Code -&gt; CredentialFailure
 </span><a href="Unison.Auth.Types.html#InvalidTokenResponse"><span class="hs-identifier hs-var">InvalidTokenResponse</span></a></span><span> </span><span class="annot"><span class="annottext">URI
-</span><a href="#local-6989586621679963595"><span class="hs-identifier hs-var">tokenEndpoint</span></a></span><span> </span><span class="annot"><span class="annottext">(Code -&gt; CredentialFailure) -&gt; Code -&gt; CredentialFailure
+</span><a href="#local-6989586621679963787"><span class="hs-identifier hs-var">tokenEndpoint</span></a></span><span> </span><span class="annot"><span class="annottext">(Code -&gt; CredentialFailure) -&gt; Code -&gt; CredentialFailure
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Code
 </span><span class="hs-string">&quot;Received &quot;</span></span><span> </span><span class="annot"><span class="annottext">Code -&gt; Code -&gt; Code
@@ -529,48 +529,48 @@ forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Status -&gt; Code
 forall a. Show a =&gt; a -&gt; Code
 </span><span class="hs-identifier hs-var">tShow</span></span><span> </span><span class="annot"><span class="annottext">Status
-</span><a href="#local-6989586621679963581"><span class="hs-identifier hs-var">status</span></a></span><span> </span><span class="annot"><span class="annottext">Code -&gt; Code -&gt; Code
+</span><a href="#local-6989586621679963773"><span class="hs-identifier hs-var">status</span></a></span><span> </span><span class="annot"><span class="annottext">Code -&gt; Code -&gt; Code
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Code
 </span><span class="hs-string">&quot; response from token endpoint&quot;</span></span><span class="hs-special">)</span><span>
 </span><span id="line-125"></span><span>
 </span><span id="line-126"></span><span class="annot"><a href="Unison.Auth.OAuth.html#addQueryParam"><span class="hs-identifier hs-type">addQueryParam</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ByteString</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ByteString</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">URI</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">URI</span></span><span>
 </span><span id="line-127"></span><span id="addQueryParam"><span class="annot"><span class="annottext">addQueryParam :: ByteString -&gt; ByteString -&gt; URI -&gt; URI
-</span><a href="Unison.Auth.OAuth.html#addQueryParam"><span class="hs-identifier hs-var hs-var">addQueryParam</span></a></span></span><span> </span><span id="local-6989586621679963570"><span class="annot"><span class="annottext">ByteString
-</span><a href="#local-6989586621679963570"><span class="hs-identifier hs-var">key</span></a></span></span><span> </span><span id="local-6989586621679963569"><span class="annot"><span class="annottext">ByteString
-</span><a href="#local-6989586621679963569"><span class="hs-identifier hs-var">val</span></a></span></span><span> </span><span id="local-6989586621679963568"><span class="annot"><span class="annottext">URI
-</span><a href="#local-6989586621679963568"><span class="hs-identifier hs-var">uri</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-128"></span><span>  </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679963567"><span class="annot"><span class="annottext">existingQuery :: [(ByteString, Maybe ByteString)]
-</span><a href="#local-6989586621679963567"><span class="hs-identifier hs-var hs-var">existingQuery</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ByteString -&gt; [(ByteString, Maybe ByteString)]
+</span><a href="Unison.Auth.OAuth.html#addQueryParam"><span class="hs-identifier hs-var hs-var">addQueryParam</span></a></span></span><span> </span><span id="local-6989586621679963762"><span class="annot"><span class="annottext">ByteString
+</span><a href="#local-6989586621679963762"><span class="hs-identifier hs-var">key</span></a></span></span><span> </span><span id="local-6989586621679963761"><span class="annot"><span class="annottext">ByteString
+</span><a href="#local-6989586621679963761"><span class="hs-identifier hs-var">val</span></a></span></span><span> </span><span id="local-6989586621679963760"><span class="annot"><span class="annottext">URI
+</span><a href="#local-6989586621679963760"><span class="hs-identifier hs-var">uri</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-128"></span><span>  </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679963759"><span class="annot"><span class="annottext">existingQuery :: [(ByteString, Maybe ByteString)]
+</span><a href="#local-6989586621679963759"><span class="hs-identifier hs-var hs-var">existingQuery</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ByteString -&gt; [(ByteString, Maybe ByteString)]
 </span><span class="hs-identifier hs-var">parseQuery</span></span><span> </span><span class="annot"><span class="annottext">(ByteString -&gt; [(ByteString, Maybe ByteString)])
 -&gt; ByteString -&gt; [(ByteString, Maybe ByteString)]
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ByteString
 </span><span class="hs-identifier hs-var">BSC.pack</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">URI -&gt; String
 </span><span class="hs-identifier hs-var hs-var">uriQuery</span></span><span> </span><span class="annot"><span class="annottext">URI
-</span><a href="#local-6989586621679963568"><span class="hs-identifier hs-var">uri</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-129"></span><span>      </span><span id="local-6989586621679963564"><span class="annot"><span class="annottext">newParam :: (ByteString, Maybe ByteString)
-</span><a href="#local-6989586621679963564"><span class="hs-identifier hs-var hs-var">newParam</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ByteString
-</span><a href="#local-6989586621679963570"><span class="hs-identifier hs-var">key</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">ByteString -&gt; Maybe ByteString
+</span><a href="#local-6989586621679963760"><span class="hs-identifier hs-var">uri</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-129"></span><span>      </span><span id="local-6989586621679963756"><span class="annot"><span class="annottext">newParam :: (ByteString, Maybe ByteString)
+</span><a href="#local-6989586621679963756"><span class="hs-identifier hs-var hs-var">newParam</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ByteString
+</span><a href="#local-6989586621679963762"><span class="hs-identifier hs-var">key</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">ByteString -&gt; Maybe ByteString
 forall a. a -&gt; Maybe a
 </span><span class="hs-identifier hs-var">Just</span></span><span> </span><span class="annot"><span class="annottext">ByteString
-</span><a href="#local-6989586621679963569"><span class="hs-identifier hs-var">val</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679963761"><span class="hs-identifier hs-var">val</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-130"></span><span>   </span><span class="hs-keyword">in</span><span> </span><span class="annot"><span class="annottext">URI
-</span><a href="#local-6989586621679963568"><span class="hs-identifier hs-var">uri</span></a></span><span> </span><span class="hs-special">{</span><span class="annot"><span class="annottext">uriQuery :: String
+</span><a href="#local-6989586621679963760"><span class="hs-identifier hs-var">uri</span></a></span><span> </span><span class="hs-special">{</span><span class="annot"><span class="annottext">uriQuery :: String
 </span><span class="hs-identifier hs-var">uriQuery</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ByteString -&gt; String
 </span><span class="hs-identifier hs-var">BSC.unpack</span></span><span> </span><span class="annot"><span class="annottext">(ByteString -&gt; String) -&gt; ByteString -&gt; String
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Bool -&gt; [(ByteString, Maybe ByteString)] -&gt; ByteString
 </span><span class="hs-identifier hs-var">renderQuery</span></span><span> </span><span class="annot"><span class="annottext">Bool
 </span><span class="hs-identifier hs-var">True</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">[(ByteString, Maybe ByteString)]
-</span><a href="#local-6989586621679963567"><span class="hs-identifier hs-var">existingQuery</span></a></span><span> </span><span class="annot"><span class="annottext">[(ByteString, Maybe ByteString)]
+</span><a href="#local-6989586621679963759"><span class="hs-identifier hs-var">existingQuery</span></a></span><span> </span><span class="annot"><span class="annottext">[(ByteString, Maybe ByteString)]
 -&gt; [(ByteString, Maybe ByteString)]
 -&gt; [(ByteString, Maybe ByteString)]
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">(ByteString, Maybe ByteString)
-</span><a href="#local-6989586621679963564"><span class="hs-identifier hs-var">newParam</span></a></span><span class="hs-special">]</span><span class="hs-special">)</span><span class="hs-special">}</span><span>
+</span><a href="#local-6989586621679963756"><span class="hs-identifier hs-var">newParam</span></a></span><span class="hs-special">]</span><span class="hs-special">)</span><span class="hs-special">}</span><span>
 </span><span id="line-131"></span><span>
-</span><span id="line-132"></span><span id="local-6989586621679963744"><span class="annot"><a href="Unison.Auth.OAuth.html#generateParams"><span class="hs-identifier hs-type">generateParams</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">MonadIO</span></span><span> </span><span class="annot"><a href="#local-6989586621679963744"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679963744"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Auth.Types.html#PKCEVerifier"><span class="hs-identifier hs-type">PKCEVerifier</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#PKCEChallenge"><span class="hs-identifier hs-type">PKCEChallenge</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#OAuthState"><span class="hs-identifier hs-type">OAuthState</span></a></span><span class="hs-special">)</span></span><span>
+</span><span id="line-132"></span><span id="local-6989586621679963936"><span class="annot"><a href="Unison.Auth.OAuth.html#generateParams"><span class="hs-identifier hs-type">generateParams</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">MonadIO</span></span><span> </span><span class="annot"><a href="#local-6989586621679963936"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679963936"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Auth.Types.html#PKCEVerifier"><span class="hs-identifier hs-type">PKCEVerifier</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#PKCEChallenge"><span class="hs-identifier hs-type">PKCEChallenge</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#OAuthState"><span class="hs-identifier hs-type">OAuthState</span></a></span><span class="hs-special">)</span></span><span>
 </span><span id="line-133"></span><span id="generateParams"><span class="annot"><span class="annottext">generateParams :: m (ByteString, ByteString, ByteString)
 </span><a href="Unison.Auth.OAuth.html#generateParams"><span class="hs-identifier hs-var hs-var">generateParams</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">IO (ByteString, ByteString, ByteString)
 -&gt; m (ByteString, ByteString, ByteString)
@@ -581,8 +581,8 @@ forall (m :: * -&gt; *) a. MonadIO m =&gt; IO a -&gt; m a
 -&gt; m (ByteString, ByteString, ByteString)
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-134"></span><span>  </span><span id="local-6989586621679963561"><span class="annot"><span class="annottext">ByteString
-</span><a href="#local-6989586621679963561"><span class="hs-identifier hs-var">verifier</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Base -&gt; ByteString -&gt; ByteString
+</span><span id="line-134"></span><span>  </span><span id="local-6989586621679963753"><span class="annot"><span class="annottext">ByteString
+</span><a href="#local-6989586621679963753"><span class="hs-identifier hs-var">verifier</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Base -&gt; ByteString -&gt; ByteString
 forall bin bout.
 (ByteArrayAccess bin, ByteArray bout) =&gt;
 Base -&gt; bin -&gt; bout
@@ -595,24 +595,24 @@ forall (m :: * -&gt; *) byteArray.
 Port -&gt; m byteArray
 </span><span class="hs-identifier hs-var">getRandomBytes</span></span><span> </span><span class="annot"><span class="annottext">Port
 </span><span class="hs-number">50</span></span><span>
-</span><span id="line-135"></span><span>  </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679963557"><span class="annot"><span class="annottext">digest :: Digest SHA256
-</span><a href="#local-6989586621679963557"><span class="hs-identifier hs-var hs-var">digest</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">SHA256 -&gt; ByteString -&gt; Digest SHA256
+</span><span id="line-135"></span><span>  </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679963749"><span class="annot"><span class="annottext">digest :: Digest SHA256
+</span><a href="#local-6989586621679963749"><span class="hs-identifier hs-var hs-var">digest</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">SHA256 -&gt; ByteString -&gt; Digest SHA256
 forall ba alg.
 (ByteArrayAccess ba, HashAlgorithm alg) =&gt;
 alg -&gt; ba -&gt; Digest alg
 </span><span class="hs-identifier hs-var">Crypto.hashWith</span></span><span> </span><span class="annot"><span class="annottext">SHA256
 </span><span class="hs-identifier hs-var">Crypto.SHA256</span></span><span> </span><span class="annot"><span class="annottext">ByteString
-</span><a href="#local-6989586621679963561"><span class="hs-identifier hs-var">verifier</span></a></span><span>
-</span><span id="line-136"></span><span>  </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679963554"><span class="annot"><span class="annottext">challenge :: ByteString
-</span><a href="#local-6989586621679963554"><span class="hs-identifier hs-var hs-var">challenge</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Base -&gt; Digest SHA256 -&gt; ByteString
+</span><a href="#local-6989586621679963753"><span class="hs-identifier hs-var">verifier</span></a></span><span>
+</span><span id="line-136"></span><span>  </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679963746"><span class="annot"><span class="annottext">challenge :: ByteString
+</span><a href="#local-6989586621679963746"><span class="hs-identifier hs-var hs-var">challenge</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Base -&gt; Digest SHA256 -&gt; ByteString
 forall bin bout.
 (ByteArrayAccess bin, ByteArray bout) =&gt;
 Base -&gt; bin -&gt; bout
 </span><span class="hs-identifier hs-var">BE.convertToBase</span></span><span> </span><span class="annot"><span class="annottext">Base
 </span><span class="hs-identifier hs-var">BE.Base64URLUnpadded</span></span><span> </span><span class="annot"><span class="annottext">Digest SHA256
-</span><a href="#local-6989586621679963557"><span class="hs-identifier hs-var">digest</span></a></span><span>
-</span><span id="line-137"></span><span>  </span><span id="local-6989586621679963553"><span class="annot"><span class="annottext">ByteString
-</span><a href="#local-6989586621679963553"><span class="hs-identifier hs-var">state</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Base -&gt; ByteString -&gt; ByteString
+</span><a href="#local-6989586621679963749"><span class="hs-identifier hs-var">digest</span></a></span><span>
+</span><span id="line-137"></span><span>  </span><span id="local-6989586621679963745"><span class="annot"><span class="annottext">ByteString
+</span><a href="#local-6989586621679963745"><span class="hs-identifier hs-var">state</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Base -&gt; ByteString -&gt; ByteString
 forall bin bout.
 (ByteArrayAccess bin, ByteArray bout) =&gt;
 Base -&gt; bin -&gt; bout
@@ -626,7 +626,7 @@ Port -&gt; m byteArray
 </span><span class="hs-identifier hs-var">getRandomBytes</span></span><span> </span><span class="annot"><span class="annottext">Port
 </span><span class="hs-number">12</span></span><span>
 </span><span id="line-138"></span><span>  </span><span class="hs-identifier">pure</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ByteString
-</span><a href="#local-6989586621679963561"><span class="hs-identifier hs-var">verifier</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">ByteString
-</span><a href="#local-6989586621679963554"><span class="hs-identifier hs-var">challenge</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">ByteString
-</span><a href="#local-6989586621679963553"><span class="hs-identifier hs-var">state</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679963753"><span class="hs-identifier hs-var">verifier</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">ByteString
+</span><a href="#local-6989586621679963746"><span class="hs-identifier hs-var">challenge</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">ByteString
+</span><a href="#local-6989586621679963745"><span class="hs-identifier hs-var">state</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-139"></span></pre></body></html>
