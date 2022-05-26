@@ -14,7 +14,7 @@
 </span><span id="line-14"></span><span>    </span><span id="OpenCodebaseDoesntExist"><span class="annot"><a href="Unison.Codebase.Init.OpenCodebaseError.html#OpenCodebaseDoesntExist"><span class="hs-identifier hs-var">OpenCodebaseDoesntExist</span></a></span></span><span>
 </span><span id="line-15"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span class="hs-comment">-- | The codebase exists, but its schema version is unknown to this application.</span><span>
 </span><span id="line-16"></span><span>    </span><span id="OpenCodebaseUnknownSchemaVersion"><span class="annot"><a href="Unison.Codebase.Init.OpenCodebaseError.html#OpenCodebaseUnknownSchemaVersion"><span class="hs-identifier hs-var">OpenCodebaseUnknownSchemaVersion</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Word64</span></span><span>
-</span><span id="line-17"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">stock</span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621680705248"><span id="local-6989586621680705250"><span id="local-6989586621680705252"><span class="annot"><span class="annottext">Int -&gt; OpenCodebaseError -&gt; ShowS
+</span><span id="line-17"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">stock</span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621680729080"><span id="local-6989586621680729082"><span id="local-6989586621680729084"><span class="annot"><span class="annottext">Int -&gt; OpenCodebaseError -&gt; ShowS
 [OpenCodebaseError] -&gt; ShowS
 OpenCodebaseError -&gt; String
 (Int -&gt; OpenCodebaseError -&gt; ShowS)
@@ -29,7 +29,7 @@ show :: OpenCodebaseError -&gt; String
 $cshow :: OpenCodebaseError -&gt; String
 showsPrec :: Int -&gt; OpenCodebaseError -&gt; ShowS
 $cshowsPrec :: Int -&gt; OpenCodebaseError -&gt; ShowS
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680705243"><span id="local-6989586621680705245"><span class="annot"><span class="annottext">OpenCodebaseError -&gt; OpenCodebaseError -&gt; Bool
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680729075"><span id="local-6989586621680729077"><span class="annot"><span class="annottext">OpenCodebaseError -&gt; OpenCodebaseError -&gt; Bool
 (OpenCodebaseError -&gt; OpenCodebaseError -&gt; Bool)
 -&gt; (OpenCodebaseError -&gt; OpenCodebaseError -&gt; Bool)
 -&gt; Eq OpenCodebaseError
@@ -39,7 +39,7 @@ $c/= :: OpenCodebaseError -&gt; OpenCodebaseError -&gt; Bool
 == :: OpenCodebaseError -&gt; OpenCodebaseError -&gt; Bool
 $c== :: OpenCodebaseError -&gt; OpenCodebaseError -&gt; Bool
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-18"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">anyclass</span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621680705234"><span id="local-6989586621680705236"><span id="local-6989586621680705238"><span class="annot"><span class="annottext">Show OpenCodebaseError
+</span><span id="line-18"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">anyclass</span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621680729066"><span id="local-6989586621680729068"><span id="local-6989586621680729070"><span class="annot"><span class="annottext">Show OpenCodebaseError
 Typeable OpenCodebaseError
 Typeable OpenCodebaseError
 -&gt; Show OpenCodebaseError

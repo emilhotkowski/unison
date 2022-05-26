@@ -7,14 +7,14 @@
 
 module U.Codebase.Sync
 debug :: Bool
-data TrySyncResult h
-Missing :: [h] -> TrySyncResult h
-Done :: TrySyncResult h
-PreviouslyDone :: TrySyncResult h
-NonFatalError :: TrySyncResult h
-data Sync m h
-Sync :: (h -> m (TrySyncResult h)) -> Sync m h
-[trySync] :: Sync m h -> h -> m (TrySyncResult h)
+data TrySyncResult entity
+Missing :: [entity] -> TrySyncResult entity
+Done :: TrySyncResult entity
+PreviouslyDone :: TrySyncResult entity
+NonFatalError :: TrySyncResult entity
+data Sync m entity
+Sync :: (entity -> m (TrySyncResult entity)) -> Sync m entity
+[trySync] :: Sync m entity -> entity -> m (TrySyncResult entity)
 transformSync :: (forall a. m a -> n a) -> Sync m h -> Sync n h
 data Progress m h
 Progress :: (h -> m ()) -> (h -> m ()) -> (h -> m ()) -> m () -> Progress m h
@@ -30,4 +30,4 @@ sync :: forall m h. (Monad m, Show h) => Sync m h -> Progress m h -> [h] -> m ()
 -- | Doesn't call <a>allDone</a> at the end, in case you plan to call sync
 --   more than once.
 sync' :: forall m h. (Monad m, Show h) => Sync m h -> Progress m h -> [h] -> m ()
-instance GHC.Show.Show h => GHC.Show.Show (U.Codebase.Sync.TrySyncResult h)
+instance GHC.Show.Show entity => GHC.Show.Show (U.Codebase.Sync.TrySyncResult entity)

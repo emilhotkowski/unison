@@ -28,6 +28,8 @@ Git :: DebugFlag
 Sqlite :: DebugFlag
 Codebase :: DebugFlag
 Auth :: DebugFlag
+Migration :: DebugFlag
+Integrity :: DebugFlag
 instance GHC.Enum.Enum Unison.Debug.DebugFlag
 instance GHC.Enum.Bounded Unison.Debug.DebugFlag
 instance GHC.Show.Show Unison.Debug.DebugFlag

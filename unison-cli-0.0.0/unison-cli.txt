@@ -208,7 +208,7 @@ GistInput :: WriteRepo -> GistInput
 [repo] :: GistInput -> WriteRepo
 data Event
 UnisonFileChanged :: SourceName -> Source -> Event
-IncomingRootBranch :: Set Hash -> Event
+IncomingRootBranch :: Set CausalHash -> Event
 data OutputLocation
 ConsoleLocation :: OutputLocation
 LatestFileLocation :: OutputLocation
@@ -296,12 +296,12 @@ instance GHC.Base.Monoid (Unison.Codebase.Editor.Output.BranchDiff.MetadataDiff 
 
 module Unison.Codebase.Editor.Output.DumpNamespace
 data DumpNamespace
-DumpNamespace :: Map Referent (Set NameSegment, Set Reference) -> Map Reference (Set NameSegment, Set Reference) -> Map NameSegment EditHash -> Map NameSegment Hash -> Set Hash -> DumpNamespace
+DumpNamespace :: Map Referent (Set NameSegment, Set Reference) -> Map Reference (Set NameSegment, Set Reference) -> Map NameSegment EditHash -> Map NameSegment CausalHash -> Set CausalHash -> DumpNamespace
 [terms] :: DumpNamespace -> Map Referent (Set NameSegment, Set Reference)
 [types] :: DumpNamespace -> Map Reference (Set NameSegment, Set Reference)
 [patches] :: DumpNamespace -> Map NameSegment EditHash
-[children] :: DumpNamespace -> Map NameSegment Hash
-[causalParents] :: DumpNamespace -> Set Hash
+[children] :: DumpNamespace -> Map NameSegment CausalHash
+[causalParents] :: DumpNamespace -> Set CausalHash
 instance GHC.Show.Show Unison.Codebase.Editor.Output.DumpNamespace.DumpNamespace
 
 module Unison.Codebase.Editor.SlurpComponent
@@ -652,11 +652,11 @@ ListDependents :: Int -> LabeledDependency -> [(Reference, Maybe Name)] -> Outpu
 --   branch
 ListNamespaceDependencies :: PrettyPrintEnv -> Absolute -> Map LabeledDependency (Set Name) -> Output v
 DumpNumberedArgs :: NumberedArgs -> Output v
-DumpBitBooster :: Hash -> Map Hash [Hash] -> Output v
+DumpBitBooster :: CausalHash -> Map CausalHash [CausalHash] -> Output v
 DumpUnisonFileHashes :: Int -> [(Name, Id)] -> [(Name, Id)] -> [(Name, Id)] -> Output v
 BadName :: String -> Output v
 DefaultMetadataNotification :: Output v
-CouldntLoadBranch :: Hash -> Output v
+CouldntLoadBranch :: CausalHash -> Output v
 HelpMessage :: InputPattern -> Output v
 NamespaceEmpty :: NonEmpty AbsBranchId -> Output v
 NoOp :: Output v
@@ -664,7 +664,7 @@ RefusedToPush :: PushBehavior -> Output v
 
 -- | <tt>GistCreated repo hash</tt> means causal <tt>hash</tt> was just
 --   published to <tt>repo</tt>.
-GistCreated :: Int -> WriteRepo -> Hash -> Output v
+GistCreated :: Int -> WriteRepo -> CausalHash -> Output v
 
 -- | Directs the user to URI to begin an authorization flow.
 InitiateAuthFlow :: URI -> Output v
@@ -698,14 +698,14 @@ CantDeleteNamespace :: PrettyPrintEnvDecl -> Map LabeledDependency (NESet Labele
 DeletedDespiteDependents :: PrettyPrintEnvDecl -> Map LabeledDependency (NESet LabeledDependency) -> NumberedOutput v
 
 -- | size limit, history , how the history ends
-History :: Maybe Int -> HashLength -> [(Hash, Diff)] -> HistoryTail -> NumberedOutput v
+History :: Maybe Int -> HashLength -> [(CausalHash, Diff)] -> HistoryTail -> NumberedOutput v
 ListEdits :: Patch -> PrettyPrintEnv -> NumberedOutput v
 type NumberedArgs = [String]
 type ListDetailed = Bool
 data HistoryTail
-EndOfLog :: Hash -> HistoryTail
-MergeTail :: Hash -> [Hash] -> HistoryTail
-PageEnd :: Hash -> Int -> HistoryTail
+EndOfLog :: CausalHash -> HistoryTail
+MergeTail :: CausalHash -> [CausalHash] -> HistoryTail
+PageEnd :: CausalHash -> Int -> HistoryTail
 data TestReportStats
 CachedTests :: TotalCount -> CachedCount -> TestReportStats
 NewlyComputed :: TestReportStats
@@ -750,7 +750,7 @@ data Command m i v a
 [TermReferencesByShortHash] :: ShortHash -> Command m i v (Set Reference)
 [TermReferentsByShortHash] :: ShortHash -> Command m i v (Set Referent)
 [BranchHashLength] :: Command m i v Int
-[BranchHashesByPrefix] :: ShortBranchHash -> Command m i v (Set Hash)
+[BranchHashesByPrefix] :: ShortBranchHash -> Command m i v (Set CausalHash)
 [ParseType] :: NamesWithHistory -> LexedSource -> Command m i v (Either (Err v) (Type v Ann))
 [LoadSource] :: SourceName -> Command m i v LoadSourceResult
 [Typecheck] :: AmbientAbilities v -> NamesWithHistory -> SourceName -> LexedSource -> Command m i v (TypecheckingResult v)
@@ -760,14 +760,14 @@ data Command m i v a
 [PutWatch] :: WatchKind -> Id -> Term v Ann -> Command m i v ()
 [LoadWatches] :: WatchKind -> Set Reference -> Command m i v [(Reference, Term v Ann)]
 [LoadLocalRootBranch] :: Command m i v (Branch m)
-[LoadLocalBranch] :: Hash -> Command m i v (Branch m)
+[LoadLocalBranch] :: CausalHash -> Command m i v (Branch m)
 [Merge] :: MergeMode -> Branch m -> Branch m -> Command m i v (Branch m)
 [ViewRemoteBranch] :: ReadRemoteNamespace -> GitBranchBehavior -> (Branch m -> Free (Command m i v) r) -> Command m i v (Either GitError r)
 [ImportRemoteBranch] :: ReadRemoteNamespace -> SyncMode -> Preprocessing m -> Command m i v (Either GitError (Branch m))
 [SyncLocalRootBranch] :: Branch m -> Command m i v ()
 [SyncRemoteBranch] :: WriteRepo -> PushGitBranchOpts -> (Branch m -> m (Either e (Branch m))) -> Command m i v (Either GitError (Either e (Branch m)))
 [AppendToReflog] :: Text -> Branch m -> Branch m -> Command m i v ()
-[LoadReflog] :: Command m i v [Entry Hash]
+[LoadReflog] :: Command m i v [Entry CausalHash]
 [LoadTerm] :: Id -> Command m i v (Maybe (Term v Ann))
 [LoadTermComponentWithTypes] :: Hash -> Command m i v (Maybe [(Term v Ann, Type v Ann)])
 [LoadType] :: Id -> Command m i v (Maybe (Decl v Ann))
@@ -852,13 +852,13 @@ LoopState :: Branch m -> Branch m -> NonEmpty Absolute -> Maybe (FilePath, SkipN
 type Action' m v = Action m (Either Event Input) v
 type SkipNextUpdate = Bool
 type InputDescription = Text
-root :: forall m_a1LTT v_a1LTU. Lens' (LoopState m_a1LTT v_a1LTU) (Branch m_a1LTT)
-numberedArgs :: forall m_a1LTT v_a1LTU. Lens' (LoopState m_a1LTT v_a1LTU) NumberedArgs
-latestTypecheckedFile :: forall m_a1LTT v_a1LTU v_a1MF6. Lens (LoopState m_a1LTT v_a1LTU) (LoopState m_a1LTT v_a1MF6) (Maybe (TypecheckedUnisonFile v_a1LTU Ann)) (Maybe (TypecheckedUnisonFile v_a1MF6 Ann))
-latestFile :: forall m_a1LTT v_a1LTU. Lens' (LoopState m_a1LTT v_a1LTU) (Maybe (FilePath, SkipNextUpdate))
-lastSavedRoot :: forall m_a1LTT v_a1LTU. Lens' (LoopState m_a1LTT v_a1LTU) (Branch m_a1LTT)
-lastInput :: forall m_a1LTT v_a1LTU. Lens' (LoopState m_a1LTT v_a1LTU) (Maybe Input)
-currentPathStack :: forall m_a1LTT v_a1LTU. Lens' (LoopState m_a1LTT v_a1LTU) (NonEmpty Absolute)
+root :: forall m_a1LTE v_a1LTF. Lens' (LoopState m_a1LTE v_a1LTF) (Branch m_a1LTE)
+numberedArgs :: forall m_a1LTE v_a1LTF. Lens' (LoopState m_a1LTE v_a1LTF) NumberedArgs
+latestTypecheckedFile :: forall m_a1LTE v_a1LTF v_a1MER. Lens (LoopState m_a1LTE v_a1LTF) (LoopState m_a1LTE v_a1MER) (Maybe (TypecheckedUnisonFile v_a1LTF Ann)) (Maybe (TypecheckedUnisonFile v_a1MER Ann))
+latestFile :: forall m_a1LTE v_a1LTF. Lens' (LoopState m_a1LTE v_a1LTF) (Maybe (FilePath, SkipNextUpdate))
+lastSavedRoot :: forall m_a1LTE v_a1LTF. Lens' (LoopState m_a1LTE v_a1LTF) (Branch m_a1LTE)
+lastInput :: forall m_a1LTE v_a1LTF. Lens' (LoopState m_a1LTE v_a1LTF) (Maybe Input)
+currentPathStack :: forall m_a1LTE v_a1LTF. Lens' (LoopState m_a1LTE v_a1LTF) (NonEmpty Absolute)
 currentPath :: Getter (LoopState m v) Absolute
 loopState0 :: Branch m -> Absolute -> LoopState m v
 respond :: MonadCommand n m i v => Output v -> n ()
@@ -1083,7 +1083,7 @@ prettyBranchId :: AbsBranchId -> Pretty
 prettyRelative :: Relative -> Pretty
 prettyAbsolute :: Absolute -> Pretty
 prettySBH :: IsString s => ShortBranchHash -> Pretty s
-prettyCausalHash :: IsString s => RawHash x -> Pretty s
+prettyCausalHash :: IsString s => CausalHash -> Pretty s
 formatMissingStuff :: (Show tm, Show typ) => [(HashQualified Name, tm)] -> [(HashQualified Name, typ)] -> Pretty
 displayDefinitions' :: Var v => Ord a1 => PrettyPrintEnvDecl -> Map Reference (DisplayObject () (Decl v a1)) -> Map Reference (DisplayObject (Type v a1) (Term v a1)) -> Pretty
 displayRendered :: Maybe FilePath -> Pretty -> IO Pretty
@@ -1130,8 +1130,9 @@ numberedArgsForEndangerments :: PrettyPrintEnvDecl -> Map LabeledDependency (NES
 --   going extinct.
 endangeredDependentsTable :: PrettyPrintEnvDecl -> Map LabeledDependency (NESet LabeledDependency) -> Pretty ColorText
 
--- | Displays a full, non-truncated Branch Hash to a string, e.g. #abcdef
-displayBranchHash :: Hash -> String
+-- | Displays a full, non-truncated Branch.CausalHash to a string, e.g.
+--   #abcdef
+displayBranchHash :: CausalHash -> String
 
 module Unison.CommandLine.DisplayValues
 type Pretty = Pretty ColorText

@@ -81,9 +81,19 @@ fromByteString :: ByteString -> Hash
 toBase32Hex :: Hash -> Base32Hex
 toBase32HexText :: Hash -> Text
 toByteString :: Hash -> ByteString
+
+-- | A hash tagged with the type it's a hash of, useful for maintaining
+--   type safety guarantees.
+newtype HashFor t
+HashFor :: Hash -> HashFor t
+[genericHash] :: HashFor t -> Hash
 instance GHC.Generics.Generic U.Util.Hash.Hash
 instance GHC.Classes.Ord U.Util.Hash.Hash
 instance GHC.Classes.Eq U.Util.Hash.Hash
+instance GHC.Generics.Generic (U.Util.Hash.HashFor t)
+instance GHC.Classes.Ord (U.Util.Hash.HashFor t)
+instance GHC.Classes.Eq (U.Util.Hash.HashFor t)
+instance GHC.Show.Show (U.Util.Hash.HashFor t)
 instance GHC.Show.Show U.Util.Hash.Hash
 
 module U.Util.Lens

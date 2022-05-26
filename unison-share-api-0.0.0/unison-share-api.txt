@@ -417,7 +417,7 @@ type SyntaxText = SyntaxText' Reference
 data ShallowListEntry v a
 ShallowTermEntry :: TermEntry v a -> ShallowListEntry v a
 ShallowTypeEntry :: TypeEntry -> ShallowListEntry v a
-ShallowBranchEntry :: NameSegment -> Hash -> Maybe Int -> ShallowListEntry v a
+ShallowBranchEntry :: NameSegment -> CausalHash -> Maybe Int -> ShallowListEntry v a
 ShallowPatchEntry :: NameSegment -> ShallowListEntry v a
 listEntryName :: ShallowListEntry v a -> Text
 data BackendError
@@ -425,8 +425,8 @@ NoSuchNamespace :: Absolute -> BackendError
 BadNamespace :: String -> String -> BackendError
 CouldntExpandBranchHash :: ShortBranchHash -> BackendError
 AmbiguousBranchHash :: ShortBranchHash -> Set ShortBranchHash -> BackendError
-NoBranchForHash :: Hash -> BackendError
-CouldntLoadBranch :: Hash -> BackendError
+NoBranchForHash :: CausalHash -> BackendError
+CouldntLoadBranch :: CausalHash -> BackendError
 MissingSignatureForTerm :: Reference -> BackendError
 data BackendEnv
 BackendEnv :: Bool -> BackendEnv
@@ -550,21 +550,21 @@ DefinitionResults :: Map Reference (DisplayObject (Type v Ann) (Term v Ann)) -> 
 [$sel:termResults:DefinitionResults] :: DefinitionResults v -> Map Reference (DisplayObject (Type v Ann) (Term v Ann))
 [$sel:typeResults:DefinitionResults] :: DefinitionResults v -> Map Reference (DisplayObject () (Decl v Ann))
 [$sel:noResults:DefinitionResults] :: DefinitionResults v -> [HashQualified Name]
-expandShortBranchHash :: Monad m => Codebase m v a -> ShortBranchHash -> Backend m Hash
+expandShortBranchHash :: Monad m => Codebase m v a -> ShortBranchHash -> Backend m CausalHash
 
 -- | Efficiently resolve a root hash and path to a shallow branch's causal.
-getShallowCausalAtPathFromRootHash :: Monad m => Codebase m v a -> Maybe Hash -> Path -> Backend m (CausalBranch m)
+getShallowCausalAtPathFromRootHash :: Monad m => Codebase m v a -> Maybe CausalHash -> Path -> Backend m (CausalBranch m)
 formatType' :: Var v => PrettyPrintEnv -> Width -> Type v a -> SyntaxText
 formatType :: Var v => PrettyPrintEnv -> Width -> Type v a -> SyntaxText
 formatSuffixedType :: Var v => PrettyPrintEnvDecl -> Width -> Type v Ann -> SyntaxText
 mungeSyntaxText :: Functor g => g (Element Reference) -> g Element
-prettyDefinitionsBySuffixes :: Path -> Maybe Hash -> Maybe Width -> Suffixify -> Runtime Symbol -> Codebase IO Symbol Ann -> [HashQualified Name] -> Backend IO DefinitionDisplayResults
+prettyDefinitionsBySuffixes :: Path -> Maybe CausalHash -> Maybe Width -> Suffixify -> Runtime Symbol -> Codebase IO Symbol Ann -> [HashQualified Name] -> Backend IO DefinitionDisplayResults
 renderDoc :: PrettyPrintEnvDecl -> Width -> Runtime Symbol -> Codebase IO Symbol Ann -> Reference -> IO (HashQualifiedName, UnisonHash, Doc)
 docsInBranchToHtmlFiles :: Runtime Symbol -> Codebase IO Symbol Ann -> Branch IO -> Path -> FilePath -> IO ()
 bestNameForTerm :: forall v. Var v => PrettyPrintEnv -> Width -> Referent -> Text
 bestNameForType :: forall v. Var v => PrettyPrintEnv -> Width -> Reference -> Text
-scopedNamesForBranchHash :: forall m v a. Monad m => Codebase m v a -> Maybe Hash -> Path -> Backend m (Names, Names)
-resolveBranchHash :: Monad m => Maybe Hash -> Codebase m v a -> Backend m (Branch m)
+scopedNamesForBranchHash :: forall m v a. Monad m => Codebase m v a -> Maybe CausalHash -> Path -> Backend m (Names, Names)
+resolveCausalHash :: Monad m => Maybe CausalHash -> Codebase m v a -> Backend m (Branch m)
 resolveRootBranchHash :: Monad m => Maybe ShortBranchHash -> Codebase m v a -> Backend m (Branch m)
 
 -- | Determines whether we include full cycles in the results, (e.g. if I
@@ -606,7 +606,7 @@ badHQN :: HashQualifiedName -> ServerError
 backendError :: BackendError -> ServerError
 badNamespace :: String -> String -> ServerError
 noSuchNamespace :: HashQualifiedName -> ServerError
-couldntLoadBranch :: Hash -> ServerError
+couldntLoadBranch :: CausalHash -> ServerError
 ambiguousNamespace :: HashQualifiedName -> Set HashQualifiedName -> ServerError
 missingSigForTerm :: HashQualifiedName -> ServerError
 

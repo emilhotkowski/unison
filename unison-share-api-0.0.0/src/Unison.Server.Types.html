@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span id="%24con2tag_9gYYqI7jSS6HeDFJiZnn2I"><span id="%24con2tag_9tA1zVdHp3r0D6V4CN2ZK6"><span id="%24con2tag_7LDOIhRqGc2CcsARDRatkC"></span></span></span><span class="hs-pragma">{-# LANGUAGE DataKinds #-}</span><span>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span id="%24con2tag_TdpQMu2mTz7HmG93RlQo6"><span id="%24con2tag_Lo3aWUdnAaCLHCqeBUjPjX"><span id="%24con2tag_l5OHX4QE5mK45zR5TM3CC"></span></span></span><span class="hs-pragma">{-# LANGUAGE DataKinds #-}</span><span>
 </span><span id="line-2"></span><span class="hs-pragma">{-# LANGUAGE DeriveAnyClass #-}</span><span>
 </span><span id="line-3"></span><span class="hs-pragma">{-# LANGUAGE DeriveGeneric #-}</span><span>
 </span><span id="line-4"></span><span class="hs-pragma">{-# LANGUAGE DerivingVia #-}</span><span>
@@ -40,13 +40,13 @@
 </span><span id="line-40"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Unison.Server.Syntax.html"><span class="hs-identifier">Unison.Server.Syntax</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Server.Syntax.html#SyntaxText"><span class="hs-identifier">SyntaxText</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-41"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Util.Pretty</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Width</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
 </span><span id="line-42"></span><span>
-</span><span id="line-43"></span><span class="hs-keyword">type</span><span> </span><span id="APIHeaders"><span class="annot"><a href="Unison.Server.Types.html#APIHeaders"><span class="hs-identifier hs-var">APIHeaders</span></a></span></span><span> </span><span id="local-6989586621679277710"><span class="annot"><a href="#local-6989586621679277710"><span class="hs-identifier hs-type">x</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-43"></span><span class="hs-keyword">type</span><span> </span><span id="APIHeaders"><span class="annot"><a href="Unison.Server.Types.html#APIHeaders"><span class="hs-identifier hs-var">APIHeaders</span></a></span></span><span> </span><span id="local-6989586621679277723"><span class="annot"><a href="#local-6989586621679277723"><span class="hs-identifier hs-type">x</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-44"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">Headers</span></span><span>
 </span><span id="line-45"></span><span>    </span><span class="hs-special">'</span><span class="hs-special">[</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Header</span></span><span> </span><span class="annot"><span class="hs-string">&quot;Cache-Control&quot;</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
 </span><span id="line-46"></span><span>     </span><span class="hs-special">]</span><span>
-</span><span id="line-47"></span><span>    </span><span class="annot"><a href="#local-6989586621679277710"><span class="hs-identifier hs-type">x</span></a></span><span>
+</span><span id="line-47"></span><span>    </span><span class="annot"><a href="#local-6989586621679277723"><span class="hs-identifier hs-type">x</span></a></span><span>
 </span><span id="line-48"></span><span>
-</span><span id="line-49"></span><span class="hs-keyword">type</span><span> </span><span id="APIGet"><span class="annot"><a href="Unison.Server.Types.html#APIGet"><span class="hs-identifier hs-var">APIGet</span></a></span></span><span> </span><span id="local-6989586621679277708"><span class="annot"><a href="#local-6989586621679277708"><span class="hs-identifier hs-type">c</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Get</span></span><span> </span><span class="hs-special">'</span><span class="hs-special">[</span><span class="annot"><span class="hs-identifier hs-type">JSON</span></span><span class="hs-special">]</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Server.Types.html#APIHeaders"><span class="hs-identifier hs-type">APIHeaders</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679277708"><span class="hs-identifier hs-type">c</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-49"></span><span class="hs-keyword">type</span><span> </span><span id="APIGet"><span class="annot"><a href="Unison.Server.Types.html#APIGet"><span class="hs-identifier hs-var">APIGet</span></a></span></span><span> </span><span id="local-6989586621679277721"><span class="annot"><a href="#local-6989586621679277721"><span class="hs-identifier hs-type">c</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Get</span></span><span> </span><span class="hs-special">'</span><span class="hs-special">[</span><span class="annot"><span class="hs-identifier hs-type">JSON</span></span><span class="hs-special">]</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Server.Types.html#APIHeaders"><span class="hs-identifier hs-type">APIHeaders</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679277721"><span class="hs-identifier hs-type">c</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-50"></span><span>
 </span><span id="line-51"></span><span class="hs-keyword">type</span><span> </span><span id="HashQualifiedName"><span class="annot"><a href="Unison.Server.Types.html#HashQualifiedName"><span class="hs-identifier hs-var">HashQualifiedName</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span>
 </span><span id="line-52"></span><span>
@@ -58,12 +58,12 @@
 </span><span id="line-58"></span><span>
 </span><span id="line-59"></span><span class="hs-keyword">type</span><span> </span><span id="UnisonHash"><span class="annot"><a href="Unison.Server.Types.html#UnisonHash"><span class="hs-identifier hs-var">UnisonHash</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span>
 </span><span id="line-60"></span><span>
-</span><span id="line-61"></span><span id="local-6989586621679277697"><span id="local-6989586621679277699"><span id="local-6989586621679277701"><span class="hs-keyword">deriving</span><span> </span><span class="hs-keyword">via</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Bool</span></span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FromHttpApiData</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#Suffixify"><span class="hs-identifier hs-type">Suffixify</span></a></span></span></span></span><span>
+</span><span id="line-61"></span><span id="local-6989586621679277710"><span id="local-6989586621679277712"><span id="local-6989586621679277714"><span class="hs-keyword">deriving</span><span> </span><span class="hs-keyword">via</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Bool</span></span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FromHttpApiData</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#Suffixify"><span class="hs-identifier hs-type">Suffixify</span></a></span></span></span></span><span>
 </span><span id="line-62"></span><span>
-</span><span id="line-63"></span><span id="local-6989586621679277694"><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">anyclass</span></span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToParamSchema</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#Suffixify"><span class="hs-identifier hs-type">Suffixify</span></a></span></span><span>
+</span><span id="line-63"></span><span id="local-6989586621679277707"><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">anyclass</span></span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToParamSchema</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#Suffixify"><span class="hs-identifier hs-type">Suffixify</span></a></span></span><span>
 </span><span id="line-64"></span><span>
-</span><span id="line-65"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679277686"><span id="local-6989586621679277688"><span id="local-6989586621679277691"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#TypeDefinition"><span class="hs-identifier hs-type">TypeDefinition</span></a></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-66"></span><span>  </span><span id="local-6989586621679277684"><span class="annot"><span class="annottext">toEncoding :: TypeDefinition -&gt; Encoding
+</span><span id="line-65"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679277699"><span id="local-6989586621679277701"><span id="local-6989586621679277704"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#TypeDefinition"><span class="hs-identifier hs-type">TypeDefinition</span></a></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-66"></span><span>  </span><span id="local-6989586621679277697"><span class="annot"><span class="annottext">toEncoding :: TypeDefinition -&gt; Encoding
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var">toEncoding</span></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Options -&gt; TypeDefinition -&gt; Encoding
 forall a.
 (Generic a, GToJSON' Encoding Zero (Rep a)) =&gt;
@@ -71,33 +71,33 @@ Options -&gt; a -&gt; Encoding
 </span><span class="hs-identifier hs-var">genericToEncoding</span></span><span> </span><span class="annot"><span class="annottext">Options
 </span><span class="hs-identifier hs-var">defaultOptions</span></span><span>
 </span><span id="line-67"></span><span>
-</span><span id="line-68"></span><span id="local-6989586621679277678"><span class="hs-keyword">deriving</span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSchema</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#TypeDefinition"><span class="hs-identifier hs-type">TypeDefinition</span></a></span></span><span>
+</span><span id="line-68"></span><span id="local-6989586621679277691"><span class="hs-keyword">deriving</span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSchema</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#TypeDefinition"><span class="hs-identifier hs-type">TypeDefinition</span></a></span></span><span>
 </span><span id="line-69"></span><span>
-</span><span id="line-70"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679277670"><span id="local-6989586621679277672"><span id="local-6989586621679277675"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#TermDefinition"><span class="hs-identifier hs-type">TermDefinition</span></a></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-71"></span><span>  </span><span id="local-6989586621679277669"><span class="annot"><span class="annottext">toEncoding :: TermDefinition -&gt; Encoding
-</span><a href="#local-6989586621679277669"><span class="hs-identifier hs-var hs-var hs-var hs-var">toEncoding</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Options -&gt; TermDefinition -&gt; Encoding
+</span><span id="line-70"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679277683"><span id="local-6989586621679277685"><span id="local-6989586621679277688"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#TermDefinition"><span class="hs-identifier hs-type">TermDefinition</span></a></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-71"></span><span>  </span><span id="local-6989586621679277682"><span class="annot"><span class="annottext">toEncoding :: TermDefinition -&gt; Encoding
+</span><a href="#local-6989586621679277682"><span class="hs-identifier hs-var hs-var hs-var hs-var">toEncoding</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Options -&gt; TermDefinition -&gt; Encoding
 forall a.
 (Generic a, GToJSON' Encoding Zero (Rep a)) =&gt;
 Options -&gt; a -&gt; Encoding
 </span><span class="hs-identifier hs-var">genericToEncoding</span></span><span> </span><span class="annot"><span class="annottext">Options
 </span><span class="hs-identifier hs-var">defaultOptions</span></span><span>
 </span><span id="line-72"></span><span>
-</span><span id="line-73"></span><span id="local-6989586621679277666"><span class="hs-keyword">deriving</span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSchema</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#TermDefinition"><span class="hs-identifier hs-type">TermDefinition</span></a></span></span><span>
+</span><span id="line-73"></span><span id="local-6989586621679277679"><span class="hs-keyword">deriving</span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSchema</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#TermDefinition"><span class="hs-identifier hs-type">TermDefinition</span></a></span></span><span>
 </span><span id="line-74"></span><span>
-</span><span id="line-75"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679277659"><span id="local-6989586621679277661"><span id="local-6989586621679277664"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#DefinitionDisplayResults"><span class="hs-identifier hs-type">DefinitionDisplayResults</span></a></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-76"></span><span>  </span><span id="local-6989586621679277658"><span class="annot"><span class="annottext">toEncoding :: DefinitionDisplayResults -&gt; Encoding
-</span><a href="#local-6989586621679277658"><span class="hs-identifier hs-var hs-var hs-var hs-var">toEncoding</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Options -&gt; DefinitionDisplayResults -&gt; Encoding
+</span><span id="line-75"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679277672"><span id="local-6989586621679277674"><span id="local-6989586621679277677"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#DefinitionDisplayResults"><span class="hs-identifier hs-type">DefinitionDisplayResults</span></a></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-76"></span><span>  </span><span id="local-6989586621679277671"><span class="annot"><span class="annottext">toEncoding :: DefinitionDisplayResults -&gt; Encoding
+</span><a href="#local-6989586621679277671"><span class="hs-identifier hs-var hs-var hs-var hs-var">toEncoding</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Options -&gt; DefinitionDisplayResults -&gt; Encoding
 forall a.
 (Generic a, GToJSON' Encoding Zero (Rep a)) =&gt;
 Options -&gt; a -&gt; Encoding
 </span><span class="hs-identifier hs-var">genericToEncoding</span></span><span> </span><span class="annot"><span class="annottext">Options
 </span><span class="hs-identifier hs-var">defaultOptions</span></span><span>
 </span><span id="line-77"></span><span>
-</span><span id="line-78"></span><span id="local-6989586621679277655"><span class="hs-keyword">deriving</span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSchema</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#DefinitionDisplayResults"><span class="hs-identifier hs-type">DefinitionDisplayResults</span></a></span></span><span>
+</span><span id="line-78"></span><span id="local-6989586621679277668"><span class="hs-keyword">deriving</span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSchema</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#DefinitionDisplayResults"><span class="hs-identifier hs-type">DefinitionDisplayResults</span></a></span></span><span>
 </span><span id="line-79"></span><span>
-</span><span id="line-80"></span><span id="local-6989586621679277653"><span id="local-6989586621679277654"></span></span><span class="hs-keyword">newtype</span><span> </span><span id="Suffixify"><span class="annot"><a href="Unison.Server.Types.html#Suffixify"><span class="hs-identifier hs-var">Suffixify</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Suffixify"><span class="annot"><a href="Unison.Server.Types.html#Suffixify"><span class="hs-identifier hs-var">Suffixify</span></a></span></span><span> </span><span class="hs-special">{</span><span id="%24sel%3Asuffixified%3ASuffixify"><span class="annot"><span class="annottext">Suffixify -&gt; Bool
+</span><span id="line-80"></span><span id="local-6989586621679277666"><span id="local-6989586621679277667"></span></span><span class="hs-keyword">newtype</span><span> </span><span id="Suffixify"><span class="annot"><a href="Unison.Server.Types.html#Suffixify"><span class="hs-identifier hs-var">Suffixify</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Suffixify"><span class="annot"><a href="Unison.Server.Types.html#Suffixify"><span class="hs-identifier hs-var">Suffixify</span></a></span></span><span> </span><span class="hs-special">{</span><span id="%24sel%3Asuffixified%3ASuffixify"><span class="annot"><span class="annottext">Suffixify -&gt; Bool
 </span><a href="Unison.Server.Types.html#%24sel%3Asuffixified%3ASuffixify"><span class="hs-identifier hs-var hs-var">suffixified</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Bool</span></span><span class="hs-special">}</span><span>
-</span><span id="line-81"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679277647"><span id="local-6989586621679277649"><span class="annot"><span class="annottext">Suffixify -&gt; Suffixify -&gt; Bool
+</span><span id="line-81"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679277660"><span id="local-6989586621679277662"><span class="annot"><span class="annottext">Suffixify -&gt; Suffixify -&gt; Bool
 (Suffixify -&gt; Suffixify -&gt; Bool)
 -&gt; (Suffixify -&gt; Suffixify -&gt; Bool) -&gt; Eq Suffixify
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -105,7 +105,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: Suffixify -&gt; Suffixify -&gt; Bool
 == :: Suffixify -&gt; Suffixify -&gt; Bool
 $c== :: Suffixify -&gt; Suffixify -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679277631"><span id="local-6989586621679277633"><span id="local-6989586621679277635"><span id="local-6989586621679277637"><span id="local-6989586621679277639"><span id="local-6989586621679277641"><span id="local-6989586621679277643"><span class="annot"><span class="annottext">Eq Suffixify
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679277644"><span id="local-6989586621679277646"><span id="local-6989586621679277648"><span id="local-6989586621679277650"><span id="local-6989586621679277652"><span id="local-6989586621679277654"><span id="local-6989586621679277656"><span class="annot"><span class="annottext">Eq Suffixify
 Eq Suffixify
 -&gt; (Suffixify -&gt; Suffixify -&gt; Ordering)
 -&gt; (Suffixify -&gt; Suffixify -&gt; Bool)
@@ -143,7 +143,7 @@ $c&lt; :: Suffixify -&gt; Suffixify -&gt; Bool
 compare :: Suffixify -&gt; Suffixify -&gt; Ordering
 $ccompare :: Suffixify -&gt; Suffixify -&gt; Ordering
 $cp1Ord :: Eq Suffixify
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679277624"><span id="local-6989586621679277626"><span id="local-6989586621679277628"><span class="annot"><span class="annottext">Int -&gt; Suffixify -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679277637"><span id="local-6989586621679277639"><span id="local-6989586621679277641"><span class="annot"><span class="annottext">Int -&gt; Suffixify -&gt; ShowS
 [Suffixify] -&gt; ShowS
 Suffixify -&gt; String
 (Int -&gt; Suffixify -&gt; ShowS)
@@ -168,7 +168,7 @@ $cto :: forall x. Rep Suffixify x -&gt; Suffixify
 $cfrom :: forall x. Suffixify -&gt; Rep Suffixify x
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var">Generic</span></span><span class="hs-special">)</span><span>
 </span><span id="line-82"></span><span>
-</span><span id="line-83"></span><span id="local-6989586621679277618"><span id="local-6989586621679277619"></span></span><span class="hs-keyword">data</span><span> </span><span id="TermDefinition"><span class="annot"><a href="Unison.Server.Types.html#TermDefinition"><span class="hs-identifier hs-var">TermDefinition</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="TermDefinition"><span class="annot"><a href="Unison.Server.Types.html#TermDefinition"><span class="hs-identifier hs-var">TermDefinition</span></a></span></span><span>
+</span><span id="line-83"></span><span id="local-6989586621679277631"><span id="local-6989586621679277632"></span></span><span class="hs-keyword">data</span><span> </span><span id="TermDefinition"><span class="annot"><a href="Unison.Server.Types.html#TermDefinition"><span class="hs-identifier hs-var">TermDefinition</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="TermDefinition"><span class="annot"><a href="Unison.Server.Types.html#TermDefinition"><span class="hs-identifier hs-var">TermDefinition</span></a></span></span><span>
 </span><span id="line-84"></span><span>  </span><span class="hs-special">{</span><span> </span><span id="%24sel%3AtermNames%3ATermDefinition"><span class="annot"><span class="annottext">TermDefinition -&gt; [Text]
 </span><a href="Unison.Server.Types.html#%24sel%3AtermNames%3ATermDefinition"><span class="hs-identifier hs-var hs-var">termNames</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Unison.Server.Types.html#HashQualifiedName"><span class="hs-identifier hs-type">HashQualifiedName</span></a></span><span class="hs-special">]</span><span class="hs-special">,</span><span>
 </span><span id="line-85"></span><span>    </span><span id="%24sel%3AbestTermName%3ATermDefinition"><span class="annot"><span class="annottext">TermDefinition -&gt; Text
@@ -182,7 +182,7 @@ $cfrom :: forall x. Suffixify -&gt; Rep Suffixify x
 </span><span id="line-89"></span><span>    </span><span id="%24sel%3AtermDocs%3ATermDefinition"><span class="annot"><span class="annottext">TermDefinition -&gt; [(Text, Text, Doc)]
 </span><a href="Unison.Server.Types.html#%24sel%3AtermDocs%3ATermDefinition"><span class="hs-identifier hs-var hs-var">termDocs</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="hs-special">(</span><span class="annot"><a href="Unison.Server.Types.html#HashQualifiedName"><span class="hs-identifier hs-type">HashQualifiedName</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Unison.Server.Types.html#UnisonHash"><span class="hs-identifier hs-type">UnisonHash</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Unison.Server.Doc.html#Doc"><span class="hs-identifier hs-type">Doc</span></a></span><span class="hs-special">)</span><span class="hs-special">]</span><span>
 </span><span id="line-90"></span><span>  </span><span class="hs-special">}</span><span>
-</span><span id="line-91"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679277607"><span id="local-6989586621679277609"><span class="annot"><span class="annottext">TermDefinition -&gt; TermDefinition -&gt; Bool
+</span><span id="line-91"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679277620"><span id="local-6989586621679277622"><span class="annot"><span class="annottext">TermDefinition -&gt; TermDefinition -&gt; Bool
 (TermDefinition -&gt; TermDefinition -&gt; Bool)
 -&gt; (TermDefinition -&gt; TermDefinition -&gt; Bool) -&gt; Eq TermDefinition
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -190,7 +190,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: TermDefinition -&gt; TermDefinition -&gt; Bool
 == :: TermDefinition -&gt; TermDefinition -&gt; Bool
 $c== :: TermDefinition -&gt; TermDefinition -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679277601"><span id="local-6989586621679277603"><span id="local-6989586621679277605"><span class="annot"><span class="annottext">Int -&gt; TermDefinition -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679277614"><span id="local-6989586621679277616"><span id="local-6989586621679277618"><span class="annot"><span class="annottext">Int -&gt; TermDefinition -&gt; ShowS
 [TermDefinition] -&gt; ShowS
 TermDefinition -&gt; String
 (Int -&gt; TermDefinition -&gt; ShowS)
@@ -216,7 +216,7 @@ $cto :: forall x. Rep TermDefinition x -&gt; TermDefinition
 $cfrom :: forall x. TermDefinition -&gt; Rep TermDefinition x
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var">Generic</span></span><span class="hs-special">)</span><span>
 </span><span id="line-92"></span><span>
-</span><span id="line-93"></span><span id="local-6989586621679277597"><span id="local-6989586621679277598"></span></span><span class="hs-keyword">data</span><span> </span><span id="TypeDefinition"><span class="annot"><a href="Unison.Server.Types.html#TypeDefinition"><span class="hs-identifier hs-var">TypeDefinition</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="TypeDefinition"><span class="annot"><a href="Unison.Server.Types.html#TypeDefinition"><span class="hs-identifier hs-var">TypeDefinition</span></a></span></span><span>
+</span><span id="line-93"></span><span id="local-6989586621679277610"><span id="local-6989586621679277611"></span></span><span class="hs-keyword">data</span><span> </span><span id="TypeDefinition"><span class="annot"><a href="Unison.Server.Types.html#TypeDefinition"><span class="hs-identifier hs-var">TypeDefinition</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="TypeDefinition"><span class="annot"><a href="Unison.Server.Types.html#TypeDefinition"><span class="hs-identifier hs-var">TypeDefinition</span></a></span></span><span>
 </span><span id="line-94"></span><span>  </span><span class="hs-special">{</span><span> </span><span id="%24sel%3AtypeNames%3ATypeDefinition"><span class="annot"><span class="annottext">TypeDefinition -&gt; [Text]
 </span><a href="Unison.Server.Types.html#%24sel%3AtypeNames%3ATypeDefinition"><span class="hs-identifier hs-var hs-var">typeNames</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Unison.Server.Types.html#HashQualifiedName"><span class="hs-identifier hs-type">HashQualifiedName</span></a></span><span class="hs-special">]</span><span class="hs-special">,</span><span>
 </span><span id="line-95"></span><span>    </span><span id="%24sel%3AbestTypeName%3ATypeDefinition"><span class="annot"><span class="annottext">TypeDefinition -&gt; Text
@@ -228,7 +228,7 @@ $cfrom :: forall x. TermDefinition -&gt; Rep TermDefinition x
 </span><span id="line-98"></span><span>    </span><span id="%24sel%3AtypeDocs%3ATypeDefinition"><span class="annot"><span class="annottext">TypeDefinition -&gt; [(Text, Text, Doc)]
 </span><a href="Unison.Server.Types.html#%24sel%3AtypeDocs%3ATypeDefinition"><span class="hs-identifier hs-var hs-var">typeDocs</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="hs-special">(</span><span class="annot"><a href="Unison.Server.Types.html#HashQualifiedName"><span class="hs-identifier hs-type">HashQualifiedName</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Unison.Server.Types.html#UnisonHash"><span class="hs-identifier hs-type">UnisonHash</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Unison.Server.Doc.html#Doc"><span class="hs-identifier hs-type">Doc</span></a></span><span class="hs-special">)</span><span class="hs-special">]</span><span>
 </span><span id="line-99"></span><span>  </span><span class="hs-special">}</span><span>
-</span><span id="line-100"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679277587"><span id="local-6989586621679277589"><span class="annot"><span class="annottext">TypeDefinition -&gt; TypeDefinition -&gt; Bool
+</span><span id="line-100"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679277600"><span id="local-6989586621679277602"><span class="annot"><span class="annottext">TypeDefinition -&gt; TypeDefinition -&gt; Bool
 (TypeDefinition -&gt; TypeDefinition -&gt; Bool)
 -&gt; (TypeDefinition -&gt; TypeDefinition -&gt; Bool) -&gt; Eq TypeDefinition
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -236,7 +236,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: TypeDefinition -&gt; TypeDefinition -&gt; Bool
 == :: TypeDefinition -&gt; TypeDefinition -&gt; Bool
 $c== :: TypeDefinition -&gt; TypeDefinition -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679277581"><span id="local-6989586621679277583"><span id="local-6989586621679277585"><span class="annot"><span class="annottext">Int -&gt; TypeDefinition -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679277594"><span id="local-6989586621679277596"><span id="local-6989586621679277598"><span class="annot"><span class="annottext">Int -&gt; TypeDefinition -&gt; ShowS
 [TypeDefinition] -&gt; ShowS
 TypeDefinition -&gt; String
 (Int -&gt; TypeDefinition -&gt; ShowS)
@@ -262,7 +262,7 @@ $cto :: forall x. Rep TypeDefinition x -&gt; TypeDefinition
 $cfrom :: forall x. TypeDefinition -&gt; Rep TypeDefinition x
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var">Generic</span></span><span class="hs-special">)</span><span>
 </span><span id="line-101"></span><span>
-</span><span id="line-102"></span><span id="local-6989586621679277577"><span id="local-6989586621679277578"></span></span><span class="hs-keyword">data</span><span> </span><span id="DefinitionDisplayResults"><span class="annot"><a href="Unison.Server.Types.html#DefinitionDisplayResults"><span class="hs-identifier hs-var">DefinitionDisplayResults</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="DefinitionDisplayResults"><span class="annot"><a href="Unison.Server.Types.html#DefinitionDisplayResults"><span class="hs-identifier hs-var">DefinitionDisplayResults</span></a></span></span><span>
+</span><span id="line-102"></span><span id="local-6989586621679277590"><span id="local-6989586621679277591"></span></span><span class="hs-keyword">data</span><span> </span><span id="DefinitionDisplayResults"><span class="annot"><a href="Unison.Server.Types.html#DefinitionDisplayResults"><span class="hs-identifier hs-var">DefinitionDisplayResults</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="DefinitionDisplayResults"><span class="annot"><a href="Unison.Server.Types.html#DefinitionDisplayResults"><span class="hs-identifier hs-var">DefinitionDisplayResults</span></a></span></span><span>
 </span><span id="line-103"></span><span>  </span><span class="hs-special">{</span><span> </span><span id="%24sel%3AtermDefinitions%3ADefinitionDisplayResults"><span class="annot"><span class="annottext">DefinitionDisplayResults -&gt; Map Text TermDefinition
 </span><a href="Unison.Server.Types.html#%24sel%3AtermDefinitions%3ADefinitionDisplayResults"><span class="hs-identifier hs-var hs-var">termDefinitions</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#UnisonHash"><span class="hs-identifier hs-type">UnisonHash</span></a></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#TermDefinition"><span class="hs-identifier hs-type">TermDefinition</span></a></span><span class="hs-special">,</span><span>
 </span><span id="line-104"></span><span>    </span><span id="%24sel%3AtypeDefinitions%3ADefinitionDisplayResults"><span class="annot"><span class="annottext">DefinitionDisplayResults -&gt; Map Text TypeDefinition
@@ -270,7 +270,7 @@ $cfrom :: forall x. TypeDefinition -&gt; Rep TypeDefinition x
 </span><span id="line-105"></span><span>    </span><span id="%24sel%3AmissingDefinitions%3ADefinitionDisplayResults"><span class="annot"><span class="annottext">DefinitionDisplayResults -&gt; [Text]
 </span><a href="Unison.Server.Types.html#%24sel%3AmissingDefinitions%3ADefinitionDisplayResults"><span class="hs-identifier hs-var hs-var">missingDefinitions</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Unison.Server.Types.html#HashQualifiedName"><span class="hs-identifier hs-type">HashQualifiedName</span></a></span><span class="hs-special">]</span><span>
 </span><span id="line-106"></span><span>  </span><span class="hs-special">}</span><span>
-</span><span id="line-107"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679277569"><span id="local-6989586621679277571"><span class="annot"><span class="annottext">DefinitionDisplayResults -&gt; DefinitionDisplayResults -&gt; Bool
+</span><span id="line-107"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679277582"><span id="local-6989586621679277584"><span class="annot"><span class="annottext">DefinitionDisplayResults -&gt; DefinitionDisplayResults -&gt; Bool
 (DefinitionDisplayResults -&gt; DefinitionDisplayResults -&gt; Bool)
 -&gt; (DefinitionDisplayResults -&gt; DefinitionDisplayResults -&gt; Bool)
 -&gt; Eq DefinitionDisplayResults
@@ -279,7 +279,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: DefinitionDisplayResults -&gt; DefinitionDisplayResults -&gt; Bool
 == :: DefinitionDisplayResults -&gt; DefinitionDisplayResults -&gt; Bool
 $c== :: DefinitionDisplayResults -&gt; DefinitionDisplayResults -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679277563"><span id="local-6989586621679277565"><span id="local-6989586621679277567"><span class="annot"><span class="annottext">Int -&gt; DefinitionDisplayResults -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679277576"><span id="local-6989586621679277578"><span id="local-6989586621679277580"><span class="annot"><span class="annottext">Int -&gt; DefinitionDisplayResults -&gt; ShowS
 [DefinitionDisplayResults] -&gt; ShowS
 DefinitionDisplayResults -&gt; String
 (Int -&gt; DefinitionDisplayResults -&gt; ShowS)
@@ -311,8 +311,8 @@ $cfrom :: forall x.
 DefinitionDisplayResults -&gt; Rep DefinitionDisplayResults x
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var">Generic</span></span><span class="hs-special">)</span><span>
 </span><span id="line-108"></span><span>
-</span><span id="line-109"></span><span id="local-6989586621679277559"><span id="local-6989586621679277560"></span></span><span class="hs-keyword">data</span><span> </span><span id="TermTag"><span class="annot"><a href="Unison.Server.Types.html#TermTag"><span class="hs-identifier hs-var">TermTag</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Doc"><span class="annot"><a href="Unison.Server.Types.html#Doc"><span class="hs-identifier hs-var">Doc</span></a></span></span><span> </span><span class="hs-glyph">|</span><span> </span><span id="Test"><span class="annot"><a href="Unison.Server.Types.html#Test"><span class="hs-identifier hs-var">Test</span></a></span></span><span>
-</span><span id="line-110"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679277553"><span id="local-6989586621679277555"><span class="annot"><span class="annottext">TermTag -&gt; TermTag -&gt; Bool
+</span><span id="line-109"></span><span id="local-6989586621679277572"><span id="local-6989586621679277573"></span></span><span class="hs-keyword">data</span><span> </span><span id="TermTag"><span class="annot"><a href="Unison.Server.Types.html#TermTag"><span class="hs-identifier hs-var">TermTag</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Doc"><span class="annot"><a href="Unison.Server.Types.html#Doc"><span class="hs-identifier hs-var">Doc</span></a></span></span><span> </span><span class="hs-glyph">|</span><span> </span><span id="Test"><span class="annot"><a href="Unison.Server.Types.html#Test"><span class="hs-identifier hs-var">Test</span></a></span></span><span>
+</span><span id="line-110"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679277566"><span id="local-6989586621679277568"><span class="annot"><span class="annottext">TermTag -&gt; TermTag -&gt; Bool
 (TermTag -&gt; TermTag -&gt; Bool)
 -&gt; (TermTag -&gt; TermTag -&gt; Bool) -&gt; Eq TermTag
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -320,7 +320,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: TermTag -&gt; TermTag -&gt; Bool
 == :: TermTag -&gt; TermTag -&gt; Bool
 $c== :: TermTag -&gt; TermTag -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679277538"><span id="local-6989586621679277540"><span id="local-6989586621679277542"><span id="local-6989586621679277544"><span id="local-6989586621679277546"><span id="local-6989586621679277548"><span id="local-6989586621679277550"><span class="annot"><span class="annottext">Eq TermTag
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679277551"><span id="local-6989586621679277553"><span id="local-6989586621679277555"><span id="local-6989586621679277557"><span id="local-6989586621679277559"><span id="local-6989586621679277561"><span id="local-6989586621679277563"><span class="annot"><span class="annottext">Eq TermTag
 Eq TermTag
 -&gt; (TermTag -&gt; TermTag -&gt; Ordering)
 -&gt; (TermTag -&gt; TermTag -&gt; Bool)
@@ -358,7 +358,7 @@ $c&lt; :: TermTag -&gt; TermTag -&gt; Bool
 compare :: TermTag -&gt; TermTag -&gt; Ordering
 $ccompare :: TermTag -&gt; TermTag -&gt; Ordering
 $cp1Ord :: Eq TermTag
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679277532"><span id="local-6989586621679277534"><span id="local-6989586621679277536"><span class="annot"><span class="annottext">Int -&gt; TermTag -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679277545"><span id="local-6989586621679277547"><span id="local-6989586621679277549"><span class="annot"><span class="annottext">Int -&gt; TermTag -&gt; ShowS
 [TermTag] -&gt; ShowS
 TermTag -&gt; String
 (Int -&gt; TermTag -&gt; ShowS)
@@ -381,8 +381,8 @@ $cto :: forall x. Rep TermTag x -&gt; TermTag
 $cfrom :: forall x. TermTag -&gt; Rep TermTag x
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var">Generic</span></span><span class="hs-special">)</span><span>
 </span><span id="line-111"></span><span>
-</span><span id="line-112"></span><span id="local-6989586621679277528"><span id="local-6989586621679277529"></span></span><span class="hs-keyword">data</span><span> </span><span id="TypeTag"><span class="annot"><a href="Unison.Server.Types.html#TypeTag"><span class="hs-identifier hs-var">TypeTag</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Ability"><span class="annot"><a href="Unison.Server.Types.html#Ability"><span class="hs-identifier hs-var">Ability</span></a></span></span><span> </span><span class="hs-glyph">|</span><span> </span><span id="Data"><span class="annot"><a href="Unison.Server.Types.html#Data"><span class="hs-identifier hs-var">Data</span></a></span></span><span>
-</span><span id="line-113"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679277522"><span id="local-6989586621679277524"><span class="annot"><span class="annottext">TypeTag -&gt; TypeTag -&gt; Bool
+</span><span id="line-112"></span><span id="local-6989586621679277541"><span id="local-6989586621679277542"></span></span><span class="hs-keyword">data</span><span> </span><span id="TypeTag"><span class="annot"><a href="Unison.Server.Types.html#TypeTag"><span class="hs-identifier hs-var">TypeTag</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Ability"><span class="annot"><a href="Unison.Server.Types.html#Ability"><span class="hs-identifier hs-var">Ability</span></a></span></span><span> </span><span class="hs-glyph">|</span><span> </span><span id="Data"><span class="annot"><a href="Unison.Server.Types.html#Data"><span class="hs-identifier hs-var">Data</span></a></span></span><span>
+</span><span id="line-113"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679277535"><span id="local-6989586621679277537"><span class="annot"><span class="annottext">TypeTag -&gt; TypeTag -&gt; Bool
 (TypeTag -&gt; TypeTag -&gt; Bool)
 -&gt; (TypeTag -&gt; TypeTag -&gt; Bool) -&gt; Eq TypeTag
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -390,7 +390,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: TypeTag -&gt; TypeTag -&gt; Bool
 == :: TypeTag -&gt; TypeTag -&gt; Bool
 $c== :: TypeTag -&gt; TypeTag -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679277507"><span id="local-6989586621679277509"><span id="local-6989586621679277511"><span id="local-6989586621679277513"><span id="local-6989586621679277515"><span id="local-6989586621679277517"><span id="local-6989586621679277519"><span class="annot"><span class="annottext">Eq TypeTag
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679277520"><span id="local-6989586621679277522"><span id="local-6989586621679277524"><span id="local-6989586621679277526"><span id="local-6989586621679277528"><span id="local-6989586621679277530"><span id="local-6989586621679277532"><span class="annot"><span class="annottext">Eq TypeTag
 Eq TypeTag
 -&gt; (TypeTag -&gt; TypeTag -&gt; Ordering)
 -&gt; (TypeTag -&gt; TypeTag -&gt; Bool)
@@ -428,7 +428,7 @@ $c&lt; :: TypeTag -&gt; TypeTag -&gt; Bool
 compare :: TypeTag -&gt; TypeTag -&gt; Ordering
 $ccompare :: TypeTag -&gt; TypeTag -&gt; Ordering
 $cp1Ord :: Eq TypeTag
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679277501"><span id="local-6989586621679277503"><span id="local-6989586621679277505"><span class="annot"><span class="annottext">Int -&gt; TypeTag -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679277514"><span id="local-6989586621679277516"><span id="local-6989586621679277518"><span class="annot"><span class="annottext">Int -&gt; TypeTag -&gt; ShowS
 [TypeTag] -&gt; ShowS
 TypeTag -&gt; String
 (Int -&gt; TypeTag -&gt; ShowS)
@@ -451,10 +451,10 @@ $cto :: forall x. Rep TypeTag x -&gt; TypeTag
 $cfrom :: forall x. TypeTag -&gt; Rep TypeTag x
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var">Generic</span></span><span class="hs-special">)</span><span>
 </span><span id="line-114"></span><span>
-</span><span id="line-115"></span><span id="local-6989586621679277497"><span id="local-6989586621679277498"></span></span><span class="hs-keyword">data</span><span> </span><span id="UnisonRef"><span class="annot"><a href="Unison.Server.Types.html#UnisonRef"><span class="hs-identifier hs-var">UnisonRef</span></a></span></span><span>
+</span><span id="line-115"></span><span id="local-6989586621679277510"><span id="local-6989586621679277511"></span></span><span class="hs-keyword">data</span><span> </span><span id="UnisonRef"><span class="annot"><a href="Unison.Server.Types.html#UnisonRef"><span class="hs-identifier hs-var">UnisonRef</span></a></span></span><span>
 </span><span id="line-116"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="TypeRef"><span class="annot"><a href="Unison.Server.Types.html#TypeRef"><span class="hs-identifier hs-var">TypeRef</span></a></span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#UnisonHash"><span class="hs-identifier hs-type">UnisonHash</span></a></span><span>
 </span><span id="line-117"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="TermRef"><span class="annot"><a href="Unison.Server.Types.html#TermRef"><span class="hs-identifier hs-var">TermRef</span></a></span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#UnisonHash"><span class="hs-identifier hs-type">UnisonHash</span></a></span><span>
-</span><span id="line-118"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679277491"><span id="local-6989586621679277493"><span class="annot"><span class="annottext">UnisonRef -&gt; UnisonRef -&gt; Bool
+</span><span id="line-118"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679277504"><span id="local-6989586621679277506"><span class="annot"><span class="annottext">UnisonRef -&gt; UnisonRef -&gt; Bool
 (UnisonRef -&gt; UnisonRef -&gt; Bool)
 -&gt; (UnisonRef -&gt; UnisonRef -&gt; Bool) -&gt; Eq UnisonRef
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -462,7 +462,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: UnisonRef -&gt; UnisonRef -&gt; Bool
 == :: UnisonRef -&gt; UnisonRef -&gt; Bool
 $c== :: UnisonRef -&gt; UnisonRef -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679277476"><span id="local-6989586621679277478"><span id="local-6989586621679277480"><span id="local-6989586621679277482"><span id="local-6989586621679277484"><span id="local-6989586621679277486"><span id="local-6989586621679277488"><span class="annot"><span class="annottext">Eq UnisonRef
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679277489"><span id="local-6989586621679277491"><span id="local-6989586621679277493"><span id="local-6989586621679277495"><span id="local-6989586621679277497"><span id="local-6989586621679277499"><span id="local-6989586621679277501"><span class="annot"><span class="annottext">Eq UnisonRef
 Eq UnisonRef
 -&gt; (UnisonRef -&gt; UnisonRef -&gt; Ordering)
 -&gt; (UnisonRef -&gt; UnisonRef -&gt; Bool)
@@ -500,7 +500,7 @@ $c&lt; :: UnisonRef -&gt; UnisonRef -&gt; Bool
 compare :: UnisonRef -&gt; UnisonRef -&gt; Ordering
 $ccompare :: UnisonRef -&gt; UnisonRef -&gt; Ordering
 $cp1Ord :: Eq UnisonRef
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679277470"><span id="local-6989586621679277472"><span id="local-6989586621679277474"><span class="annot"><span class="annottext">Int -&gt; UnisonRef -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679277483"><span id="local-6989586621679277485"><span id="local-6989586621679277487"><span class="annot"><span class="annottext">Int -&gt; UnisonRef -&gt; ShowS
 [UnisonRef] -&gt; ShowS
 UnisonRef -&gt; String
 (Int -&gt; UnisonRef -&gt; ShowS)
@@ -525,10 +525,10 @@ $cto :: forall x. Rep UnisonRef x -&gt; UnisonRef
 $cfrom :: forall x. UnisonRef -&gt; Rep UnisonRef x
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var">Generic</span></span><span class="hs-special">)</span><span>
 </span><span id="line-119"></span><span>
-</span><span id="line-120"></span><span id="local-6989586621679277466"><span id="local-6989586621679277467"></span></span><span class="hs-keyword">data</span><span> </span><span id="FoundEntry"><span class="annot"><a href="Unison.Server.Types.html#FoundEntry"><span class="hs-identifier hs-var">FoundEntry</span></a></span></span><span>
+</span><span id="line-120"></span><span id="local-6989586621679277479"><span id="local-6989586621679277480"></span></span><span class="hs-keyword">data</span><span> </span><span id="FoundEntry"><span class="annot"><a href="Unison.Server.Types.html#FoundEntry"><span class="hs-identifier hs-var">FoundEntry</span></a></span></span><span>
 </span><span id="line-121"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="FoundTerm"><span class="annot"><a href="Unison.Server.Types.html#FoundTerm"><span class="hs-identifier hs-var">FoundTerm</span></a></span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#NamedTerm"><span class="hs-identifier hs-type">NamedTerm</span></a></span><span>
 </span><span id="line-122"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="FoundType"><span class="annot"><a href="Unison.Server.Types.html#FoundType"><span class="hs-identifier hs-var">FoundType</span></a></span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#NamedType"><span class="hs-identifier hs-type">NamedType</span></a></span><span>
-</span><span id="line-123"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679277460"><span id="local-6989586621679277462"><span class="annot"><span class="annottext">FoundEntry -&gt; FoundEntry -&gt; Bool
+</span><span id="line-123"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679277473"><span id="local-6989586621679277475"><span class="annot"><span class="annottext">FoundEntry -&gt; FoundEntry -&gt; Bool
 (FoundEntry -&gt; FoundEntry -&gt; Bool)
 -&gt; (FoundEntry -&gt; FoundEntry -&gt; Bool) -&gt; Eq FoundEntry
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -536,7 +536,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: FoundEntry -&gt; FoundEntry -&gt; Bool
 == :: FoundEntry -&gt; FoundEntry -&gt; Bool
 $c== :: FoundEntry -&gt; FoundEntry -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679277454"><span id="local-6989586621679277456"><span id="local-6989586621679277458"><span class="annot"><span class="annottext">Int -&gt; FoundEntry -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679277467"><span id="local-6989586621679277469"><span id="local-6989586621679277471"><span class="annot"><span class="annottext">Int -&gt; FoundEntry -&gt; ShowS
 [FoundEntry] -&gt; ShowS
 FoundEntry -&gt; String
 (Int -&gt; FoundEntry -&gt; ShowS)
@@ -561,28 +561,28 @@ $cto :: forall x. Rep FoundEntry x -&gt; FoundEntry
 $cfrom :: forall x. FoundEntry -&gt; Rep FoundEntry x
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var">Generic</span></span><span class="hs-special">)</span><span>
 </span><span id="line-124"></span><span>
-</span><span id="line-125"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679277445"><span id="local-6989586621679277447"><span id="local-6989586621679277450"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#FoundEntry"><span class="hs-identifier hs-type">FoundEntry</span></a></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-126"></span><span>  </span><span id="local-6989586621679277444"><span class="annot"><span class="annottext">toEncoding :: FoundEntry -&gt; Encoding
-</span><a href="#local-6989586621679277444"><span class="hs-identifier hs-var hs-var hs-var hs-var">toEncoding</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Options -&gt; FoundEntry -&gt; Encoding
+</span><span id="line-125"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679277458"><span id="local-6989586621679277460"><span id="local-6989586621679277463"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#FoundEntry"><span class="hs-identifier hs-type">FoundEntry</span></a></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-126"></span><span>  </span><span id="local-6989586621679277457"><span class="annot"><span class="annottext">toEncoding :: FoundEntry -&gt; Encoding
+</span><a href="#local-6989586621679277457"><span class="hs-identifier hs-var hs-var hs-var hs-var">toEncoding</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Options -&gt; FoundEntry -&gt; Encoding
 forall a.
 (Generic a, GToJSON' Encoding Zero (Rep a)) =&gt;
 Options -&gt; a -&gt; Encoding
 </span><span class="hs-identifier hs-var">genericToEncoding</span></span><span> </span><span class="annot"><span class="annottext">Options
 </span><span class="hs-identifier hs-var">defaultOptions</span></span><span>
 </span><span id="line-127"></span><span>
-</span><span id="line-128"></span><span id="local-6989586621679277441"><span class="hs-keyword">deriving</span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSchema</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#FoundEntry"><span class="hs-identifier hs-type">FoundEntry</span></a></span></span><span>
+</span><span id="line-128"></span><span id="local-6989586621679277454"><span class="hs-keyword">deriving</span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSchema</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#FoundEntry"><span class="hs-identifier hs-type">FoundEntry</span></a></span></span><span>
 </span><span id="line-129"></span><span>
 </span><span id="line-130"></span><span class="annot"><a href="Unison.Server.Types.html#unisonRefToText"><span class="hs-identifier hs-type">unisonRefToText</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Server.Types.html#UnisonRef"><span class="hs-identifier hs-type">UnisonRef</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span>
 </span><span id="line-131"></span><span id="unisonRefToText"><span class="annot"><span class="annottext">unisonRefToText :: UnisonRef -&gt; Text
 </span><a href="Unison.Server.Types.html#unisonRefToText"><span class="hs-identifier hs-var hs-var">unisonRefToText</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-glyph">\</span><span class="hs-glyph">case</span><span>
-</span><span id="line-132"></span><span>  </span><span class="annot"><a href="Unison.Server.Types.html#TypeRef"><span class="hs-identifier hs-type">TypeRef</span></a></span><span> </span><span id="local-6989586621679277439"><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679277439"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679277439"><span class="hs-identifier hs-var">r</span></a></span><span>
-</span><span id="line-133"></span><span>  </span><span class="annot"><a href="Unison.Server.Types.html#TermRef"><span class="hs-identifier hs-type">TermRef</span></a></span><span> </span><span id="local-6989586621679277438"><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679277438"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679277438"><span class="hs-identifier hs-var">r</span></a></span><span>
+</span><span id="line-132"></span><span>  </span><span class="annot"><a href="Unison.Server.Types.html#TypeRef"><span class="hs-identifier hs-type">TypeRef</span></a></span><span> </span><span id="local-6989586621679277452"><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679277452"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679277452"><span class="hs-identifier hs-var">r</span></a></span><span>
+</span><span id="line-133"></span><span>  </span><span class="annot"><a href="Unison.Server.Types.html#TermRef"><span class="hs-identifier hs-type">TermRef</span></a></span><span> </span><span id="local-6989586621679277451"><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679277451"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679277451"><span class="hs-identifier hs-var">r</span></a></span><span>
 </span><span id="line-134"></span><span>
-</span><span id="line-135"></span><span id="local-6989586621679277436"><span id="local-6989586621679277437"></span></span><span class="hs-keyword">data</span><span> </span><span id="NamedTerm"><span class="annot"><a href="Unison.Server.Types.html#NamedTerm"><span class="hs-identifier hs-var">NamedTerm</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="NamedTerm"><span class="annot"><a href="Unison.Server.Types.html#NamedTerm"><span class="hs-identifier hs-var">NamedTerm</span></a></span></span><span>
+</span><span id="line-135"></span><span id="local-6989586621679277449"><span id="local-6989586621679277450"></span></span><span class="hs-keyword">data</span><span> </span><span id="NamedTerm"><span class="annot"><a href="Unison.Server.Types.html#NamedTerm"><span class="hs-identifier hs-var">NamedTerm</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="NamedTerm"><span class="annot"><a href="Unison.Server.Types.html#NamedTerm"><span class="hs-identifier hs-var">NamedTerm</span></a></span></span><span>
 </span><span id="line-136"></span><span>  </span><span class="hs-special">{</span><span> </span><span id="%24sel%3AtermName%3ANamedTerm"><span class="annot"><span class="annottext">NamedTerm -&gt; Text
 </span><a href="Unison.Server.Types.html#%24sel%3AtermName%3ANamedTerm"><span class="hs-identifier hs-var hs-var">termName</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Server.Types.html#HashQualifiedName"><span class="hs-identifier hs-type">HashQualifiedName</span></a></span><span class="hs-special">,</span><span>
 </span><span id="line-137"></span><span>    </span><span id="%24sel%3AtermHash%3ANamedTerm"><span class="annot"><span class="annottext">NamedTerm -&gt; Text
@@ -592,7 +592,7 @@ Options -&gt; a -&gt; Encoding
 </span><span id="line-139"></span><span>    </span><span id="%24sel%3AtermTag%3ANamedTerm"><span class="annot"><span class="annottext">NamedTerm -&gt; Maybe TermTag
 </span><a href="Unison.Server.Types.html#%24sel%3AtermTag%3ANamedTerm"><span class="hs-identifier hs-var hs-var">termTag</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#TermTag"><span class="hs-identifier hs-type">TermTag</span></a></span><span>
 </span><span id="line-140"></span><span>  </span><span class="hs-special">}</span><span>
-</span><span id="line-141"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679277427"><span id="local-6989586621679277429"><span class="annot"><span class="annottext">NamedTerm -&gt; NamedTerm -&gt; Bool
+</span><span id="line-141"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679277440"><span id="local-6989586621679277442"><span class="annot"><span class="annottext">NamedTerm -&gt; NamedTerm -&gt; Bool
 (NamedTerm -&gt; NamedTerm -&gt; Bool)
 -&gt; (NamedTerm -&gt; NamedTerm -&gt; Bool) -&gt; Eq NamedTerm
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -608,7 +608,7 @@ forall a.
 (forall x. a -&gt; Rep a x) -&gt; (forall x. Rep a x -&gt; a) -&gt; Generic a
 $cto :: forall x. Rep NamedTerm x -&gt; NamedTerm
 $cfrom :: forall x. NamedTerm -&gt; Rep NamedTerm x
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var">Generic</span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679277419"><span id="local-6989586621679277421"><span id="local-6989586621679277423"><span class="annot"><span class="annottext">Int -&gt; NamedTerm -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">Generic</span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679277432"><span id="local-6989586621679277434"><span id="local-6989586621679277436"><span class="annot"><span class="annottext">Int -&gt; NamedTerm -&gt; ShowS
 [NamedTerm] -&gt; ShowS
 NamedTerm -&gt; String
 (Int -&gt; NamedTerm -&gt; ShowS)
@@ -625,18 +625,18 @@ showsPrec :: Int -&gt; NamedTerm -&gt; ShowS
 $cshowsPrec :: Int -&gt; NamedTerm -&gt; ShowS
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
 </span><span id="line-142"></span><span>
-</span><span id="line-143"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679277412"><span id="local-6989586621679277414"><span id="local-6989586621679277417"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#NamedTerm"><span class="hs-identifier hs-type">NamedTerm</span></a></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-144"></span><span>  </span><span id="local-6989586621679277411"><span class="annot"><span class="annottext">toEncoding :: NamedTerm -&gt; Encoding
-</span><a href="#local-6989586621679277411"><span class="hs-identifier hs-var hs-var hs-var hs-var">toEncoding</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Options -&gt; NamedTerm -&gt; Encoding
+</span><span id="line-143"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679277425"><span id="local-6989586621679277427"><span id="local-6989586621679277430"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#NamedTerm"><span class="hs-identifier hs-type">NamedTerm</span></a></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-144"></span><span>  </span><span id="local-6989586621679277424"><span class="annot"><span class="annottext">toEncoding :: NamedTerm -&gt; Encoding
+</span><a href="#local-6989586621679277424"><span class="hs-identifier hs-var hs-var hs-var hs-var">toEncoding</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Options -&gt; NamedTerm -&gt; Encoding
 forall a.
 (Generic a, GToJSON' Encoding Zero (Rep a)) =&gt;
 Options -&gt; a -&gt; Encoding
 </span><span class="hs-identifier hs-var">genericToEncoding</span></span><span> </span><span class="annot"><span class="annottext">Options
 </span><span class="hs-identifier hs-var">defaultOptions</span></span><span>
 </span><span id="line-145"></span><span>
-</span><span id="line-146"></span><span id="local-6989586621679277408"><span class="hs-keyword">deriving</span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSchema</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#NamedTerm"><span class="hs-identifier hs-type">NamedTerm</span></a></span></span><span>
+</span><span id="line-146"></span><span id="local-6989586621679277421"><span class="hs-keyword">deriving</span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSchema</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#NamedTerm"><span class="hs-identifier hs-type">NamedTerm</span></a></span></span><span>
 </span><span id="line-147"></span><span>
-</span><span id="line-148"></span><span id="local-6989586621679277406"><span id="local-6989586621679277407"></span></span><span class="hs-keyword">data</span><span> </span><span id="NamedType"><span class="annot"><a href="Unison.Server.Types.html#NamedType"><span class="hs-identifier hs-var">NamedType</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="NamedType"><span class="annot"><a href="Unison.Server.Types.html#NamedType"><span class="hs-identifier hs-var">NamedType</span></a></span></span><span>
+</span><span id="line-148"></span><span id="local-6989586621679277419"><span id="local-6989586621679277420"></span></span><span class="hs-keyword">data</span><span> </span><span id="NamedType"><span class="annot"><a href="Unison.Server.Types.html#NamedType"><span class="hs-identifier hs-var">NamedType</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="NamedType"><span class="annot"><a href="Unison.Server.Types.html#NamedType"><span class="hs-identifier hs-var">NamedType</span></a></span></span><span>
 </span><span id="line-149"></span><span>  </span><span class="hs-special">{</span><span> </span><span id="%24sel%3AtypeName%3ANamedType"><span class="annot"><span class="annottext">NamedType -&gt; Text
 </span><a href="Unison.Server.Types.html#%24sel%3AtypeName%3ANamedType"><span class="hs-identifier hs-var hs-var">typeName</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Server.Types.html#HashQualifiedName"><span class="hs-identifier hs-type">HashQualifiedName</span></a></span><span class="hs-special">,</span><span>
 </span><span id="line-150"></span><span>    </span><span id="%24sel%3AtypeHash%3ANamedType"><span class="annot"><span class="annottext">NamedType -&gt; Text
@@ -644,7 +644,7 @@ Options -&gt; a -&gt; Encoding
 </span><span id="line-151"></span><span>    </span><span id="%24sel%3AtypeTag%3ANamedType"><span class="annot"><span class="annottext">NamedType -&gt; TypeTag
 </span><a href="Unison.Server.Types.html#%24sel%3AtypeTag%3ANamedType"><span class="hs-identifier hs-var hs-var">typeTag</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Server.Types.html#TypeTag"><span class="hs-identifier hs-type">TypeTag</span></a></span><span>
 </span><span id="line-152"></span><span>  </span><span class="hs-special">}</span><span>
-</span><span id="line-153"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679277398"><span id="local-6989586621679277400"><span class="annot"><span class="annottext">NamedType -&gt; NamedType -&gt; Bool
+</span><span id="line-153"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679277411"><span id="local-6989586621679277413"><span class="annot"><span class="annottext">NamedType -&gt; NamedType -&gt; Bool
 (NamedType -&gt; NamedType -&gt; Bool)
 -&gt; (NamedType -&gt; NamedType -&gt; Bool) -&gt; Eq NamedType
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -660,7 +660,7 @@ forall a.
 (forall x. a -&gt; Rep a x) -&gt; (forall x. Rep a x -&gt; a) -&gt; Generic a
 $cto :: forall x. Rep NamedType x -&gt; NamedType
 $cfrom :: forall x. NamedType -&gt; Rep NamedType x
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var">Generic</span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679277390"><span id="local-6989586621679277392"><span id="local-6989586621679277394"><span class="annot"><span class="annottext">Int -&gt; NamedType -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">Generic</span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679277403"><span id="local-6989586621679277405"><span id="local-6989586621679277407"><span class="annot"><span class="annottext">Int -&gt; NamedType -&gt; ShowS
 [NamedType] -&gt; ShowS
 NamedType -&gt; String
 (Int -&gt; NamedType -&gt; ShowS)
@@ -677,38 +677,38 @@ showsPrec :: Int -&gt; NamedType -&gt; ShowS
 $cshowsPrec :: Int -&gt; NamedType -&gt; ShowS
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
 </span><span id="line-154"></span><span>
-</span><span id="line-155"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679277383"><span id="local-6989586621679277385"><span id="local-6989586621679277388"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#NamedType"><span class="hs-identifier hs-type">NamedType</span></a></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-156"></span><span>  </span><span id="local-6989586621679277382"><span class="annot"><span class="annottext">toEncoding :: NamedType -&gt; Encoding
-</span><a href="#local-6989586621679277382"><span class="hs-identifier hs-var hs-var hs-var hs-var">toEncoding</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Options -&gt; NamedType -&gt; Encoding
+</span><span id="line-155"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679277396"><span id="local-6989586621679277398"><span id="local-6989586621679277401"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#NamedType"><span class="hs-identifier hs-type">NamedType</span></a></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-156"></span><span>  </span><span id="local-6989586621679277395"><span class="annot"><span class="annottext">toEncoding :: NamedType -&gt; Encoding
+</span><a href="#local-6989586621679277395"><span class="hs-identifier hs-var hs-var hs-var hs-var">toEncoding</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Options -&gt; NamedType -&gt; Encoding
 forall a.
 (Generic a, GToJSON' Encoding Zero (Rep a)) =&gt;
 Options -&gt; a -&gt; Encoding
 </span><span class="hs-identifier hs-var">genericToEncoding</span></span><span> </span><span class="annot"><span class="annottext">Options
 </span><span class="hs-identifier hs-var">defaultOptions</span></span><span>
 </span><span id="line-157"></span><span>
-</span><span id="line-158"></span><span id="local-6989586621679277379"><span class="hs-keyword">deriving</span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSchema</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#NamedType"><span class="hs-identifier hs-type">NamedType</span></a></span></span><span>
+</span><span id="line-158"></span><span id="local-6989586621679277392"><span class="hs-keyword">deriving</span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSchema</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#NamedType"><span class="hs-identifier hs-type">NamedType</span></a></span></span><span>
 </span><span id="line-159"></span><span>
-</span><span id="line-160"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679277372"><span id="local-6989586621679277374"><span id="local-6989586621679277377"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#TermTag"><span class="hs-identifier hs-type">TermTag</span></a></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-161"></span><span>  </span><span id="local-6989586621679277371"><span class="annot"><span class="annottext">toEncoding :: TermTag -&gt; Encoding
-</span><a href="#local-6989586621679277371"><span class="hs-identifier hs-var hs-var hs-var hs-var">toEncoding</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Options -&gt; TermTag -&gt; Encoding
+</span><span id="line-160"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679277385"><span id="local-6989586621679277387"><span id="local-6989586621679277390"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#TermTag"><span class="hs-identifier hs-type">TermTag</span></a></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-161"></span><span>  </span><span id="local-6989586621679277384"><span class="annot"><span class="annottext">toEncoding :: TermTag -&gt; Encoding
+</span><a href="#local-6989586621679277384"><span class="hs-identifier hs-var hs-var hs-var hs-var">toEncoding</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Options -&gt; TermTag -&gt; Encoding
 forall a.
 (Generic a, GToJSON' Encoding Zero (Rep a)) =&gt;
 Options -&gt; a -&gt; Encoding
 </span><span class="hs-identifier hs-var">genericToEncoding</span></span><span> </span><span class="annot"><span class="annottext">Options
 </span><span class="hs-identifier hs-var">defaultOptions</span></span><span>
 </span><span id="line-162"></span><span>
-</span><span id="line-163"></span><span id="local-6989586621679277368"><span class="hs-keyword">deriving</span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSchema</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#TermTag"><span class="hs-identifier hs-type">TermTag</span></a></span></span><span>
+</span><span id="line-163"></span><span id="local-6989586621679277381"><span class="hs-keyword">deriving</span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSchema</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#TermTag"><span class="hs-identifier hs-type">TermTag</span></a></span></span><span>
 </span><span id="line-164"></span><span>
-</span><span id="line-165"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679277361"><span id="local-6989586621679277363"><span id="local-6989586621679277366"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#TypeTag"><span class="hs-identifier hs-type">TypeTag</span></a></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-166"></span><span>  </span><span id="local-6989586621679277360"><span class="annot"><span class="annottext">toEncoding :: TypeTag -&gt; Encoding
-</span><a href="#local-6989586621679277360"><span class="hs-identifier hs-var hs-var hs-var hs-var">toEncoding</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Options -&gt; TypeTag -&gt; Encoding
+</span><span id="line-165"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679277374"><span id="local-6989586621679277376"><span id="local-6989586621679277379"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#TypeTag"><span class="hs-identifier hs-type">TypeTag</span></a></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-166"></span><span>  </span><span id="local-6989586621679277373"><span class="annot"><span class="annottext">toEncoding :: TypeTag -&gt; Encoding
+</span><a href="#local-6989586621679277373"><span class="hs-identifier hs-var hs-var hs-var hs-var">toEncoding</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Options -&gt; TypeTag -&gt; Encoding
 forall a.
 (Generic a, GToJSON' Encoding Zero (Rep a)) =&gt;
 Options -&gt; a -&gt; Encoding
 </span><span class="hs-identifier hs-var">genericToEncoding</span></span><span> </span><span class="annot"><span class="annottext">Options
 </span><span class="hs-identifier hs-var">defaultOptions</span></span><span>
 </span><span id="line-167"></span><span>
-</span><span id="line-168"></span><span id="local-6989586621679277357"><span class="hs-keyword">deriving</span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSchema</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#TypeTag"><span class="hs-identifier hs-type">TypeTag</span></a></span></span><span>
+</span><span id="line-168"></span><span id="local-6989586621679277370"><span class="hs-keyword">deriving</span><span> </span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToSchema</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#TypeTag"><span class="hs-identifier hs-type">TypeTag</span></a></span></span><span>
 </span><span id="line-169"></span><span>
 </span><span id="line-170"></span><span class="hs-comment">-- Helpers</span><span>
 </span><span id="line-171"></span><span>
@@ -720,7 +720,7 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; Text
 </span><span class="hs-identifier hs-var">Text.fromStrict</span></span><span>
 </span><span id="line-174"></span><span>
-</span><span id="line-175"></span><span id="local-6989586621679277352"><span class="annot"><a href="Unison.Server.Types.html#mungeShow"><span class="hs-identifier hs-type">mungeShow</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Show</span></span><span> </span><span class="annot"><a href="#local-6989586621679277352"><span class="hs-identifier hs-type">s</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679277352"><span class="hs-identifier hs-type">s</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">LZ.ByteString</span></span></span><span>
+</span><span id="line-175"></span><span id="local-6989586621679277365"><span class="annot"><a href="Unison.Server.Types.html#mungeShow"><span class="hs-identifier hs-type">mungeShow</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Show</span></span><span> </span><span class="annot"><a href="#local-6989586621679277365"><span class="hs-identifier hs-type">s</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679277365"><span class="hs-identifier hs-type">s</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">LZ.ByteString</span></span></span><span>
 </span><span id="line-176"></span><span id="mungeShow"><span class="annot"><span class="annottext">mungeShow :: s -&gt; ByteString
 </span><a href="Unison.Server.Types.html#mungeShow"><span class="hs-identifier hs-var hs-var">mungeShow</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; ByteString
 </span><a href="Unison.Server.Types.html#mungeString"><span class="hs-identifier hs-var">mungeString</span></a></span><span> </span><span class="annot"><span class="annottext">(String -&gt; ByteString) -&gt; (s -&gt; String) -&gt; s -&gt; ByteString
@@ -742,7 +742,7 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><a href="Unison.Server.Types.html#defaultWidth"><span class="hs-identifier hs-var hs-var">defaultWidth</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Width
 </span><span class="hs-number">80</span></span><span>
 </span><span id="line-183"></span><span>
-</span><span id="line-184"></span><span id="local-6989586621679277345"><span id="local-6989586621679277346"><span class="annot"><a href="Unison.Server.Types.html#discard"><span class="hs-identifier hs-type">discard</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Applicative</span></span><span> </span><span class="annot"><a href="#local-6989586621679277346"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679277345"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679277346"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span></span></span><span>
+</span><span id="line-184"></span><span id="local-6989586621679277358"><span id="local-6989586621679277359"><span class="annot"><a href="Unison.Server.Types.html#discard"><span class="hs-identifier hs-type">discard</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Applicative</span></span><span> </span><span class="annot"><a href="#local-6989586621679277359"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679277358"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679277359"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span></span></span><span>
 </span><span id="line-185"></span><span id="discard"><span class="annot"><span class="annottext">discard :: a -&gt; m ()
 </span><a href="Unison.Server.Types.html#discard"><span class="hs-identifier hs-var hs-var">discard</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">m () -&gt; a -&gt; m ()
 forall a b. a -&gt; b -&gt; a
@@ -759,7 +759,7 @@ forall a. a -&gt; Maybe a -&gt; a
 </span><span class="hs-identifier hs-var">fromMaybe</span></span><span> </span><span class="annot"><span class="annottext">Width
 </span><a href="Unison.Server.Types.html#defaultWidth"><span class="hs-identifier hs-var">defaultWidth</span></a></span><span>
 </span><span id="line-189"></span><span>
-</span><span id="line-190"></span><span id="local-6989586621679277340"><span class="annot"><a href="Unison.Server.Types.html#setCacheControl"><span class="hs-identifier hs-type">setCacheControl</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="#local-6989586621679277340"><span class="hs-identifier hs-type">v</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Unison.Server.Types.html#APIHeaders"><span class="hs-identifier hs-type">APIHeaders</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679277340"><span class="hs-identifier hs-type">v</span></a></span></span><span>
+</span><span id="line-190"></span><span id="local-6989586621679277353"><span class="annot"><a href="Unison.Server.Types.html#setCacheControl"><span class="hs-identifier hs-type">setCacheControl</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="#local-6989586621679277353"><span class="hs-identifier hs-type">v</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Unison.Server.Types.html#APIHeaders"><span class="hs-identifier hs-type">APIHeaders</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679277353"><span class="hs-identifier hs-type">v</span></a></span></span><span>
 </span><span id="line-191"></span><span id="setCacheControl"><span class="annot"><span class="annottext">setCacheControl :: v -&gt; APIHeaders v
 </span><a href="Unison.Server.Types.html#setCacheControl"><span class="hs-identifier hs-var hs-var">setCacheControl</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; v -&gt; APIHeaders v
 forall (h :: Symbol) v orig new.
@@ -768,31 +768,30 @@ v -&gt; orig -&gt; new
 </span><span class="hs-identifier hs-var">addHeader</span></span><span> </span><span class="hs-glyph">@</span><span class="annot"><span class="hs-string">&quot;Cache-Control&quot;</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;public&quot;</span></span><span>
 </span><span id="line-192"></span><span>
-</span><span id="line-193"></span><span id="local-6989586621679277338"><span class="annot"><a href="Unison.Server.Types.html#branchToUnisonHash"><span class="hs-identifier hs-type">branchToUnisonHash</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Branch.Branch</span></span><span> </span><span class="annot"><a href="#local-6989586621679277338"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Unison.Server.Types.html#UnisonHash"><span class="hs-identifier hs-type">UnisonHash</span></a></span></span><span>
+</span><span id="line-193"></span><span id="local-6989586621679277351"><span class="annot"><a href="Unison.Server.Types.html#branchToUnisonHash"><span class="hs-identifier hs-type">branchToUnisonHash</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Branch.Branch</span></span><span> </span><span class="annot"><a href="#local-6989586621679277351"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Unison.Server.Types.html#UnisonHash"><span class="hs-identifier hs-type">UnisonHash</span></a></span></span><span>
 </span><span id="line-194"></span><span id="branchToUnisonHash"><span class="annot"><span class="annottext">branchToUnisonHash :: Branch m -&gt; Text
-</span><a href="Unison.Server.Types.html#branchToUnisonHash"><span class="hs-identifier hs-var hs-var">branchToUnisonHash</span></a></span></span><span> </span><span id="local-6989586621679277336"><span class="annot"><span class="annottext">Branch m
-</span><a href="#local-6989586621679277336"><span class="hs-identifier hs-var">b</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><a href="Unison.Server.Types.html#branchToUnisonHash"><span class="hs-identifier hs-var hs-var">branchToUnisonHash</span></a></span></span><span> </span><span id="local-6989586621679277349"><span class="annot"><span class="annottext">Branch m
+</span><a href="#local-6989586621679277349"><span class="hs-identifier hs-var">b</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-195"></span><span>  </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Text
 </span><span class="hs-string">&quot;#&quot;</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; Text -&gt; Text
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
-</span><span class="hs-operator hs-var">&lt;&gt;</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(Text -&gt; Text) -&gt; (RawHash Raw -&gt; Text) -&gt; RawHash Raw -&gt; Text
+</span><span class="hs-operator hs-var">&lt;&gt;</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(Text -&gt; Text) -&gt; (CausalHash -&gt; Text) -&gt; CausalHash -&gt; Text
 forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">Hash -&gt; Text
-</span><span class="hs-identifier hs-var">Hash.base32Hex</span></span><span> </span><span class="annot"><span class="annottext">(Hash -&gt; Text) -&gt; (RawHash Raw -&gt; Hash) -&gt; RawHash Raw -&gt; Text
+</span><span class="hs-identifier hs-var">Hash.base32Hex</span></span><span> </span><span class="annot"><span class="annottext">(Hash -&gt; Text) -&gt; (CausalHash -&gt; Hash) -&gt; CausalHash -&gt; Text
 forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
-</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">RawHash Raw -&gt; Hash
-forall a. RawHash a -&gt; Hash
-</span><span class="hs-identifier hs-var hs-var">Causal.unRawHash</span></span><span> </span><span class="annot"><span class="annottext">(RawHash Raw -&gt; Text) -&gt; RawHash Raw -&gt; Text
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">CausalHash -&gt; Hash
+</span><span class="hs-identifier hs-var hs-var">Causal.unCausalHash</span></span><span> </span><span class="annot"><span class="annottext">(CausalHash -&gt; Text) -&gt; CausalHash -&gt; Text
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Branch m -&gt; RawHash Raw
-forall (m :: * -&gt; *). Branch m -&gt; RawHash Raw
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Branch m -&gt; CausalHash
+forall (m :: * -&gt; *). Branch m -&gt; CausalHash
 </span><span class="hs-identifier hs-var">Branch.headHash</span></span><span> </span><span class="annot"><span class="annottext">Branch m
-</span><a href="#local-6989586621679277336"><span class="hs-identifier hs-var">b</span></a></span><span>
+</span><a href="#local-6989586621679277349"><span class="hs-identifier hs-var">b</span></a></span><span>
 </span><span id="line-196"></span><span>
-</span><span id="line-197"></span><span id="local-6989586621679277332"><span class="annot"><a href="Unison.Server.Types.html#v2CausalBranchToUnisonHash"><span class="hs-identifier hs-type">v2CausalBranchToUnisonHash</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">V2Branch.CausalBranch</span></span><span> </span><span class="annot"><a href="#local-6989586621679277332"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Unison.Server.Types.html#UnisonHash"><span class="hs-identifier hs-type">UnisonHash</span></a></span></span><span>
+</span><span id="line-197"></span><span id="local-6989586621679277345"><span class="annot"><a href="Unison.Server.Types.html#v2CausalBranchToUnisonHash"><span class="hs-identifier hs-type">v2CausalBranchToUnisonHash</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">V2Branch.CausalBranch</span></span><span> </span><span class="annot"><a href="#local-6989586621679277345"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Unison.Server.Types.html#UnisonHash"><span class="hs-identifier hs-type">UnisonHash</span></a></span></span><span>
 </span><span id="line-198"></span><span id="v2CausalBranchToUnisonHash"><span class="annot"><span class="annottext">v2CausalBranchToUnisonHash :: CausalBranch m -&gt; Text
-</span><a href="Unison.Server.Types.html#v2CausalBranchToUnisonHash"><span class="hs-identifier hs-var hs-var">v2CausalBranchToUnisonHash</span></a></span></span><span> </span><span id="local-6989586621679277330"><span class="annot"><span class="annottext">CausalBranch m
-</span><a href="#local-6989586621679277330"><span class="hs-identifier hs-var">b</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><a href="Unison.Server.Types.html#v2CausalBranchToUnisonHash"><span class="hs-identifier hs-var hs-var">v2CausalBranchToUnisonHash</span></a></span></span><span> </span><span id="local-6989586621679277343"><span class="annot"><span class="annottext">CausalBranch m
+</span><a href="#local-6989586621679277343"><span class="hs-identifier hs-var">b</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-199"></span><span>  </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Text
 </span><span class="hs-string">&quot;#&quot;</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; Text -&gt; Text
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
@@ -807,5 +806,5 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">CausalBranch m -&gt; CausalHash
 forall (m :: * -&gt; *) hc he e. Causal m hc he e -&gt; hc
 </span><span class="hs-identifier hs-var hs-var">V2Causal.causalHash</span></span><span> </span><span class="annot"><span class="annottext">CausalBranch m
-</span><a href="#local-6989586621679277330"><span class="hs-identifier hs-var">b</span></a></span><span>
+</span><a href="#local-6989586621679277343"><span class="hs-identifier hs-var">b</span></a></span><span>
 </span><span id="line-200"></span></pre></body></html>

@@ -512,3 +512,25 @@ class ToRow a
 
 -- | <a>ToField</a> a collection of values.
 toRow :: ToRow a => a -> [SQLData]
+
+-- | The 1-tuple type or single-value "collection".
+--   
+--   This type is structurally equivalent to the <a>Identity</a> type, but
+--   its intent is more about serving as the anonymous 1-tuple type missing
+--   from Haskell for attaching typeclass instances.
+--   
+--   Parameter usage example:
+--   
+--   <pre>
+--   encodeSomething (<a>Only</a> (42::Int))
+--   </pre>
+--   
+--   Result usage example:
+--   
+--   <pre>
+--   xs &lt;- decodeSomething
+--   forM_ xs $ \(<a>Only</a> id) -&gt; {- ... -}
+--   </pre>
+newtype Only a
+Only :: a -> Only a
+[fromOnly] :: Only a -> a

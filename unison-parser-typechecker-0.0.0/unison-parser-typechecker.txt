@@ -6,34 +6,39 @@
 @version 0.0.0
 
 module Unison.Codebase.Causal.Type
-data Causal m h e
-UnsafeOne :: RawHash h -> e -> Causal m h e
-[currentHash] :: Causal m h e -> RawHash h
-[head] :: Causal m h e -> e
-UnsafeCons :: RawHash h -> e -> (RawHash h, m (Causal m h e)) -> Causal m h e
-[currentHash] :: Causal m h e -> RawHash h
-[head] :: Causal m h e -> e
-[tail] :: Causal m h e -> (RawHash h, m (Causal m h e))
-UnsafeMerge :: RawHash h -> e -> Map (RawHash h) (m (Causal m h e)) -> Causal m h e
-[currentHash] :: Causal m h e -> RawHash h
-[head] :: Causal m h e -> e
-[tails] :: Causal m h e -> Map (RawHash h) (m (Causal m h e))
-newtype RawHash a
-RawHash :: Hash -> RawHash a
-[unRawHash] :: RawHash a -> Hash
-pattern One :: RawHash h -> e -> Causal m h e
-pattern Cons :: RawHash h -> e -> (RawHash h, m (Causal m h e)) -> Causal m h e
-pattern Merge :: RawHash h -> e -> Map (RawHash h) (m (Causal m h e)) -> Causal m h e
-before :: Monad m => Causal m h e -> Causal m h e -> m Bool
-predecessors :: Causal m h e -> Seq (m (Causal m h e))
-lca :: Monad m => Causal m h e -> Causal m h e -> m (Maybe (Causal m h e))
-instance GHC.Generics.Generic (Unison.Codebase.Causal.Type.RawHash a)
-instance GHC.Classes.Ord (Unison.Codebase.Causal.Type.RawHash a)
-instance GHC.Classes.Eq (Unison.Codebase.Causal.Type.RawHash a)
-instance GHC.Show.Show e => GHC.Show.Show (Unison.Codebase.Causal.Type.Causal m h e)
-instance GHC.Classes.Eq (Unison.Codebase.Causal.Type.Causal m h a)
-instance GHC.Classes.Ord (Unison.Codebase.Causal.Type.Causal m h a)
-instance GHC.Show.Show (Unison.Codebase.Causal.Type.RawHash a)
+data Causal m e
+UnsafeOne :: CausalHash -> HashFor e -> e -> Causal m e
+[currentHash] :: Causal m e -> CausalHash
+[valueHash] :: Causal m e -> HashFor e
+[head] :: Causal m e -> e
+UnsafeCons :: CausalHash -> HashFor e -> e -> (CausalHash, m (Causal m e)) -> Causal m e
+[currentHash] :: Causal m e -> CausalHash
+[valueHash] :: Causal m e -> HashFor e
+[head] :: Causal m e -> e
+[tail] :: Causal m e -> (CausalHash, m (Causal m e))
+UnsafeMerge :: CausalHash -> HashFor e -> e -> Map CausalHash (m (Causal m e)) -> Causal m e
+[currentHash] :: Causal m e -> CausalHash
+[valueHash] :: Causal m e -> HashFor e
+[head] :: Causal m e -> e
+[tails] :: Causal m e -> Map CausalHash (m (Causal m e))
+
+-- | Represents a hash of a causal containing values of the provided type.
+newtype CausalHash
+CausalHash :: Hash -> CausalHash
+[unCausalHash] :: CausalHash -> Hash
+pattern One :: CausalHash -> HashFor e -> e -> Causal m e
+pattern Cons :: CausalHash -> HashFor e -> e -> (CausalHash, m (Causal m e)) -> Causal m e
+pattern Merge :: CausalHash -> HashFor e -> e -> Map CausalHash (m (Causal m e)) -> Causal m e
+before :: Monad m => Causal m e -> Causal m e -> m Bool
+predecessors :: Causal m e -> Seq (m (Causal m e))
+lca :: Monad m => Causal m e -> Causal m e -> m (Maybe (Causal m e))
+instance GHC.Generics.Generic Unison.Codebase.Causal.Type.CausalHash
+instance GHC.Classes.Ord Unison.Codebase.Causal.Type.CausalHash
+instance GHC.Classes.Eq Unison.Codebase.Causal.Type.CausalHash
+instance GHC.Show.Show Unison.Codebase.Causal.Type.CausalHash
+instance GHC.Show.Show e => GHC.Show.Show (Unison.Codebase.Causal.Type.Causal m e)
+instance GHC.Classes.Eq (Unison.Codebase.Causal.Type.Causal m a)
+instance GHC.Classes.Ord (Unison.Codebase.Causal.Type.Causal m a)
 
 module Unison.Codebase.CodeLookup
 data CodeLookup v m a
@@ -338,6 +343,9 @@ Worktree :: FilePath -> GitRepo
 gitCacheDir :: MonadIO m => Text -> m FilePath
 instance GHC.Show.Show Unison.Codebase.Editor.Git.GitRepo
 
+module Unison.Codebase.SqliteCodebase.Migrations.Helpers
+abortMigration :: String -> Transaction a
+
 module Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema2To3
 
 -- | The 1 to 2 migration kept around hash objects of hash version 1,
@@ -616,6 +624,13 @@ module Unison.Hashing.V2.Hashable
 --   full codebase migration and should not be taken lightly.
 class Hashable t
 hash :: Hashable t => t -> Hash
+hashFor :: Hashable t => t -> HashFor t
+
+-- | A hash tagged with the type it's a hash of, useful for maintaining
+--   type safety guarantees.
+newtype HashFor t
+HashFor :: Hash -> HashFor t
+[genericHash] :: HashFor t -> Hash
 instance Unison.Hashing.V2.Tokenizable.Tokenizable a => Unison.Hashing.V2.Hashable.Hashable [a]
 instance Unison.Hashing.V2.Tokenizable.Tokenizable a => Unison.Hashing.V2.Hashable.Hashable (Data.Set.Internal.Set a)
 instance Unison.Hashing.V2.Hashable.Hashable GHC.Int.Int64
@@ -1626,28 +1641,22 @@ empty :: Metadata
 singleton :: Type -> Value -> Metadata
 toRelation :: Star3 a n x y -> Relation a n
 
-module Unison.Codebase.Branch.Raw
-type Star r n = Star r n
-type EditHash = Hash
-data Raw
-Raw :: Star Referent NameSegment -> Star Reference NameSegment -> Map NameSegment Hash -> Map NameSegment EditHash -> Raw
-[_termsR] :: Raw -> Star Referent NameSegment
-[_typesR] :: Raw -> Star Reference NameSegment
-[_childrenR] :: Raw -> Map NameSegment Hash
-[_editsR] :: Raw -> Map NameSegment EditHash
-
 module Unison.Codebase.Branch.Type
+
+-- | A Hash for a namespace itself, it doesn't incorporate any history.
+type NamespaceHash m = HashFor (Branch0 m)
+
+-- | Represents a hash of a causal containing values of the provided type.
+newtype CausalHash
+CausalHash :: Hash -> CausalHash
+[unCausalHash] :: CausalHash -> Hash
+head :: Branch m -> Branch0 m
+headHash :: Branch m -> CausalHash
 
 -- | A node in the Unison namespace hierarchy along with its history.
 newtype Branch m
 Branch :: UnwrappedBranch m -> Branch m
 [_history] :: Branch m -> UnwrappedBranch m
-type UnwrappedBranch m = Causal m Raw (Branch0 m)
-type Hash = RawHash Raw
-type EditHash = Hash
-type Star r n = Star r n
-head :: Branch m -> Branch0 m
-headHash :: Branch m -> Hash
 
 -- | A node in the Unison namespace hierarchy.
 --   
@@ -1673,6 +1682,9 @@ Branch0 :: Star Referent NameSegment -> Star Reference NameSegment -> Map NameSe
 [deepEdits] :: Branch0 m -> Map Name EditHash
 history :: Iso' (Branch m) (UnwrappedBranch m)
 edits :: Lens' (Branch0 m) (Map NameSegment (EditHash, m Patch))
+type Star r n = Star r n
+type EditHash = Hash
+type UnwrappedBranch m = Causal m (Branch0 m)
 instance GHC.Classes.Ord (Unison.Codebase.Branch.Type.Branch m)
 instance GHC.Classes.Eq (Unison.Codebase.Branch.Type.Branch m)
 instance GHC.Classes.Eq (Unison.Codebase.Branch.Type.Branch0 m)
@@ -1680,7 +1692,7 @@ instance GHC.Classes.Eq (Unison.Codebase.Branch.Type.Branch0 m)
 module Unison.Hashing.V2.Convert
 type ResolutionResult v a r = Either Seq ResolutionFailure v a r
 hashBranch0 :: Branch0 m -> Hash
-hashCausal :: Hashable e => e -> Set (RawHash h) -> Hash
+hashCausal :: Hashable e => e -> Set CausalHash -> (CausalHash, HashFor e)
 hashDataDecls :: Var v => Map v (DataDeclaration v a) -> ResolutionResult v a [(v, Id, DataDeclaration v a)]
 hashDecls :: Var v => Map v (Decl v a) -> ResolutionResult v a [(v, Id, Decl v a)]
 hashPatch :: Patch -> Hash
@@ -1696,31 +1708,33 @@ typeToReference :: Var v => Type v a -> Reference
 typeToReferenceMentions :: Var v => Type v a -> Set Reference
 
 module Unison.Codebase.Causal
-data Causal m h e
-pattern One :: RawHash h -> e -> Causal m h e
-pattern Cons :: RawHash h -> e -> (RawHash h, m (Causal m h e)) -> Causal m h e
-pattern Merge :: RawHash h -> e -> Map (RawHash h) (m (Causal m h e)) -> Causal m h e
-newtype RawHash a
-RawHash :: Hash -> RawHash a
-[unRawHash] :: RawHash a -> Hash
+data Causal m e
+pattern One :: CausalHash -> HashFor e -> e -> Causal m e
+pattern Cons :: CausalHash -> HashFor e -> e -> (CausalHash, m (Causal m e)) -> Causal m e
+pattern Merge :: CausalHash -> HashFor e -> e -> Map CausalHash (m (Causal m e)) -> Causal m e
+
+-- | Represents a hash of a causal containing values of the provided type.
+newtype CausalHash
+CausalHash :: Hash -> CausalHash
+[unCausalHash] :: CausalHash -> Hash
 
 -- | Focus the current head, keeping the hash up to date.
-head_ :: Hashable e => Lens' (Causal m h e) e
-one :: Hashable e => e -> Causal m h e
-cons :: (Applicative m, Hashable e) => e -> Causal m h e -> Causal m h e
-consDistinct :: (Applicative m, Eq e, Hashable e) => e -> Causal m h e -> Causal m h e
-uncons :: Applicative m => Causal m h e -> m (Maybe (e, Causal m h e))
-predecessors :: Causal m h e -> Seq (m (Causal m h e))
-threeWayMerge :: forall m h e. (Monad m, Hashable e) => (Maybe e -> e -> e -> m e) -> Causal m h e -> Causal m h e -> m (Causal m h e)
-threeWayMerge' :: forall m h e. (Monad m, Hashable e) => (Causal m h e -> Causal m h e -> m (Maybe (Causal m h e))) -> (Maybe e -> e -> e -> m e) -> Causal m h e -> Causal m h e -> m (Causal m h e)
-squashMerge' :: forall m h e. (Monad m, Hashable e, Eq e) => (Causal m h e -> Causal m h e -> m (Maybe (Causal m h e))) -> (e -> m e) -> (Maybe e -> e -> e -> m e) -> Causal m h e -> Causal m h e -> m (Causal m h e)
-lca :: Monad m => Causal m h e -> Causal m h e -> m (Maybe (Causal m h e))
-stepDistinct :: (Applicative m, Eq e, Hashable e) => (e -> e) -> Causal m h e -> Causal m h e
-stepDistinctM :: (Applicative m, Functor n, Eq e, Hashable e) => (e -> n e) -> Causal m h e -> n (Causal m h e)
-transform :: Functor m => (forall a. m a -> n a) -> Causal m h e -> Causal n h e
-unsafeMapHashPreserving :: Functor m => (e -> e2) -> Causal m h e -> Causal m h e2
-before :: Monad m => Causal m h e -> Causal m h e -> m Bool
-beforeHash :: forall m h e. Monad m => Word -> RawHash h -> Causal m h e -> m Bool
+head_ :: Hashable e => Lens' (Causal m e) e
+one :: Hashable e => e -> Causal m e
+cons :: (Applicative m, Hashable e) => e -> Causal m e -> Causal m e
+consDistinct :: (Applicative m, Eq e, Hashable e) => e -> Causal m e -> Causal m e
+uncons :: Applicative m => Causal m e -> m (Maybe (e, Causal m e))
+predecessors :: Causal m e -> Seq (m (Causal m e))
+threeWayMerge :: forall m e. (Monad m, Hashable e) => (Maybe e -> e -> e -> m e) -> Causal m e -> Causal m e -> m (Causal m e)
+threeWayMerge' :: forall m e. (Monad m, Hashable e) => (Causal m e -> Causal m e -> m (Maybe (Causal m e))) -> (Maybe e -> e -> e -> m e) -> Causal m e -> Causal m e -> m (Causal m e)
+squashMerge' :: forall m e. (Monad m, Hashable e, Eq e) => (Causal m e -> Causal m e -> m (Maybe (Causal m e))) -> (e -> m e) -> (Maybe e -> e -> e -> m e) -> Causal m e -> Causal m e -> m (Causal m e)
+lca :: Monad m => Causal m e -> Causal m e -> m (Maybe (Causal m e))
+stepDistinct :: (Applicative m, Eq e, Hashable e) => (e -> e) -> Causal m e -> Causal m e
+stepDistinctM :: (Applicative m, Functor n, Eq e, Hashable e) => (e -> n e) -> Causal m e -> n (Causal m e)
+transform :: Functor m => (forall a. m a -> n a) -> Causal m e -> Causal n e
+unsafeMapHashPreserving :: forall m e e2. Functor m => (e -> e2) -> Causal m e -> Causal m e2
+before :: Monad m => Causal m e -> Causal m e -> m Bool
+beforeHash :: forall m e. Monad m => Word -> CausalHash -> Causal m e -> m Bool
 instance GHC.Show.Show a => GHC.Show.Show (Unison.Codebase.Causal.FoldHistoryResult a)
 instance GHC.Classes.Ord a => GHC.Classes.Ord (Unison.Codebase.Causal.FoldHistoryResult a)
 instance GHC.Classes.Eq a => GHC.Classes.Eq (Unison.Codebase.Causal.FoldHistoryResult a)
@@ -1729,7 +1743,7 @@ module Unison.Codebase.Causal.FoldHistory
 data FoldHistoryResult a
 Satisfied :: a -> FoldHistoryResult a
 Unsatisfied :: a -> FoldHistoryResult a
-foldHistoryUntil :: forall m h e a. Monad m => (a -> e -> (a, Bool)) -> a -> Causal m h e -> m (FoldHistoryResult a)
+foldHistoryUntil :: forall m e a. Monad m => (a -> e -> (a, Bool)) -> a -> Causal m e -> m (FoldHistoryResult a)
 instance GHC.Show.Show a => GHC.Show.Show (Unison.Codebase.Causal.FoldHistory.FoldHistoryResult a)
 instance GHC.Classes.Ord a => GHC.Classes.Ord (Unison.Codebase.Causal.FoldHistory.FoldHistoryResult a)
 instance GHC.Classes.Eq a => GHC.Classes.Eq (Unison.Codebase.Causal.FoldHistory.FoldHistoryResult a)
@@ -2294,9 +2308,9 @@ Env :: [Type v loc] -> TypeLookup v loc -> Map Name [NamedReference v loc] -> En
 [_ambientAbilities] :: Env v loc -> [Type v loc]
 [_typeLookup] :: Env v loc -> TypeLookup v loc
 [_termsByShortname] :: Env v loc -> Map Name [NamedReference v loc]
-typeLookup :: forall v_a3CFU loc_a3CFV. Lens' (Env v_a3CFU loc_a3CFV) (TypeLookup v_a3CFU loc_a3CFV)
-termsByShortname :: forall v_a3CFU loc_a3CFV. Lens' (Env v_a3CFU loc_a3CFV) (Map Name [NamedReference v_a3CFU loc_a3CFV])
-ambientAbilities :: forall v_a3CFU loc_a3CFV. Lens' (Env v_a3CFU loc_a3CFV) [Type v_a3CFU loc_a3CFV]
+typeLookup :: forall v_a3CXL loc_a3CXM. Lens' (Env v_a3CXL loc_a3CXM) (TypeLookup v_a3CXL loc_a3CXM)
+termsByShortname :: forall v_a3CXL loc_a3CXM. Lens' (Env v_a3CXL loc_a3CXM) (Map Name [NamedReference v_a3CXL loc_a3CXM])
+ambientAbilities :: forall v_a3CXL loc_a3CXM. Lens' (Env v_a3CXL loc_a3CXM) [Type v_a3CXL loc_a3CXM]
 
 -- | Infer the type of a <a>Term</a>, using a function to resolve the type
 --   of <tt>Ref</tt> constructors contained in that term.
@@ -2920,6 +2934,41 @@ constructorNamed :: Reference -> Text -> ConstructorId
 constructorName :: Reference -> ConstructorId -> Text
 source :: Text
 
+module Unison.Codebase.SqliteCodebase.Branch.Dependencies
+type Branches m = [(CausalHash, m (Branch m))]
+data Dependencies
+Dependencies :: Set EditHash -> Set Hash -> Set Hash -> Dependencies
+[patches] :: Dependencies -> Set EditHash
+[terms] :: Dependencies -> Set Hash
+[decls] :: Dependencies -> Set Hash
+data Dependencies'
+Dependencies' :: [EditHash] -> [Hash] -> [Hash] -> Dependencies'
+[patches'] :: Dependencies' -> [EditHash]
+[terms'] :: Dependencies' -> [Hash]
+[decls'] :: Dependencies' -> [Hash]
+to' :: Dependencies -> Dependencies'
+fromBranch :: Applicative m => Branch m -> (Branches m, Dependencies)
+fromBranch0 :: Applicative m => Branch0 m -> (Branches m, Dependencies)
+instance GHC.Base.Monoid Unison.Codebase.SqliteCodebase.Branch.Dependencies.Dependencies
+instance GHC.Base.Semigroup Unison.Codebase.SqliteCodebase.Branch.Dependencies.Dependencies
+instance GHC.Generics.Generic Unison.Codebase.SqliteCodebase.Branch.Dependencies.Dependencies
+instance GHC.Show.Show Unison.Codebase.SqliteCodebase.Branch.Dependencies.Dependencies
+instance GHC.Base.Monoid Unison.Codebase.SqliteCodebase.Branch.Dependencies.Dependencies'
+instance GHC.Base.Semigroup Unison.Codebase.SqliteCodebase.Branch.Dependencies.Dependencies'
+instance GHC.Generics.Generic Unison.Codebase.SqliteCodebase.Branch.Dependencies.Dependencies'
+instance GHC.Show.Show Unison.Codebase.SqliteCodebase.Branch.Dependencies.Dependencies'
+instance GHC.Classes.Eq Unison.Codebase.SqliteCodebase.Branch.Dependencies.Dependencies'
+
+module Unison.Codebase.Branch.Raw
+type Star r n = Star r n
+type EditHash = Hash
+data Raw
+Raw :: Star Referent NameSegment -> Star Reference NameSegment -> Map NameSegment Hash -> Map NameSegment EditHash -> Raw
+[_termsR] :: Raw -> Star Referent NameSegment
+[_typesR] :: Raw -> Star Reference NameSegment
+[_childrenR] :: Raw -> Map NameSegment Hash
+[_editsR] :: Raw -> Map NameSegment EditHash
+
 module Unison.Codebase.Branch.BranchDiff
 type Star r n = Star r n
 data BranchDiff
@@ -2942,7 +2991,7 @@ module Unison.Codebase.Branch
 newtype Branch m
 Branch :: UnwrappedBranch m -> Branch m
 [_history] :: Branch m -> UnwrappedBranch m
-type UnwrappedBranch m = Causal m Raw (Branch0 m)
+type UnwrappedBranch m = Causal m (Branch0 m)
 
 -- | A node in the Unison namespace hierarchy.
 --   
@@ -2968,9 +3017,13 @@ Branch0 :: Star Referent NameSegment -> Star Reference NameSegment -> Map NameSe
 [deepEdits] :: Branch0 m -> Map Name EditHash
 data Raw
 type Star r n = Star r n
-type Hash = RawHash Raw
+
+-- | A Hash for a namespace itself, it doesn't incorporate any history.
+type NamespaceHash m = HashFor (Branch0 m)
+
+-- | Represents a hash of a causal containing values of the provided type.
+data CausalHash
 type EditHash = Hash
-pattern Hash :: Hash -> RawHash a
 branch0 :: forall m. Star Referent NameSegment -> Star TypeReference NameSegment -> Map NameSegment (Branch m) -> Map NameSegment (EditHash, m Patch) -> Branch0 m
 one :: Branch0 m -> Branch m
 cons :: Applicative m => Branch0 m -> Branch m -> Branch m
@@ -2999,7 +3052,7 @@ before :: Monad m => Branch m -> Branch m -> m Bool
 lca :: Monad m => Branch m -> Branch m -> m (Maybe (Branch m))
 history :: Iso' (Branch m) (UnwrappedBranch m)
 head :: Branch m -> Branch0 m
-headHash :: Branch m -> Hash
+headHash :: Branch m -> CausalHash
 children :: Lens' (Branch0 m) (Map NameSegment (Branch m))
 nonEmptyChildren :: Branch0 m -> Map NameSegment (Branch m)
 
@@ -3101,7 +3154,7 @@ module Unison.Codebase.Type
 
 -- | Abstract interface to a user's codebase.
 data Codebase m v a
-Codebase :: (Id -> m (Maybe (Term v a))) -> (Id -> m (Maybe (Type v a))) -> (Id -> m (Maybe (Decl v a))) -> (Reference -> m ConstructorType) -> (Id -> Term v a -> Type v a -> m ()) -> (Id -> Decl v a -> m ()) -> (Hash -> m (Maybe [(Term v a, Type v a)])) -> (Hash -> m (Maybe [Decl v a])) -> (Hash -> m (Maybe CycleSize)) -> m CausalHash -> m (Branch m) -> m Bool -> (Branch m -> m ()) -> m (IO (), IO (Set Hash)) -> (CausalHash -> m (CausalBranch m)) -> (Hash -> m (Maybe (Branch m))) -> (Branch m -> m ()) -> (Hash -> m Bool) -> (EditHash -> m (Maybe Patch)) -> (EditHash -> Patch -> m ()) -> (EditHash -> m Bool) -> (Reference -> m (Set Id)) -> (Hash -> m (Set Id)) -> (CodebasePath -> SyncMode -> Branch m -> m ()) -> (CodebasePath -> SyncMode -> Branch m -> m ()) -> (forall r. ReadRemoteNamespace -> GitBranchBehavior -> ((Branch m, CodebasePath) -> m r) -> m (Either GitError r)) -> (forall e. WriteRepo -> PushGitBranchOpts -> (Branch m -> m (Either e (Branch m))) -> m (Either GitError (Either e (Branch m)))) -> (WatchKind -> m [Id]) -> (WatchKind -> Id -> m (Maybe (Term v a))) -> (WatchKind -> Id -> Term v a -> m ()) -> m () -> m [Entry Hash] -> (Text -> Branch m -> Branch m -> m ()) -> (Reference -> m (Set Id)) -> (Reference -> m (Set Id)) -> m Int -> (ShortHash -> m (Set Id)) -> (ShortHash -> m (Set Id)) -> (ShortHash -> m (Set Id)) -> m Int -> (ShortBranchHash -> m (Set Hash)) -> Maybe (Hash -> Hash -> m (Maybe Hash)) -> Maybe (Hash -> Hash -> m Bool) -> (Path -> m ScopedNames) -> m () -> Codebase m v a
+Codebase :: (Id -> m (Maybe (Term v a))) -> (Id -> m (Maybe (Type v a))) -> (Id -> m (Maybe (Decl v a))) -> (Reference -> m ConstructorType) -> (Id -> Term v a -> Type v a -> m ()) -> (Id -> Decl v a -> m ()) -> (Hash -> m (Maybe [(Term v a, Type v a)])) -> (Hash -> m (Maybe [Decl v a])) -> (Hash -> m (Maybe CycleSize)) -> m CausalHash -> m (Branch m) -> m Bool -> (Branch m -> m ()) -> m (IO (), IO (Set CausalHash)) -> (CausalHash -> m (CausalBranch m)) -> (CausalHash -> m (Maybe (Branch m))) -> (Branch m -> m ()) -> (CausalHash -> m Bool) -> (EditHash -> m (Maybe Patch)) -> (EditHash -> Patch -> m ()) -> (EditHash -> m Bool) -> (Reference -> m (Set Id)) -> (Hash -> m (Set Id)) -> (CodebasePath -> SyncMode -> Branch m -> m ()) -> (CodebasePath -> SyncMode -> Branch m -> m ()) -> (forall r. ReadRemoteNamespace -> GitBranchBehavior -> ((Branch m, CodebasePath) -> m r) -> m (Either GitError r)) -> (forall e. WriteRepo -> PushGitBranchOpts -> (Branch m -> m (Either e (Branch m))) -> m (Either GitError (Either e (Branch m)))) -> (WatchKind -> m [Id]) -> (WatchKind -> Id -> m (Maybe (Term v a))) -> (WatchKind -> Id -> Term v a -> m ()) -> m () -> m [Entry CausalHash] -> (Text -> Branch m -> Branch m -> m ()) -> (Reference -> m (Set Id)) -> (Reference -> m (Set Id)) -> m Int -> (ShortHash -> m (Set Id)) -> (ShortHash -> m (Set Id)) -> (ShortHash -> m (Set Id)) -> m Int -> (ShortBranchHash -> m (Set CausalHash)) -> Maybe (CausalHash -> CausalHash -> m (Maybe CausalHash)) -> Maybe (CausalHash -> CausalHash -> m Bool) -> (Path -> m ScopedNames) -> m () -> Codebase m v a
 
 -- | Get a user-defined term from the codebase.
 --   
@@ -3152,9 +3205,9 @@ Codebase :: (Id -> m (Maybe (Term v a))) -> (Id -> m (Maybe (Type v a))) -> (Id 
 -- | Like <a>putBranch</a>, but also adjusts the root branch pointer
 --   afterwards.
 [putRootBranch] :: Codebase m v a -> Branch m -> m ()
-[rootBranchUpdates] :: Codebase m v a -> m (IO (), IO (Set Hash))
+[rootBranchUpdates] :: Codebase m v a -> m (IO (), IO (Set CausalHash))
 [getShallowBranchForHash] :: Codebase m v a -> CausalHash -> m (CausalBranch m)
-[getBranchForHashImpl] :: Codebase m v a -> Hash -> m (Maybe (Branch m))
+[getBranchForHashImpl] :: Codebase m v a -> CausalHash -> m (Maybe (Branch m))
 
 -- | Put a branch into the codebase, which includes its children, its
 --   patches, and the branch itself, if they don't already exist.
@@ -3164,7 +3217,7 @@ Codebase :: (Id -> m (Maybe (Term v a))) -> (Id -> m (Maybe (Type v a))) -> (Id 
 [putBranch] :: Codebase m v a -> Branch m -> m ()
 
 -- | Check whether the given branch exists in the codebase.
-[branchExists] :: Codebase m v a -> Hash -> m Bool
+[branchExists] :: Codebase m v a -> CausalHash -> m Bool
 
 -- | Get a patch from the codebase.
 [getPatch] :: Codebase m v a -> EditHash -> m (Maybe Patch)
@@ -3223,7 +3276,7 @@ Codebase :: (Id -> m (Maybe (Term v a))) -> (Id -> m (Maybe (Type v a))) -> (Id 
 [clearWatches] :: Codebase m v a -> m ()
 
 -- | Get the entire reflog.
-[getReflog] :: Codebase m v a -> m [Entry Hash]
+[getReflog] :: Codebase m v a -> m [Entry CausalHash]
 
 -- | <tt>appendReflog reason before after</tt> appends a reflog entry.
 --   
@@ -3261,9 +3314,9 @@ Codebase :: (Id -> m (Maybe (Term v a))) -> (Id -> m (Maybe (Type v a))) -> (Id 
 [branchHashLength] :: Codebase m v a -> m Int
 
 -- | Get the set of branches whose hash matches the given prefix.
-[branchHashesByPrefix] :: Codebase m v a -> ShortBranchHash -> m (Set Hash)
-[lcaImpl] :: Codebase m v a -> Maybe (Hash -> Hash -> m (Maybe Hash))
-[beforeImpl] :: Codebase m v a -> Maybe (Hash -> Hash -> m Bool)
+[branchHashesByPrefix] :: Codebase m v a -> ShortBranchHash -> m (Set CausalHash)
+[lcaImpl] :: Codebase m v a -> Maybe (CausalHash -> CausalHash -> m (Maybe CausalHash))
+[beforeImpl] :: Codebase m v a -> Maybe (CausalHash -> CausalHash -> m Bool)
 [namesAtPath] :: Codebase m v a -> Path -> m ScopedNames
 [updateNameLookup] :: Codebase m v a -> m ()
 
@@ -3277,7 +3330,7 @@ PushGitBranchOpts :: Bool -> SyncMode -> PushGitBranchOpts
 [syncMode] :: PushGitBranchOpts -> SyncMode
 data GitError
 GitProtocolError :: GitProtocolError -> GitError
-GitCodebaseError :: GitCodebaseError Hash -> GitError
+GitCodebaseError :: GitCodebaseError CausalHash -> GitError
 GitSqliteCodebaseError :: GitSqliteCodebaseError -> GitError
 type SyncToDir m = CodebasePath -> SyncMode -> Branch m -> m ()
 
@@ -3312,8 +3365,8 @@ rreference1to2 :: Hash -> Reference -> Reference' Text (Maybe Hash)
 rreferenceid2to1 :: Hash -> Id' (Maybe Hash) -> Id
 rreferenceid1to2 :: Hash -> Id -> Id' (Maybe Hash)
 hash1to2 :: Hash -> Hash
-branchHash1to2 :: Hash -> CausalHash
-branchHash2to1 :: CausalHash -> Hash
+branchHash1to2 :: NamespaceHash m -> BranchHash
+branchHash2to1 :: forall m. BranchHash -> NamespaceHash m
 patchHash1to2 :: EditHash -> PatchHash
 reference2to1 :: Reference -> Reference
 reference1to2 :: Reference -> Reference
@@ -3327,8 +3380,8 @@ referentid2to1 :: Applicative m => (Reference -> m ConstructorType) -> Id -> m I
 constructorType1to2 :: ConstructorType -> ConstructorType
 constructorType2to1 :: ConstructorType -> ConstructorType
 hash2to1 :: Hash -> Hash
-causalHash2to1 :: CausalHash -> RawHash Raw
-causalHash1to2 :: RawHash Raw -> CausalHash
+causalHash2to1 :: CausalHash -> CausalHash
+causalHash1to2 :: CausalHash -> CausalHash
 ttype2to1 :: Type Symbol -> Type Symbol Ann
 dtype2to1 :: Hash -> Type Symbol -> Type Symbol Ann
 type2to1' :: (r -> Reference) -> TypeR r Symbol -> Type Symbol Ann
@@ -3388,9 +3441,9 @@ tryFlushDeclBuffer :: TVar (Map Hash TermBufferEntry) -> TVar (Map Hash DeclBuff
 getRootBranch :: (Reference -> Transaction ConstructorType) -> TVar (Maybe (DataVersion, Branch Transaction)) -> Transaction (Branch Transaction)
 getRootBranchExists :: Transaction Bool
 putRootBranch :: TVar (Maybe (DataVersion, Branch Transaction)) -> Branch Transaction -> Transaction ()
-getBranchForHash :: (Reference -> Transaction ConstructorType) -> Hash -> Transaction (Maybe (Branch Transaction))
+getBranchForHash :: (Reference -> Transaction ConstructorType) -> CausalHash -> Transaction (Maybe (Branch Transaction))
 putBranch :: Branch Transaction -> Transaction ()
-isCausalHash :: Hash -> Transaction Bool
+isCausalHash :: CausalHash -> Transaction Bool
 getPatch :: EditHash -> Transaction (Maybe Patch)
 putPatch :: EditHash -> Patch -> Transaction ()
 patchExists :: EditHash -> Transaction Bool
@@ -3409,11 +3462,11 @@ defnReferencesByPrefix :: ObjectType -> ShortHash -> Transaction (Set Id)
 termReferencesByPrefix :: ShortHash -> Transaction (Set Id)
 declReferencesByPrefix :: ShortHash -> Transaction (Set Id)
 referentsByPrefix :: (Reference -> Transaction ConstructorType) -> ShortHash -> Transaction (Set Id)
-branchHashesByPrefix :: ShortBranchHash -> Transaction (Set Hash)
-sqlLca :: Hash -> Hash -> Transaction (Maybe Hash)
+branchHashesByPrefix :: ShortBranchHash -> Transaction (Set CausalHash)
+sqlLca :: CausalHash -> CausalHash -> Transaction (Maybe CausalHash)
 termExists :: Hash -> Transaction Bool
 declExists :: Hash -> Transaction Bool
-before :: Hash -> Hash -> Transaction (Maybe Bool)
+before :: CausalHash -> CausalHash -> Transaction (Maybe Bool)
 
 -- | Construct a <a>ScopedNames</a> which can produce names which are
 --   relative to the provided Path.
@@ -3425,6 +3478,70 @@ instance GHC.Classes.Eq a => GHC.Classes.Eq (Unison.Codebase.SqliteCodebase.Oper
 module Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers
 dbBranchHash :: DbBranch -> Transaction Hash
 dbPatchHash :: Patch -> Transaction Hash
+
+module Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema3To4
+
+-- | There was a bug in previous versions of UCM which incorrectly used
+--   causal hashes as branch hashes. This remained undetected because there
+--   was never a need for this hash to be verifiable, and the hashes were
+--   still unique because the namespace hash was PART of the causal hash.
+--   It did however result in many identical branches being stored multiple
+--   times under different <tt>primary_hash_id</tt>s.
+--   
+--   However, with the advent of Share and Sync, we now need to correctly
+--   verify these namespace hashes.
+--   
+--   This migration fixes the issue by re-hashing namespace objects where
+--   the value_hash_id of a causal matches the self_hash_id. Luckily this
+--   doesn't change any causal hashes.
+--   
+--   However, due to the possibility of multiple identical objects stored
+--   under different <tt>primary_hash_id</tt>s, we may now have multiple
+--   objects with the same <tt>primary_hash_id</tt>, which our DB schema
+--   doesn't allow.
+--   
+--   To address this, we keep exactly one <tt>canonical</tt> object for
+--   each hash, then remap all references to old objects into this
+--   canonical object instead. Unfortunately this requires mapping over
+--   every branch object and traversing the child references.
+--   
+--   It was also discovered that some developers had many branches which
+--   referenced objects which weren't in their codebase. We're not yet sure
+--   how this happened, but it's unlikely to be the case for most end
+--   users, and it turned out that these references were in causals and
+--   branches which were unreachable from the root namespace. As a fix,
+--   this migration also tracks every causal and branch which is reachable
+--   from the root namespace and deletes all causals and namespaces which
+--   are unreachable. Note that this may orphan some definitions, patches,
+--   etc. which were previously referenced in an <tt>unreachable</tt>
+--   branch, but they were already floating around in an unreachable state.
+migrateSchema3To4 :: Transaction ()
+instance GHC.Generics.Generic Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema3To4.MigrationState
+
+
+-- | There are many invariants we expect to hold in our sqlite database and
+--   on codebase objects which we can't maintain using database checks.
+--   This module performs checks for some of these invariants, which can be
+--   useful to run after performing potentially dangerous operations like
+--   migrations.
+module Unison.Codebase.IntegrityCheck
+
+-- | Performs all available integrity checks.
+integrityCheckFullCodebase :: Transaction IntegrityResult
+
+-- | Performs a bevy of checks on branch objects and their relation to
+--   causals.
+integrityCheckAllBranches :: Transaction IntegrityResult
+
+-- | Performs a bevy of checks on causals.
+integrityCheckAllCausals :: Transaction IntegrityResult
+data IntegrityResult
+IntegrityErrorDetected :: IntegrityResult
+NoIntegrityErrors :: IntegrityResult
+instance GHC.Classes.Eq Unison.Codebase.IntegrityCheck.IntegrityResult
+instance GHC.Show.Show Unison.Codebase.IntegrityCheck.IntegrityResult
+instance GHC.Base.Semigroup Unison.Codebase.IntegrityCheck.IntegrityResult
+instance GHC.Base.Monoid Unison.Codebase.IntegrityCheck.IntegrityResult
 
 module Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2
 migrateSchema1To2 :: (Reference -> Transaction ConstructorType) -> TVar (Map Hash TermBufferEntry) -> TVar (Map Hash DeclBufferEntry) -> Transaction ()
@@ -3439,31 +3556,6 @@ instance GHC.Generics.Generic (Unison.Codebase.SqliteCodebase.Migrations.Migrate
 instance GHC.Base.Functor Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.SomeReference
 instance GHC.Classes.Eq ref => GHC.Classes.Eq (Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.SomeReference ref)
 instance GHC.Generics.Generic Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.MigrationState
-
-module Unison.Codebase.SqliteCodebase.Branch.Dependencies
-type Branches m = [(Hash, m (Branch m))]
-data Dependencies
-Dependencies :: Set EditHash -> Set Hash -> Set Hash -> Dependencies
-[patches] :: Dependencies -> Set EditHash
-[terms] :: Dependencies -> Set Hash
-[decls] :: Dependencies -> Set Hash
-data Dependencies'
-Dependencies' :: [EditHash] -> [Hash] -> [Hash] -> Dependencies'
-[patches'] :: Dependencies' -> [EditHash]
-[terms'] :: Dependencies' -> [Hash]
-[decls'] :: Dependencies' -> [Hash]
-to' :: Dependencies -> Dependencies'
-fromBranch :: Applicative m => Branch m -> (Branches m, Dependencies)
-fromBranch0 :: Applicative m => Branch0 m -> (Branches m, Dependencies)
-instance GHC.Base.Monoid Unison.Codebase.SqliteCodebase.Branch.Dependencies.Dependencies
-instance GHC.Base.Semigroup Unison.Codebase.SqliteCodebase.Branch.Dependencies.Dependencies
-instance GHC.Generics.Generic Unison.Codebase.SqliteCodebase.Branch.Dependencies.Dependencies
-instance GHC.Show.Show Unison.Codebase.SqliteCodebase.Branch.Dependencies.Dependencies
-instance GHC.Base.Monoid Unison.Codebase.SqliteCodebase.Branch.Dependencies.Dependencies'
-instance GHC.Base.Semigroup Unison.Codebase.SqliteCodebase.Branch.Dependencies.Dependencies'
-instance GHC.Generics.Generic Unison.Codebase.SqliteCodebase.Branch.Dependencies.Dependencies'
-instance GHC.Show.Show Unison.Codebase.SqliteCodebase.Branch.Dependencies.Dependencies'
-instance GHC.Classes.Eq Unison.Codebase.SqliteCodebase.Branch.Dependencies.Dependencies'
 
 module Unison.Codebase.BranchUtil
 
@@ -3624,10 +3716,10 @@ typeReferencesByPrefix :: Codebase m v a -> ShortHash -> m (Set Id)
 isType :: Applicative m => Codebase m v a -> Reference -> m Bool
 
 -- | Check whether the given branch exists in the codebase.
-branchExists :: Codebase m v a -> Hash -> m Bool
+branchExists :: Codebase m v a -> CausalHash -> m Bool
 
 -- | Get a branch from the codebase.
-getBranchForHash :: Monad m => Codebase m v a -> Hash -> m (Maybe (Branch m))
+getBranchForHash :: Monad m => Codebase m v a -> CausalHash -> m (Maybe (Branch m))
 
 -- | Put a branch into the codebase, which includes its children, its
 --   patches, and the branch itself, if they don't already exist.
@@ -3637,12 +3729,12 @@ getBranchForHash :: Monad m => Codebase m v a -> Hash -> m (Maybe (Branch m))
 putBranch :: Codebase m v a -> Branch m -> m ()
 
 -- | Get the set of branches whose hash matches the given prefix.
-branchHashesByPrefix :: Codebase m v a -> ShortBranchHash -> m (Set Hash)
+branchHashesByPrefix :: Codebase m v a -> ShortBranchHash -> m (Set CausalHash)
 
 -- | Get the lowest common ancestor of two branches, i.e. the most recent
 --   branch that is an ancestor of both branches.
 lca :: Monad m => Codebase m v a -> Branch m -> Branch m -> m (Maybe (Branch m))
-beforeImpl :: Codebase m v a -> Maybe (Hash -> Hash -> m Bool)
+beforeImpl :: Codebase m v a -> Maybe (CausalHash -> CausalHash -> m Bool)
 
 -- | Recursively descend into shallow branches following the given path.
 shallowBranchAtPath :: Monad m => Path -> CausalBranch m -> m (Maybe (CausalBranch m))
@@ -3664,7 +3756,7 @@ getRootBranchHash :: Codebase m v a -> m CausalHash
 -- | Like <a>putBranch</a>, but also adjusts the root branch pointer
 --   afterwards.
 putRootBranch :: Codebase m v a -> Branch m -> m ()
-rootBranchUpdates :: Codebase m v a -> m (IO (), IO (Set Hash))
+rootBranchUpdates :: Codebase m v a -> m (IO (), IO (Set CausalHash))
 namesAtPath :: Codebase m v a -> Path -> m ScopedNames
 
 -- | Check whether the given patch exists in the codebase.
@@ -3717,7 +3809,7 @@ putWatch :: Codebase m v a -> WatchKind -> Id -> Term v a -> m ()
 clearWatches :: Codebase m v a -> m ()
 
 -- | Get the entire reflog.
-getReflog :: Codebase m v a -> m [Entry Hash]
+getReflog :: Codebase m v a -> m [Entry CausalHash]
 
 -- | <tt>appendReflog reason before after</tt> appends a reflog entry.
 --   
