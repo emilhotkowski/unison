@@ -3154,7 +3154,7 @@ module Unison.Codebase.Type
 
 -- | Abstract interface to a user's codebase.
 data Codebase m v a
-Codebase :: (Id -> m (Maybe (Term v a))) -> (Id -> m (Maybe (Type v a))) -> (Id -> m (Maybe (Decl v a))) -> (Reference -> m ConstructorType) -> (Id -> Term v a -> Type v a -> m ()) -> (Id -> Decl v a -> m ()) -> (Hash -> m (Maybe [(Term v a, Type v a)])) -> (Hash -> m (Maybe [Decl v a])) -> (Hash -> m (Maybe CycleSize)) -> m CausalHash -> m (Branch m) -> m Bool -> (Branch m -> m ()) -> m (IO (), IO (Set CausalHash)) -> (CausalHash -> m (CausalBranch m)) -> (CausalHash -> m (Maybe (Branch m))) -> (Branch m -> m ()) -> (CausalHash -> m Bool) -> (EditHash -> m (Maybe Patch)) -> (EditHash -> Patch -> m ()) -> (EditHash -> m Bool) -> (Reference -> m (Set Id)) -> (Hash -> m (Set Id)) -> (CodebasePath -> SyncMode -> Branch m -> m ()) -> (CodebasePath -> SyncMode -> Branch m -> m ()) -> (forall r. ReadRemoteNamespace -> GitBranchBehavior -> ((Branch m, CodebasePath) -> m r) -> m (Either GitError r)) -> (forall e. WriteRepo -> PushGitBranchOpts -> (Branch m -> m (Either e (Branch m))) -> m (Either GitError (Either e (Branch m)))) -> (WatchKind -> m [Id]) -> (WatchKind -> Id -> m (Maybe (Term v a))) -> (WatchKind -> Id -> Term v a -> m ()) -> m () -> m [Entry CausalHash] -> (Text -> Branch m -> Branch m -> m ()) -> (Reference -> m (Set Id)) -> (Reference -> m (Set Id)) -> m Int -> (ShortHash -> m (Set Id)) -> (ShortHash -> m (Set Id)) -> (ShortHash -> m (Set Id)) -> m Int -> (ShortBranchHash -> m (Set CausalHash)) -> Maybe (CausalHash -> CausalHash -> m (Maybe CausalHash)) -> Maybe (CausalHash -> CausalHash -> m Bool) -> (Path -> m ScopedNames) -> m () -> Codebase m v a
+Codebase :: (Id -> m (Maybe (Term v a))) -> (Id -> m (Maybe (Type v a))) -> (Id -> m (Maybe (Decl v a))) -> (Reference -> m ConstructorType) -> (Id -> Term v a -> Type v a -> m ()) -> (Id -> Decl v a -> m ()) -> (Hash -> m (Maybe [(Term v a, Type v a)])) -> (Hash -> m (Maybe [Decl v a])) -> (Hash -> m (Maybe CycleSize)) -> m CausalHash -> m (Branch m) -> m Bool -> (Branch m -> m ()) -> m (IO (), IO (Set CausalHash)) -> (CausalHash -> m (CausalBranch m)) -> (CausalHash -> m (Maybe (Branch m))) -> (Branch m -> m ()) -> (CausalHash -> m Bool) -> (EditHash -> m (Maybe Patch)) -> (EditHash -> Patch -> m ()) -> (EditHash -> m Bool) -> (Reference -> m (Set Id)) -> (Hash -> m (Set Id)) -> (CodebasePath -> SyncMode -> Branch m -> m ()) -> (CodebasePath -> SyncMode -> Branch m -> m ()) -> (forall r. ReadRemoteNamespace -> GitBranchBehavior -> ((Branch m, CodebasePath) -> m r) -> m (Either GitError r)) -> (forall e. WriteRepo -> PushGitBranchOpts -> (Branch m -> m (Either e (Branch m))) -> m (Either GitError (Either e (Branch m)))) -> (WatchKind -> m [Id]) -> (WatchKind -> Id -> m (Maybe (Term v a))) -> (WatchKind -> Id -> Term v a -> m ()) -> m () -> m [Entry CausalHash] -> (Text -> Branch m -> Branch m -> m ()) -> (Reference -> m (Set Id)) -> (Reference -> m (Set Id)) -> m Int -> (ShortHash -> m (Set Id)) -> (ShortHash -> m (Set Id)) -> (ShortHash -> m (Set Id)) -> m Int -> (ShortBranchHash -> m (Set CausalHash)) -> Maybe (CausalHash -> CausalHash -> m (Maybe CausalHash)) -> Maybe (CausalHash -> CausalHash -> m Bool) -> (Path -> m ScopedNames) -> m () -> Connection -> Codebase m v a
 
 -- | Get a user-defined term from the codebase.
 --   
@@ -3319,6 +3319,14 @@ Codebase :: (Id -> m (Maybe (Term v a))) -> (Id -> m (Maybe (Type v a))) -> (Id 
 [beforeImpl] :: Codebase m v a -> Maybe (CausalHash -> CausalHash -> m Bool)
 [namesAtPath] :: Codebase m v a -> Path -> m ScopedNames
 [updateNameLookup] :: Codebase m v a -> m ()
+
+-- | The SQLite connection this codebase closes over.
+--   
+--   At one time the codebase was meant to abstract over the storage layer,
+--   but it has been cumbersome. Now we prefer to interact with SQLite
+--   directly, and so provide this temporary escape hatch, until we can
+--   eliminate this interface entirely.
+[connection] :: Codebase m v a -> Connection
 
 -- | A directory that contains a codebase.
 type CodebasePath = FilePath
@@ -3535,9 +3543,17 @@ integrityCheckAllBranches :: Transaction IntegrityResult
 
 -- | Performs a bevy of checks on causals.
 integrityCheckAllCausals :: Transaction IntegrityResult
+prettyPrintIntegrityErrors :: Foldable f => f IntegrityError -> Pretty ColorText
 data IntegrityResult
-IntegrityErrorDetected :: IntegrityResult
+IntegrityErrorDetected :: NESet IntegrityError -> IntegrityResult
 NoIntegrityErrors :: IntegrityResult
+instance GHC.Classes.Ord Unison.Codebase.IntegrityCheck.BranchError
+instance GHC.Classes.Eq Unison.Codebase.IntegrityCheck.BranchError
+instance GHC.Show.Show Unison.Codebase.IntegrityCheck.BranchError
+instance GHC.Classes.Ord Unison.Codebase.IntegrityCheck.IntegrityError
+instance GHC.Classes.Eq Unison.Codebase.IntegrityCheck.IntegrityError
+instance GHC.Show.Show Unison.Codebase.IntegrityCheck.IntegrityError
+instance GHC.Classes.Ord Unison.Codebase.IntegrityCheck.IntegrityResult
 instance GHC.Classes.Eq Unison.Codebase.IntegrityCheck.IntegrityResult
 instance GHC.Show.Show Unison.Codebase.IntegrityCheck.IntegrityResult
 instance GHC.Base.Semigroup Unison.Codebase.IntegrityCheck.IntegrityResult
@@ -3870,6 +3886,14 @@ getCodebaseDir :: MonadIO m => Maybe CodebasePath -> m CodebasePath
 -- | A directory that contains a codebase.
 type CodebasePath = FilePath
 type SyncToDir m = CodebasePath -> SyncMode -> Branch m -> m ()
+
+-- | The SQLite connection this codebase closes over.
+--   
+--   At one time the codebase was meant to abstract over the storage layer,
+--   but it has been cumbersome. Now we prefer to interact with SQLite
+--   directly, and so provide this temporary escape hatch, until we can
+--   eliminate this interface entirely.
+connection :: Codebase m v a -> Connection
 addDefsToCodebase :: forall m v a. (Monad m, Var v, Show a) => Codebase m v a -> TypecheckedUnisonFile v a -> m ()
 componentReferencesForReference :: Monad m => Codebase m v a -> Reference -> m (Set Reference)
 

@@ -193,6 +193,7 @@ DebugTypecheckedUnisonFileI :: Input
 DebugDumpNamespacesI :: Input
 DebugDumpNamespaceSimpleI :: Input
 DebugClearWatchI :: Input
+DebugDoctorI :: Input
 QuitI :: Input
 ApiI :: Input
 UiI :: Input
@@ -671,6 +672,7 @@ InitiateAuthFlow :: URI -> Output v
 UnknownCodeServer :: Text -> Output v
 CredentialFailureMsg :: CredentialFailure -> Output v
 PrintVersion :: Text -> Output v
+IntegrityCheck :: IntegrityResult -> Output v
 data NumberedOutput v
 ShowDiffNamespace :: AbsBranchId -> AbsBranchId -> PrettyPrintEnv -> BranchDiffOutput v Ann -> NumberedOutput v
 ShowDiffAfterUndo :: PrettyPrintEnv -> BranchDiffOutput v Ann -> NumberedOutput v
@@ -791,6 +793,7 @@ data Command m i v a
 [RuntimeMain] :: Command m i v (Type v Ann)
 [RuntimeTest] :: Command m i v (Type v Ann)
 [ClearWatchCache] :: Command m i v ()
+[AnalyzeCodebaseIntegrity] :: Command m i v IntegrityResult
 [MakeStandalone] :: PrettyPrintEnv -> Reference -> String -> Command m i v (Maybe Error)
 
 -- | Trigger an interactive fuzzy search over the provided options and
@@ -852,13 +855,13 @@ LoopState :: Branch m -> Branch m -> NonEmpty Absolute -> Maybe (FilePath, SkipN
 type Action' m v = Action m (Either Event Input) v
 type SkipNextUpdate = Bool
 type InputDescription = Text
-root :: forall m_a1LTE v_a1LTF. Lens' (LoopState m_a1LTE v_a1LTF) (Branch m_a1LTE)
-numberedArgs :: forall m_a1LTE v_a1LTF. Lens' (LoopState m_a1LTE v_a1LTF) NumberedArgs
-latestTypecheckedFile :: forall m_a1LTE v_a1LTF v_a1MER. Lens (LoopState m_a1LTE v_a1LTF) (LoopState m_a1LTE v_a1MER) (Maybe (TypecheckedUnisonFile v_a1LTF Ann)) (Maybe (TypecheckedUnisonFile v_a1MER Ann))
-latestFile :: forall m_a1LTE v_a1LTF. Lens' (LoopState m_a1LTE v_a1LTF) (Maybe (FilePath, SkipNextUpdate))
-lastSavedRoot :: forall m_a1LTE v_a1LTF. Lens' (LoopState m_a1LTE v_a1LTF) (Branch m_a1LTE)
-lastInput :: forall m_a1LTE v_a1LTF. Lens' (LoopState m_a1LTE v_a1LTF) (Maybe Input)
-currentPathStack :: forall m_a1LTE v_a1LTF. Lens' (LoopState m_a1LTE v_a1LTF) (NonEmpty Absolute)
+root :: forall m_a1M7e v_a1M7f. Lens' (LoopState m_a1M7e v_a1M7f) (Branch m_a1M7e)
+numberedArgs :: forall m_a1M7e v_a1M7f. Lens' (LoopState m_a1M7e v_a1M7f) NumberedArgs
+latestTypecheckedFile :: forall m_a1M7e v_a1M7f v_a1MQY. Lens (LoopState m_a1M7e v_a1M7f) (LoopState m_a1M7e v_a1MQY) (Maybe (TypecheckedUnisonFile v_a1M7f Ann)) (Maybe (TypecheckedUnisonFile v_a1MQY Ann))
+latestFile :: forall m_a1M7e v_a1M7f. Lens' (LoopState m_a1M7e v_a1M7f) (Maybe (FilePath, SkipNextUpdate))
+lastSavedRoot :: forall m_a1M7e v_a1M7f. Lens' (LoopState m_a1M7e v_a1M7f) (Branch m_a1M7e)
+lastInput :: forall m_a1M7e v_a1M7f. Lens' (LoopState m_a1M7e v_a1M7f) (Maybe Input)
+currentPathStack :: forall m_a1M7e v_a1M7f. Lens' (LoopState m_a1M7e v_a1M7f) (NonEmpty Absolute)
 currentPath :: Getter (LoopState m v) Absolute
 loopState0 :: Branch m -> Absolute -> LoopState m v
 respond :: MonadCommand n m i v => Output v -> n ()
@@ -1014,6 +1017,7 @@ debugFileHashes :: InputPattern
 debugDumpNamespace :: InputPattern
 debugDumpNamespaceSimple :: InputPattern
 debugClearWatchCache :: InputPattern
+debugDoctor :: InputPattern
 test :: InputPattern
 docsToHtml :: InputPattern
 execute :: InputPattern
