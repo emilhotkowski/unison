@@ -17,100 +17,6 @@ defaultInterruptHandler :: IO (IO ())
 --   afterwards.
 withInterruptHandler :: IO () -> IO a -> IO a
 
-module Unison.Auth.Types
-data DiscoveryDoc
-DiscoveryDoc :: URI -> URI -> URI -> URI -> DiscoveryDoc
-[issuer] :: DiscoveryDoc -> URI
-[authorizationEndpoint] :: DiscoveryDoc -> URI
-[tokenEndpoint] :: DiscoveryDoc -> URI
-[userInfoEndpoint] :: DiscoveryDoc -> URI
-data Tokens
-Tokens :: AccessToken -> Maybe IDToken -> Maybe RefreshToken -> TokenType -> NominalDiffTime -> Scopes -> Tokens
-[accessToken] :: Tokens -> AccessToken
-[idToken] :: Tokens -> Maybe IDToken
-[refreshToken] :: Tokens -> Maybe RefreshToken
-[tokenType] :: Tokens -> TokenType
-[expiresIn] :: Tokens -> NominalDiffTime
-[scopes] :: Tokens -> Scopes
-data Credentials
-Credentials :: Map ProfileName (Map Host Tokens) -> ProfileName -> Credentials
-[credentials] :: Credentials -> Map ProfileName (Map Host Tokens)
-[activeProfile] :: Credentials -> ProfileName
-type Code = Text
-type AccessToken = Text
-type RefreshToken = Text
-type IDToken = Text
-type OAuthState = ByteString
-type PKCEVerifier = ByteString
-type PKCEChallenge = ByteString
-type ProfileName = Text
-data CredentialFailure
-ReauthRequired :: Host -> CredentialFailure
-CredentialParseFailure :: FilePath -> Text -> CredentialFailure
-InvalidDiscoveryDocument :: URI -> Text -> CredentialFailure
-InvalidJWT :: Text -> CredentialFailure
-RefreshFailure :: Text -> CredentialFailure
-InvalidTokenResponse :: URI -> Text -> CredentialFailure
-InvalidHost :: Host -> CredentialFailure
-
--- | The hostname of a server we may authenticate with, e.g. <tt>Host
---   "enlil.unison-lang.org"</tt>
-newtype Host
-Host :: Text -> Host
-getActiveTokens :: Host -> Credentials -> Either CredentialFailure Tokens
-setActiveTokens :: Host -> Tokens -> Credentials -> Credentials
-emptyCredentials :: Credentials
-instance GHC.Classes.Ord Unison.Auth.Types.Scopes
-instance GHC.Classes.Eq Unison.Auth.Types.Scopes
-instance GHC.Show.Show Unison.Auth.Types.Scopes
-instance GHC.Show.Show Unison.Auth.Types.DiscoveryDoc
-instance GHC.Show.Show Unison.Auth.Types.Tokens
-instance GHC.Classes.Eq Unison.Auth.Types.Tokens
-instance Data.Aeson.Types.FromJSON.FromJSONKey Unison.Auth.Types.Host
-instance Data.Aeson.Types.ToJSON.ToJSONKey Unison.Auth.Types.Host
-instance Data.Aeson.Types.FromJSON.FromJSON Unison.Auth.Types.Host
-instance Data.Aeson.Types.ToJSON.ToJSON Unison.Auth.Types.Host
-instance GHC.Show.Show Unison.Auth.Types.Host
-instance GHC.Classes.Ord Unison.Auth.Types.Host
-instance GHC.Classes.Eq Unison.Auth.Types.Host
-instance GHC.Exception.Type.Exception Unison.Auth.Types.CredentialFailure
-instance GHC.Classes.Eq Unison.Auth.Types.CredentialFailure
-instance GHC.Show.Show Unison.Auth.Types.CredentialFailure
-instance GHC.Classes.Eq Unison.Auth.Types.Credentials
-instance Data.Aeson.Types.ToJSON.ToJSON Unison.Auth.Types.Credentials
-instance Data.Aeson.Types.FromJSON.FromJSON Unison.Auth.Types.Credentials
-instance Data.Aeson.Types.FromJSON.FromJSON Unison.Auth.Types.URIParam
-instance Data.Aeson.Types.FromJSON.FromJSON Unison.Auth.Types.DiscoveryDoc
-instance Data.Aeson.Types.FromJSON.FromJSON Unison.Auth.Types.Tokens
-instance Data.Aeson.Types.ToJSON.ToJSON Unison.Auth.Types.Tokens
-instance Data.Aeson.Types.ToJSON.ToJSON Unison.Auth.Types.Scopes
-instance Data.Aeson.Types.FromJSON.FromJSON Unison.Auth.Types.Scopes
-
-module Unison.Auth.Discovery
-discoveryURI :: Host -> Either CredentialFailure URI
-discoveryForHost :: MonadIO m => Manager -> Host -> m (Either CredentialFailure DiscoveryDoc)
-
-module Unison.Auth.CredentialFile
-
--- | Atomically update the credential storage file. Creates an empty file
---   automatically if one doesn't exist.
-atomicallyModifyCredentialsFile :: MonadIO m => (Credentials -> Credentials) -> m Credentials
-
-module Unison.Auth.CredentialManager
-
--- | Saves credentials to the active profile.
-saveTokens :: MonadUnliftIO m => CredentialManager -> Host -> Tokens -> m ()
-
--- | A <a>CredentialManager</a> knows how to load, save, and cache
---   credentials. It's thread-safe and safe for use across multiple UCM
---   clients. Note: Currently the in-memory cache is _not_ updated if a
---   different UCM updates the credentials file, however this shouldn't
---   pose any problems, since auth will still be refreshed if we encounter
---   any auth failures on requests.
-data CredentialManager
-newCredentialManager :: MonadIO m => m CredentialManager
-getTokens :: MonadIO m => CredentialManager -> Host -> m (Either CredentialFailure Tokens)
-
 module Unison.Codebase.Editor.AuthorInfo
 data AuthorInfo v a
 AuthorInfo :: (Id, Term v a, Type v a) -> AuthorInfo v a
@@ -199,7 +105,7 @@ ApiI :: Input
 UiI :: Input
 DocsToHtmlI :: Path' -> FilePath -> Input
 GistI :: GistInput -> Input
-AuthLoginI :: Maybe CodebaseServerName -> Input
+AuthLoginI :: Input
 VersionI :: Input
 
 -- | <tt>"gist repo"</tt> pushes the contents of the current namespace to
@@ -558,6 +464,279 @@ watchBranchUpdates :: IO (Branch IO) -> TQueue Event -> Codebase IO v a -> IO (I
 watchConfig :: FilePath -> IO (Config, IO ())
 watchFileSystem :: TQueue Event -> FilePath -> IO (IO ())
 
+module Unison.CommandLine.InputPatterns
+showPatternHelp :: InputPattern -> Pretty ColorText
+patternName :: InputPattern -> Pretty ColorText
+makeExample :: InputPattern -> [Pretty ColorText] -> Pretty ColorText
+makeExampleNoBackticks :: InputPattern -> [Pretty ColorText] -> Pretty ColorText
+makeExample' :: InputPattern -> Pretty ColorText
+makeExampleEOS :: InputPattern -> [Pretty ColorText] -> Pretty ColorText
+helpFor :: InputPattern -> Either (Pretty ColorText) Input
+mergeBuiltins :: InputPattern
+mergeIOBuiltins :: InputPattern
+updateBuiltins :: InputPattern
+todo :: InputPattern
+load :: InputPattern
+add :: InputPattern
+previewAdd :: InputPattern
+updateNoPatch :: InputPattern
+update :: InputPattern
+previewUpdate :: InputPattern
+patch :: InputPattern
+view :: InputPattern
+display :: InputPattern
+displayTo :: InputPattern
+docs :: InputPattern
+api :: InputPattern
+ui :: InputPattern
+undo :: InputPattern
+viewByPrefix :: InputPattern
+find :: InputPattern
+findGlobal :: InputPattern
+find' :: String -> Bool -> InputPattern
+findShallow :: InputPattern
+findVerbose :: InputPattern
+findPatch :: InputPattern
+renameTerm :: InputPattern
+renameType :: InputPattern
+delete :: InputPattern
+deleteTerm :: InputPattern
+deleteType :: InputPattern
+deleteTermReplacementCommand :: String
+deleteTypeReplacementCommand :: String
+deleteReplacement :: Bool -> InputPattern
+deleteTermReplacement :: InputPattern
+deleteTypeReplacement :: InputPattern
+parseHashQualifiedName :: String -> Either (Pretty ColorText) (HashQualified Name)
+aliasTerm :: InputPattern
+aliasType :: InputPattern
+aliasMany :: InputPattern
+up :: InputPattern
+cd :: InputPattern
+back :: InputPattern
+deleteNamespace :: InputPattern
+deleteNamespaceForce :: InputPattern
+deleteNamespaceParser :: Pretty ColorText -> Insistence -> [String] -> Either (Pretty ColorText) Input
+deletePatch :: InputPattern
+movePatch :: String -> String -> Either (Pretty ColorText) Input
+copyPatch' :: String -> String -> Either (Pretty ColorText) Input
+copyPatch :: InputPattern
+renamePatch :: InputPattern
+renameBranch :: InputPattern
+history :: InputPattern
+forkLocal :: InputPattern
+resetRoot :: InputPattern
+pullSilent :: InputPattern
+pull :: InputPattern
+pullWithoutHistory :: InputPattern
+pullImpl :: String -> Verbosity -> PullMode -> Pretty ColorText -> InputPattern
+pullExhaustive :: InputPattern
+push :: InputPattern
+pushCreate :: InputPattern
+pushExhaustive :: InputPattern
+createPullRequest :: InputPattern
+loadPullRequest :: InputPattern
+parseUri :: String -> String -> Either (Pretty ColorText) ReadRemoteNamespace
+prettyPrintParseError :: String -> ParseError Char Void -> Pretty ColorText
+parseWriteRepo :: String -> String -> Either (Pretty ColorText) WriteRepo
+parsePushPath :: String -> String -> Either (Pretty ColorText) WriteRemotePath
+squashMerge :: InputPattern
+mergeLocal :: InputPattern
+diffNamespace :: InputPattern
+previewMergeLocal :: InputPattern
+replaceEdit :: (HashQualified Name -> HashQualified Name -> Maybe PatchPath -> Input) -> InputPattern
+replace :: InputPattern
+viewReflog :: InputPattern
+edit :: InputPattern
+topicNameArg :: ArgumentType
+codebaseServerNameArg :: ArgumentType
+helpTopics :: InputPattern
+helpTopicsMap :: Map String (Pretty ColorText)
+help :: InputPattern
+quit :: InputPattern
+viewPatch :: InputPattern
+link :: InputPattern
+links :: InputPattern
+unlink :: InputPattern
+names :: IsGlobal -> InputPattern
+dependents :: InputPattern
+dependencies :: InputPattern
+namespaceDependencies :: InputPattern
+debugNumberedArgs :: InputPattern
+debugFileHashes :: InputPattern
+debugDumpNamespace :: InputPattern
+debugDumpNamespaceSimple :: InputPattern
+debugClearWatchCache :: InputPattern
+debugDoctor :: InputPattern
+test :: InputPattern
+docsToHtml :: InputPattern
+execute :: InputPattern
+ioTest :: InputPattern
+makeStandalone :: InputPattern
+createAuthor :: InputPattern
+gist :: InputPattern
+authLogin :: InputPattern
+printVersion :: InputPattern
+validInputs :: [InputPattern]
+visibleInputs :: [InputPattern]
+commandNames :: [String]
+commandNameArg :: ArgumentType
+exactDefinitionOrPathArg :: ArgumentType
+fuzzyDefinitionQueryArg :: ArgumentType
+definitionQueryArg :: ArgumentType
+exactDefinitionTypeQueryArg :: ArgumentType
+exactDefinitionTermQueryArg :: ArgumentType
+typeCompletor :: Applicative m => (String -> [String] -> [Completion]) -> String -> Codebase m v a -> Branch m -> Absolute -> m [Completion]
+termCompletor :: Applicative m => (String -> [String] -> [Completion]) -> String -> Codebase m v a -> Branch m -> Absolute -> m [Completion]
+patchArg :: ArgumentType
+allCompletors :: Monad m => [String -> Codebase m v a -> Branch m -> Absolute -> m [Completion]] -> String -> Codebase m v a -> Branch m -> Absolute -> m [Completion]
+bothCompletors :: Monad m => (String -> t2 -> t3 -> t4 -> m [Completion]) -> (String -> t2 -> t3 -> t4 -> m [Completion]) -> String -> t2 -> t3 -> t4 -> m [Completion]
+
+-- | A completer for namespace paths.
+pathCompletor :: Applicative f => (String -> [String] -> [Completion]) -> (Branch0 m -> Set Text) -> String -> codebase -> Branch m -> Absolute -> f [Completion]
+namespaceArg :: ArgumentType
+
+-- | Recursively collects all names of namespaces which are children of the
+--   branch.
+allSubNamespaces :: Branch0 m -> [Text]
+newNameArg :: ArgumentType
+noCompletions :: ArgumentType
+gitUrlArg :: ArgumentType
+collectNothings :: (a -> Maybe b) -> [a] -> [a]
+explainRemote :: Pretty ColorText
+
+module Unison.CommandLine.Welcome
+data Welcome
+Welcome :: Onboarding -> DownloadBase -> FilePath -> Text -> Welcome
+[onboarding] :: Welcome -> Onboarding
+[downloadBase] :: Welcome -> DownloadBase
+[watchDir] :: Welcome -> FilePath
+[unisonVersion] :: Welcome -> Text
+data DownloadBase
+DownloadBase :: ReadRemoteNamespace -> DownloadBase
+DontDownloadBase :: DownloadBase
+data CodebaseInitStatus
+NewlyCreatedCodebase :: CodebaseInitStatus
+PreviouslyCreatedCodebase :: CodebaseInitStatus
+data Onboarding
+Init :: CodebaseInitStatus -> Onboarding
+DownloadingBase :: ReadRemoteNamespace -> Onboarding
+Author :: Onboarding
+Finished :: Onboarding
+PreviouslyOnboarded :: Onboarding
+welcome :: CodebaseInitStatus -> DownloadBase -> FilePath -> Text -> Welcome
+pullBase :: ReadRemoteNamespace -> Either Event Input
+run :: Codebase IO v a -> Welcome -> IO [Either Event Input]
+toInput :: Pretty ColorText -> Either Event Input
+determineFirstStep :: DownloadBase -> Codebase IO v a -> IO Onboarding
+asciiartUnison :: Pretty ColorText
+downloading :: Path -> Pretty ColorText
+header :: Text -> Pretty ColorText
+authorSuggestion :: Pretty ColorText
+getStarted :: FilePath -> IO (Pretty ColorText)
+
+module Unison.Share.Types
+data CodeserverURI
+CodeserverURI :: String -> URIAuth -> String -> CodeserverURI
+[codeserverScheme] :: CodeserverURI -> String
+[codeserverAuthority] :: CodeserverURI -> URIAuth
+[codeserverPath] :: CodeserverURI -> String
+
+-- | This is distinct from the codeserver URI in that we store credentials
+--   by a normalized ID, since it's much easier to look up that way than
+--   from an arbitrary path. We may wish to use explicitly named
+--   configurations in the future. This currently uses a stringified
+--   uriAuthority.
+newtype CodeserverId
+CodeserverId :: Text -> CodeserverId
+[codeserverId] :: CodeserverId -> Text
+codeserverFromURI :: URI -> Maybe CodeserverURI
+
+-- | Gets the part of the CodeserverURI that we use for identifying that
+--   codeserver in credentials files.
+--   
+--   <pre>
+--   &gt;&gt;&gt; import Data.Maybe (fromJust)
+--   
+--   &gt;&gt;&gt; import Network.URI (parseURI)
+--   
+--   &gt;&gt;&gt; codeserverIdFromURI (CodeserverURI . fromJust $ parseURI "http://localhost:5424/api")
+--   
+--   &gt;&gt;&gt; codeserverIdFromURI (CodeserverURI . fromJust $ parseURI "https://share.unison-lang.org/api")
+--   Right "localhost"
+--   Right "share.unison-lang.org"
+--   </pre>
+codeserverIdFromURI :: URI -> Either Text CodeserverId
+codeserverToURI :: CodeserverURI -> URI
+codeserverIdFromCodeserverURI :: CodeserverURI -> CodeserverId
+instance GHC.Classes.Ord Unison.Share.Types.CodeserverURI
+instance GHC.Classes.Eq Unison.Share.Types.CodeserverURI
+instance GHC.Show.Show Unison.Share.Types.CodeserverURI
+instance Data.Aeson.Types.FromJSON.FromJSONKey Unison.Share.Types.CodeserverId
+instance Data.Aeson.Types.ToJSON.ToJSONKey Unison.Share.Types.CodeserverId
+instance Data.Aeson.Types.FromJSON.FromJSON Unison.Share.Types.CodeserverId
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Share.Types.CodeserverId
+instance GHC.Classes.Ord Unison.Share.Types.CodeserverId
+instance GHC.Classes.Eq Unison.Share.Types.CodeserverId
+instance GHC.Show.Show Unison.Share.Types.CodeserverId
+
+module Unison.Auth.Types
+data DiscoveryDoc
+DiscoveryDoc :: URI -> URI -> URI -> URI -> DiscoveryDoc
+[issuer] :: DiscoveryDoc -> URI
+[authorizationEndpoint] :: DiscoveryDoc -> URI
+[tokenEndpoint] :: DiscoveryDoc -> URI
+[userInfoEndpoint] :: DiscoveryDoc -> URI
+data Tokens
+Tokens :: AccessToken -> Maybe IDToken -> Maybe RefreshToken -> TokenType -> NominalDiffTime -> Scopes -> Tokens
+[accessToken] :: Tokens -> AccessToken
+[idToken] :: Tokens -> Maybe IDToken
+[refreshToken] :: Tokens -> Maybe RefreshToken
+[tokenType] :: Tokens -> TokenType
+[expiresIn] :: Tokens -> NominalDiffTime
+[scopes] :: Tokens -> Scopes
+data Credentials
+Credentials :: Map ProfileName (Map CodeserverId Tokens) -> ProfileName -> Credentials
+[credentials] :: Credentials -> Map ProfileName (Map CodeserverId Tokens)
+[activeProfile] :: Credentials -> ProfileName
+type Code = Text
+type AccessToken = Text
+type RefreshToken = Text
+type IDToken = Text
+type OAuthState = ByteString
+type PKCEVerifier = ByteString
+type PKCEChallenge = ByteString
+type ProfileName = Text
+data CredentialFailure
+ReauthRequired :: CodeserverId -> CredentialFailure
+CredentialParseFailure :: FilePath -> Text -> CredentialFailure
+InvalidDiscoveryDocument :: URI -> Text -> CredentialFailure
+InvalidJWT :: Text -> CredentialFailure
+RefreshFailure :: Text -> CredentialFailure
+InvalidTokenResponse :: URI -> Text -> CredentialFailure
+InvalidHost :: CodeserverURI -> CredentialFailure
+getActiveTokens :: CodeserverId -> Credentials -> Either CredentialFailure Tokens
+setActiveTokens :: CodeserverId -> Tokens -> Credentials -> Credentials
+emptyCredentials :: Credentials
+instance GHC.Exception.Type.Exception Unison.Auth.Types.CredentialFailure
+instance GHC.Classes.Eq Unison.Auth.Types.CredentialFailure
+instance GHC.Show.Show Unison.Auth.Types.CredentialFailure
+instance GHC.Classes.Ord Unison.Auth.Types.Scopes
+instance GHC.Classes.Eq Unison.Auth.Types.Scopes
+instance GHC.Show.Show Unison.Auth.Types.Scopes
+instance GHC.Show.Show Unison.Auth.Types.DiscoveryDoc
+instance GHC.Show.Show Unison.Auth.Types.Tokens
+instance GHC.Classes.Eq Unison.Auth.Types.Tokens
+instance GHC.Classes.Eq Unison.Auth.Types.Credentials
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Auth.Types.Credentials
+instance Data.Aeson.Types.FromJSON.FromJSON Unison.Auth.Types.Credentials
+instance Data.Aeson.Types.FromJSON.FromJSON Unison.Auth.Types.URIParam
+instance Data.Aeson.Types.FromJSON.FromJSON Unison.Auth.Types.DiscoveryDoc
+instance Data.Aeson.Types.FromJSON.FromJSON Unison.Auth.Types.Tokens
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Auth.Types.Tokens
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Auth.Types.Scopes
+instance Data.Aeson.Types.FromJSON.FromJSON Unison.Auth.Types.Scopes
+
 module Unison.Codebase.Editor.Output
 data Output v
 Success :: Output v
@@ -732,6 +911,82 @@ instance GHC.Show.Show Unison.Codebase.Editor.Output.HistoryTail
 instance GHC.Show.Show Unison.Codebase.Editor.Output.TestReportStats
 instance GHC.Show.Show Unison.Codebase.Editor.Output.UndoFailureReason
 
+module Unison.CommandLine.OutputMessages
+type Pretty = Pretty ColorText
+shortenDirectory :: FilePath -> IO FilePath
+renderFileName :: FilePath -> IO Pretty
+notifyNumbered :: Var v => NumberedOutput v -> (Pretty, NumberedArgs)
+showListEdits :: Patch -> PrettyPrintEnv -> (Pretty ColorText, NumberedArgs)
+prettyURI :: URI -> Pretty
+prettyRemoteNamespace :: ReadRemoteNamespace -> Pretty
+notifyUser :: forall v. Var v => FilePath -> Output v -> IO Pretty
+prettyFilePath :: FilePath -> Pretty
+prettyPath' :: Path' -> Pretty
+prettyBranchId :: AbsBranchId -> Pretty
+prettyRelative :: Relative -> Pretty
+prettyAbsolute :: Absolute -> Pretty
+prettySBH :: IsString s => ShortBranchHash -> Pretty s
+prettyCausalHash :: IsString s => CausalHash -> Pretty s
+formatMissingStuff :: (Show tm, Show typ) => [(HashQualified Name, tm)] -> [(HashQualified Name, typ)] -> Pretty
+displayDefinitions' :: Var v => Ord a1 => PrettyPrintEnvDecl -> Map Reference (DisplayObject () (Decl v a1)) -> Map Reference (DisplayObject (Type v a1) (Term v a1)) -> Pretty
+displayRendered :: Maybe FilePath -> Pretty -> IO Pretty
+displayDefinitions :: Var v => Ord a1 => Maybe FilePath -> PrettyPrintEnvDecl -> Map Reference (DisplayObject () (Decl v a1)) -> Map Reference (DisplayObject (Type v a1) (Term v a1)) -> IO Pretty
+displayTestResults :: Bool -> PrettyPrintEnv -> [(Reference, Text)] -> [(Reference, Text)] -> Pretty
+unsafePrettyTermResultSig' :: Var v => PrettyPrintEnv -> TermResult' v a -> Pretty
+unsafePrettyTermResultSigFull' :: Var v => PrettyPrintEnv -> TermResult' v a -> Pretty
+prettyTypeResultHeader' :: Var v => TypeResult' v a -> Pretty
+prettyTypeResultHeaderFull' :: Var v => TypeResult' v a -> Pretty
+prettyDeclTriple :: Var v => (HashQualified Name, Reference, DisplayObject () (Decl v a)) -> Pretty
+prettyDeclPair :: Var v => PrettyPrintEnv -> (Reference, DisplayObject () (Decl v a)) -> Pretty
+renderNameConflicts :: PrettyPrintEnv -> Names -> Numbered Pretty
+renderEditConflicts :: PrettyPrintEnv -> Patch -> Numbered Pretty
+type Numbered = State (Int, Seq String)
+addNumberedArg :: String -> Numbered Int
+formatNum :: Int -> Pretty
+runNumbered :: Numbered a -> (a, NumberedArgs)
+todoOutput :: Var v => PrettyPrintEnvDecl -> TodoOutput v a -> (Pretty, NumberedArgs)
+listOfDefinitions :: Var v => PrettyPrintEnv -> ListDetailed -> [SearchResult' v a] -> IO Pretty
+listOfLinks :: Var v => PrettyPrintEnv -> [(HashQualified Name, Maybe (Type v a))] -> IO Pretty
+data ShowNumbers
+ShowNumbers :: ShowNumbers
+HideNumbers :: ShowNumbers
+
+-- | <tt>ppe</tt> is just for rendering type signatures `oldPath, newPath
+--   :: Path.Absolute` are just for producing fully-qualified numbered args
+showDiffNamespace :: forall v. Var v => ShowNumbers -> PrettyPrintEnv -> AbsBranchId -> AbsBranchId -> BranchDiffOutput v Ann -> (Pretty, NumberedArgs)
+noResults :: Pretty
+listOfDefinitions' :: Var v => PrettyPrintEnv -> ListDetailed -> [SearchResult' v a] -> Pretty
+watchPrinter :: Var v => Text -> PrettyPrintEnv -> Ann -> WatchKind -> Term v () -> IsCacheHit -> Pretty
+filestatusTip :: Pretty
+prettyDiff :: Diff -> Pretty
+prettyTermName :: PrettyPrintEnv -> Referent -> Pretty
+prettyTypeName :: PrettyPrintEnv -> Reference -> Pretty
+prettyReadRepo :: ReadRepo -> Pretty
+prettyWriteRepo :: WriteRepo -> Pretty
+isTestOk :: Term v Ann -> Bool
+
+-- | Get the list of numbered args corresponding to an endangerment map,
+--   which is used by a few outputs. See <a>endangeredDependentsTable</a>.
+numberedArgsForEndangerments :: PrettyPrintEnvDecl -> Map LabeledDependency (NESet LabeledDependency) -> NumberedArgs
+
+-- | Format and render all dependents which are endangered by references
+--   going extinct.
+endangeredDependentsTable :: PrettyPrintEnvDecl -> Map LabeledDependency (NESet LabeledDependency) -> Pretty ColorText
+
+-- | Displays a full, non-truncated Branch.CausalHash to a string, e.g.
+--   #abcdef
+displayBranchHash :: CausalHash -> String
+
+module Unison.CommandLine.DisplayValues
+type Pretty = Pretty ColorText
+displayTerm :: Monad m => PrettyPrintEnvDecl -> (Reference -> m (Maybe (Term Symbol ()))) -> (Referent -> m (Maybe (Type Symbol ()))) -> (Term Symbol () -> m (Maybe (Term Symbol ()))) -> (Reference -> m (Maybe (Decl Symbol ()))) -> Term Symbol () -> m Pretty
+type ElideUnit = Bool
+displayTerm' :: Monad m => ElideUnit -> PrettyPrintEnvDecl -> (Reference -> m (Maybe (Term Symbol ()))) -> (Referent -> m (Maybe (Type Symbol ()))) -> (Term Symbol () -> m (Maybe (Term Symbol ()))) -> (Reference -> m (Maybe (Decl Symbol ()))) -> Term Symbol () -> m Pretty
+displayPretty :: forall m. Monad m => PrettyPrintEnvDecl -> (Reference -> m (Maybe (Term Symbol ()))) -> (Referent -> m (Maybe (Type Symbol ()))) -> (Term Symbol () -> m (Maybe (Term Symbol ()))) -> (Reference -> m (Maybe (Decl Symbol ()))) -> Term Symbol () -> m Pretty
+displayDoc :: forall v m. (Var v, Monad m) => PrettyPrintEnvDecl -> (Reference -> m (Maybe (Term v ()))) -> (Referent -> m (Maybe (Type v ()))) -> (Term v () -> m (Maybe (Term v ()))) -> (Reference -> m (Maybe (Decl v ()))) -> Term v () -> m Pretty
+termName :: PrettyPrintEnv -> Referent -> Pretty
+typeName :: PrettyPrintEnv -> Reference -> Pretty
+
 module Unison.Codebase.Editor.Command
 data Command m i v a
 [Eval] :: m a -> Command m i v a
@@ -828,6 +1083,36 @@ propagateAndApply :: forall m i v. (Applicative m, Var v) => Names -> Patch -> B
 instance GHC.Show.Show v => GHC.Show.Show (Unison.Codebase.Editor.Propagate.Edits v)
 instance Unison.ABT.Var v => GHC.Classes.Eq (Unison.Codebase.Editor.Propagate.Edits v)
 
+module Unison.Codebase.Editor.HandleCommand
+typecheck :: Monad m => [Type Symbol Ann] -> Codebase m Symbol Ann -> ParsingEnv -> SourceName -> LexedSource -> m (TypecheckingResult Symbol)
+typecheck' :: Monad m => [Type Symbol Ann] -> Codebase m Symbol Ann -> UnisonFile Symbol Ann -> m (TypecheckingResult Symbol)
+commandLine :: forall i a gen. DRG gen => Config -> IO i -> (Branch IO -> IO ()) -> Runtime Symbol -> (Output Symbol -> IO ()) -> (NumberedOutput Symbol -> IO NumberedArgs) -> (SourceName -> IO LoadSourceResult) -> Codebase IO Symbol Ann -> Maybe BaseUrl -> UCMVersion -> (Int -> IO gen) -> Free (Command IO i Symbol) a -> IO a
+
+module Unison.Auth.CredentialFile
+
+-- | Atomically update the credential storage file. Creates an empty file
+--   automatically if one doesn't exist.
+atomicallyModifyCredentialsFile :: MonadIO m => (Credentials -> Credentials) -> m Credentials
+
+module Unison.Auth.Discovery
+discoveryURI :: CodeserverURI -> URI
+discoveryForCodeserver :: MonadIO m => Manager -> CodeserverURI -> m (Either CredentialFailure DiscoveryDoc)
+
+module Unison.Auth.CredentialManager
+
+-- | Saves credentials to the active profile.
+saveTokens :: MonadUnliftIO m => CredentialManager -> CodeserverId -> Tokens -> m ()
+
+-- | A <a>CredentialManager</a> knows how to load, save, and cache
+--   credentials. It's thread-safe and safe for use across multiple UCM
+--   clients. Note: Currently the in-memory cache is _not_ updated if a
+--   different UCM updates the credentials file, however this shouldn't
+--   pose any problems, since auth will still be refreshed if we encounter
+--   any auth failures on requests.
+data CredentialManager
+newCredentialManager :: MonadIO m => m CredentialManager
+getTokens :: MonadIO m => CredentialManager -> CodeserverId -> m (Either CredentialFailure Tokens)
+
 module Unison.Codebase.Editor.HandleInput.LoopState
 type F m i v = Free (Command m i v)
 data Env
@@ -855,13 +1140,13 @@ LoopState :: Branch m -> Branch m -> NonEmpty Absolute -> Maybe (FilePath, SkipN
 type Action' m v = Action m (Either Event Input) v
 type SkipNextUpdate = Bool
 type InputDescription = Text
-root :: forall m_a1M7e v_a1M7f. Lens' (LoopState m_a1M7e v_a1M7f) (Branch m_a1M7e)
-numberedArgs :: forall m_a1M7e v_a1M7f. Lens' (LoopState m_a1M7e v_a1M7f) NumberedArgs
-latestTypecheckedFile :: forall m_a1M7e v_a1M7f v_a1MQY. Lens (LoopState m_a1M7e v_a1M7f) (LoopState m_a1M7e v_a1MQY) (Maybe (TypecheckedUnisonFile v_a1M7f Ann)) (Maybe (TypecheckedUnisonFile v_a1MQY Ann))
-latestFile :: forall m_a1M7e v_a1M7f. Lens' (LoopState m_a1M7e v_a1M7f) (Maybe (FilePath, SkipNextUpdate))
-lastSavedRoot :: forall m_a1M7e v_a1M7f. Lens' (LoopState m_a1M7e v_a1M7f) (Branch m_a1M7e)
-lastInput :: forall m_a1M7e v_a1M7f. Lens' (LoopState m_a1M7e v_a1M7f) (Maybe Input)
-currentPathStack :: forall m_a1M7e v_a1M7f. Lens' (LoopState m_a1M7e v_a1M7f) (NonEmpty Absolute)
+root :: forall m_a30iF v_a30iG. Lens' (LoopState m_a30iF v_a30iG) (Branch m_a30iF)
+numberedArgs :: forall m_a30iF v_a30iG. Lens' (LoopState m_a30iF v_a30iG) NumberedArgs
+latestTypecheckedFile :: forall m_a30iF v_a30iG v_a310s. Lens (LoopState m_a30iF v_a30iG) (LoopState m_a30iF v_a310s) (Maybe (TypecheckedUnisonFile v_a30iG Ann)) (Maybe (TypecheckedUnisonFile v_a310s Ann))
+latestFile :: forall m_a30iF v_a30iG. Lens' (LoopState m_a30iF v_a30iG) (Maybe (FilePath, SkipNextUpdate))
+lastSavedRoot :: forall m_a30iF v_a30iG. Lens' (LoopState m_a30iF v_a30iG) (Branch m_a30iF)
+lastInput :: forall m_a30iF v_a30iG. Lens' (LoopState m_a30iF v_a30iG) (Maybe Input)
+currentPathStack :: forall m_a30iF v_a30iG. Lens' (LoopState m_a30iF v_a30iG) (NonEmpty Absolute)
 currentPath :: Getter (LoopState m v) Absolute
 loopState0 :: Branch m -> Absolute -> LoopState m v
 respond :: MonadCommand n m i v => Output v -> n ()
@@ -900,287 +1185,35 @@ module Unison.Codebase.Editor.HandleInput.NamespaceDependencies
 --   names of dependents, including aliases.
 namespaceDependencies :: forall m i v. Ord v => Branch0 m -> Action m i v (Map LabeledDependency (Set Name))
 
-module Unison.Codebase.Editor.HandleCommand
-typecheck :: Monad m => [Type Symbol Ann] -> Codebase m Symbol Ann -> ParsingEnv -> SourceName -> LexedSource -> m (TypecheckingResult Symbol)
-typecheck' :: Monad m => [Type Symbol Ann] -> Codebase m Symbol Ann -> UnisonFile Symbol Ann -> m (TypecheckingResult Symbol)
-commandLine :: forall i a gen. DRG gen => Config -> IO i -> (Branch IO -> IO ()) -> Runtime Symbol -> (Output Symbol -> IO ()) -> (NumberedOutput Symbol -> IO NumberedArgs) -> (SourceName -> IO LoadSourceResult) -> Codebase IO Symbol Ann -> Maybe BaseUrl -> UCMVersion -> (Int -> IO gen) -> Free (Command IO i Symbol) a -> IO a
-
-module Unison.Auth.OAuth
-
--- | Direct the user through an authentication flow with the given server
---   and store the credentials in the provided credential manager.
-authenticateHost :: forall m n i v. (MonadUnliftIO m, MonadCommand m n i v) => CredentialManager -> Host -> m (Either CredentialFailure ())
-
-module Unison.Codebase.Editor.HandleInput.AuthLogin
-authLogin :: MonadUnliftIO m => Maybe Host -> Action m i v ()
-
-module Unison.CommandLine.InputPatterns
-showPatternHelp :: InputPattern -> Pretty ColorText
-patternName :: InputPattern -> Pretty ColorText
-makeExample :: InputPattern -> [Pretty ColorText] -> Pretty ColorText
-makeExampleNoBackticks :: InputPattern -> [Pretty ColorText] -> Pretty ColorText
-makeExample' :: InputPattern -> Pretty ColorText
-makeExampleEOS :: InputPattern -> [Pretty ColorText] -> Pretty ColorText
-helpFor :: InputPattern -> Either (Pretty ColorText) Input
-mergeBuiltins :: InputPattern
-mergeIOBuiltins :: InputPattern
-updateBuiltins :: InputPattern
-todo :: InputPattern
-load :: InputPattern
-add :: InputPattern
-previewAdd :: InputPattern
-updateNoPatch :: InputPattern
-update :: InputPattern
-previewUpdate :: InputPattern
-patch :: InputPattern
-view :: InputPattern
-display :: InputPattern
-displayTo :: InputPattern
-docs :: InputPattern
-api :: InputPattern
-ui :: InputPattern
-undo :: InputPattern
-viewByPrefix :: InputPattern
-find :: InputPattern
-findGlobal :: InputPattern
-find' :: String -> Bool -> InputPattern
-findShallow :: InputPattern
-findVerbose :: InputPattern
-findPatch :: InputPattern
-renameTerm :: InputPattern
-renameType :: InputPattern
-delete :: InputPattern
-deleteTerm :: InputPattern
-deleteType :: InputPattern
-deleteTermReplacementCommand :: String
-deleteTypeReplacementCommand :: String
-deleteReplacement :: Bool -> InputPattern
-deleteTermReplacement :: InputPattern
-deleteTypeReplacement :: InputPattern
-parseHashQualifiedName :: String -> Either (Pretty ColorText) (HashQualified Name)
-aliasTerm :: InputPattern
-aliasType :: InputPattern
-aliasMany :: InputPattern
-up :: InputPattern
-cd :: InputPattern
-back :: InputPattern
-deleteNamespace :: InputPattern
-deleteNamespaceForce :: InputPattern
-deleteNamespaceParser :: Pretty ColorText -> Insistence -> [String] -> Either (Pretty ColorText) Input
-deletePatch :: InputPattern
-movePatch :: String -> String -> Either (Pretty ColorText) Input
-copyPatch' :: String -> String -> Either (Pretty ColorText) Input
-copyPatch :: InputPattern
-renamePatch :: InputPattern
-renameBranch :: InputPattern
-history :: InputPattern
-forkLocal :: InputPattern
-resetRoot :: InputPattern
-pullSilent :: InputPattern
-pull :: InputPattern
-pullWithoutHistory :: InputPattern
-pullImpl :: String -> Verbosity -> PullMode -> Pretty ColorText -> InputPattern
-pullExhaustive :: InputPattern
-push :: InputPattern
-pushCreate :: InputPattern
-pushExhaustive :: InputPattern
-createPullRequest :: InputPattern
-loadPullRequest :: InputPattern
-parseUri :: String -> String -> Either (Pretty ColorText) ReadRemoteNamespace
-prettyPrintParseError :: String -> ParseError Char Void -> Pretty ColorText
-parseWriteRepo :: String -> String -> Either (Pretty ColorText) WriteRepo
-parsePushPath :: String -> String -> Either (Pretty ColorText) WriteRemotePath
-squashMerge :: InputPattern
-mergeLocal :: InputPattern
-diffNamespace :: InputPattern
-previewMergeLocal :: InputPattern
-replaceEdit :: (HashQualified Name -> HashQualified Name -> Maybe PatchPath -> Input) -> InputPattern
-replace :: InputPattern
-viewReflog :: InputPattern
-edit :: InputPattern
-topicNameArg :: ArgumentType
-codebaseServerNameArg :: ArgumentType
-helpTopics :: InputPattern
-helpTopicsMap :: Map String (Pretty ColorText)
-help :: InputPattern
-quit :: InputPattern
-viewPatch :: InputPattern
-link :: InputPattern
-links :: InputPattern
-unlink :: InputPattern
-names :: IsGlobal -> InputPattern
-dependents :: InputPattern
-dependencies :: InputPattern
-namespaceDependencies :: InputPattern
-debugNumberedArgs :: InputPattern
-debugFileHashes :: InputPattern
-debugDumpNamespace :: InputPattern
-debugDumpNamespaceSimple :: InputPattern
-debugClearWatchCache :: InputPattern
-debugDoctor :: InputPattern
-test :: InputPattern
-docsToHtml :: InputPattern
-execute :: InputPattern
-ioTest :: InputPattern
-makeStandalone :: InputPattern
-createAuthor :: InputPattern
-gist :: InputPattern
-authLogin :: InputPattern
-printVersion :: InputPattern
-validInputs :: [InputPattern]
-visibleInputs :: [InputPattern]
-commandNames :: [String]
-commandNameArg :: ArgumentType
-exactDefinitionOrPathArg :: ArgumentType
-fuzzyDefinitionQueryArg :: ArgumentType
-definitionQueryArg :: ArgumentType
-exactDefinitionTypeQueryArg :: ArgumentType
-exactDefinitionTermQueryArg :: ArgumentType
-typeCompletor :: Applicative m => (String -> [String] -> [Completion]) -> String -> Codebase m v a -> Branch m -> Absolute -> m [Completion]
-termCompletor :: Applicative m => (String -> [String] -> [Completion]) -> String -> Codebase m v a -> Branch m -> Absolute -> m [Completion]
-patchArg :: ArgumentType
-allCompletors :: Monad m => [String -> Codebase m v a -> Branch m -> Absolute -> m [Completion]] -> String -> Codebase m v a -> Branch m -> Absolute -> m [Completion]
-bothCompletors :: Monad m => (String -> t2 -> t3 -> t4 -> m [Completion]) -> (String -> t2 -> t3 -> t4 -> m [Completion]) -> String -> t2 -> t3 -> t4 -> m [Completion]
-
--- | A completer for namespace paths.
-pathCompletor :: Applicative f => (String -> [String] -> [Completion]) -> (Branch0 m -> Set Text) -> String -> codebase -> Branch m -> Absolute -> f [Completion]
-namespaceArg :: ArgumentType
-
--- | Recursively collects all names of namespaces which are children of the
---   branch.
-allSubNamespaces :: Branch0 m -> [Text]
-newNameArg :: ArgumentType
-noCompletions :: ArgumentType
-gitUrlArg :: ArgumentType
-collectNothings :: (a -> Maybe b) -> [a] -> [a]
-explainRemote :: Pretty ColorText
-
 module Unison.Auth.Tokens
 
 -- | Checks whether a JWT access token is expired.
 isExpired :: MonadIO m => AccessToken -> m Bool
 
--- | Given a <a>Host</a>, provide a valid <a>AccessToken</a> for the
---   associated host. The TokenProvider may automatically refresh access
---   tokens if we have a refresh token.
-type TokenProvider = Host -> IO (Either CredentialFailure AccessToken)
+-- | Given a <a>CodeserverId</a>, provide a valid <a>AccessToken</a> for
+--   the associated host. The TokenProvider may automatically refresh
+--   access tokens if we have a refresh token.
+type TokenProvider = CodeserverId -> IO (Either CredentialFailure AccessToken)
 
 -- | Creates a <a>TokenProvider</a> using the given
 --   <a>CredentialManager</a>
 newTokenProvider :: CredentialManager -> TokenProvider
 
 -- | Don't yet support automatically refreshing tokens.
-refreshTokens :: MonadIO m => CredentialManager -> Host -> Tokens -> m (Either CredentialFailure Tokens)
+refreshTokens :: MonadIO m => CredentialManager -> CodeserverId -> Tokens -> m (Either CredentialFailure Tokens)
 
-module Unison.CommandLine.OutputMessages
-type Pretty = Pretty ColorText
-shortenDirectory :: FilePath -> IO FilePath
-renderFileName :: FilePath -> IO Pretty
-notifyNumbered :: Var v => NumberedOutput v -> (Pretty, NumberedArgs)
-showListEdits :: Patch -> PrettyPrintEnv -> (Pretty ColorText, NumberedArgs)
-prettyURI :: URI -> Pretty
-prettyRemoteNamespace :: ReadRemoteNamespace -> Pretty
-notifyUser :: forall v. Var v => FilePath -> Output v -> IO Pretty
-prettyFilePath :: FilePath -> Pretty
-prettyPath' :: Path' -> Pretty
-prettyBranchId :: AbsBranchId -> Pretty
-prettyRelative :: Relative -> Pretty
-prettyAbsolute :: Absolute -> Pretty
-prettySBH :: IsString s => ShortBranchHash -> Pretty s
-prettyCausalHash :: IsString s => CausalHash -> Pretty s
-formatMissingStuff :: (Show tm, Show typ) => [(HashQualified Name, tm)] -> [(HashQualified Name, typ)] -> Pretty
-displayDefinitions' :: Var v => Ord a1 => PrettyPrintEnvDecl -> Map Reference (DisplayObject () (Decl v a1)) -> Map Reference (DisplayObject (Type v a1) (Term v a1)) -> Pretty
-displayRendered :: Maybe FilePath -> Pretty -> IO Pretty
-displayDefinitions :: Var v => Ord a1 => Maybe FilePath -> PrettyPrintEnvDecl -> Map Reference (DisplayObject () (Decl v a1)) -> Map Reference (DisplayObject (Type v a1) (Term v a1)) -> IO Pretty
-displayTestResults :: Bool -> PrettyPrintEnv -> [(Reference, Text)] -> [(Reference, Text)] -> Pretty
-unsafePrettyTermResultSig' :: Var v => PrettyPrintEnv -> TermResult' v a -> Pretty
-unsafePrettyTermResultSigFull' :: Var v => PrettyPrintEnv -> TermResult' v a -> Pretty
-prettyTypeResultHeader' :: Var v => TypeResult' v a -> Pretty
-prettyTypeResultHeaderFull' :: Var v => TypeResult' v a -> Pretty
-prettyDeclTriple :: Var v => (HashQualified Name, Reference, DisplayObject () (Decl v a)) -> Pretty
-prettyDeclPair :: Var v => PrettyPrintEnv -> (Reference, DisplayObject () (Decl v a)) -> Pretty
-renderNameConflicts :: PrettyPrintEnv -> Names -> Numbered Pretty
-renderEditConflicts :: PrettyPrintEnv -> Patch -> Numbered Pretty
-type Numbered = State (Int, Seq String)
-addNumberedArg :: String -> Numbered Int
-formatNum :: Int -> Pretty
-runNumbered :: Numbered a -> (a, NumberedArgs)
-todoOutput :: Var v => PrettyPrintEnvDecl -> TodoOutput v a -> (Pretty, NumberedArgs)
-listOfDefinitions :: Var v => PrettyPrintEnv -> ListDetailed -> [SearchResult' v a] -> IO Pretty
-listOfLinks :: Var v => PrettyPrintEnv -> [(HashQualified Name, Maybe (Type v a))] -> IO Pretty
-data ShowNumbers
-ShowNumbers :: ShowNumbers
-HideNumbers :: ShowNumbers
+module Unison.Auth.OAuth
 
--- | <tt>ppe</tt> is just for rendering type signatures `oldPath, newPath
---   :: Path.Absolute` are just for producing fully-qualified numbered args
-showDiffNamespace :: forall v. Var v => ShowNumbers -> PrettyPrintEnv -> AbsBranchId -> AbsBranchId -> BranchDiffOutput v Ann -> (Pretty, NumberedArgs)
-noResults :: Pretty
-listOfDefinitions' :: Var v => PrettyPrintEnv -> ListDetailed -> [SearchResult' v a] -> Pretty
-watchPrinter :: Var v => Text -> PrettyPrintEnv -> Ann -> WatchKind -> Term v () -> IsCacheHit -> Pretty
-filestatusTip :: Pretty
-prettyDiff :: Diff -> Pretty
-prettyTermName :: PrettyPrintEnv -> Referent -> Pretty
-prettyTypeName :: PrettyPrintEnv -> Reference -> Pretty
-prettyReadRepo :: ReadRepo -> Pretty
-prettyWriteRepo :: WriteRepo -> Pretty
-isTestOk :: Term v Ann -> Bool
+-- | Direct the user through an authentication flow with the given server
+--   and store the credentials in the provided credential manager.
+authenticateCodeserver :: forall m n i v. (MonadUnliftIO m, MonadCommand m n i v) => CredentialManager -> CodeserverURI -> m (Either CredentialFailure ())
 
--- | Get the list of numbered args corresponding to an endangerment map,
---   which is used by a few outputs. See <a>endangeredDependentsTable</a>.
-numberedArgsForEndangerments :: PrettyPrintEnvDecl -> Map LabeledDependency (NESet LabeledDependency) -> NumberedArgs
-
--- | Format and render all dependents which are endangered by references
---   going extinct.
-endangeredDependentsTable :: PrettyPrintEnvDecl -> Map LabeledDependency (NESet LabeledDependency) -> Pretty ColorText
-
--- | Displays a full, non-truncated Branch.CausalHash to a string, e.g.
---   #abcdef
-displayBranchHash :: CausalHash -> String
-
-module Unison.CommandLine.DisplayValues
-type Pretty = Pretty ColorText
-displayTerm :: Monad m => PrettyPrintEnvDecl -> (Reference -> m (Maybe (Term Symbol ()))) -> (Referent -> m (Maybe (Type Symbol ()))) -> (Term Symbol () -> m (Maybe (Term Symbol ()))) -> (Reference -> m (Maybe (Decl Symbol ()))) -> Term Symbol () -> m Pretty
-type ElideUnit = Bool
-displayTerm' :: Monad m => ElideUnit -> PrettyPrintEnvDecl -> (Reference -> m (Maybe (Term Symbol ()))) -> (Referent -> m (Maybe (Type Symbol ()))) -> (Term Symbol () -> m (Maybe (Term Symbol ()))) -> (Reference -> m (Maybe (Decl Symbol ()))) -> Term Symbol () -> m Pretty
-displayPretty :: forall m. Monad m => PrettyPrintEnvDecl -> (Reference -> m (Maybe (Term Symbol ()))) -> (Referent -> m (Maybe (Type Symbol ()))) -> (Term Symbol () -> m (Maybe (Term Symbol ()))) -> (Reference -> m (Maybe (Decl Symbol ()))) -> Term Symbol () -> m Pretty
-displayDoc :: forall v m. (Var v, Monad m) => PrettyPrintEnvDecl -> (Reference -> m (Maybe (Term v ()))) -> (Referent -> m (Maybe (Type v ()))) -> (Term v () -> m (Maybe (Term v ()))) -> (Reference -> m (Maybe (Decl v ()))) -> Term v () -> m Pretty
-termName :: PrettyPrintEnv -> Referent -> Pretty
-typeName :: PrettyPrintEnv -> Reference -> Pretty
+module Unison.Codebase.Editor.HandleInput.AuthLogin
+authLogin :: MonadUnliftIO m => Action m i v ()
 
 module Unison.Codebase.Editor.HandleInput
 loop :: forall m. MonadUnliftIO m => Action m (Either Event Input) Symbol ()
 parseSearchType :: (Monad m, Var v) => SrcLoc -> String -> Action' m v (Either (Output v) (Type v Ann))
-
-module Unison.CommandLine.Welcome
-data Welcome
-Welcome :: Onboarding -> DownloadBase -> FilePath -> Text -> Welcome
-[onboarding] :: Welcome -> Onboarding
-[downloadBase] :: Welcome -> DownloadBase
-[watchDir] :: Welcome -> FilePath
-[unisonVersion] :: Welcome -> Text
-data DownloadBase
-DownloadBase :: ReadRemoteNamespace -> DownloadBase
-DontDownloadBase :: DownloadBase
-data CodebaseInitStatus
-NewlyCreatedCodebase :: CodebaseInitStatus
-PreviouslyCreatedCodebase :: CodebaseInitStatus
-data Onboarding
-Init :: CodebaseInitStatus -> Onboarding
-DownloadingBase :: ReadRemoteNamespace -> Onboarding
-Author :: Onboarding
-Finished :: Onboarding
-PreviouslyOnboarded :: Onboarding
-welcome :: CodebaseInitStatus -> DownloadBase -> FilePath -> Text -> Welcome
-pullBase :: ReadRemoteNamespace -> Either Event Input
-run :: Codebase IO v a -> Welcome -> IO [Either Event Input]
-toInput :: Pretty ColorText -> Either Event Input
-determineFirstStep :: DownloadBase -> Codebase IO v a -> IO Onboarding
-asciiartUnison :: Pretty ColorText
-downloading :: Path -> Pretty ColorText
-header :: Text -> Pretty ColorText
-authorSuggestion :: Pretty ColorText
-getStarted :: FilePath -> IO (Pretty ColorText)
 
 module Unison.Codebase.TranscriptParser
 data Stanza
