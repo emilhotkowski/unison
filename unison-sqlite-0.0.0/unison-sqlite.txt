@@ -321,7 +321,7 @@ JournalMode'PERSIST :: JournalMode
 JournalMode'MEMORY :: JournalMode
 JournalMode'WAL :: JournalMode
 JournalMode'OFF :: JournalMode
-trySetJournalMode :: Connection -> JournalMode -> IO ()
+trySetJournalMode :: MonadIO m => Connection -> JournalMode -> m ()
 
 -- | <pre>
 --   VACUUM
