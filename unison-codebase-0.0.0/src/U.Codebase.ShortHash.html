@@ -20,7 +20,7 @@
 </span><a href="U.Codebase.ShortHash.html#prefix"><span class="hs-identifier hs-var hs-var">prefix</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span class="hs-special">,</span><span> </span><span id="cycle"><span class="annot"><span class="annottext">ShortHash -&gt; Maybe Word64
 </span><a href="U.Codebase.ShortHash.html#cycle"><span class="hs-identifier hs-var hs-var">cycle</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Word64</span></span><span class="hs-special">,</span><span> </span><span id="cid"><span class="annot"><span class="annottext">ShortHash -&gt; Maybe Word64
 </span><a href="U.Codebase.ShortHash.html#cid"><span class="hs-identifier hs-var hs-var">cid</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Word64</span></span><span class="hs-special">}</span><span>
-</span><span id="line-20"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679120631"><span id="local-6989586621679120633"><span class="annot"><span class="annottext">ShortHash -&gt; ShortHash -&gt; Bool
+</span><span id="line-20"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679120351"><span id="local-6989586621679120353"><span class="annot"><span class="annottext">ShortHash -&gt; ShortHash -&gt; Bool
 (ShortHash -&gt; ShortHash -&gt; Bool)
 -&gt; (ShortHash -&gt; ShortHash -&gt; Bool) -&gt; Eq ShortHash
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -28,7 +28,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: ShortHash -&gt; ShortHash -&gt; Bool
 == :: ShortHash -&gt; ShortHash -&gt; Bool
 $c== :: ShortHash -&gt; ShortHash -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679120615"><span id="local-6989586621679120617"><span id="local-6989586621679120619"><span id="local-6989586621679120621"><span id="local-6989586621679120623"><span id="local-6989586621679120625"><span id="local-6989586621679120627"><span class="annot"><span class="annottext">Eq ShortHash
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679120335"><span id="local-6989586621679120337"><span id="local-6989586621679120339"><span id="local-6989586621679120341"><span id="local-6989586621679120343"><span id="local-6989586621679120345"><span id="local-6989586621679120347"><span class="annot"><span class="annottext">Eq ShortHash
 Eq ShortHash
 -&gt; (ShortHash -&gt; ShortHash -&gt; Ordering)
 -&gt; (ShortHash -&gt; ShortHash -&gt; Bool)
@@ -66,7 +66,7 @@ $c&lt; :: ShortHash -&gt; ShortHash -&gt; Bool
 compare :: ShortHash -&gt; ShortHash -&gt; Ordering
 $ccompare :: ShortHash -&gt; ShortHash -&gt; Ordering
 $cp1Ord :: Eq ShortHash
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679120608"><span id="local-6989586621679120610"><span id="local-6989586621679120612"><span class="annot"><span class="annottext">Int -&gt; ShortHash -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679120328"><span id="local-6989586621679120330"><span id="local-6989586621679120332"><span class="annot"><span class="annottext">Int -&gt; ShortHash -&gt; ShowS
 [ShortHash] -&gt; ShowS
 ShortHash -&gt; String
 (Int -&gt; ShortHash -&gt; ShowS)
@@ -84,7 +84,7 @@ $cshowsPrec :: Int -&gt; ShortHash -&gt; ShowS
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
 </span><span id="line-21"></span><span>
 </span><span id="line-22"></span><span class="hs-keyword">data</span><span> </span><span id="ShortBranchHash"><span class="annot"><a href="U.Codebase.ShortHash.html#ShortBranchHash"><span class="hs-identifier hs-var">ShortBranchHash</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="ShortBranchHash"><span class="annot"><a href="U.Codebase.ShortHash.html#ShortBranchHash"><span class="hs-identifier hs-var">ShortBranchHash</span></a></span></span><span> </span><span class="hs-special">{</span><span id="toText"><span class="annot"><span class="annottext">ShortBranchHash -&gt; Text
-</span><a href="U.Codebase.ShortHash.html#toText"><span class="hs-identifier hs-var hs-var">toText</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679120601"><span id="local-6989586621679120603"><span class="annot"><span class="annottext">ShortBranchHash -&gt; ShortBranchHash -&gt; Bool
+</span><a href="U.Codebase.ShortHash.html#toText"><span class="hs-identifier hs-var hs-var">toText</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679120321"><span id="local-6989586621679120323"><span class="annot"><span class="annottext">ShortBranchHash -&gt; ShortBranchHash -&gt; Bool
 (ShortBranchHash -&gt; ShortBranchHash -&gt; Bool)
 -&gt; (ShortBranchHash -&gt; ShortBranchHash -&gt; Bool)
 -&gt; Eq ShortBranchHash
@@ -93,7 +93,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: ShortBranchHash -&gt; ShortBranchHash -&gt; Bool
 == :: ShortBranchHash -&gt; ShortBranchHash -&gt; Bool
 $c== :: ShortBranchHash -&gt; ShortBranchHash -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679120586"><span id="local-6989586621679120588"><span id="local-6989586621679120590"><span id="local-6989586621679120592"><span id="local-6989586621679120594"><span id="local-6989586621679120596"><span id="local-6989586621679120598"><span class="annot"><span class="annottext">Eq ShortBranchHash
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679120306"><span id="local-6989586621679120308"><span id="local-6989586621679120310"><span id="local-6989586621679120312"><span id="local-6989586621679120314"><span id="local-6989586621679120316"><span id="local-6989586621679120318"><span class="annot"><span class="annottext">Eq ShortBranchHash
 Eq ShortBranchHash
 -&gt; (ShortBranchHash -&gt; ShortBranchHash -&gt; Ordering)
 -&gt; (ShortBranchHash -&gt; ShortBranchHash -&gt; Bool)
@@ -131,7 +131,7 @@ $c&lt; :: ShortBranchHash -&gt; ShortBranchHash -&gt; Bool
 compare :: ShortBranchHash -&gt; ShortBranchHash -&gt; Ordering
 $ccompare :: ShortBranchHash -&gt; ShortBranchHash -&gt; Ordering
 $cp1Ord :: Eq ShortBranchHash
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679120580"><span id="local-6989586621679120582"><span id="local-6989586621679120584"><span class="annot"><span class="annottext">Int -&gt; ShortBranchHash -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679120300"><span id="local-6989586621679120302"><span id="local-6989586621679120304"><span class="annot"><span class="annottext">Int -&gt; ShortBranchHash -&gt; ShowS
 [ShortBranchHash] -&gt; ShowS
 ShortBranchHash -&gt; String
 (Int -&gt; ShortBranchHash -&gt; ShowS)

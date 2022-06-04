@@ -44,7 +44,7 @@
 </span><span id="line-42"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="RefreshFailure"><span class="annot"><a href="Unison.Auth.Types.html#RefreshFailure"><span class="hs-identifier hs-var">RefreshFailure</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span>
 </span><span id="line-43"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="InvalidTokenResponse"><span class="annot"><a href="Unison.Auth.Types.html#InvalidTokenResponse"><span class="hs-identifier hs-var">InvalidTokenResponse</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">URI</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span>
 </span><span id="line-44"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="InvalidHost"><span class="annot"><a href="Unison.Auth.Types.html#InvalidHost"><span class="hs-identifier hs-var">InvalidHost</span></a></span></span><span> </span><span class="annot"><a href="Unison.Share.Types.html#CodeserverURI"><span class="hs-identifier hs-type">CodeserverURI</span></a></span><span>
-</span><span id="line-45"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">stock</span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679966070"><span id="local-6989586621679966072"><span id="local-6989586621679966074"><span class="annot"><span class="annottext">Int -&gt; CredentialFailure -&gt; ShowS
+</span><span id="line-45"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">stock</span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679965773"><span id="local-6989586621679965775"><span id="local-6989586621679965777"><span class="annot"><span class="annottext">Int -&gt; CredentialFailure -&gt; ShowS
 [CredentialFailure] -&gt; ShowS
 CredentialFailure -&gt; String
 (Int -&gt; CredentialFailure -&gt; ShowS)
@@ -59,7 +59,7 @@ show :: CredentialFailure -&gt; String
 $cshow :: CredentialFailure -&gt; String
 showsPrec :: Int -&gt; CredentialFailure -&gt; ShowS
 $cshowsPrec :: Int -&gt; CredentialFailure -&gt; ShowS
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679966065"><span id="local-6989586621679966067"><span class="annot"><span class="annottext">CredentialFailure -&gt; CredentialFailure -&gt; Bool
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679965768"><span id="local-6989586621679965770"><span class="annot"><span class="annottext">CredentialFailure -&gt; CredentialFailure -&gt; Bool
 (CredentialFailure -&gt; CredentialFailure -&gt; Bool)
 -&gt; (CredentialFailure -&gt; CredentialFailure -&gt; Bool)
 -&gt; Eq CredentialFailure
@@ -69,7 +69,7 @@ $c/= :: CredentialFailure -&gt; CredentialFailure -&gt; Bool
 == :: CredentialFailure -&gt; CredentialFailure -&gt; Bool
 $c== :: CredentialFailure -&gt; CredentialFailure -&gt; Bool
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-46"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">anyclass</span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679966056"><span id="local-6989586621679966058"><span id="local-6989586621679966060"><span class="annot"><span class="annottext">Show CredentialFailure
+</span><span id="line-46"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">anyclass</span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679965759"><span id="local-6989586621679965761"><span id="local-6989586621679965763"><span class="annot"><span class="annottext">Show CredentialFailure
 Typeable CredentialFailure
 Typeable CredentialFailure
 -&gt; Show CredentialFailure
@@ -114,7 +114,7 @@ $cp1Exception :: Typeable CredentialFailure
 </span><span id="line-62"></span><span class="hs-keyword">type</span><span> </span><span id="TokenType"><span class="annot"><a href="Unison.Auth.Types.html#TokenType"><span class="hs-identifier hs-var">TokenType</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span>
 </span><span id="line-63"></span><span>
 </span><span id="line-64"></span><span class="hs-keyword">newtype</span><span> </span><span id="Scopes"><span class="annot"><a href="Unison.Auth.Types.html#Scopes"><span class="hs-identifier hs-var">Scopes</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Scopes"><span class="annot"><a href="Unison.Auth.Types.html#Scopes"><span class="hs-identifier hs-var">Scopes</span></a></span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span class="hs-special">]</span><span>
-</span><span id="line-65"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">stock</span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679966046"><span id="local-6989586621679966048"><span id="local-6989586621679966050"><span class="annot"><span class="annottext">Int -&gt; Scopes -&gt; ShowS
+</span><span id="line-65"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">stock</span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679965749"><span id="local-6989586621679965751"><span id="local-6989586621679965753"><span class="annot"><span class="annottext">Int -&gt; Scopes -&gt; ShowS
 [Scopes] -&gt; ShowS
 Scopes -&gt; String
 (Int -&gt; Scopes -&gt; ShowS)
@@ -127,7 +127,7 @@ show :: Scopes -&gt; String
 $cshow :: Scopes -&gt; String
 showsPrec :: Int -&gt; Scopes -&gt; ShowS
 $cshowsPrec :: Int -&gt; Scopes -&gt; ShowS
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679966042"><span id="local-6989586621679966044"><span class="annot"><span class="annottext">Scopes -&gt; Scopes -&gt; Bool
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679965745"><span id="local-6989586621679965747"><span class="annot"><span class="annottext">Scopes -&gt; Scopes -&gt; Bool
 (Scopes -&gt; Scopes -&gt; Bool)
 -&gt; (Scopes -&gt; Scopes -&gt; Bool) -&gt; Eq Scopes
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -135,7 +135,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: Scopes -&gt; Scopes -&gt; Bool
 == :: Scopes -&gt; Scopes -&gt; Bool
 $c== :: Scopes -&gt; Scopes -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679966027"><span id="local-6989586621679966029"><span id="local-6989586621679966031"><span id="local-6989586621679966033"><span id="local-6989586621679966035"><span id="local-6989586621679966037"><span id="local-6989586621679966039"><span class="annot"><span class="annottext">Eq Scopes
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679965730"><span id="local-6989586621679965732"><span id="local-6989586621679965734"><span id="local-6989586621679965736"><span id="local-6989586621679965738"><span id="local-6989586621679965740"><span id="local-6989586621679965742"><span class="annot"><span class="annottext">Eq Scopes
 Eq Scopes
 -&gt; (Scopes -&gt; Scopes -&gt; Ordering)
 -&gt; (Scopes -&gt; Scopes -&gt; Bool)
@@ -175,26 +175,26 @@ $ccompare :: Scopes -&gt; Scopes -&gt; Ordering
 $cp1Ord :: Eq Scopes
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">)</span><span>
 </span><span id="line-66"></span><span>
-</span><span id="line-67"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679966019"><span id="local-6989586621679966021"><span id="local-6989586621679966023"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Scopes"><span class="hs-identifier hs-type">Scopes</span></a></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-68"></span><span>  </span><span id="local-6989586621679966017"><span class="annot"><span class="annottext">toJSON :: Scopes -&gt; Value
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var">toJSON</span></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Auth.Types.html#Scopes"><span class="hs-identifier hs-type">Scopes</span></a></span><span> </span><span id="local-6989586621679966015"><span class="annot"><span class="annottext">[ProfileName]
-</span><a href="#local-6989586621679966015"><span class="hs-identifier hs-var">scopes</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ProfileName -&gt; Value
+</span><span id="line-67"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679965722"><span id="local-6989586621679965724"><span id="local-6989586621679965726"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Scopes"><span class="hs-identifier hs-type">Scopes</span></a></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-68"></span><span>  </span><span id="local-6989586621679965720"><span class="annot"><span class="annottext">toJSON :: Scopes -&gt; Value
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">toJSON</span></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Auth.Types.html#Scopes"><span class="hs-identifier hs-type">Scopes</span></a></span><span> </span><span id="local-6989586621679965718"><span class="annot"><span class="annottext">[ProfileName]
+</span><a href="#local-6989586621679965718"><span class="hs-identifier hs-var">scopes</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ProfileName -&gt; Value
 </span><span class="hs-identifier hs-var">Aeson.String</span></span><span> </span><span class="annot"><span class="annottext">(ProfileName -&gt; Value) -&gt; ProfileName -&gt; Value
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[ProfileName] -&gt; ProfileName
 </span><span class="hs-identifier hs-var">Text.unwords</span></span><span> </span><span class="annot"><span class="annottext">[ProfileName]
-</span><a href="#local-6989586621679966015"><span class="hs-identifier hs-var">scopes</span></a></span><span>
+</span><a href="#local-6989586621679965718"><span class="hs-identifier hs-var">scopes</span></a></span><span>
 </span><span id="line-69"></span><span>
-</span><span id="line-70"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679966010"><span class="annot"><span class="hs-identifier hs-type">FromJSON</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Scopes"><span class="hs-identifier hs-type">Scopes</span></a></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-71"></span><span>  </span><span id="local-6989586621679966008"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser Scopes
+</span><span id="line-70"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679965713"><span class="annot"><span class="hs-identifier hs-type">FromJSON</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Scopes"><span class="hs-identifier hs-type">Scopes</span></a></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-71"></span><span>  </span><span id="local-6989586621679965711"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser Scopes
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var">parseJSON</span></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; (ProfileName -&gt; Parser Scopes) -&gt; Value -&gt; Parser Scopes
 forall a. String -&gt; (ProfileName -&gt; Parser a) -&gt; Value -&gt; Parser a
 </span><span class="hs-identifier hs-var">Aeson.withText</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;Scopes&quot;</span></span><span> </span><span class="annot"><span class="annottext">((ProfileName -&gt; Parser Scopes) -&gt; Value -&gt; Parser Scopes)
 -&gt; (ProfileName -&gt; Parser Scopes) -&gt; Value -&gt; Parser Scopes
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679966005"><span class="annot"><span class="annottext">ProfileName
-</span><a href="#local-6989586621679966005"><span class="hs-identifier hs-var">txt</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679965708"><span class="annot"><span class="annottext">ProfileName
+</span><a href="#local-6989586621679965708"><span class="hs-identifier hs-var">txt</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
 </span><span id="line-72"></span><span>    </span><span class="annot"><span class="annottext">Scopes -&gt; Parser Scopes
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Scopes -&gt; Parser Scopes)
@@ -205,7 +205,7 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">ProfileName -&gt; [ProfileName]
 </span><span class="hs-identifier hs-var">Text.words</span></span><span> </span><span class="annot"><span class="annottext">ProfileName
-</span><a href="#local-6989586621679966005"><span class="hs-identifier hs-var">txt</span></a></span><span>
+</span><a href="#local-6989586621679965708"><span class="hs-identifier hs-var">txt</span></a></span><span>
 </span><span id="line-73"></span><span>
 </span><span id="line-74"></span><span class="hs-keyword">data</span><span> </span><span id="DiscoveryDoc"><span class="annot"><a href="Unison.Auth.Types.html#DiscoveryDoc"><span class="hs-identifier hs-var">DiscoveryDoc</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="DiscoveryDoc"><span class="annot"><a href="Unison.Auth.Types.html#DiscoveryDoc"><span class="hs-identifier hs-var">DiscoveryDoc</span></a></span></span><span>
 </span><span id="line-75"></span><span>  </span><span class="hs-special">{</span><span> </span><span id="issuer"><span class="annot"><span class="annottext">DiscoveryDoc -&gt; URI
@@ -217,7 +217,7 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span id="line-78"></span><span>    </span><span id="userInfoEndpoint"><span class="annot"><span class="annottext">DiscoveryDoc -&gt; URI
 </span><a href="Unison.Auth.Types.html#userInfoEndpoint"><span class="hs-identifier hs-var hs-var">userInfoEndpoint</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">URI</span></span><span>
 </span><span id="line-79"></span><span>  </span><span class="hs-special">}</span><span>
-</span><span id="line-80"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679965992"><span id="local-6989586621679965994"><span id="local-6989586621679965996"><span class="annot"><span class="annottext">Int -&gt; DiscoveryDoc -&gt; ShowS
+</span><span id="line-80"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679965695"><span id="local-6989586621679965697"><span id="local-6989586621679965699"><span class="annot"><span class="annottext">Int -&gt; DiscoveryDoc -&gt; ShowS
 [DiscoveryDoc] -&gt; ShowS
 DiscoveryDoc -&gt; String
 (Int -&gt; DiscoveryDoc -&gt; ShowS)
@@ -248,7 +248,7 @@ $cshowsPrec :: Int -&gt; DiscoveryDoc -&gt; ShowS
 </span><span id="line-88"></span><span>    </span><span id="scopes"><span class="annot"><span class="annottext">Tokens -&gt; Scopes
 </span><a href="Unison.Auth.Types.html#scopes"><span class="hs-identifier hs-var hs-var">scopes</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Scopes"><span class="hs-identifier hs-type">Scopes</span></a></span><span>
 </span><span id="line-89"></span><span>  </span><span class="hs-special">}</span><span>
-</span><span id="line-90"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679965981"><span id="local-6989586621679965983"><span class="annot"><span class="annottext">Tokens -&gt; Tokens -&gt; Bool
+</span><span id="line-90"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679965684"><span id="local-6989586621679965686"><span class="annot"><span class="annottext">Tokens -&gt; Tokens -&gt; Bool
 (Tokens -&gt; Tokens -&gt; Bool)
 -&gt; (Tokens -&gt; Tokens -&gt; Bool) -&gt; Eq Tokens
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -256,7 +256,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: Tokens -&gt; Tokens -&gt; Bool
 == :: Tokens -&gt; Tokens -&gt; Bool
 $c== :: Tokens -&gt; Tokens -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679965975"><span id="local-6989586621679965977"><span id="local-6989586621679965979"><span class="annot"><span class="annottext">Int -&gt; Tokens -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679965678"><span id="local-6989586621679965680"><span id="local-6989586621679965682"><span class="annot"><span class="annottext">Int -&gt; Tokens -&gt; ShowS
 [Tokens] -&gt; ShowS
 Tokens -&gt; String
 (Int -&gt; Tokens -&gt; ShowS)
@@ -271,50 +271,50 @@ showsPrec :: Int -&gt; Tokens -&gt; ShowS
 $cshowsPrec :: Int -&gt; Tokens -&gt; ShowS
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
 </span><span id="line-91"></span><span>
-</span><span id="line-92"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679965972"><span class="annot"><span class="hs-identifier hs-type">Aeson.FromJSON</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Tokens"><span class="hs-identifier hs-type">Tokens</span></a></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-93"></span><span>  </span><span id="local-6989586621679965971"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser Tokens
-</span><a href="#local-6989586621679965971"><span class="hs-identifier hs-var hs-var hs-var hs-var">parseJSON</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-92"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679965675"><span class="annot"><span class="hs-identifier hs-type">Aeson.FromJSON</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Tokens"><span class="hs-identifier hs-type">Tokens</span></a></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-93"></span><span>  </span><span id="local-6989586621679965674"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser Tokens
+</span><a href="#local-6989586621679965674"><span class="hs-identifier hs-var hs-var hs-var hs-var">parseJSON</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-94"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; (Object -&gt; Parser Tokens) -&gt; Value -&gt; Parser Tokens
 forall a. String -&gt; (Object -&gt; Parser a) -&gt; Value -&gt; Parser a
 </span><span class="hs-identifier hs-var">Aeson.withObject</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;Tokens&quot;</span></span><span> </span><span class="annot"><span class="annottext">((Object -&gt; Parser Tokens) -&gt; Value -&gt; Parser Tokens)
 -&gt; (Object -&gt; Parser Tokens) -&gt; Value -&gt; Parser Tokens
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679965969"><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679965969"><span class="hs-identifier hs-var">obj</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-95"></span><span>      </span><span id="local-6989586621679965968"><span class="annot"><span class="annottext">ProfileName
-</span><a href="#local-6989586621679965968"><span class="hs-identifier hs-var">accessToken</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679965969"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; ProfileName -&gt; Parser ProfileName
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679965672"><span class="annot"><span class="annottext">Object
+</span><a href="#local-6989586621679965672"><span class="hs-identifier hs-var">obj</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-95"></span><span>      </span><span id="local-6989586621679965671"><span class="annot"><span class="annottext">ProfileName
+</span><a href="#local-6989586621679965671"><span class="hs-identifier hs-var">accessToken</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Object
+</span><a href="#local-6989586621679965672"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; ProfileName -&gt; Parser ProfileName
 forall a. FromJSON a =&gt; Object -&gt; ProfileName -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">ProfileName
 </span><span class="hs-string">&quot;access_token&quot;</span></span><span>
-</span><span id="line-96"></span><span>      </span><span id="local-6989586621679965967"><span class="annot"><span class="annottext">Maybe ProfileName
-</span><a href="#local-6989586621679965967"><span class="hs-identifier hs-var">idToken</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679965969"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; ProfileName -&gt; Parser (Maybe ProfileName)
+</span><span id="line-96"></span><span>      </span><span id="local-6989586621679965670"><span class="annot"><span class="annottext">Maybe ProfileName
+</span><a href="#local-6989586621679965670"><span class="hs-identifier hs-var">idToken</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Object
+</span><a href="#local-6989586621679965672"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; ProfileName -&gt; Parser (Maybe ProfileName)
 forall a. FromJSON a =&gt; Object -&gt; ProfileName -&gt; Parser (Maybe a)
 </span><span class="hs-operator hs-var">.:?</span></span><span> </span><span class="annot"><span class="annottext">ProfileName
 </span><span class="hs-string">&quot;id_token&quot;</span></span><span>
-</span><span id="line-97"></span><span>      </span><span id="local-6989586621679965966"><span class="annot"><span class="annottext">Maybe ProfileName
-</span><a href="#local-6989586621679965966"><span class="hs-identifier hs-var">refreshToken</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679965969"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; ProfileName -&gt; Parser (Maybe ProfileName)
+</span><span id="line-97"></span><span>      </span><span id="local-6989586621679965669"><span class="annot"><span class="annottext">Maybe ProfileName
+</span><a href="#local-6989586621679965669"><span class="hs-identifier hs-var">refreshToken</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Object
+</span><a href="#local-6989586621679965672"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; ProfileName -&gt; Parser (Maybe ProfileName)
 forall a. FromJSON a =&gt; Object -&gt; ProfileName -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">ProfileName
 </span><span class="hs-string">&quot;refresh_token&quot;</span></span><span>
-</span><span id="line-98"></span><span>      </span><span id="local-6989586621679965965"><span class="annot"><span class="annottext">ProfileName
-</span><a href="#local-6989586621679965965"><span class="hs-identifier hs-var">tokenType</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679965969"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; ProfileName -&gt; Parser ProfileName
+</span><span id="line-98"></span><span>      </span><span id="local-6989586621679965668"><span class="annot"><span class="annottext">ProfileName
+</span><a href="#local-6989586621679965668"><span class="hs-identifier hs-var">tokenType</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Object
+</span><a href="#local-6989586621679965672"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; ProfileName -&gt; Parser ProfileName
 forall a. FromJSON a =&gt; Object -&gt; ProfileName -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">ProfileName
 </span><span class="hs-string">&quot;token_type&quot;</span></span><span>
-</span><span id="line-99"></span><span>      </span><span id="local-6989586621679965964"><span class="annot"><span class="annottext">NominalDiffTime
-</span><a href="#local-6989586621679965964"><span class="hs-identifier hs-var">expiresIn</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679965969"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; ProfileName -&gt; Parser NominalDiffTime
+</span><span id="line-99"></span><span>      </span><span id="local-6989586621679965667"><span class="annot"><span class="annottext">NominalDiffTime
+</span><a href="#local-6989586621679965667"><span class="hs-identifier hs-var">expiresIn</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Object
+</span><a href="#local-6989586621679965672"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; ProfileName -&gt; Parser NominalDiffTime
 forall a. FromJSON a =&gt; Object -&gt; ProfileName -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">ProfileName
 </span><span class="hs-string">&quot;expires_in&quot;</span></span><span>
-</span><span id="line-100"></span><span>      </span><span id="local-6989586621679965963"><span class="annot"><span class="annottext">Scopes
-</span><a href="#local-6989586621679965963"><span class="hs-identifier hs-var">scopes</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679965969"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; ProfileName -&gt; Parser Scopes
+</span><span id="line-100"></span><span>      </span><span id="local-6989586621679965666"><span class="annot"><span class="annottext">Scopes
+</span><a href="#local-6989586621679965666"><span class="hs-identifier hs-var">scopes</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Object
+</span><a href="#local-6989586621679965672"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; ProfileName -&gt; Parser Scopes
 forall a. FromJSON a =&gt; Object -&gt; ProfileName -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">ProfileName
 </span><span class="hs-string">&quot;scope&quot;</span></span><span>
@@ -341,64 +341,64 @@ tokenType :: ProfileName
 refreshToken :: Maybe ProfileName
 idToken :: Maybe ProfileName
 accessToken :: ProfileName
-</span><a href="#local-6989586621679965963"><span class="hs-glyph hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">..</span></a></span><span class="hs-special">}</span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679965666"><span class="hs-glyph hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">..</span></a></span><span class="hs-special">}</span><span class="hs-special">)</span><span>
 </span><span id="line-102"></span><span>
-</span><span id="line-103"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679965956"><span id="local-6989586621679965958"><span id="local-6989586621679965960"><span class="annot"><span class="hs-identifier hs-type">Aeson.ToJSON</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Tokens"><span class="hs-identifier hs-type">Tokens</span></a></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-104"></span><span>  </span><span id="local-6989586621679965955"><span class="annot"><span class="annottext">toJSON :: Tokens -&gt; Value
-</span><a href="#local-6989586621679965955"><span class="hs-identifier hs-var hs-var hs-var hs-var">toJSON</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Auth.Types.html#Tokens"><span class="hs-identifier hs-type">Tokens</span></a></span><span> </span><span id="local-6989586621679965954"><span class="annot"><span class="annottext">ProfileName
-</span><a href="#local-6989586621679965954"><span class="hs-identifier hs-var">accessToken</span></a></span></span><span> </span><span id="local-6989586621679965953"><span class="annot"><span class="annottext">Maybe ProfileName
-</span><a href="#local-6989586621679965953"><span class="hs-identifier hs-var">idToken</span></a></span></span><span> </span><span id="local-6989586621679965952"><span class="annot"><span class="annottext">Maybe ProfileName
-</span><a href="#local-6989586621679965952"><span class="hs-identifier hs-var">refreshToken</span></a></span></span><span> </span><span id="local-6989586621679965951"><span class="annot"><span class="annottext">ProfileName
-</span><a href="#local-6989586621679965951"><span class="hs-identifier hs-var">tokenType</span></a></span></span><span> </span><span id="local-6989586621679965950"><span class="annot"><span class="annottext">NominalDiffTime
-</span><a href="#local-6989586621679965950"><span class="hs-identifier hs-var">expiresIn</span></a></span></span><span> </span><span id="local-6989586621679965949"><span class="annot"><span class="annottext">Scopes
-</span><a href="#local-6989586621679965949"><span class="hs-identifier hs-var">scopes</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-103"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679965659"><span id="local-6989586621679965661"><span id="local-6989586621679965663"><span class="annot"><span class="hs-identifier hs-type">Aeson.ToJSON</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Tokens"><span class="hs-identifier hs-type">Tokens</span></a></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-104"></span><span>  </span><span id="local-6989586621679965658"><span class="annot"><span class="annottext">toJSON :: Tokens -&gt; Value
+</span><a href="#local-6989586621679965658"><span class="hs-identifier hs-var hs-var hs-var hs-var">toJSON</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Auth.Types.html#Tokens"><span class="hs-identifier hs-type">Tokens</span></a></span><span> </span><span id="local-6989586621679965657"><span class="annot"><span class="annottext">ProfileName
+</span><a href="#local-6989586621679965657"><span class="hs-identifier hs-var">accessToken</span></a></span></span><span> </span><span id="local-6989586621679965656"><span class="annot"><span class="annottext">Maybe ProfileName
+</span><a href="#local-6989586621679965656"><span class="hs-identifier hs-var">idToken</span></a></span></span><span> </span><span id="local-6989586621679965655"><span class="annot"><span class="annottext">Maybe ProfileName
+</span><a href="#local-6989586621679965655"><span class="hs-identifier hs-var">refreshToken</span></a></span></span><span> </span><span id="local-6989586621679965654"><span class="annot"><span class="annottext">ProfileName
+</span><a href="#local-6989586621679965654"><span class="hs-identifier hs-var">tokenType</span></a></span></span><span> </span><span id="local-6989586621679965653"><span class="annot"><span class="annottext">NominalDiffTime
+</span><a href="#local-6989586621679965653"><span class="hs-identifier hs-var">expiresIn</span></a></span></span><span> </span><span id="local-6989586621679965652"><span class="annot"><span class="annottext">Scopes
+</span><a href="#local-6989586621679965652"><span class="hs-identifier hs-var">scopes</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-105"></span><span>    </span><span class="annot"><span class="annottext">[Pair] -&gt; Value
 </span><span class="hs-identifier hs-var">Aeson.object</span></span><span>
 </span><span id="line-106"></span><span>      </span><span class="hs-special">[</span><span> </span><span class="annot"><span class="annottext">ProfileName
 </span><span class="hs-string">&quot;access_token&quot;</span></span><span> </span><span class="annot"><span class="annottext">ProfileName -&gt; ProfileName -&gt; Pair
 forall kv v. (KeyValue kv, ToJSON v) =&gt; ProfileName -&gt; v -&gt; kv
 </span><span class="hs-operator hs-var">.=</span></span><span> </span><span class="annot"><span class="annottext">ProfileName
-</span><a href="#local-6989586621679965954"><span class="hs-identifier hs-var">accessToken</span></a></span><span class="hs-special">,</span><span>
+</span><a href="#local-6989586621679965657"><span class="hs-identifier hs-var">accessToken</span></a></span><span class="hs-special">,</span><span>
 </span><span id="line-107"></span><span>        </span><span class="annot"><span class="annottext">ProfileName
 </span><span class="hs-string">&quot;id_token&quot;</span></span><span> </span><span class="annot"><span class="annottext">ProfileName -&gt; Maybe ProfileName -&gt; Pair
 forall kv v. (KeyValue kv, ToJSON v) =&gt; ProfileName -&gt; v -&gt; kv
 </span><span class="hs-operator hs-var">.=</span></span><span> </span><span class="annot"><span class="annottext">Maybe ProfileName
-</span><a href="#local-6989586621679965953"><span class="hs-identifier hs-var">idToken</span></a></span><span class="hs-special">,</span><span>
+</span><a href="#local-6989586621679965656"><span class="hs-identifier hs-var">idToken</span></a></span><span class="hs-special">,</span><span>
 </span><span id="line-108"></span><span>        </span><span class="annot"><span class="annottext">ProfileName
 </span><span class="hs-string">&quot;refresh_token&quot;</span></span><span> </span><span class="annot"><span class="annottext">ProfileName -&gt; Maybe ProfileName -&gt; Pair
 forall kv v. (KeyValue kv, ToJSON v) =&gt; ProfileName -&gt; v -&gt; kv
 </span><span class="hs-operator hs-var">.=</span></span><span> </span><span class="annot"><span class="annottext">Maybe ProfileName
-</span><a href="#local-6989586621679965952"><span class="hs-identifier hs-var">refreshToken</span></a></span><span class="hs-special">,</span><span>
+</span><a href="#local-6989586621679965655"><span class="hs-identifier hs-var">refreshToken</span></a></span><span class="hs-special">,</span><span>
 </span><span id="line-109"></span><span>        </span><span class="annot"><span class="annottext">ProfileName
 </span><span class="hs-string">&quot;token_type&quot;</span></span><span> </span><span class="annot"><span class="annottext">ProfileName -&gt; ProfileName -&gt; Pair
 forall kv v. (KeyValue kv, ToJSON v) =&gt; ProfileName -&gt; v -&gt; kv
 </span><span class="hs-operator hs-var">.=</span></span><span> </span><span class="annot"><span class="annottext">ProfileName
-</span><a href="#local-6989586621679965951"><span class="hs-identifier hs-var">tokenType</span></a></span><span class="hs-special">,</span><span>
+</span><a href="#local-6989586621679965654"><span class="hs-identifier hs-var">tokenType</span></a></span><span class="hs-special">,</span><span>
 </span><span id="line-110"></span><span>        </span><span class="annot"><span class="annottext">ProfileName
 </span><span class="hs-string">&quot;expires_in&quot;</span></span><span> </span><span class="annot"><span class="annottext">ProfileName -&gt; NominalDiffTime -&gt; Pair
 forall kv v. (KeyValue kv, ToJSON v) =&gt; ProfileName -&gt; v -&gt; kv
 </span><span class="hs-operator hs-var">.=</span></span><span> </span><span class="annot"><span class="annottext">NominalDiffTime
-</span><a href="#local-6989586621679965950"><span class="hs-identifier hs-var">expiresIn</span></a></span><span class="hs-special">,</span><span>
+</span><a href="#local-6989586621679965653"><span class="hs-identifier hs-var">expiresIn</span></a></span><span class="hs-special">,</span><span>
 </span><span id="line-111"></span><span>        </span><span class="annot"><span class="annottext">ProfileName
 </span><span class="hs-string">&quot;scope&quot;</span></span><span> </span><span class="annot"><span class="annottext">ProfileName -&gt; Scopes -&gt; Pair
 forall kv v. (KeyValue kv, ToJSON v) =&gt; ProfileName -&gt; v -&gt; kv
 </span><span class="hs-operator hs-var">.=</span></span><span> </span><span class="annot"><span class="annottext">Scopes
-</span><a href="#local-6989586621679965949"><span class="hs-identifier hs-var">scopes</span></a></span><span>
+</span><a href="#local-6989586621679965652"><span class="hs-identifier hs-var">scopes</span></a></span><span>
 </span><span id="line-112"></span><span>      </span><span class="hs-special">]</span><span>
 </span><span id="line-113"></span><span>
 </span><span id="line-114"></span><span class="hs-keyword">newtype</span><span> </span><span id="URIParam"><span class="annot"><a href="Unison.Auth.Types.html#URIParam"><span class="hs-identifier hs-var">URIParam</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="URIParam"><span class="annot"><a href="Unison.Auth.Types.html#URIParam"><span class="hs-identifier hs-var">URIParam</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">URI</span></span><span>
 </span><span id="line-115"></span><span>
-</span><span id="line-116"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679965944"><span class="annot"><span class="hs-identifier hs-type">Aeson.FromJSON</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#URIParam"><span class="hs-identifier hs-type">URIParam</span></a></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-117"></span><span>  </span><span id="local-6989586621679965943"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser URIParam
-</span><a href="#local-6989586621679965943"><span class="hs-identifier hs-var hs-var hs-var hs-var">parseJSON</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span id="line-116"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679965647"><span class="annot"><span class="hs-identifier hs-type">Aeson.FromJSON</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#URIParam"><span class="hs-identifier hs-type">URIParam</span></a></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-117"></span><span>  </span><span id="local-6989586621679965646"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser URIParam
+</span><a href="#local-6989586621679965646"><span class="hs-identifier hs-var hs-var hs-var hs-var">parseJSON</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
 -&gt; (ProfileName -&gt; Parser URIParam) -&gt; Value -&gt; Parser URIParam
 forall a. String -&gt; (ProfileName -&gt; Parser a) -&gt; Value -&gt; Parser a
 </span><span class="hs-identifier hs-var">Aeson.withText</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;URI&quot;</span></span><span> </span><span class="annot"><span class="annottext">((ProfileName -&gt; Parser URIParam) -&gt; Value -&gt; Parser URIParam)
 -&gt; (ProfileName -&gt; Parser URIParam) -&gt; Value -&gt; Parser URIParam
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679965942"><span class="annot"><span class="annottext">ProfileName
-</span><a href="#local-6989586621679965942"><span class="hs-identifier hs-var">txt</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679965645"><span class="annot"><span class="annottext">ProfileName
+</span><a href="#local-6989586621679965645"><span class="hs-identifier hs-var">txt</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
 </span><span id="line-118"></span><span>    </span><span class="annot"><span class="annottext">Parser URIParam
 -&gt; (URI -&gt; Parser URIParam) -&gt; Maybe URI -&gt; Parser URIParam
 forall b a. b -&gt; (a -&gt; b) -&gt; Maybe a -&gt; b
@@ -416,40 +416,40 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Maybe URI
 </span><span class="hs-identifier hs-var">URI.parseURI</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ProfileName -&gt; String
 </span><span class="hs-identifier hs-var">Text.unpack</span></span><span> </span><span class="annot"><span class="annottext">ProfileName
-</span><a href="#local-6989586621679965942"><span class="hs-identifier hs-var">txt</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679965645"><span class="hs-identifier hs-var">txt</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-119"></span><span>
-</span><span id="line-120"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679965936"><span class="annot"><span class="hs-identifier hs-type">Aeson.FromJSON</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#DiscoveryDoc"><span class="hs-identifier hs-type">DiscoveryDoc</span></a></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-121"></span><span>  </span><span id="local-6989586621679965935"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser DiscoveryDoc
-</span><a href="#local-6989586621679965935"><span class="hs-identifier hs-var hs-var hs-var hs-var">parseJSON</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span id="line-120"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679965639"><span class="annot"><span class="hs-identifier hs-type">Aeson.FromJSON</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#DiscoveryDoc"><span class="hs-identifier hs-type">DiscoveryDoc</span></a></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-121"></span><span>  </span><span id="local-6989586621679965638"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser DiscoveryDoc
+</span><a href="#local-6989586621679965638"><span class="hs-identifier hs-var hs-var hs-var hs-var">parseJSON</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
 -&gt; (Object -&gt; Parser DiscoveryDoc) -&gt; Value -&gt; Parser DiscoveryDoc
 forall a. String -&gt; (Object -&gt; Parser a) -&gt; Value -&gt; Parser a
 </span><span class="hs-identifier hs-var">Aeson.withObject</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;Discovery Document&quot;</span></span><span> </span><span class="annot"><span class="annottext">((Object -&gt; Parser DiscoveryDoc) -&gt; Value -&gt; Parser DiscoveryDoc)
 -&gt; (Object -&gt; Parser DiscoveryDoc) -&gt; Value -&gt; Parser DiscoveryDoc
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679965934"><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679965934"><span class="hs-identifier hs-var">obj</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-122"></span><span>    </span><span class="annot"><a href="Unison.Auth.Types.html#URIParam"><span class="hs-identifier hs-type">URIParam</span></a></span><span> </span><span id="local-6989586621679965933"><span class="annot"><span class="annottext">URI
-</span><a href="#local-6989586621679965933"><span class="hs-identifier hs-var">issuer</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679965934"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; ProfileName -&gt; Parser URIParam
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679965637"><span class="annot"><span class="annottext">Object
+</span><a href="#local-6989586621679965637"><span class="hs-identifier hs-var">obj</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-122"></span><span>    </span><span class="annot"><a href="Unison.Auth.Types.html#URIParam"><span class="hs-identifier hs-type">URIParam</span></a></span><span> </span><span id="local-6989586621679965636"><span class="annot"><span class="annottext">URI
+</span><a href="#local-6989586621679965636"><span class="hs-identifier hs-var">issuer</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Object
+</span><a href="#local-6989586621679965637"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; ProfileName -&gt; Parser URIParam
 forall a. FromJSON a =&gt; Object -&gt; ProfileName -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">ProfileName
 </span><span class="hs-string">&quot;issuer&quot;</span></span><span>
-</span><span id="line-123"></span><span>    </span><span class="annot"><a href="Unison.Auth.Types.html#URIParam"><span class="hs-identifier hs-type">URIParam</span></a></span><span> </span><span id="local-6989586621679965932"><span class="annot"><span class="annottext">URI
-</span><a href="#local-6989586621679965932"><span class="hs-identifier hs-var">authorizationEndpoint</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679965934"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; ProfileName -&gt; Parser URIParam
+</span><span id="line-123"></span><span>    </span><span class="annot"><a href="Unison.Auth.Types.html#URIParam"><span class="hs-identifier hs-type">URIParam</span></a></span><span> </span><span id="local-6989586621679965635"><span class="annot"><span class="annottext">URI
+</span><a href="#local-6989586621679965635"><span class="hs-identifier hs-var">authorizationEndpoint</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Object
+</span><a href="#local-6989586621679965637"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; ProfileName -&gt; Parser URIParam
 forall a. FromJSON a =&gt; Object -&gt; ProfileName -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">ProfileName
 </span><span class="hs-string">&quot;authorization_endpoint&quot;</span></span><span>
-</span><span id="line-124"></span><span>    </span><span class="annot"><a href="Unison.Auth.Types.html#URIParam"><span class="hs-identifier hs-type">URIParam</span></a></span><span> </span><span id="local-6989586621679965931"><span class="annot"><span class="annottext">URI
-</span><a href="#local-6989586621679965931"><span class="hs-identifier hs-var">tokenEndpoint</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679965934"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; ProfileName -&gt; Parser URIParam
+</span><span id="line-124"></span><span>    </span><span class="annot"><a href="Unison.Auth.Types.html#URIParam"><span class="hs-identifier hs-type">URIParam</span></a></span><span> </span><span id="local-6989586621679965634"><span class="annot"><span class="annottext">URI
+</span><a href="#local-6989586621679965634"><span class="hs-identifier hs-var">tokenEndpoint</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Object
+</span><a href="#local-6989586621679965637"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; ProfileName -&gt; Parser URIParam
 forall a. FromJSON a =&gt; Object -&gt; ProfileName -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">ProfileName
 </span><span class="hs-string">&quot;token_endpoint&quot;</span></span><span>
-</span><span id="line-125"></span><span>    </span><span class="annot"><a href="Unison.Auth.Types.html#URIParam"><span class="hs-identifier hs-type">URIParam</span></a></span><span> </span><span id="local-6989586621679965930"><span class="annot"><span class="annottext">URI
-</span><a href="#local-6989586621679965930"><span class="hs-identifier hs-var">userInfoEndpoint</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679965934"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; ProfileName -&gt; Parser URIParam
+</span><span id="line-125"></span><span>    </span><span class="annot"><a href="Unison.Auth.Types.html#URIParam"><span class="hs-identifier hs-type">URIParam</span></a></span><span> </span><span id="local-6989586621679965633"><span class="annot"><span class="annottext">URI
+</span><a href="#local-6989586621679965633"><span class="hs-identifier hs-var">userInfoEndpoint</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Object
+</span><a href="#local-6989586621679965637"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; ProfileName -&gt; Parser URIParam
 forall a. FromJSON a =&gt; Object -&gt; ProfileName -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">ProfileName
 </span><span class="hs-string">&quot;userinfo_endpoint&quot;</span></span><span>
@@ -465,7 +465,7 @@ userInfoEndpoint :: URI
 tokenEndpoint :: URI
 authorizationEndpoint :: URI
 issuer :: URI
-</span><a href="#local-6989586621679965930"><span class="hs-glyph hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">..</span></a></span><span class="hs-special">}</span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679965633"><span class="hs-glyph hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">..</span></a></span><span class="hs-special">}</span><span class="hs-special">)</span><span>
 </span><span id="line-127"></span><span>
 </span><span id="line-128"></span><span class="hs-keyword">type</span><span> </span><span id="ProfileName"><span class="annot"><a href="Unison.Auth.Types.html#ProfileName"><span class="hs-identifier hs-var">ProfileName</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span>
 </span><span id="line-129"></span><span>
@@ -475,7 +475,7 @@ issuer :: URI
 </span><span id="line-132"></span><span>    </span><span id="activeProfile"><span class="annot"><span class="annottext">Credentials -&gt; ProfileName
 </span><a href="Unison.Auth.Types.html#activeProfile"><span class="hs-identifier hs-var hs-var">activeProfile</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#ProfileName"><span class="hs-identifier hs-type">ProfileName</span></a></span><span>
 </span><span id="line-133"></span><span>  </span><span class="hs-special">}</span><span>
-</span><span id="line-134"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679965923"><span id="local-6989586621679965925"><span class="annot"><span class="annottext">Credentials -&gt; Credentials -&gt; Bool
+</span><span id="line-134"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679965626"><span id="local-6989586621679965628"><span class="annot"><span class="annottext">Credentials -&gt; Credentials -&gt; Bool
 (Credentials -&gt; Credentials -&gt; Bool)
 -&gt; (Credentials -&gt; Credentials -&gt; Bool) -&gt; Eq Credentials
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -496,25 +496,25 @@ forall a. Monoid a =&gt; a
 </span><span id="line-138"></span><span>
 </span><span id="line-139"></span><span class="annot"><a href="Unison.Auth.Types.html#getActiveTokens"><span class="hs-identifier hs-type">getActiveTokens</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Share.Types.html#CodeserverId"><span class="hs-identifier hs-type">CodeserverId</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Credentials"><span class="hs-identifier hs-type">Credentials</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#CredentialFailure"><span class="hs-identifier hs-type">CredentialFailure</span></a></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Tokens"><span class="hs-identifier hs-type">Tokens</span></a></span><span>
 </span><span id="line-140"></span><span id="getActiveTokens"><span class="annot"><span class="annottext">getActiveTokens :: CodeserverId -&gt; Credentials -&gt; Either CredentialFailure Tokens
-</span><a href="Unison.Auth.Types.html#getActiveTokens"><span class="hs-identifier hs-var hs-var">getActiveTokens</span></a></span></span><span> </span><span id="local-6989586621679965922"><span class="annot"><span class="annottext">CodeserverId
-</span><a href="#local-6989586621679965922"><span class="hs-identifier hs-var">host</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Auth.Types.html#Credentials"><span class="hs-identifier hs-type">Credentials</span></a></span><span> </span><span class="hs-special">{</span><span id="local-6989586621679965921"><span class="annot"><span class="annottext">Map ProfileName (Map CodeserverId Tokens)
+</span><a href="Unison.Auth.Types.html#getActiveTokens"><span class="hs-identifier hs-var hs-var">getActiveTokens</span></a></span></span><span> </span><span id="local-6989586621679965625"><span class="annot"><span class="annottext">CodeserverId
+</span><a href="#local-6989586621679965625"><span class="hs-identifier hs-var">host</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Auth.Types.html#Credentials"><span class="hs-identifier hs-type">Credentials</span></a></span><span> </span><span class="hs-special">{</span><span id="local-6989586621679965624"><span class="annot"><span class="annottext">Map ProfileName (Map CodeserverId Tokens)
 credentials :: Map ProfileName (Map CodeserverId Tokens)
 credentials :: Credentials -&gt; Map ProfileName (Map CodeserverId Tokens)
-</span><a href="#local-6989586621679965921"><span class="hs-identifier hs-var hs-var">credentials</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679965920"><span class="annot"><span class="annottext">ProfileName
+</span><a href="#local-6989586621679965624"><span class="hs-identifier hs-var hs-var">credentials</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679965623"><span class="annot"><span class="annottext">ProfileName
 activeProfile :: ProfileName
 activeProfile :: Credentials -&gt; ProfileName
-</span><a href="#local-6989586621679965920"><span class="hs-identifier hs-var hs-var">activeProfile</span></a></span></span><span class="hs-special">}</span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span>
+</span><a href="#local-6989586621679965623"><span class="hs-identifier hs-var hs-var">activeProfile</span></a></span></span><span class="hs-special">}</span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-141"></span><span>  </span><span class="annot"><span class="annottext">CredentialFailure
 -&gt; Maybe Tokens -&gt; Either CredentialFailure Tokens
 forall a b. a -&gt; Maybe b -&gt; Either a b
 </span><span class="hs-identifier hs-var">maybeToEither</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">CodeserverId -&gt; CredentialFailure
 </span><a href="Unison.Auth.Types.html#ReauthRequired"><span class="hs-identifier hs-var">ReauthRequired</span></a></span><span> </span><span class="annot"><span class="annottext">CodeserverId
-</span><a href="#local-6989586621679965922"><span class="hs-identifier hs-var">host</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(Maybe Tokens -&gt; Either CredentialFailure Tokens)
+</span><a href="#local-6989586621679965625"><span class="hs-identifier hs-var">host</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(Maybe Tokens -&gt; Either CredentialFailure Tokens)
 -&gt; Maybe Tokens -&gt; Either CredentialFailure Tokens
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span>
 </span><span id="line-142"></span><span>    </span><span class="annot"><span class="annottext">Map ProfileName (Map CodeserverId Tokens)
-</span><a href="#local-6989586621679965921"><span class="hs-identifier hs-var">credentials</span></a></span><span> </span><span class="annot"><span class="annottext">Map ProfileName (Map CodeserverId Tokens)
+</span><a href="#local-6989586621679965624"><span class="hs-identifier hs-var">credentials</span></a></span><span> </span><span class="annot"><span class="annottext">Map ProfileName (Map CodeserverId Tokens)
 -&gt; Getting
      (First Tokens) (Map ProfileName (Map CodeserverId Tokens)) Tokens
 -&gt; Maybe Tokens
@@ -526,7 +526,7 @@ forall s a. s -&gt; Getting (First a) s a -&gt; Maybe a
 forall m. Ixed m =&gt; Index m -&gt; Traversal' m (IxValue m)
 </span><span class="hs-identifier hs-var">ix</span></span><span> </span><span class="annot"><span class="annottext">ProfileName
 Index (Map ProfileName (Map CodeserverId Tokens))
-</span><a href="#local-6989586621679965920"><span class="hs-identifier hs-var">activeProfile</span></a></span><span> </span><span class="annot"><span class="annottext">((Map CodeserverId Tokens
+</span><a href="#local-6989586621679965623"><span class="hs-identifier hs-var">activeProfile</span></a></span><span> </span><span class="annot"><span class="annottext">((Map CodeserverId Tokens
   -&gt; Const (First Tokens) (Map CodeserverId Tokens))
  -&gt; Map ProfileName (Map CodeserverId Tokens)
  -&gt; Const
@@ -543,24 +543,24 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 forall m. Ixed m =&gt; Index m -&gt; Traversal' m (IxValue m)
 </span><span class="hs-identifier hs-var">ix</span></span><span> </span><span class="annot"><span class="annottext">Index (Map CodeserverId Tokens)
 CodeserverId
-</span><a href="#local-6989586621679965922"><span class="hs-identifier hs-var">host</span></a></span><span>
+</span><a href="#local-6989586621679965625"><span class="hs-identifier hs-var">host</span></a></span><span>
 </span><span id="line-143"></span><span>
 </span><span id="line-144"></span><span class="annot"><a href="Unison.Auth.Types.html#setActiveTokens"><span class="hs-identifier hs-type">setActiveTokens</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Share.Types.html#CodeserverId"><span class="hs-identifier hs-type">CodeserverId</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Tokens"><span class="hs-identifier hs-type">Tokens</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Credentials"><span class="hs-identifier hs-type">Credentials</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Credentials"><span class="hs-identifier hs-type">Credentials</span></a></span><span>
 </span><span id="line-145"></span><span id="setActiveTokens"><span class="annot"><span class="annottext">setActiveTokens :: CodeserverId -&gt; Tokens -&gt; Credentials -&gt; Credentials
-</span><a href="Unison.Auth.Types.html#setActiveTokens"><span class="hs-identifier hs-var hs-var">setActiveTokens</span></a></span></span><span> </span><span id="local-6989586621679965916"><span class="annot"><span class="annottext">CodeserverId
-</span><a href="#local-6989586621679965916"><span class="hs-identifier hs-var">host</span></a></span></span><span> </span><span id="local-6989586621679965915"><span class="annot"><span class="annottext">Tokens
-</span><a href="#local-6989586621679965915"><span class="hs-identifier hs-var">tokens</span></a></span></span><span> </span><span id="local-6989586621679965914"><span class="annot"><span class="annottext">creds :: Credentials
-</span><a href="#local-6989586621679965914"><span class="hs-identifier hs-var">creds</span></a></span></span><span class="hs-glyph">@</span><span class="hs-special">(</span><span class="annot"><a href="Unison.Auth.Types.html#Credentials"><span class="hs-identifier hs-type">Credentials</span></a></span><span> </span><span class="hs-special">{</span><span id="local-6989586621679965913"><span class="annot"><span class="annottext">Map ProfileName (Map CodeserverId Tokens)
+</span><a href="Unison.Auth.Types.html#setActiveTokens"><span class="hs-identifier hs-var hs-var">setActiveTokens</span></a></span></span><span> </span><span id="local-6989586621679965619"><span class="annot"><span class="annottext">CodeserverId
+</span><a href="#local-6989586621679965619"><span class="hs-identifier hs-var">host</span></a></span></span><span> </span><span id="local-6989586621679965618"><span class="annot"><span class="annottext">Tokens
+</span><a href="#local-6989586621679965618"><span class="hs-identifier hs-var">tokens</span></a></span></span><span> </span><span id="local-6989586621679965617"><span class="annot"><span class="annottext">creds :: Credentials
+</span><a href="#local-6989586621679965617"><span class="hs-identifier hs-var">creds</span></a></span></span><span class="hs-glyph">@</span><span class="hs-special">(</span><span class="annot"><a href="Unison.Auth.Types.html#Credentials"><span class="hs-identifier hs-type">Credentials</span></a></span><span> </span><span class="hs-special">{</span><span id="local-6989586621679965616"><span class="annot"><span class="annottext">Map ProfileName (Map CodeserverId Tokens)
 credentials :: Map ProfileName (Map CodeserverId Tokens)
 credentials :: Credentials -&gt; Map ProfileName (Map CodeserverId Tokens)
-</span><a href="#local-6989586621679965913"><span class="hs-identifier hs-var hs-var">credentials</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679965912"><span class="annot"><span class="annottext">ProfileName
+</span><a href="#local-6989586621679965616"><span class="hs-identifier hs-var hs-var">credentials</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679965615"><span class="annot"><span class="annottext">ProfileName
 activeProfile :: ProfileName
 activeProfile :: Credentials -&gt; ProfileName
-</span><a href="#local-6989586621679965912"><span class="hs-identifier hs-var hs-var">activeProfile</span></a></span></span><span class="hs-special">}</span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-146"></span><span>  </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679965911"><span class="annot"><span class="annottext">newCredMap :: Map ProfileName (Map CodeserverId Tokens)
-</span><a href="#local-6989586621679965911"><span class="hs-identifier hs-var hs-var">newCredMap</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><a href="#local-6989586621679965615"><span class="hs-identifier hs-var hs-var">activeProfile</span></a></span></span><span class="hs-special">}</span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-146"></span><span>  </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679965614"><span class="annot"><span class="annottext">newCredMap :: Map ProfileName (Map CodeserverId Tokens)
+</span><a href="#local-6989586621679965614"><span class="hs-identifier hs-var hs-var">newCredMap</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-147"></span><span>        </span><span class="annot"><span class="annottext">Map ProfileName (Map CodeserverId Tokens)
-</span><a href="#local-6989586621679965913"><span class="hs-identifier hs-var">credentials</span></a></span><span>
+</span><a href="#local-6989586621679965616"><span class="hs-identifier hs-var">credentials</span></a></span><span>
 </span><span id="line-148"></span><span>          </span><span class="annot"><span class="annottext">Map ProfileName (Map CodeserverId Tokens)
 -&gt; (Map ProfileName (Map CodeserverId Tokens)
     -&gt; Map ProfileName (Map CodeserverId Tokens))
@@ -573,7 +573,7 @@ forall a b. a -&gt; (a -&gt; b) -&gt; b
 forall m. At m =&gt; Index m -&gt; Lens' m (Maybe (IxValue m))
 </span><span class="hs-identifier hs-var">at</span></span><span> </span><span class="annot"><span class="annottext">ProfileName
 Index (Map ProfileName (Map CodeserverId Tokens))
-</span><a href="#local-6989586621679965912"><span class="hs-identifier hs-var">activeProfile</span></a></span><span> </span><span class="annot"><span class="annottext">((Maybe (Map CodeserverId Tokens)
+</span><a href="#local-6989586621679965615"><span class="hs-identifier hs-var">activeProfile</span></a></span><span> </span><span class="annot"><span class="annottext">((Maybe (Map CodeserverId Tokens)
   -&gt; Identity (Maybe (Map CodeserverId Tokens)))
  -&gt; Map ProfileName (Map CodeserverId Tokens)
  -&gt; Identity (Map ProfileName (Map CodeserverId Tokens)))
@@ -605,7 +605,7 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 forall m. At m =&gt; Index m -&gt; Lens' m (Maybe (IxValue m))
 </span><span class="hs-identifier hs-var">at</span></span><span> </span><span class="annot"><span class="annottext">Index (Map CodeserverId Tokens)
 CodeserverId
-</span><a href="#local-6989586621679965916"><span class="hs-identifier hs-var">host</span></a></span><span> </span><span class="annot"><span class="annottext">((Maybe Tokens -&gt; Identity (Maybe Tokens))
+</span><a href="#local-6989586621679965619"><span class="hs-identifier hs-var">host</span></a></span><span> </span><span class="annot"><span class="annottext">((Maybe Tokens -&gt; Identity (Maybe Tokens))
  -&gt; Map ProfileName (Map CodeserverId Tokens)
  -&gt; Identity (Map ProfileName (Map CodeserverId Tokens)))
 -&gt; Maybe Tokens
@@ -615,53 +615,53 @@ forall s t a b. ASetter s t a b -&gt; b -&gt; s -&gt; t
 </span><span class="hs-operator hs-var">.~</span></span><span> </span><span class="annot"><span class="annottext">Tokens -&gt; Maybe Tokens
 forall a. a -&gt; Maybe a
 </span><span class="hs-identifier hs-var">Just</span></span><span> </span><span class="annot"><span class="annottext">Tokens
-</span><a href="#local-6989586621679965915"><span class="hs-identifier hs-var">tokens</span></a></span><span>
+</span><a href="#local-6989586621679965618"><span class="hs-identifier hs-var">tokens</span></a></span><span>
 </span><span id="line-149"></span><span>   </span><span class="hs-keyword">in</span><span> </span><span class="annot"><span class="annottext">Credentials
-</span><a href="#local-6989586621679965914"><span class="hs-identifier hs-var">creds</span></a></span><span> </span><span class="hs-special">{</span><span class="annot"><span class="annottext">credentials :: Map ProfileName (Map CodeserverId Tokens)
+</span><a href="#local-6989586621679965617"><span class="hs-identifier hs-var">creds</span></a></span><span> </span><span class="hs-special">{</span><span class="annot"><span class="annottext">credentials :: Map ProfileName (Map CodeserverId Tokens)
 </span><a href="Unison.Auth.Types.html#credentials"><span class="hs-identifier hs-var">credentials</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Map ProfileName (Map CodeserverId Tokens)
-</span><a href="#local-6989586621679965911"><span class="hs-identifier hs-var">newCredMap</span></a></span><span class="hs-special">}</span><span>
+</span><a href="#local-6989586621679965614"><span class="hs-identifier hs-var">newCredMap</span></a></span><span class="hs-special">}</span><span>
 </span><span id="line-150"></span><span>
-</span><span id="line-151"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679965899"><span id="local-6989586621679965901"><span id="local-6989586621679965903"><span class="annot"><span class="hs-identifier hs-type">Aeson.ToJSON</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Credentials"><span class="hs-identifier hs-type">Credentials</span></a></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-152"></span><span>  </span><span id="local-6989586621679965898"><span class="annot"><span class="annottext">toJSON :: Credentials -&gt; Value
-</span><a href="#local-6989586621679965898"><span class="hs-identifier hs-var hs-var hs-var hs-var">toJSON</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Auth.Types.html#Credentials"><span class="hs-identifier hs-type">Credentials</span></a></span><span> </span><span id="local-6989586621679965897"><span class="annot"><span class="annottext">Map ProfileName (Map CodeserverId Tokens)
-</span><a href="#local-6989586621679965897"><span class="hs-identifier hs-var">credMap</span></a></span></span><span> </span><span id="local-6989586621679965896"><span class="annot"><span class="annottext">ProfileName
-</span><a href="#local-6989586621679965896"><span class="hs-identifier hs-var">activeProfile</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-151"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679965602"><span id="local-6989586621679965604"><span id="local-6989586621679965606"><span class="annot"><span class="hs-identifier hs-type">Aeson.ToJSON</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Credentials"><span class="hs-identifier hs-type">Credentials</span></a></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-152"></span><span>  </span><span id="local-6989586621679965601"><span class="annot"><span class="annottext">toJSON :: Credentials -&gt; Value
+</span><a href="#local-6989586621679965601"><span class="hs-identifier hs-var hs-var hs-var hs-var">toJSON</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Auth.Types.html#Credentials"><span class="hs-identifier hs-type">Credentials</span></a></span><span> </span><span id="local-6989586621679965600"><span class="annot"><span class="annottext">Map ProfileName (Map CodeserverId Tokens)
+</span><a href="#local-6989586621679965600"><span class="hs-identifier hs-var">credMap</span></a></span></span><span> </span><span id="local-6989586621679965599"><span class="annot"><span class="annottext">ProfileName
+</span><a href="#local-6989586621679965599"><span class="hs-identifier hs-var">activeProfile</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-153"></span><span>    </span><span class="annot"><span class="annottext">[Pair] -&gt; Value
 </span><span class="hs-identifier hs-var">Aeson.object</span></span><span>
 </span><span id="line-154"></span><span>      </span><span class="hs-special">[</span><span> </span><span class="annot"><span class="annottext">ProfileName
 </span><span class="hs-string">&quot;credentials&quot;</span></span><span> </span><span class="annot"><span class="annottext">ProfileName -&gt; Map ProfileName (Map CodeserverId Tokens) -&gt; Pair
 forall kv v. (KeyValue kv, ToJSON v) =&gt; ProfileName -&gt; v -&gt; kv
 </span><span class="hs-operator hs-var">.=</span></span><span> </span><span class="annot"><span class="annottext">Map ProfileName (Map CodeserverId Tokens)
-</span><a href="#local-6989586621679965897"><span class="hs-identifier hs-var">credMap</span></a></span><span class="hs-special">,</span><span>
+</span><a href="#local-6989586621679965600"><span class="hs-identifier hs-var">credMap</span></a></span><span class="hs-special">,</span><span>
 </span><span id="line-155"></span><span>        </span><span class="annot"><span class="annottext">ProfileName
 </span><span class="hs-string">&quot;active_profile&quot;</span></span><span> </span><span class="annot"><span class="annottext">ProfileName -&gt; ProfileName -&gt; Pair
 forall kv v. (KeyValue kv, ToJSON v) =&gt; ProfileName -&gt; v -&gt; kv
 </span><span class="hs-operator hs-var">.=</span></span><span> </span><span class="annot"><span class="annottext">ProfileName
-</span><a href="#local-6989586621679965896"><span class="hs-identifier hs-var">activeProfile</span></a></span><span>
+</span><a href="#local-6989586621679965599"><span class="hs-identifier hs-var">activeProfile</span></a></span><span>
 </span><span id="line-156"></span><span>      </span><span class="hs-special">]</span><span>
 </span><span id="line-157"></span><span>
-</span><span id="line-158"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679965893"><span class="annot"><span class="hs-identifier hs-type">Aeson.FromJSON</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Credentials"><span class="hs-identifier hs-type">Credentials</span></a></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-159"></span><span>  </span><span id="local-6989586621679965892"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser Credentials
-</span><a href="#local-6989586621679965892"><span class="hs-identifier hs-var hs-var hs-var hs-var">parseJSON</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span id="line-158"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679965596"><span class="annot"><span class="hs-identifier hs-type">Aeson.FromJSON</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Credentials"><span class="hs-identifier hs-type">Credentials</span></a></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-159"></span><span>  </span><span id="local-6989586621679965595"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser Credentials
+</span><a href="#local-6989586621679965595"><span class="hs-identifier hs-var hs-var hs-var hs-var">parseJSON</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
 -&gt; (Object -&gt; Parser Credentials) -&gt; Value -&gt; Parser Credentials
 forall a. String -&gt; (Object -&gt; Parser a) -&gt; Value -&gt; Parser a
 </span><span class="hs-identifier hs-var">Aeson.withObject</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;Credentials&quot;</span></span><span> </span><span class="annot"><span class="annottext">((Object -&gt; Parser Credentials) -&gt; Value -&gt; Parser Credentials)
 -&gt; (Object -&gt; Parser Credentials) -&gt; Value -&gt; Parser Credentials
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679965891"><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679965891"><span class="hs-identifier hs-var">obj</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-160"></span><span>    </span><span id="local-6989586621679965890"><span class="annot"><span class="annottext">Map ProfileName (Map CodeserverId Tokens)
-</span><a href="#local-6989586621679965890"><span class="hs-identifier hs-var">credentials</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679965891"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679965594"><span class="annot"><span class="annottext">Object
+</span><a href="#local-6989586621679965594"><span class="hs-identifier hs-var">obj</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-160"></span><span>    </span><span id="local-6989586621679965593"><span class="annot"><span class="annottext">Map ProfileName (Map CodeserverId Tokens)
+</span><a href="#local-6989586621679965593"><span class="hs-identifier hs-var">credentials</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Object
+</span><a href="#local-6989586621679965594"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object
 -&gt; ProfileName
 -&gt; Parser (Map ProfileName (Map CodeserverId Tokens))
 forall a. FromJSON a =&gt; Object -&gt; ProfileName -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">ProfileName
 </span><span class="hs-string">&quot;credentials&quot;</span></span><span>
-</span><span id="line-161"></span><span>    </span><span id="local-6989586621679965889"><span class="annot"><span class="annottext">ProfileName
-</span><a href="#local-6989586621679965889"><span class="hs-identifier hs-var">activeProfile</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679965891"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; ProfileName -&gt; Parser ProfileName
+</span><span id="line-161"></span><span>    </span><span id="local-6989586621679965592"><span class="annot"><span class="annottext">ProfileName
+</span><a href="#local-6989586621679965592"><span class="hs-identifier hs-var">activeProfile</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Object
+</span><a href="#local-6989586621679965594"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; ProfileName -&gt; Parser ProfileName
 forall a. FromJSON a =&gt; Object -&gt; ProfileName -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">ProfileName
 </span><span class="hs-string">&quot;active_profile&quot;</span></span><span>
@@ -673,5 +673,5 @@ activeProfile :: ProfileName
 credentials :: Map ProfileName (Map CodeserverId Tokens)
 activeProfile :: ProfileName
 credentials :: Map ProfileName (Map CodeserverId Tokens)
-</span><a href="#local-6989586621679965889"><span class="hs-glyph hs-var hs-var hs-var hs-var">..</span></a></span><span class="hs-special">}</span><span>
+</span><a href="#local-6989586621679965592"><span class="hs-glyph hs-var hs-var hs-var hs-var">..</span></a></span><span class="hs-special">}</span><span>
 </span><span id="line-163"></span></pre></body></html>
