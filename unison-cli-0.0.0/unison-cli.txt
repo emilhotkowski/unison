@@ -537,7 +537,7 @@ pushExhaustive :: InputPattern
 createPullRequest :: InputPattern
 loadPullRequest :: InputPattern
 parseUri :: String -> String -> Either (Pretty ColorText) ReadRemoteNamespace
-prettyPrintParseError :: String -> ParseError Char Void -> Pretty ColorText
+prettyPrintParseError :: String -> ParseErrorBundle Text Void -> Pretty ColorText
 parseWriteRepo :: String -> String -> Either (Pretty ColorText) WriteRepo
 parsePushPath :: String -> String -> Either (Pretty ColorText) WriteRemotePath
 squashMerge :: InputPattern
@@ -604,6 +604,8 @@ noCompletions :: ArgumentType
 gitUrlArg :: ArgumentType
 collectNothings :: (a -> Maybe b) -> [a] -> [a]
 explainRemote :: Pretty ColorText
+showErrorFancy :: ShowErrorComponent e => ErrorFancy e -> String
+showErrorItem :: ErrorItem (Token Text) -> String
 
 module Unison.CommandLine.Welcome
 data Welcome
@@ -1140,13 +1142,13 @@ LoopState :: Branch m -> Branch m -> NonEmpty Absolute -> Maybe (FilePath, SkipN
 type Action' m v = Action m (Either Event Input) v
 type SkipNextUpdate = Bool
 type InputDescription = Text
-root :: forall m_a30en v_a30eo. Lens' (LoopState m_a30en v_a30eo) (Branch m_a30en)
-numberedArgs :: forall m_a30en v_a30eo. Lens' (LoopState m_a30en v_a30eo) NumberedArgs
-latestTypecheckedFile :: forall m_a30en v_a30eo v_a30Wa. Lens (LoopState m_a30en v_a30eo) (LoopState m_a30en v_a30Wa) (Maybe (TypecheckedUnisonFile v_a30eo Ann)) (Maybe (TypecheckedUnisonFile v_a30Wa Ann))
-latestFile :: forall m_a30en v_a30eo. Lens' (LoopState m_a30en v_a30eo) (Maybe (FilePath, SkipNextUpdate))
-lastSavedRoot :: forall m_a30en v_a30eo. Lens' (LoopState m_a30en v_a30eo) (Branch m_a30en)
-lastInput :: forall m_a30en v_a30eo. Lens' (LoopState m_a30en v_a30eo) (Maybe Input)
-currentPathStack :: forall m_a30en v_a30eo. Lens' (LoopState m_a30en v_a30eo) (NonEmpty Absolute)
+root :: forall m_a30va v_a30vb. Lens' (LoopState m_a30va v_a30vb) (Branch m_a30va)
+numberedArgs :: forall m_a30va v_a30vb. Lens' (LoopState m_a30va v_a30vb) NumberedArgs
+latestTypecheckedFile :: forall m_a30va v_a30vb v_a31cX. Lens (LoopState m_a30va v_a30vb) (LoopState m_a30va v_a31cX) (Maybe (TypecheckedUnisonFile v_a30vb Ann)) (Maybe (TypecheckedUnisonFile v_a31cX Ann))
+latestFile :: forall m_a30va v_a30vb. Lens' (LoopState m_a30va v_a30vb) (Maybe (FilePath, SkipNextUpdate))
+lastSavedRoot :: forall m_a30va v_a30vb. Lens' (LoopState m_a30va v_a30vb) (Branch m_a30va)
+lastInput :: forall m_a30va v_a30vb. Lens' (LoopState m_a30va v_a30vb) (Maybe Input)
+currentPathStack :: forall m_a30va v_a30vb. Lens' (LoopState m_a30va v_a30vb) (NonEmpty Absolute)
 currentPath :: Getter (LoopState m v) Absolute
 loopState0 :: Branch m -> Absolute -> LoopState m v
 respond :: MonadCommand n m i v => Output v -> n ()

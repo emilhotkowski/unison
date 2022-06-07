@@ -1444,8 +1444,10 @@ instance Data.Foldable.Foldable Unison.Lexer.T
 instance GHC.Base.Functor Unison.Lexer.T
 instance GHC.Show.Show a => GHC.Show.Show (Unison.Lexer.T a)
 instance Text.Megaparsec.Error.ShowErrorComponent (Unison.Lexer.Token Unison.Lexer.Err)
-instance Text.Megaparsec.Error.ShowToken (Unison.Lexer.Token Unison.Lexer.Lexeme)
+instance Text.Megaparsec.Stream.VisualStream [Unison.Lexer.Token Unison.Lexer.Lexeme]
 instance GHC.Base.Applicative Unison.Lexer.Token
+instance Data.Traversable.Traversable Unison.Lexer.Token
+instance Data.Foldable.Foldable Unison.Lexer.Token
 instance GHC.Base.Functor Unison.Lexer.Token
 instance GHC.Show.Show a => GHC.Show.Show (Unison.Lexer.Token a)
 instance GHC.Classes.Ord a => GHC.Classes.Ord (Unison.Lexer.Token a)
@@ -1462,7 +1464,7 @@ module Unison.Parser
 debug :: Bool
 type P v = ParsecT (Error v) Input ((->) ParsingEnv)
 type Token s = Token s
-type Err v = ParseError (Token Input) (Error v)
+type Err v = ParseError Input (Error v)
 data ParsingEnv
 ParsingEnv :: UniqueName -> NamesWithHistory -> ParsingEnv
 [uniqueNames] :: ParsingEnv -> UniqueName
@@ -1553,6 +1555,8 @@ positionalVar :: (Annotated a, Var v) => a -> v -> v
 instance GHC.Classes.Ord v => GHC.Classes.Ord (Unison.Parser.Error v)
 instance GHC.Classes.Eq v => GHC.Classes.Eq (Unison.Parser.Error v)
 instance GHC.Show.Show v => GHC.Show.Show (Unison.Parser.Error v)
+instance Text.Megaparsec.Stream.VisualStream Unison.Parser.Input
+instance Text.Megaparsec.Stream.Stream Unison.Parser.Input
 instance GHC.Show.Show Unison.Parser.Input
 instance GHC.Classes.Ord Unison.Parser.Input
 instance GHC.Classes.Eq Unison.Parser.Input
@@ -1562,7 +1566,6 @@ instance Unison.Parser.Annotated a => Unison.Parser.Annotated (Unison.ABT.Term f
 instance Unison.Parser.Annotated a => Unison.Parser.Annotated (Unison.Pattern.Pattern a)
 instance Unison.Parser.Annotated a => Unison.Parser.Annotated [a]
 instance (Unison.Parser.Annotated a, Unison.Parser.Annotated b) => Unison.Parser.Annotated (Unison.Term.MatchCase a b)
-instance Text.Megaparsec.Stream.Stream Unison.Parser.Input
 instance (GHC.Classes.Ord v, GHC.Show.Show v) => Text.Megaparsec.Error.ShowErrorComponent (Unison.Parser.Error v)
 instance GHC.Base.Semigroup Unison.Parser.UniqueName
 instance GHC.Base.Monoid Unison.Parser.UniqueName
@@ -2308,9 +2311,9 @@ Env :: [Type v loc] -> TypeLookup v loc -> Map Name [NamedReference v loc] -> En
 [_ambientAbilities] :: Env v loc -> [Type v loc]
 [_typeLookup] :: Env v loc -> TypeLookup v loc
 [_termsByShortname] :: Env v loc -> Map Name [NamedReference v loc]
-typeLookup :: forall v_a3CTk loc_a3CTl. Lens' (Env v_a3CTk loc_a3CTl) (TypeLookup v_a3CTk loc_a3CTl)
-termsByShortname :: forall v_a3CTk loc_a3CTl. Lens' (Env v_a3CTk loc_a3CTl) (Map Name [NamedReference v_a3CTk loc_a3CTl])
-ambientAbilities :: forall v_a3CTk loc_a3CTl. Lens' (Env v_a3CTk loc_a3CTl) [Type v_a3CTk loc_a3CTl]
+typeLookup :: forall v_a3DTg loc_a3DTh. Lens' (Env v_a3DTg loc_a3DTh) (TypeLookup v_a3DTg loc_a3DTh)
+termsByShortname :: forall v_a3DTg loc_a3DTh. Lens' (Env v_a3DTg loc_a3DTh) (Map Name [NamedReference v_a3DTg loc_a3DTh])
+ambientAbilities :: forall v_a3DTg loc_a3DTh. Lens' (Env v_a3DTg loc_a3DTh) [Type v_a3DTg loc_a3DTh]
 
 -- | Infer the type of a <a>Term</a>, using a function to resolve the type
 --   of <tt>Ref</tt> constructors contained in that term.
