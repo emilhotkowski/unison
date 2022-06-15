@@ -48,8 +48,8 @@ forall (f :: * -&gt; *) a b. Functor f =&gt; f a -&gt; (a -&gt; b) -&gt; f b
 </span><a href="Unison.Share.Types.html#codeserverPath"><span class="hs-identifier hs-var">codeserverPath</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;/api&quot;</span></span><span>
 </span><span id="line-24"></span><span>        </span><span class="hs-special">}</span><span>
-</span><span id="line-25"></span><span>    </span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679973098"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679973098"><span class="hs-identifier hs-var">shareHost</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
+</span><span id="line-25"></span><span>    </span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679973030"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679973030"><span class="hs-identifier hs-var">shareHost</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
 </span><span id="line-26"></span><span>      </span><span class="annot"><span class="annottext">CodeserverURI -&gt; Maybe CodeserverURI -&gt; CodeserverURI
 forall a. a -&gt; Maybe a -&gt; a
 </span><span class="hs-identifier hs-var">fromMaybe</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; CodeserverURI
@@ -60,27 +60,27 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-string">&quot;Share Host is not a valid URI: &quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679973098"><span class="hs-identifier hs-var">shareHost</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(Maybe CodeserverURI -&gt; CodeserverURI)
+</span><a href="#local-6989586621679973030"><span class="hs-identifier hs-var">shareHost</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(Maybe CodeserverURI -&gt; CodeserverURI)
 -&gt; Maybe CodeserverURI -&gt; CodeserverURI
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-27"></span><span>        </span><span id="local-6989586621679973095"><span class="annot"><span class="annottext">URI
-</span><a href="#local-6989586621679973095"><span class="hs-identifier hs-var">uri</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">String -&gt; Maybe URI
+</span><span id="line-27"></span><span>        </span><span id="local-6989586621679973027"><span class="annot"><span class="annottext">URI
+</span><a href="#local-6989586621679973027"><span class="hs-identifier hs-var">uri</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">String -&gt; Maybe URI
 </span><span class="hs-identifier hs-var">parseURI</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679973098"><span class="hs-identifier hs-var">shareHost</span></a></span><span>
+</span><a href="#local-6989586621679973030"><span class="hs-identifier hs-var">shareHost</span></a></span><span>
 </span><span id="line-28"></span><span>        </span><span class="annot"><span class="annottext">URI -&gt; Maybe CodeserverURI
 </span><a href="Unison.Share.Types.html#codeserverFromURI"><span class="hs-identifier hs-var">codeserverFromURI</span></a></span><span> </span><span class="annot"><span class="annottext">URI
-</span><a href="#local-6989586621679973095"><span class="hs-identifier hs-var">uri</span></a></span><span>
+</span><a href="#local-6989586621679973027"><span class="hs-identifier hs-var">uri</span></a></span><span>
 </span><span id="line-29"></span><span class="hs-pragma">{-# NOINLINE</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.HandleInput.AuthLogin.html#defaultShareURI"><span class="hs-pragma hs-type">defaultShareURI</span></a></span><span> </span><span class="hs-pragma">#-}</span><span>
 </span><span id="line-30"></span><span>
-</span><span id="line-31"></span><span id="local-6989586621679973091"><span id="local-6989586621679973092"><span id="local-6989586621679973093"><span class="annot"><a href="Unison.Codebase.Editor.HandleInput.AuthLogin.html#authLogin"><span class="hs-identifier hs-type">authLogin</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">UnliftIO.MonadUnliftIO</span></span><span> </span><span class="annot"><a href="#local-6989586621679973093"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.HandleInput.LoopState.html#Action"><span class="hs-identifier hs-type">Action</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679973093"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679973092"><span class="hs-identifier hs-type">i</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679973091"><span class="hs-identifier hs-type">v</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span></span></span></span><span>
+</span><span id="line-31"></span><span id="local-6989586621679973023"><span id="local-6989586621679973024"><span id="local-6989586621679973025"><span class="annot"><a href="Unison.Codebase.Editor.HandleInput.AuthLogin.html#authLogin"><span class="hs-identifier hs-type">authLogin</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">UnliftIO.MonadUnliftIO</span></span><span> </span><span class="annot"><a href="#local-6989586621679973025"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.HandleInput.LoopState.html#Action"><span class="hs-identifier hs-type">Action</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679973025"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679973024"><span class="hs-identifier hs-type">i</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679973023"><span class="hs-identifier hs-type">v</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span></span></span></span><span>
 </span><span id="line-32"></span><span id="authLogin"><span class="annot"><span class="annottext">authLogin :: Action m i v ()
 </span><a href="Unison.Codebase.Editor.HandleInput.AuthLogin.html#authLogin"><span class="hs-identifier hs-var hs-var">authLogin</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-33"></span><span>  </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679973090"><span class="annot"><span class="annottext">host :: CodeserverURI
-</span><a href="#local-6989586621679973090"><span class="hs-identifier hs-var hs-var">host</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">CodeserverURI
+</span><span id="line-33"></span><span>  </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679973022"><span class="annot"><span class="annottext">host :: CodeserverURI
+</span><a href="#local-6989586621679973022"><span class="hs-identifier hs-var hs-var">host</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">CodeserverURI
 </span><a href="Unison.Codebase.Editor.HandleInput.AuthLogin.html#defaultShareURI"><span class="hs-identifier hs-var">defaultShareURI</span></a></span><span>
-</span><span id="line-34"></span><span>  </span><span id="local-6989586621679973089"><span class="annot"><span class="annottext">CredentialManager
-</span><a href="#local-6989586621679973089"><span class="hs-identifier hs-var">credsMan</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(Env -&gt; CredentialManager) -&gt; Action m i v CredentialManager
+</span><span id="line-34"></span><span>  </span><span id="local-6989586621679973021"><span class="annot"><span class="annottext">CredentialManager
+</span><a href="#local-6989586621679973021"><span class="hs-identifier hs-var">credsMan</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(Env -&gt; CredentialManager) -&gt; Action m i v CredentialManager
 forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
 </span><span class="hs-identifier hs-var">asks</span></span><span> </span><span class="annot"><span class="annottext">Env -&gt; CredentialManager
 </span><a href="Unison.Codebase.Editor.HandleInput.LoopState.html#credentialManager"><span class="hs-identifier hs-var hs-var">credentialManager</span></a></span><span>
@@ -167,21 +167,21 @@ forall (m :: * -&gt; *) (n :: * -&gt; *) i v.
 CredentialManager
 -&gt; CodeserverURI -&gt; m (Either CredentialFailure ())
 </span><a href="Unison.Auth.OAuth.html#authenticateCodeserver"><span class="hs-identifier hs-var">authenticateCodeserver</span></a></span><span> </span><span class="annot"><span class="annottext">CredentialManager
-</span><a href="#local-6989586621679973089"><span class="hs-identifier hs-var">credsMan</span></a></span><span> </span><span class="annot"><span class="annottext">CodeserverURI
-</span><a href="#local-6989586621679973090"><span class="hs-identifier hs-var">host</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Action m i v (Either CredentialFailure ())
+</span><a href="#local-6989586621679973021"><span class="hs-identifier hs-var">credsMan</span></a></span><span> </span><span class="annot"><span class="annottext">CodeserverURI
+</span><a href="#local-6989586621679973022"><span class="hs-identifier hs-var">host</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Action m i v (Either CredentialFailure ())
 -&gt; (Either CredentialFailure () -&gt; Action m i v ())
 -&gt; Action m i v ()
 forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
 </span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="hs-glyph">\</span><span class="hs-glyph">case</span><span>
-</span><span id="line-36"></span><span>    </span><span class="annot"><span class="hs-identifier hs-type">Left</span></span><span> </span><span id="local-6989586621679973083"><span class="annot"><span class="annottext">CredentialFailure
-</span><a href="#local-6989586621679973083"><span class="hs-identifier hs-var">err</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Output v -&gt; Action m i v ()
+</span><span id="line-36"></span><span>    </span><span class="annot"><span class="hs-identifier hs-type">Left</span></span><span> </span><span id="local-6989586621679973015"><span class="annot"><span class="annottext">CredentialFailure
+</span><a href="#local-6989586621679973015"><span class="hs-identifier hs-var">err</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Output v -&gt; Action m i v ()
 forall (n :: * -&gt; *) (m :: * -&gt; *) i v.
 MonadCommand n m i v =&gt;
 Output v -&gt; n ()
 </span><a href="Unison.Codebase.Editor.HandleInput.LoopState.html#respond"><span class="hs-identifier hs-var">respond</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">CredentialFailure -&gt; Output v
 forall v. CredentialFailure -&gt; Output v
 </span><a href="Unison.Codebase.Editor.Output.html#CredentialFailureMsg"><span class="hs-identifier hs-var">CredentialFailureMsg</span></a></span><span> </span><span class="annot"><span class="annottext">CredentialFailure
-</span><a href="#local-6989586621679973083"><span class="hs-identifier hs-var">err</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679973015"><span class="hs-identifier hs-var">err</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-37"></span><span>    </span><span class="annot"><span class="hs-identifier hs-type">Right</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Output v -&gt; Action m i v ()
 forall (n :: * -&gt; *) (m :: * -&gt; *) i v.
 MonadCommand n m i v =&gt;

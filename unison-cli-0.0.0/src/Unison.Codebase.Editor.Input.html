@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span id="%24con2tag_5Fe7XCN7YkYKGA7WvuONT3"><span id="%24con2tag_3q163HgO5NYHspphML9Kyu"></span></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Unison.Codebase.Editor.Input</span><span>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span id="%24con2tag_1NKpfkL71NTIeJ7xMr9ig9"><span id="%24con2tag_2yjp3J6kC9uDFNgFUoexsR"></span></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Unison.Codebase.Editor.Input</span><span>
 </span><span id="line-2"></span><span>  </span><span class="hs-special">(</span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.Input.html#Input"><span class="hs-identifier">Input</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span>
 </span><span id="line-3"></span><span>    </span><span class="annot"><a href="Unison.Codebase.Editor.Input.html#GistInput"><span class="hs-identifier">GistInput</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span>
 </span><span id="line-4"></span><span>    </span><span class="annot"><a href="Unison.Codebase.Editor.Input.html#Event"><span class="hs-identifier">Event</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span>
@@ -45,7 +45,7 @@
 </span><span id="line-45"></span><span class="hs-keyword">type</span><span> </span><span id="PatchPath"><span class="annot"><a href="Unison.Codebase.Editor.Input.html#PatchPath"><span class="hs-identifier hs-var">PatchPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Path.Split'</span></span><span>
 </span><span id="line-46"></span><span>
 </span><span id="line-47"></span><span class="hs-keyword">data</span><span> </span><span id="OptionalPatch"><span class="annot"><a href="Unison.Codebase.Editor.Input.html#OptionalPatch"><span class="hs-identifier hs-var">OptionalPatch</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="NoPatch"><span class="annot"><a href="Unison.Codebase.Editor.Input.html#NoPatch"><span class="hs-identifier hs-var">NoPatch</span></a></span></span><span> </span><span class="hs-glyph">|</span><span> </span><span id="DefaultPatch"><span class="annot"><a href="Unison.Codebase.Editor.Input.html#DefaultPatch"><span class="hs-identifier hs-var">DefaultPatch</span></a></span></span><span> </span><span class="hs-glyph">|</span><span> </span><span id="UsePatch"><span class="annot"><a href="Unison.Codebase.Editor.Input.html#UsePatch"><span class="hs-identifier hs-var">UsePatch</span></a></span></span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.Input.html#PatchPath"><span class="hs-identifier hs-type">PatchPath</span></a></span><span>
-</span><span id="line-48"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679961735"><span id="local-6989586621679961737"><span class="annot"><span class="annottext">OptionalPatch -&gt; OptionalPatch -&gt; Bool
+</span><span id="line-48"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679961667"><span id="local-6989586621679961669"><span class="annot"><span class="annottext">OptionalPatch -&gt; OptionalPatch -&gt; Bool
 (OptionalPatch -&gt; OptionalPatch -&gt; Bool)
 -&gt; (OptionalPatch -&gt; OptionalPatch -&gt; Bool) -&gt; Eq OptionalPatch
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -53,7 +53,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: OptionalPatch -&gt; OptionalPatch -&gt; Bool
 == :: OptionalPatch -&gt; OptionalPatch -&gt; Bool
 $c== :: OptionalPatch -&gt; OptionalPatch -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679961719"><span id="local-6989586621679961721"><span id="local-6989586621679961723"><span id="local-6989586621679961725"><span id="local-6989586621679961727"><span id="local-6989586621679961729"><span id="local-6989586621679961731"><span class="annot"><span class="annottext">Eq OptionalPatch
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679961651"><span id="local-6989586621679961653"><span id="local-6989586621679961655"><span id="local-6989586621679961657"><span id="local-6989586621679961659"><span id="local-6989586621679961661"><span id="local-6989586621679961663"><span class="annot"><span class="annottext">Eq OptionalPatch
 Eq OptionalPatch
 -&gt; (OptionalPatch -&gt; OptionalPatch -&gt; Ordering)
 -&gt; (OptionalPatch -&gt; OptionalPatch -&gt; Bool)
@@ -91,7 +91,7 @@ $c&lt; :: OptionalPatch -&gt; OptionalPatch -&gt; Bool
 compare :: OptionalPatch -&gt; OptionalPatch -&gt; Ordering
 $ccompare :: OptionalPatch -&gt; OptionalPatch -&gt; Ordering
 $cp1Ord :: Eq OptionalPatch
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679961712"><span id="local-6989586621679961714"><span id="local-6989586621679961716"><span class="annot"><span class="annottext">Int -&gt; OptionalPatch -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679961644"><span id="local-6989586621679961646"><span id="local-6989586621679961648"><span class="annot"><span class="annottext">Int -&gt; OptionalPatch -&gt; ShowS
 [OptionalPatch] -&gt; ShowS
 OptionalPatch -&gt; String
 (Int -&gt; OptionalPatch -&gt; ShowS)
@@ -116,7 +116,7 @@ $cshowsPrec :: Int -&gt; OptionalPatch -&gt; ShowS
 </span><span id="line-55"></span><span>
 </span><span id="line-56"></span><span class="hs-comment">-- | Should we force the operation or not?</span><span>
 </span><span id="line-57"></span><span class="hs-keyword">data</span><span> </span><span id="Insistence"><span class="annot"><a href="Unison.Codebase.Editor.Input.html#Insistence"><span class="hs-identifier hs-var">Insistence</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Force"><span class="annot"><a href="Unison.Codebase.Editor.Input.html#Force"><span class="hs-identifier hs-var">Force</span></a></span></span><span> </span><span class="hs-glyph">|</span><span> </span><span id="Try"><span class="annot"><a href="Unison.Codebase.Editor.Input.html#Try"><span class="hs-identifier hs-var">Try</span></a></span></span><span>
-</span><span id="line-58"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679961701"><span id="local-6989586621679961703"><span id="local-6989586621679961705"><span class="annot"><span class="annottext">Int -&gt; Insistence -&gt; ShowS
+</span><span id="line-58"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679961633"><span id="local-6989586621679961635"><span id="local-6989586621679961637"><span class="annot"><span class="annottext">Int -&gt; Insistence -&gt; ShowS
 [Insistence] -&gt; ShowS
 Insistence -&gt; String
 (Int -&gt; Insistence -&gt; ShowS)
@@ -131,7 +131,7 @@ show :: Insistence -&gt; String
 $cshow :: Insistence -&gt; String
 showsPrec :: Int -&gt; Insistence -&gt; ShowS
 $cshowsPrec :: Int -&gt; Insistence -&gt; ShowS
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679961697"><span id="local-6989586621679961699"><span class="annot"><span class="annottext">Insistence -&gt; Insistence -&gt; Bool
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679961629"><span id="local-6989586621679961631"><span class="annot"><span class="annottext">Insistence -&gt; Insistence -&gt; Bool
 (Insistence -&gt; Insistence -&gt; Bool)
 -&gt; (Insistence -&gt; Insistence -&gt; Bool) -&gt; Eq Insistence
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -144,18 +144,18 @@ $c== :: Insistence -&gt; Insistence -&gt; Bool
 </span><span id="line-60"></span><span class="annot"><a href="Unison.Codebase.Editor.Input.html#parseBranchId"><span class="hs-identifier hs-type">parseBranchId</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.Input.html#BranchId"><span class="hs-identifier hs-type">BranchId</span></a></span><span>
 </span><span id="line-61"></span><span id="parseBranchId"><span class="annot"><span class="annottext">parseBranchId :: String -&gt; Either String BranchId
 </span><a href="Unison.Codebase.Editor.Input.html#parseBranchId"><span class="hs-identifier hs-var hs-var">parseBranchId</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Char
-</span><span class="hs-char">'#'</span></span><span> </span><span class="annot"><span class="hs-glyph hs-type">:</span></span><span> </span><span id="local-6989586621679961696"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679961696"><span class="hs-identifier hs-var">s</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">Text -&gt; Maybe ShortBranchHash
+</span><span class="hs-char">'#'</span></span><span> </span><span class="annot"><span class="hs-glyph hs-type">:</span></span><span> </span><span id="local-6989586621679961628"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679961628"><span class="hs-identifier hs-var">s</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">Text -&gt; Maybe ShortBranchHash
 </span><span class="hs-identifier hs-var">SBH.fromText</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; Text
 </span><span class="hs-identifier hs-var">Text.pack</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679961696"><span class="hs-identifier hs-var">s</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">of</span><span>
+</span><a href="#local-6989586621679961628"><span class="hs-identifier hs-var">s</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">of</span><span>
 </span><span id="line-62"></span><span>  </span><span class="annot"><span class="annottext">Maybe ShortBranchHash
 </span><span class="hs-identifier hs-var">Nothing</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">String -&gt; Either String BranchId
 forall a b. a -&gt; Either a b
 </span><span class="hs-identifier hs-var">Left</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;Invalid hash, expected a base32hex string.&quot;</span></span><span>
-</span><span id="line-63"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679961693"><span class="annot"><span class="annottext">ShortBranchHash
-</span><a href="#local-6989586621679961693"><span class="hs-identifier hs-var">h</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">BranchId -&gt; Either String BranchId
+</span><span id="line-63"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679961625"><span class="annot"><span class="annottext">ShortBranchHash
+</span><a href="#local-6989586621679961625"><span class="hs-identifier hs-var">h</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">BranchId -&gt; Either String BranchId
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(BranchId -&gt; Either String BranchId)
 -&gt; BranchId -&gt; Either String BranchId
@@ -163,21 +163,21 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">ShortBranchHash -&gt; BranchId
 forall a b. a -&gt; Either a b
 </span><span class="hs-identifier hs-var">Left</span></span><span> </span><span class="annot"><span class="annottext">ShortBranchHash
-</span><a href="#local-6989586621679961693"><span class="hs-identifier hs-var">h</span></a></span><span>
-</span><span id="line-64"></span><span class="annot"><a href="Unison.Codebase.Editor.Input.html#parseBranchId"><span class="hs-identifier hs-var">parseBranchId</span></a></span><span> </span><span id="local-6989586621679961692"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679961692"><span class="hs-identifier hs-var">s</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Path' -&gt; BranchId
+</span><a href="#local-6989586621679961625"><span class="hs-identifier hs-var">h</span></a></span><span>
+</span><span id="line-64"></span><span class="annot"><a href="Unison.Codebase.Editor.Input.html#parseBranchId"><span class="hs-identifier hs-var">parseBranchId</span></a></span><span> </span><span id="local-6989586621679961624"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679961624"><span class="hs-identifier hs-var">s</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Path' -&gt; BranchId
 forall a b. b -&gt; Either a b
 </span><span class="hs-identifier hs-var">Right</span></span><span> </span><span class="annot"><span class="annottext">(Path' -&gt; BranchId)
 -&gt; Either String Path' -&gt; Either String BranchId
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Either String Path'
 </span><span class="hs-identifier hs-var">Path.parsePath'</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679961692"><span class="hs-identifier hs-var">s</span></a></span><span>
+</span><a href="#local-6989586621679961624"><span class="hs-identifier hs-var">s</span></a></span><span>
 </span><span id="line-65"></span><span>
 </span><span id="line-66"></span><span class="hs-keyword">data</span><span> </span><span id="PullMode"><span class="annot"><a href="Unison.Codebase.Editor.Input.html#PullMode"><span class="hs-identifier hs-var">PullMode</span></a></span></span><span>
 </span><span id="line-67"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="PullWithHistory"><span class="annot"><a href="Unison.Codebase.Editor.Input.html#PullWithHistory"><span class="hs-identifier hs-var">PullWithHistory</span></a></span></span><span>
 </span><span id="line-68"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="PullWithoutHistory"><span class="annot"><a href="Unison.Codebase.Editor.Input.html#PullWithoutHistory"><span class="hs-identifier hs-var">PullWithoutHistory</span></a></span></span><span>
-</span><span id="line-69"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679961684"><span id="local-6989586621679961686"><span class="annot"><span class="annottext">PullMode -&gt; PullMode -&gt; Bool
+</span><span id="line-69"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679961616"><span id="local-6989586621679961618"><span class="annot"><span class="annottext">PullMode -&gt; PullMode -&gt; Bool
 (PullMode -&gt; PullMode -&gt; Bool)
 -&gt; (PullMode -&gt; PullMode -&gt; Bool) -&gt; Eq PullMode
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -185,7 +185,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: PullMode -&gt; PullMode -&gt; Bool
 == :: PullMode -&gt; PullMode -&gt; Bool
 $c== :: PullMode -&gt; PullMode -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679961678"><span id="local-6989586621679961680"><span id="local-6989586621679961682"><span class="annot"><span class="annottext">Int -&gt; PullMode -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679961610"><span id="local-6989586621679961612"><span id="local-6989586621679961614"><span class="annot"><span class="annottext">Int -&gt; PullMode -&gt; ShowS
 [PullMode] -&gt; ShowS
 PullMode -&gt; String
 (Int -&gt; PullMode -&gt; ShowS)
@@ -318,14 +318,14 @@ $cshowsPrec :: Int -&gt; PullMode -&gt; ShowS
 </span><span id="line-186"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="GistI"><span class="annot"><a href="Unison.Codebase.Editor.Input.html#GistI"><span class="hs-identifier hs-var">GistI</span></a></span></span><span> </span><span class="annot"><a href="Unison.Codebase.Editor.Input.html#GistInput"><span class="hs-identifier hs-type">GistInput</span></a></span><span>
 </span><span id="line-187"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="AuthLoginI"><span class="annot"><a href="Unison.Codebase.Editor.Input.html#AuthLoginI"><span class="hs-identifier hs-var">AuthLoginI</span></a></span></span><span>
 </span><span id="line-188"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="VersionI"><span class="annot"><a href="Unison.Codebase.Editor.Input.html#VersionI"><span class="hs-identifier hs-var">VersionI</span></a></span></span><span>
-</span><span id="line-189"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679961586"><span id="local-6989586621679961588"><span class="annot"><span class="annottext">Input -&gt; Input -&gt; Bool
+</span><span id="line-189"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679961518"><span id="local-6989586621679961520"><span class="annot"><span class="annottext">Input -&gt; Input -&gt; Bool
 (Input -&gt; Input -&gt; Bool) -&gt; (Input -&gt; Input -&gt; Bool) -&gt; Eq Input
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 /= :: Input -&gt; Input -&gt; Bool
 $c/= :: Input -&gt; Input -&gt; Bool
 == :: Input -&gt; Input -&gt; Bool
 $c== :: Input -&gt; Input -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679961580"><span id="local-6989586621679961582"><span id="local-6989586621679961584"><span class="annot"><span class="annottext">Int -&gt; Input -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679961512"><span id="local-6989586621679961514"><span id="local-6989586621679961516"><span class="annot"><span class="annottext">Int -&gt; Input -&gt; ShowS
 [Input] -&gt; ShowS
 Input -&gt; String
 (Int -&gt; Input -&gt; ShowS)
@@ -345,7 +345,7 @@ $cshowsPrec :: Int -&gt; Input -&gt; ShowS
 </span><span id="line-193"></span><span>  </span><span class="hs-special">{</span><span> </span><span id="repo"><span class="annot"><span class="annottext">GistInput -&gt; WriteRepo
 </span><a href="Unison.Codebase.Editor.Input.html#repo"><span class="hs-identifier hs-var hs-var">repo</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">WriteRepo</span></span><span>
 </span><span id="line-194"></span><span>  </span><span class="hs-special">}</span><span>
-</span><span id="line-195"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">stock</span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679961574"><span id="local-6989586621679961576"><span class="annot"><span class="annottext">GistInput -&gt; GistInput -&gt; Bool
+</span><span id="line-195"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">stock</span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679961506"><span id="local-6989586621679961508"><span class="annot"><span class="annottext">GistInput -&gt; GistInput -&gt; Bool
 (GistInput -&gt; GistInput -&gt; Bool)
 -&gt; (GistInput -&gt; GistInput -&gt; Bool) -&gt; Eq GistInput
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -353,7 +353,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: GistInput -&gt; GistInput -&gt; Bool
 == :: GistInput -&gt; GistInput -&gt; Bool
 $c== :: GistInput -&gt; GistInput -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679961568"><span id="local-6989586621679961570"><span id="local-6989586621679961572"><span class="annot"><span class="annottext">Int -&gt; GistInput -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679961500"><span id="local-6989586621679961502"><span id="local-6989586621679961504"><span class="annot"><span class="annottext">Int -&gt; GistInput -&gt; ShowS
 [GistInput] -&gt; ShowS
 GistInput -&gt; String
 (Int -&gt; GistInput -&gt; ShowS)
@@ -376,7 +376,7 @@ $cshowsPrec :: Int -&gt; GistInput -&gt; ShowS
 </span><span id="line-200"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="LatestFileLocation"><span class="annot"><a href="Unison.Codebase.Editor.Input.html#LatestFileLocation"><span class="hs-identifier hs-var">LatestFileLocation</span></a></span></span><span>
 </span><span id="line-201"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="FileLocation"><span class="annot"><a href="Unison.Codebase.Editor.Input.html#FileLocation"><span class="hs-identifier hs-var">FileLocation</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span>
 </span><span id="line-202"></span><span>  </span><span class="hs-comment">-- ClipboardLocation</span><span>
-</span><span id="line-203"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679961561"><span id="local-6989586621679961563"><span class="annot"><span class="annottext">OutputLocation -&gt; OutputLocation -&gt; Bool
+</span><span id="line-203"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679961493"><span id="local-6989586621679961495"><span class="annot"><span class="annottext">OutputLocation -&gt; OutputLocation -&gt; Bool
 (OutputLocation -&gt; OutputLocation -&gt; Bool)
 -&gt; (OutputLocation -&gt; OutputLocation -&gt; Bool) -&gt; Eq OutputLocation
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -384,7 +384,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: OutputLocation -&gt; OutputLocation -&gt; Bool
 == :: OutputLocation -&gt; OutputLocation -&gt; Bool
 $c== :: OutputLocation -&gt; OutputLocation -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679961555"><span id="local-6989586621679961557"><span id="local-6989586621679961559"><span class="annot"><span class="annottext">Int -&gt; OutputLocation -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679961487"><span id="local-6989586621679961489"><span id="local-6989586621679961491"><span class="annot"><span class="annottext">Int -&gt; OutputLocation -&gt; ShowS
 [OutputLocation] -&gt; ShowS
 OutputLocation -&gt; String
 (Int -&gt; OutputLocation -&gt; ShowS)
