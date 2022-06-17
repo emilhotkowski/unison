@@ -23,6 +23,7 @@ debugM :: (Show a, Monad m) => DebugFlag -> String -> a -> m ()
 whenDebug :: Monad m => DebugFlag -> m () -> m ()
 debugLog :: DebugFlag -> String -> a -> a
 debugLogM :: Monad m => DebugFlag -> String -> m ()
+shouldDebug :: DebugFlag -> Bool
 data DebugFlag
 Git :: DebugFlag
 Sqlite :: DebugFlag
@@ -30,6 +31,7 @@ Codebase :: DebugFlag
 Auth :: DebugFlag
 Migration :: DebugFlag
 Integrity :: DebugFlag
+Sync :: DebugFlag
 instance GHC.Enum.Enum Unison.Debug.DebugFlag
 instance GHC.Enum.Bounded Unison.Debug.DebugFlag
 instance GHC.Show.Show Unison.Debug.DebugFlag
@@ -2237,6 +2239,9 @@ uncurry4 :: (a -> b -> c -> d -> e) -> (a, b, c, d) -> e
 reportBug :: String -> String -> String
 tShow :: Show a => a -> Text
 
+-- | <i>Warning: You left this wundefined.</i>
+wundefined :: HasCallStack => a
+
 -- | E.g.
 --   
 --   @<tt> onNothing (throwIO MissingPerson) $ mayThing </tt>@
@@ -2244,6 +2249,8 @@ onNothing :: Applicative m => m a -> Maybe a -> m a
 
 -- | E.g. <tt>maybePerson <a>whenNothing</a> throwIO MissingPerson</tt>
 whenNothing :: Applicative m => Maybe a -> m a -> m a
+whenJust :: Applicative m => Maybe a -> (a -> m ()) -> m ()
+whenJustM :: Monad m => m (Maybe a) -> (a -> m ()) -> m ()
 
 -- | Given an <a>Either</a>, convert it to a <a>Maybe</a>, where
 --   <a>Left</a> becomes <a>Nothing</a>.
@@ -2292,6 +2299,15 @@ traverseKeysWith :: (Applicative f, Ord k') => (v -> v -> v) -> (k -> f k') -> M
 swap :: Ord b => Map a b -> Map b a
 valuesVector :: Map k v -> Vector v
 
+module Unison.Util.Monoid
+intercalateMap :: (Foldable t, Monoid a) => a -> (b -> a) -> t b -> a
+fromMaybe :: Monoid a => Maybe a -> a
+whenM :: Monoid a => Bool -> a -> a
+unlessM :: Monoid a => Bool -> a -> a
+isEmpty :: (Eq a, Monoid a) => a -> Bool
+nonEmpty :: (Eq a, Monoid a) => a -> Bool
+foldMapM :: (Monad m, Foldable f, Monoid b) => (a -> m b) -> f a -> m b
+
 module Unison.Util.Set
 
 -- | Set difference, but return <tt>Nothing</tt> if the difference is
@@ -2301,3 +2317,4 @@ mapMaybe :: Ord b => (a -> Maybe b) -> Set a -> Set b
 symmetricDifference :: Ord a => Set a -> Set a -> Set a
 traverse :: (Applicative f, Ord b) => (a -> f b) -> Set a -> f (Set b)
 flatMap :: Ord b => (a -> Set b) -> Set a -> Set b
+filterM :: (Ord a, Monad m) => (a -> m Bool) -> Set a -> m (Set a)

@@ -12,7 +12,7 @@
 </span><span id="line-12"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Sqlite</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">FromField</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">ToField</span></span><span class="hs-special">)</span><span>
 </span><span id="line-13"></span><span>
 </span><span id="line-14"></span><span class="hs-keyword">newtype</span><span> </span><span id="HashVersion"><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#HashVersion"><span class="hs-identifier hs-var">HashVersion</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="HashVersion"><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#HashVersion"><span class="hs-identifier hs-var">HashVersion</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Word64</span></span><span>
-</span><span id="line-15"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">stock</span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679396863"><span id="local-6989586621679396865"><span class="annot"><span class="annottext">HashVersion -&gt; HashVersion -&gt; Bool
+</span><span id="line-15"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="annot"><span class="hs-keyword">stock</span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679437383"><span id="local-6989586621679437385"><span class="annot"><span class="annottext">HashVersion -&gt; HashVersion -&gt; Bool
 (HashVersion -&gt; HashVersion -&gt; Bool)
 -&gt; (HashVersion -&gt; HashVersion -&gt; Bool) -&gt; Eq HashVersion
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -20,7 +20,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: HashVersion -&gt; HashVersion -&gt; Bool
 == :: HashVersion -&gt; HashVersion -&gt; Bool
 $c== :: HashVersion -&gt; HashVersion -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396847"><span id="local-6989586621679396849"><span id="local-6989586621679396851"><span id="local-6989586621679396853"><span id="local-6989586621679396855"><span id="local-6989586621679396857"><span id="local-6989586621679396859"><span class="annot"><span class="annottext">Eq HashVersion
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679437367"><span id="local-6989586621679437369"><span id="local-6989586621679437371"><span id="local-6989586621679437373"><span id="local-6989586621679437375"><span id="local-6989586621679437377"><span id="local-6989586621679437379"><span class="annot"><span class="annottext">Eq HashVersion
 Eq HashVersion
 -&gt; (HashVersion -&gt; HashVersion -&gt; Ordering)
 -&gt; (HashVersion -&gt; HashVersion -&gt; Bool)
@@ -58,7 +58,7 @@ $c&lt; :: HashVersion -&gt; HashVersion -&gt; Bool
 compare :: HashVersion -&gt; HashVersion -&gt; Ordering
 $ccompare :: HashVersion -&gt; HashVersion -&gt; Ordering
 $cp1Ord :: Eq HashVersion
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396840"><span id="local-6989586621679396842"><span id="local-6989586621679396844"><span class="annot"><span class="annottext">Int -&gt; HashVersion -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679437360"><span id="local-6989586621679437362"><span id="local-6989586621679437364"><span class="annot"><span class="annottext">Int -&gt; HashVersion -&gt; ShowS
 [HashVersion] -&gt; ShowS
 HashVersion -&gt; String
 (Int -&gt; HashVersion -&gt; ShowS)
@@ -74,7 +74,7 @@ $cshow :: HashVersion -&gt; String
 showsPrec :: Int -&gt; HashVersion -&gt; ShowS
 $cshowsPrec :: Int -&gt; HashVersion -&gt; ShowS
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-16"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679396825"><span id="local-6989586621679396827"><span id="local-6989586621679396829"><span id="local-6989586621679396831"><span id="local-6989586621679396833"><span id="local-6989586621679396835"><span id="local-6989586621679396837"><span class="annot"><span class="annottext">Integer -&gt; HashVersion
+</span><span id="line-16"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679437345"><span id="local-6989586621679437347"><span id="local-6989586621679437349"><span id="local-6989586621679437351"><span id="local-6989586621679437353"><span id="local-6989586621679437355"><span id="local-6989586621679437357"><span class="annot"><span class="annottext">Integer -&gt; HashVersion
 HashVersion -&gt; HashVersion
 HashVersion -&gt; HashVersion -&gt; HashVersion
 (HashVersion -&gt; HashVersion -&gt; HashVersion)
@@ -108,7 +108,7 @@ $c* :: HashVersion -&gt; HashVersion -&gt; HashVersion
 $c- :: HashVersion -&gt; HashVersion -&gt; HashVersion
 + :: HashVersion -&gt; HashVersion -&gt; HashVersion
 $c+ :: HashVersion -&gt; HashVersion -&gt; HashVersion
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Num</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396820"><span class="annot"><span class="annottext">Num HashVersion
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Num</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679437340"><span class="annot"><span class="annottext">Num HashVersion
 Ord HashVersion
 Num HashVersion
 -&gt; Ord HashVersion -&gt; (HashVersion -&gt; Rational) -&gt; Real HashVersion
@@ -118,7 +118,7 @@ toRational :: HashVersion -&gt; Rational
 $ctoRational :: HashVersion -&gt; Rational
 $cp2Real :: Ord HashVersion
 $cp1Real :: Num HashVersion
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Real</span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396803"><span id="local-6989586621679396805"><span id="local-6989586621679396807"><span id="local-6989586621679396809"><span id="local-6989586621679396811"><span id="local-6989586621679396813"><span id="local-6989586621679396815"><span id="local-6989586621679396817"><span class="annot"><span class="annottext">Int -&gt; HashVersion
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Real</span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679437323"><span id="local-6989586621679437325"><span id="local-6989586621679437327"><span id="local-6989586621679437329"><span id="local-6989586621679437331"><span id="local-6989586621679437333"><span id="local-6989586621679437335"><span id="local-6989586621679437337"><span class="annot"><span class="annottext">Int -&gt; HashVersion
 HashVersion -&gt; Int
 HashVersion -&gt; [HashVersion]
 HashVersion -&gt; HashVersion
@@ -159,7 +159,7 @@ pred :: HashVersion -&gt; HashVersion
 $cpred :: HashVersion -&gt; HashVersion
 succ :: HashVersion -&gt; HashVersion
 $csucc :: HashVersion -&gt; HashVersion
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Enum</span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396786"><span id="local-6989586621679396788"><span id="local-6989586621679396790"><span id="local-6989586621679396792"><span id="local-6989586621679396794"><span id="local-6989586621679396796"><span id="local-6989586621679396798"><span class="annot"><span class="annottext">Enum HashVersion
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Enum</span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679437306"><span id="local-6989586621679437308"><span id="local-6989586621679437310"><span id="local-6989586621679437312"><span id="local-6989586621679437314"><span id="local-6989586621679437316"><span id="local-6989586621679437318"><span class="annot"><span class="annottext">Enum HashVersion
 Real HashVersion
 Real HashVersion
 -&gt; Enum HashVersion
@@ -201,7 +201,7 @@ quot :: HashVersion -&gt; HashVersion -&gt; HashVersion
 $cquot :: HashVersion -&gt; HashVersion -&gt; HashVersion
 $cp2Integral :: Enum HashVersion
 $cp1Integral :: Real HashVersion
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Integral</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396740"><span id="local-6989586621679396742"><span id="local-6989586621679396744"><span id="local-6989586621679396746"><span id="local-6989586621679396748"><span id="local-6989586621679396750"><span id="local-6989586621679396752"><span id="local-6989586621679396754"><span id="local-6989586621679396756"><span id="local-6989586621679396758"><span id="local-6989586621679396760"><span id="local-6989586621679396762"><span id="local-6989586621679396764"><span id="local-6989586621679396766"><span id="local-6989586621679396768"><span id="local-6989586621679396770"><span id="local-6989586621679396772"><span id="local-6989586621679396774"><span id="local-6989586621679396776"><span id="local-6989586621679396778"><span id="local-6989586621679396780"><span id="local-6989586621679396782"><span class="annot"><span class="annottext">Eq HashVersion
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Integral</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679437260"><span id="local-6989586621679437262"><span id="local-6989586621679437264"><span id="local-6989586621679437266"><span id="local-6989586621679437268"><span id="local-6989586621679437270"><span id="local-6989586621679437272"><span id="local-6989586621679437274"><span id="local-6989586621679437276"><span id="local-6989586621679437278"><span id="local-6989586621679437280"><span id="local-6989586621679437282"><span id="local-6989586621679437284"><span id="local-6989586621679437286"><span id="local-6989586621679437288"><span id="local-6989586621679437290"><span id="local-6989586621679437292"><span id="local-6989586621679437294"><span id="local-6989586621679437296"><span id="local-6989586621679437298"><span id="local-6989586621679437300"><span id="local-6989586621679437302"><span class="annot"><span class="annottext">Eq HashVersion
 HashVersion
 Eq HashVersion
 -&gt; (HashVersion -&gt; HashVersion -&gt; HashVersion)
@@ -305,12 +305,12 @@ $c.|. :: HashVersion -&gt; HashVersion -&gt; HashVersion
 .&amp;. :: HashVersion -&gt; HashVersion -&gt; HashVersion
 $c.&amp;. :: HashVersion -&gt; HashVersion -&gt; HashVersion
 $cp1Bits :: Eq HashVersion
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Bits</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396737"><span class="annot"><span class="annottext">FieldParser HashVersion
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Bits</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679437257"><span class="annot"><span class="annottext">FieldParser HashVersion
 FieldParser HashVersion -&gt; FromField HashVersion
 forall a. FieldParser a -&gt; FromField a
 fromField :: FieldParser HashVersion
 $cfromField :: FieldParser HashVersion
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var">FromField</span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396734"><span class="annot"><span class="annottext">HashVersion -&gt; SQLData
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">FromField</span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679437254"><span class="annot"><span class="annottext">HashVersion -&gt; SQLData
 (HashVersion -&gt; SQLData) -&gt; ToField HashVersion
 forall a. (a -&gt; SQLData) -&gt; ToField a
 toField :: HashVersion -&gt; SQLData
@@ -318,7 +318,7 @@ $ctoField :: HashVersion -&gt; SQLData
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var">ToField</span></span></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">via</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Word64</span></span><span>
 </span><span id="line-17"></span><span>
 </span><span id="line-18"></span><span class="hs-keyword">newtype</span><span> </span><span id="ObjectId"><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#ObjectId"><span class="hs-identifier hs-var">ObjectId</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="ObjectId"><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#ObjectId"><span class="hs-identifier hs-var">ObjectId</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Word64</span></span><span>
-</span><span id="line-19"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679396728"><span id="local-6989586621679396730"><span class="annot"><span class="annottext">ObjectId -&gt; ObjectId -&gt; Bool
+</span><span id="line-19"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679437248"><span id="local-6989586621679437250"><span class="annot"><span class="annottext">ObjectId -&gt; ObjectId -&gt; Bool
 (ObjectId -&gt; ObjectId -&gt; Bool)
 -&gt; (ObjectId -&gt; ObjectId -&gt; Bool) -&gt; Eq ObjectId
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -326,7 +326,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: ObjectId -&gt; ObjectId -&gt; Bool
 == :: ObjectId -&gt; ObjectId -&gt; Bool
 $c== :: ObjectId -&gt; ObjectId -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396713"><span id="local-6989586621679396715"><span id="local-6989586621679396717"><span id="local-6989586621679396719"><span id="local-6989586621679396721"><span id="local-6989586621679396723"><span id="local-6989586621679396725"><span class="annot"><span class="annottext">Eq ObjectId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679437233"><span id="local-6989586621679437235"><span id="local-6989586621679437237"><span id="local-6989586621679437239"><span id="local-6989586621679437241"><span id="local-6989586621679437243"><span id="local-6989586621679437245"><span class="annot"><span class="annottext">Eq ObjectId
 Eq ObjectId
 -&gt; (ObjectId -&gt; ObjectId -&gt; Ordering)
 -&gt; (ObjectId -&gt; ObjectId -&gt; Bool)
@@ -364,7 +364,7 @@ $c&lt; :: ObjectId -&gt; ObjectId -&gt; Bool
 compare :: ObjectId -&gt; ObjectId -&gt; Ordering
 $ccompare :: ObjectId -&gt; ObjectId -&gt; Ordering
 $cp1Ord :: Eq ObjectId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396707"><span id="local-6989586621679396709"><span id="local-6989586621679396711"><span class="annot"><span class="annottext">Int -&gt; ObjectId -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679437227"><span id="local-6989586621679437229"><span id="local-6989586621679437231"><span class="annot"><span class="annottext">Int -&gt; ObjectId -&gt; ShowS
 [ObjectId] -&gt; ShowS
 ObjectId -&gt; String
 (Int -&gt; ObjectId -&gt; ShowS)
@@ -378,7 +378,7 @@ $cshow :: ObjectId -&gt; String
 showsPrec :: Int -&gt; ObjectId -&gt; ShowS
 $cshowsPrec :: Int -&gt; ObjectId -&gt; ShowS
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-20"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679396693"><span id="local-6989586621679396695"><span id="local-6989586621679396697"><span id="local-6989586621679396699"><span id="local-6989586621679396701"><span id="local-6989586621679396703"><span id="local-6989586621679396705"><span class="annot"><span class="annottext">Integer -&gt; ObjectId
+</span><span id="line-20"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679437213"><span id="local-6989586621679437215"><span id="local-6989586621679437217"><span id="local-6989586621679437219"><span id="local-6989586621679437221"><span id="local-6989586621679437223"><span id="local-6989586621679437225"><span class="annot"><span class="annottext">Integer -&gt; ObjectId
 ObjectId -&gt; ObjectId
 ObjectId -&gt; ObjectId -&gt; ObjectId
 (ObjectId -&gt; ObjectId -&gt; ObjectId)
@@ -412,7 +412,7 @@ $c* :: ObjectId -&gt; ObjectId -&gt; ObjectId
 $c- :: ObjectId -&gt; ObjectId -&gt; ObjectId
 + :: ObjectId -&gt; ObjectId -&gt; ObjectId
 $c+ :: ObjectId -&gt; ObjectId -&gt; ObjectId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Num</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396689"><span class="annot"><span class="annottext">Num ObjectId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Num</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679437209"><span class="annot"><span class="annottext">Num ObjectId
 Ord ObjectId
 Num ObjectId
 -&gt; Ord ObjectId -&gt; (ObjectId -&gt; Rational) -&gt; Real ObjectId
@@ -422,7 +422,7 @@ toRational :: ObjectId -&gt; Rational
 $ctoRational :: ObjectId -&gt; Rational
 $cp2Real :: Ord ObjectId
 $cp1Real :: Num ObjectId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Real</span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396673"><span id="local-6989586621679396675"><span id="local-6989586621679396677"><span id="local-6989586621679396679"><span id="local-6989586621679396681"><span id="local-6989586621679396683"><span id="local-6989586621679396685"><span id="local-6989586621679396687"><span class="annot"><span class="annottext">Int -&gt; ObjectId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Real</span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679437193"><span id="local-6989586621679437195"><span id="local-6989586621679437197"><span id="local-6989586621679437199"><span id="local-6989586621679437201"><span id="local-6989586621679437203"><span id="local-6989586621679437205"><span id="local-6989586621679437207"><span class="annot"><span class="annottext">Int -&gt; ObjectId
 ObjectId -&gt; Int
 ObjectId -&gt; [ObjectId]
 ObjectId -&gt; ObjectId
@@ -463,7 +463,7 @@ pred :: ObjectId -&gt; ObjectId
 $cpred :: ObjectId -&gt; ObjectId
 succ :: ObjectId -&gt; ObjectId
 $csucc :: ObjectId -&gt; ObjectId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Enum</span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396657"><span id="local-6989586621679396659"><span id="local-6989586621679396661"><span id="local-6989586621679396663"><span id="local-6989586621679396665"><span id="local-6989586621679396667"><span id="local-6989586621679396669"><span class="annot"><span class="annottext">Enum ObjectId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Enum</span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679437177"><span id="local-6989586621679437179"><span id="local-6989586621679437181"><span id="local-6989586621679437183"><span id="local-6989586621679437185"><span id="local-6989586621679437187"><span id="local-6989586621679437189"><span class="annot"><span class="annottext">Enum ObjectId
 Real ObjectId
 Real ObjectId
 -&gt; Enum ObjectId
@@ -505,7 +505,7 @@ quot :: ObjectId -&gt; ObjectId -&gt; ObjectId
 $cquot :: ObjectId -&gt; ObjectId -&gt; ObjectId
 $cp2Integral :: Enum ObjectId
 $cp1Integral :: Real ObjectId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Integral</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396612"><span id="local-6989586621679396614"><span id="local-6989586621679396616"><span id="local-6989586621679396618"><span id="local-6989586621679396620"><span id="local-6989586621679396622"><span id="local-6989586621679396624"><span id="local-6989586621679396626"><span id="local-6989586621679396628"><span id="local-6989586621679396630"><span id="local-6989586621679396632"><span id="local-6989586621679396634"><span id="local-6989586621679396636"><span id="local-6989586621679396638"><span id="local-6989586621679396640"><span id="local-6989586621679396642"><span id="local-6989586621679396644"><span id="local-6989586621679396646"><span id="local-6989586621679396648"><span id="local-6989586621679396650"><span id="local-6989586621679396652"><span id="local-6989586621679396654"><span class="annot"><span class="annottext">Eq ObjectId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Integral</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679437132"><span id="local-6989586621679437134"><span id="local-6989586621679437136"><span id="local-6989586621679437138"><span id="local-6989586621679437140"><span id="local-6989586621679437142"><span id="local-6989586621679437144"><span id="local-6989586621679437146"><span id="local-6989586621679437148"><span id="local-6989586621679437150"><span id="local-6989586621679437152"><span id="local-6989586621679437154"><span id="local-6989586621679437156"><span id="local-6989586621679437158"><span id="local-6989586621679437160"><span id="local-6989586621679437162"><span id="local-6989586621679437164"><span id="local-6989586621679437166"><span id="local-6989586621679437168"><span id="local-6989586621679437170"><span id="local-6989586621679437172"><span id="local-6989586621679437174"><span class="annot"><span class="annottext">Eq ObjectId
 ObjectId
 Eq ObjectId
 -&gt; (ObjectId -&gt; ObjectId -&gt; ObjectId)
@@ -609,20 +609,20 @@ $c.|. :: ObjectId -&gt; ObjectId -&gt; ObjectId
 .&amp;. :: ObjectId -&gt; ObjectId -&gt; ObjectId
 $c.&amp;. :: ObjectId -&gt; ObjectId -&gt; ObjectId
 $cp1Bits :: Eq ObjectId
-</span><a href="#local-6989586621679396612"><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Bits</span></a></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396610"><span class="annot"><span class="annottext">FieldParser ObjectId
+</span><a href="#local-6989586621679437132"><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Bits</span></a></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679437130"><span class="annot"><span class="annottext">FieldParser ObjectId
 FieldParser ObjectId -&gt; FromField ObjectId
 forall a. FieldParser a -&gt; FromField a
 fromField :: FieldParser ObjectId
 $cfromField :: FieldParser ObjectId
-</span><a href="#local-6989586621679396610"><span class="hs-identifier hs-var hs-var hs-var hs-var">FromField</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396608"><span class="annot"><span class="annottext">ObjectId -&gt; SQLData
+</span><a href="#local-6989586621679437130"><span class="hs-identifier hs-var hs-var hs-var hs-var">FromField</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679437128"><span class="annot"><span class="annottext">ObjectId -&gt; SQLData
 (ObjectId -&gt; SQLData) -&gt; ToField ObjectId
 forall a. (a -&gt; SQLData) -&gt; ToField a
 toField :: ObjectId -&gt; SQLData
 $ctoField :: ObjectId -&gt; SQLData
-</span><a href="#local-6989586621679396608"><span class="hs-identifier hs-var hs-var hs-var hs-var">ToField</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">via</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Word64</span></span><span>
+</span><a href="#local-6989586621679437128"><span class="hs-identifier hs-var hs-var hs-var hs-var">ToField</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">via</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Word64</span></span><span>
 </span><span id="line-21"></span><span>
 </span><span id="line-22"></span><span class="hs-keyword">newtype</span><span> </span><span id="TextId"><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#TextId"><span class="hs-identifier hs-var">TextId</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="TextId"><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#TextId"><span class="hs-identifier hs-var">TextId</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Word64</span></span><span>
-</span><span id="line-23"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679396603"><span id="local-6989586621679396605"><span class="annot"><span class="annottext">TextId -&gt; TextId -&gt; Bool
+</span><span id="line-23"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679437123"><span id="local-6989586621679437125"><span class="annot"><span class="annottext">TextId -&gt; TextId -&gt; Bool
 (TextId -&gt; TextId -&gt; Bool)
 -&gt; (TextId -&gt; TextId -&gt; Bool) -&gt; Eq TextId
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -630,7 +630,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: TextId -&gt; TextId -&gt; Bool
 == :: TextId -&gt; TextId -&gt; Bool
 $c== :: TextId -&gt; TextId -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396588"><span id="local-6989586621679396590"><span id="local-6989586621679396592"><span id="local-6989586621679396594"><span id="local-6989586621679396596"><span id="local-6989586621679396598"><span id="local-6989586621679396600"><span class="annot"><span class="annottext">Eq TextId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679437108"><span id="local-6989586621679437110"><span id="local-6989586621679437112"><span id="local-6989586621679437114"><span id="local-6989586621679437116"><span id="local-6989586621679437118"><span id="local-6989586621679437120"><span class="annot"><span class="annottext">Eq TextId
 Eq TextId
 -&gt; (TextId -&gt; TextId -&gt; Ordering)
 -&gt; (TextId -&gt; TextId -&gt; Bool)
@@ -668,7 +668,7 @@ $c&lt; :: TextId -&gt; TextId -&gt; Bool
 compare :: TextId -&gt; TextId -&gt; Ordering
 $ccompare :: TextId -&gt; TextId -&gt; Ordering
 $cp1Ord :: Eq TextId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396582"><span id="local-6989586621679396584"><span id="local-6989586621679396586"><span class="annot"><span class="annottext">Int -&gt; TextId -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679437102"><span id="local-6989586621679437104"><span id="local-6989586621679437106"><span class="annot"><span class="annottext">Int -&gt; TextId -&gt; ShowS
 [TextId] -&gt; ShowS
 TextId -&gt; String
 (Int -&gt; TextId -&gt; ShowS)
@@ -682,7 +682,7 @@ $cshow :: TextId -&gt; String
 showsPrec :: Int -&gt; TextId -&gt; ShowS
 $cshowsPrec :: Int -&gt; TextId -&gt; ShowS
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-24"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679396568"><span id="local-6989586621679396570"><span id="local-6989586621679396572"><span id="local-6989586621679396574"><span id="local-6989586621679396576"><span id="local-6989586621679396578"><span id="local-6989586621679396580"><span class="annot"><span class="annottext">Integer -&gt; TextId
+</span><span id="line-24"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679437088"><span id="local-6989586621679437090"><span id="local-6989586621679437092"><span id="local-6989586621679437094"><span id="local-6989586621679437096"><span id="local-6989586621679437098"><span id="local-6989586621679437100"><span class="annot"><span class="annottext">Integer -&gt; TextId
 TextId -&gt; TextId
 TextId -&gt; TextId -&gt; TextId
 (TextId -&gt; TextId -&gt; TextId)
@@ -716,7 +716,7 @@ $c* :: TextId -&gt; TextId -&gt; TextId
 $c- :: TextId -&gt; TextId -&gt; TextId
 + :: TextId -&gt; TextId -&gt; TextId
 $c+ :: TextId -&gt; TextId -&gt; TextId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Num</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396564"><span class="annot"><span class="annottext">Num TextId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Num</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679437084"><span class="annot"><span class="annottext">Num TextId
 Ord TextId
 Num TextId -&gt; Ord TextId -&gt; (TextId -&gt; Rational) -&gt; Real TextId
 TextId -&gt; Rational
@@ -725,7 +725,7 @@ toRational :: TextId -&gt; Rational
 $ctoRational :: TextId -&gt; Rational
 $cp2Real :: Ord TextId
 $cp1Real :: Num TextId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Real</span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396548"><span id="local-6989586621679396550"><span id="local-6989586621679396552"><span id="local-6989586621679396554"><span id="local-6989586621679396556"><span id="local-6989586621679396558"><span id="local-6989586621679396560"><span id="local-6989586621679396562"><span class="annot"><span class="annottext">Int -&gt; TextId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Real</span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679437068"><span id="local-6989586621679437070"><span id="local-6989586621679437072"><span id="local-6989586621679437074"><span id="local-6989586621679437076"><span id="local-6989586621679437078"><span id="local-6989586621679437080"><span id="local-6989586621679437082"><span class="annot"><span class="annottext">Int -&gt; TextId
 TextId -&gt; Int
 TextId -&gt; [TextId]
 TextId -&gt; TextId
@@ -766,7 +766,7 @@ pred :: TextId -&gt; TextId
 $cpred :: TextId -&gt; TextId
 succ :: TextId -&gt; TextId
 $csucc :: TextId -&gt; TextId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Enum</span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396532"><span id="local-6989586621679396534"><span id="local-6989586621679396536"><span id="local-6989586621679396538"><span id="local-6989586621679396540"><span id="local-6989586621679396542"><span id="local-6989586621679396544"><span class="annot"><span class="annottext">Enum TextId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Enum</span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679437052"><span id="local-6989586621679437054"><span id="local-6989586621679437056"><span id="local-6989586621679437058"><span id="local-6989586621679437060"><span id="local-6989586621679437062"><span id="local-6989586621679437064"><span class="annot"><span class="annottext">Enum TextId
 Real TextId
 Real TextId
 -&gt; Enum TextId
@@ -808,7 +808,7 @@ quot :: TextId -&gt; TextId -&gt; TextId
 $cquot :: TextId -&gt; TextId -&gt; TextId
 $cp2Integral :: Enum TextId
 $cp1Integral :: Real TextId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Integral</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396487"><span id="local-6989586621679396489"><span id="local-6989586621679396491"><span id="local-6989586621679396493"><span id="local-6989586621679396495"><span id="local-6989586621679396497"><span id="local-6989586621679396499"><span id="local-6989586621679396501"><span id="local-6989586621679396503"><span id="local-6989586621679396505"><span id="local-6989586621679396507"><span id="local-6989586621679396509"><span id="local-6989586621679396511"><span id="local-6989586621679396513"><span id="local-6989586621679396515"><span id="local-6989586621679396517"><span id="local-6989586621679396519"><span id="local-6989586621679396521"><span id="local-6989586621679396523"><span id="local-6989586621679396525"><span id="local-6989586621679396527"><span id="local-6989586621679396529"><span class="annot"><span class="annottext">Eq TextId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Integral</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679437007"><span id="local-6989586621679437009"><span id="local-6989586621679437011"><span id="local-6989586621679437013"><span id="local-6989586621679437015"><span id="local-6989586621679437017"><span id="local-6989586621679437019"><span id="local-6989586621679437021"><span id="local-6989586621679437023"><span id="local-6989586621679437025"><span id="local-6989586621679437027"><span id="local-6989586621679437029"><span id="local-6989586621679437031"><span id="local-6989586621679437033"><span id="local-6989586621679437035"><span id="local-6989586621679437037"><span id="local-6989586621679437039"><span id="local-6989586621679437041"><span id="local-6989586621679437043"><span id="local-6989586621679437045"><span id="local-6989586621679437047"><span id="local-6989586621679437049"><span class="annot"><span class="annottext">Eq TextId
 TextId
 Eq TextId
 -&gt; (TextId -&gt; TextId -&gt; TextId)
@@ -912,20 +912,20 @@ $c.|. :: TextId -&gt; TextId -&gt; TextId
 .&amp;. :: TextId -&gt; TextId -&gt; TextId
 $c.&amp;. :: TextId -&gt; TextId -&gt; TextId
 $cp1Bits :: Eq TextId
-</span><a href="#local-6989586621679396487"><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Bits</span></a></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396485"><span class="annot"><span class="annottext">FieldParser TextId
+</span><a href="#local-6989586621679437007"><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Bits</span></a></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679437005"><span class="annot"><span class="annottext">FieldParser TextId
 FieldParser TextId -&gt; FromField TextId
 forall a. FieldParser a -&gt; FromField a
 fromField :: FieldParser TextId
 $cfromField :: FieldParser TextId
-</span><a href="#local-6989586621679396485"><span class="hs-identifier hs-var hs-var hs-var hs-var">FromField</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396483"><span class="annot"><span class="annottext">TextId -&gt; SQLData
+</span><a href="#local-6989586621679437005"><span class="hs-identifier hs-var hs-var hs-var hs-var">FromField</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679437003"><span class="annot"><span class="annottext">TextId -&gt; SQLData
 (TextId -&gt; SQLData) -&gt; ToField TextId
 forall a. (a -&gt; SQLData) -&gt; ToField a
 toField :: TextId -&gt; SQLData
 $ctoField :: TextId -&gt; SQLData
-</span><a href="#local-6989586621679396483"><span class="hs-identifier hs-var hs-var hs-var hs-var">ToField</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">via</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Word64</span></span><span>
+</span><a href="#local-6989586621679437003"><span class="hs-identifier hs-var hs-var hs-var hs-var">ToField</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">via</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Word64</span></span><span>
 </span><span id="line-25"></span><span>
 </span><span id="line-26"></span><span class="hs-keyword">newtype</span><span> </span><span id="HashId"><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#HashId"><span class="hs-identifier hs-var">HashId</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="HashId"><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#HashId"><span class="hs-identifier hs-var">HashId</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Word64</span></span><span>
-</span><span id="line-27"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679396478"><span id="local-6989586621679396480"><span class="annot"><span class="annottext">HashId -&gt; HashId -&gt; Bool
+</span><span id="line-27"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679436998"><span id="local-6989586621679437000"><span class="annot"><span class="annottext">HashId -&gt; HashId -&gt; Bool
 (HashId -&gt; HashId -&gt; Bool)
 -&gt; (HashId -&gt; HashId -&gt; Bool) -&gt; Eq HashId
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -933,7 +933,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: HashId -&gt; HashId -&gt; Bool
 == :: HashId -&gt; HashId -&gt; Bool
 $c== :: HashId -&gt; HashId -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396463"><span id="local-6989586621679396465"><span id="local-6989586621679396467"><span id="local-6989586621679396469"><span id="local-6989586621679396471"><span id="local-6989586621679396473"><span id="local-6989586621679396475"><span class="annot"><span class="annottext">Eq HashId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436983"><span id="local-6989586621679436985"><span id="local-6989586621679436987"><span id="local-6989586621679436989"><span id="local-6989586621679436991"><span id="local-6989586621679436993"><span id="local-6989586621679436995"><span class="annot"><span class="annottext">Eq HashId
 Eq HashId
 -&gt; (HashId -&gt; HashId -&gt; Ordering)
 -&gt; (HashId -&gt; HashId -&gt; Bool)
@@ -971,7 +971,7 @@ $c&lt; :: HashId -&gt; HashId -&gt; Bool
 compare :: HashId -&gt; HashId -&gt; Ordering
 $ccompare :: HashId -&gt; HashId -&gt; Ordering
 $cp1Ord :: Eq HashId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396457"><span id="local-6989586621679396459"><span id="local-6989586621679396461"><span class="annot"><span class="annottext">Int -&gt; HashId -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436977"><span id="local-6989586621679436979"><span id="local-6989586621679436981"><span class="annot"><span class="annottext">Int -&gt; HashId -&gt; ShowS
 [HashId] -&gt; ShowS
 HashId -&gt; String
 (Int -&gt; HashId -&gt; ShowS)
@@ -985,7 +985,7 @@ $cshow :: HashId -&gt; String
 showsPrec :: Int -&gt; HashId -&gt; ShowS
 $cshowsPrec :: Int -&gt; HashId -&gt; ShowS
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-28"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679396443"><span id="local-6989586621679396445"><span id="local-6989586621679396447"><span id="local-6989586621679396449"><span id="local-6989586621679396451"><span id="local-6989586621679396453"><span id="local-6989586621679396455"><span class="annot"><span class="annottext">Integer -&gt; HashId
+</span><span id="line-28"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679436963"><span id="local-6989586621679436965"><span id="local-6989586621679436967"><span id="local-6989586621679436969"><span id="local-6989586621679436971"><span id="local-6989586621679436973"><span id="local-6989586621679436975"><span class="annot"><span class="annottext">Integer -&gt; HashId
 HashId -&gt; HashId
 HashId -&gt; HashId -&gt; HashId
 (HashId -&gt; HashId -&gt; HashId)
@@ -1019,7 +1019,7 @@ $c* :: HashId -&gt; HashId -&gt; HashId
 $c- :: HashId -&gt; HashId -&gt; HashId
 + :: HashId -&gt; HashId -&gt; HashId
 $c+ :: HashId -&gt; HashId -&gt; HashId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Num</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396439"><span class="annot"><span class="annottext">Num HashId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Num</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436959"><span class="annot"><span class="annottext">Num HashId
 Ord HashId
 Num HashId -&gt; Ord HashId -&gt; (HashId -&gt; Rational) -&gt; Real HashId
 HashId -&gt; Rational
@@ -1028,7 +1028,7 @@ toRational :: HashId -&gt; Rational
 $ctoRational :: HashId -&gt; Rational
 $cp2Real :: Ord HashId
 $cp1Real :: Num HashId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Real</span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396423"><span id="local-6989586621679396425"><span id="local-6989586621679396427"><span id="local-6989586621679396429"><span id="local-6989586621679396431"><span id="local-6989586621679396433"><span id="local-6989586621679396435"><span id="local-6989586621679396437"><span class="annot"><span class="annottext">Int -&gt; HashId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Real</span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436943"><span id="local-6989586621679436945"><span id="local-6989586621679436947"><span id="local-6989586621679436949"><span id="local-6989586621679436951"><span id="local-6989586621679436953"><span id="local-6989586621679436955"><span id="local-6989586621679436957"><span class="annot"><span class="annottext">Int -&gt; HashId
 HashId -&gt; Int
 HashId -&gt; [HashId]
 HashId -&gt; HashId
@@ -1069,7 +1069,7 @@ pred :: HashId -&gt; HashId
 $cpred :: HashId -&gt; HashId
 succ :: HashId -&gt; HashId
 $csucc :: HashId -&gt; HashId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Enum</span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396407"><span id="local-6989586621679396409"><span id="local-6989586621679396411"><span id="local-6989586621679396413"><span id="local-6989586621679396415"><span id="local-6989586621679396417"><span id="local-6989586621679396419"><span class="annot"><span class="annottext">Enum HashId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Enum</span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436927"><span id="local-6989586621679436929"><span id="local-6989586621679436931"><span id="local-6989586621679436933"><span id="local-6989586621679436935"><span id="local-6989586621679436937"><span id="local-6989586621679436939"><span class="annot"><span class="annottext">Enum HashId
 Real HashId
 Real HashId
 -&gt; Enum HashId
@@ -1111,7 +1111,7 @@ quot :: HashId -&gt; HashId -&gt; HashId
 $cquot :: HashId -&gt; HashId -&gt; HashId
 $cp2Integral :: Enum HashId
 $cp1Integral :: Real HashId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Integral</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396362"><span id="local-6989586621679396364"><span id="local-6989586621679396366"><span id="local-6989586621679396368"><span id="local-6989586621679396370"><span id="local-6989586621679396372"><span id="local-6989586621679396374"><span id="local-6989586621679396376"><span id="local-6989586621679396378"><span id="local-6989586621679396380"><span id="local-6989586621679396382"><span id="local-6989586621679396384"><span id="local-6989586621679396386"><span id="local-6989586621679396388"><span id="local-6989586621679396390"><span id="local-6989586621679396392"><span id="local-6989586621679396394"><span id="local-6989586621679396396"><span id="local-6989586621679396398"><span id="local-6989586621679396400"><span id="local-6989586621679396402"><span id="local-6989586621679396404"><span class="annot"><span class="annottext">Eq HashId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Integral</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436882"><span id="local-6989586621679436884"><span id="local-6989586621679436886"><span id="local-6989586621679436888"><span id="local-6989586621679436890"><span id="local-6989586621679436892"><span id="local-6989586621679436894"><span id="local-6989586621679436896"><span id="local-6989586621679436898"><span id="local-6989586621679436900"><span id="local-6989586621679436902"><span id="local-6989586621679436904"><span id="local-6989586621679436906"><span id="local-6989586621679436908"><span id="local-6989586621679436910"><span id="local-6989586621679436912"><span id="local-6989586621679436914"><span id="local-6989586621679436916"><span id="local-6989586621679436918"><span id="local-6989586621679436920"><span id="local-6989586621679436922"><span id="local-6989586621679436924"><span class="annot"><span class="annottext">Eq HashId
 HashId
 Eq HashId
 -&gt; (HashId -&gt; HashId -&gt; HashId)
@@ -1215,21 +1215,21 @@ $c.|. :: HashId -&gt; HashId -&gt; HashId
 .&amp;. :: HashId -&gt; HashId -&gt; HashId
 $c.&amp;. :: HashId -&gt; HashId -&gt; HashId
 $cp1Bits :: Eq HashId
-</span><a href="#local-6989586621679396362"><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Bits</span></a></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396360"><span class="annot"><span class="annottext">FieldParser HashId
+</span><a href="#local-6989586621679436882"><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Bits</span></a></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436880"><span class="annot"><span class="annottext">FieldParser HashId
 FieldParser HashId -&gt; FromField HashId
 forall a. FieldParser a -&gt; FromField a
 fromField :: FieldParser HashId
 $cfromField :: FieldParser HashId
-</span><a href="#local-6989586621679396360"><span class="hs-identifier hs-var hs-var hs-var hs-var">FromField</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396358"><span class="annot"><span class="annottext">HashId -&gt; SQLData
+</span><a href="#local-6989586621679436880"><span class="hs-identifier hs-var hs-var hs-var hs-var">FromField</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436878"><span class="annot"><span class="annottext">HashId -&gt; SQLData
 (HashId -&gt; SQLData) -&gt; ToField HashId
 forall a. (a -&gt; SQLData) -&gt; ToField a
 toField :: HashId -&gt; SQLData
 $ctoField :: HashId -&gt; SQLData
-</span><a href="#local-6989586621679396358"><span class="hs-identifier hs-var hs-var hs-var hs-var">ToField</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">via</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Word64</span></span><span>
+</span><a href="#local-6989586621679436878"><span class="hs-identifier hs-var hs-var hs-var hs-var">ToField</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">via</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Word64</span></span><span>
 </span><span id="line-29"></span><span>
-</span><span id="line-30"></span><span class="hs-keyword">newtype</span><span> </span><span id="PatchObjectId"><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#PatchObjectId"><span class="hs-identifier hs-var">PatchObjectId</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="PatchObjectId"><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#PatchObjectId"><span class="hs-identifier hs-var">PatchObjectId</span></a></span></span><span> </span><span class="hs-special">{</span><span id="unPatchObjectId"><span class="annot"><span class="annottext">PatchObjectId -&gt; ObjectId
-</span><a href="U.Codebase.Sqlite.DbId.html#unPatchObjectId"><span class="hs-identifier hs-var hs-var">unPatchObjectId</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#ObjectId"><span class="hs-identifier hs-type">ObjectId</span></a></span><span class="hs-special">}</span><span>
-</span><span id="line-31"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679396352"><span id="local-6989586621679396354"><span class="annot"><span class="annottext">PatchObjectId -&gt; PatchObjectId -&gt; Bool
+</span><span id="line-30"></span><span class="hs-keyword">newtype</span><span> </span><span id="PatchObjectId"><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#PatchObjectId"><span class="hs-identifier hs-var">PatchObjectId</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="PatchObjectId"><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#PatchObjectId"><span class="hs-identifier hs-var">PatchObjectId</span></a></span></span><span> </span><span class="hs-special">{</span><span id="%24sel%3AunPatchObjectId%3APatchObjectId"><span class="annot"><span class="annottext">PatchObjectId -&gt; ObjectId
+</span><a href="U.Codebase.Sqlite.DbId.html#%24sel%3AunPatchObjectId%3APatchObjectId"><span class="hs-identifier hs-var hs-var">unPatchObjectId</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#ObjectId"><span class="hs-identifier hs-type">ObjectId</span></a></span><span class="hs-special">}</span><span>
+</span><span id="line-31"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679436872"><span id="local-6989586621679436874"><span class="annot"><span class="annottext">PatchObjectId -&gt; PatchObjectId -&gt; Bool
 (PatchObjectId -&gt; PatchObjectId -&gt; Bool)
 -&gt; (PatchObjectId -&gt; PatchObjectId -&gt; Bool) -&gt; Eq PatchObjectId
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -1237,7 +1237,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: PatchObjectId -&gt; PatchObjectId -&gt; Bool
 == :: PatchObjectId -&gt; PatchObjectId -&gt; Bool
 $c== :: PatchObjectId -&gt; PatchObjectId -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396337"><span id="local-6989586621679396339"><span id="local-6989586621679396341"><span id="local-6989586621679396343"><span id="local-6989586621679396345"><span id="local-6989586621679396347"><span id="local-6989586621679396349"><span class="annot"><span class="annottext">Eq PatchObjectId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436857"><span id="local-6989586621679436859"><span id="local-6989586621679436861"><span id="local-6989586621679436863"><span id="local-6989586621679436865"><span id="local-6989586621679436867"><span id="local-6989586621679436869"><span class="annot"><span class="annottext">Eq PatchObjectId
 Eq PatchObjectId
 -&gt; (PatchObjectId -&gt; PatchObjectId -&gt; Ordering)
 -&gt; (PatchObjectId -&gt; PatchObjectId -&gt; Bool)
@@ -1276,7 +1276,7 @@ compare :: PatchObjectId -&gt; PatchObjectId -&gt; Ordering
 $ccompare :: PatchObjectId -&gt; PatchObjectId -&gt; Ordering
 $cp1Ord :: Eq PatchObjectId
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-32"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679396323"><span id="local-6989586621679396325"><span id="local-6989586621679396327"><span id="local-6989586621679396329"><span id="local-6989586621679396331"><span id="local-6989586621679396333"><span id="local-6989586621679396335"><span class="annot"><span class="annottext">Integer -&gt; PatchObjectId
+</span><span id="line-32"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679436843"><span id="local-6989586621679436845"><span id="local-6989586621679436847"><span id="local-6989586621679436849"><span id="local-6989586621679436851"><span id="local-6989586621679436853"><span id="local-6989586621679436855"><span class="annot"><span class="annottext">Integer -&gt; PatchObjectId
 PatchObjectId -&gt; PatchObjectId
 PatchObjectId -&gt; PatchObjectId -&gt; PatchObjectId
 (PatchObjectId -&gt; PatchObjectId -&gt; PatchObjectId)
@@ -1310,7 +1310,7 @@ $c* :: PatchObjectId -&gt; PatchObjectId -&gt; PatchObjectId
 $c- :: PatchObjectId -&gt; PatchObjectId -&gt; PatchObjectId
 + :: PatchObjectId -&gt; PatchObjectId -&gt; PatchObjectId
 $c+ :: PatchObjectId -&gt; PatchObjectId -&gt; PatchObjectId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Num</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396319"><span class="annot"><span class="annottext">Num PatchObjectId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Num</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436839"><span class="annot"><span class="annottext">Num PatchObjectId
 Ord PatchObjectId
 Num PatchObjectId
 -&gt; Ord PatchObjectId
@@ -1322,7 +1322,7 @@ toRational :: PatchObjectId -&gt; Rational
 $ctoRational :: PatchObjectId -&gt; Rational
 $cp2Real :: Ord PatchObjectId
 $cp1Real :: Num PatchObjectId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Real</span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396303"><span id="local-6989586621679396305"><span id="local-6989586621679396307"><span id="local-6989586621679396309"><span id="local-6989586621679396311"><span id="local-6989586621679396313"><span id="local-6989586621679396315"><span id="local-6989586621679396317"><span class="annot"><span class="annottext">Int -&gt; PatchObjectId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Real</span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436823"><span id="local-6989586621679436825"><span id="local-6989586621679436827"><span id="local-6989586621679436829"><span id="local-6989586621679436831"><span id="local-6989586621679436833"><span id="local-6989586621679436835"><span id="local-6989586621679436837"><span class="annot"><span class="annottext">Int -&gt; PatchObjectId
 PatchObjectId -&gt; Int
 PatchObjectId -&gt; [PatchObjectId]
 PatchObjectId -&gt; PatchObjectId
@@ -1364,7 +1364,7 @@ pred :: PatchObjectId -&gt; PatchObjectId
 $cpred :: PatchObjectId -&gt; PatchObjectId
 succ :: PatchObjectId -&gt; PatchObjectId
 $csucc :: PatchObjectId -&gt; PatchObjectId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Enum</span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396287"><span id="local-6989586621679396289"><span id="local-6989586621679396291"><span id="local-6989586621679396293"><span id="local-6989586621679396295"><span id="local-6989586621679396297"><span id="local-6989586621679396299"><span class="annot"><span class="annottext">Enum PatchObjectId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Enum</span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436807"><span id="local-6989586621679436809"><span id="local-6989586621679436811"><span id="local-6989586621679436813"><span id="local-6989586621679436815"><span id="local-6989586621679436817"><span id="local-6989586621679436819"><span class="annot"><span class="annottext">Enum PatchObjectId
 Real PatchObjectId
 Real PatchObjectId
 -&gt; Enum PatchObjectId
@@ -1408,7 +1408,7 @@ quot :: PatchObjectId -&gt; PatchObjectId -&gt; PatchObjectId
 $cquot :: PatchObjectId -&gt; PatchObjectId -&gt; PatchObjectId
 $cp2Integral :: Enum PatchObjectId
 $cp1Integral :: Real PatchObjectId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Integral</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396242"><span id="local-6989586621679396244"><span id="local-6989586621679396246"><span id="local-6989586621679396248"><span id="local-6989586621679396250"><span id="local-6989586621679396252"><span id="local-6989586621679396254"><span id="local-6989586621679396256"><span id="local-6989586621679396258"><span id="local-6989586621679396260"><span id="local-6989586621679396262"><span id="local-6989586621679396264"><span id="local-6989586621679396266"><span id="local-6989586621679396268"><span id="local-6989586621679396270"><span id="local-6989586621679396272"><span id="local-6989586621679396274"><span id="local-6989586621679396276"><span id="local-6989586621679396278"><span id="local-6989586621679396280"><span id="local-6989586621679396282"><span id="local-6989586621679396284"><span class="annot"><span class="annottext">Eq PatchObjectId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Integral</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436762"><span id="local-6989586621679436764"><span id="local-6989586621679436766"><span id="local-6989586621679436768"><span id="local-6989586621679436770"><span id="local-6989586621679436772"><span id="local-6989586621679436774"><span id="local-6989586621679436776"><span id="local-6989586621679436778"><span id="local-6989586621679436780"><span id="local-6989586621679436782"><span id="local-6989586621679436784"><span id="local-6989586621679436786"><span id="local-6989586621679436788"><span id="local-6989586621679436790"><span id="local-6989586621679436792"><span id="local-6989586621679436794"><span id="local-6989586621679436796"><span id="local-6989586621679436798"><span id="local-6989586621679436800"><span id="local-6989586621679436802"><span id="local-6989586621679436804"><span class="annot"><span class="annottext">Eq PatchObjectId
 PatchObjectId
 Eq PatchObjectId
 -&gt; (PatchObjectId -&gt; PatchObjectId -&gt; PatchObjectId)
@@ -1512,21 +1512,21 @@ $c.|. :: PatchObjectId -&gt; PatchObjectId -&gt; PatchObjectId
 .&amp;. :: PatchObjectId -&gt; PatchObjectId -&gt; PatchObjectId
 $c.&amp;. :: PatchObjectId -&gt; PatchObjectId -&gt; PatchObjectId
 $cp1Bits :: Eq PatchObjectId
-</span><a href="#local-6989586621679396242"><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Bits</span></a></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396240"><span class="annot"><span class="annottext">FieldParser PatchObjectId
+</span><a href="#local-6989586621679436762"><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Bits</span></a></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436760"><span class="annot"><span class="annottext">FieldParser PatchObjectId
 FieldParser PatchObjectId -&gt; FromField PatchObjectId
 forall a. FieldParser a -&gt; FromField a
 fromField :: FieldParser PatchObjectId
 $cfromField :: FieldParser PatchObjectId
-</span><a href="#local-6989586621679396240"><span class="hs-identifier hs-var hs-var hs-var hs-var">FromField</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396238"><span class="annot"><span class="annottext">PatchObjectId -&gt; SQLData
+</span><a href="#local-6989586621679436760"><span class="hs-identifier hs-var hs-var hs-var hs-var">FromField</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436758"><span class="annot"><span class="annottext">PatchObjectId -&gt; SQLData
 (PatchObjectId -&gt; SQLData) -&gt; ToField PatchObjectId
 forall a. (a -&gt; SQLData) -&gt; ToField a
 toField :: PatchObjectId -&gt; SQLData
 $ctoField :: PatchObjectId -&gt; SQLData
-</span><a href="#local-6989586621679396238"><span class="hs-identifier hs-var hs-var hs-var hs-var">ToField</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">via</span><span> </span><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#ObjectId"><span class="hs-identifier hs-type">ObjectId</span></a></span><span>
+</span><a href="#local-6989586621679436758"><span class="hs-identifier hs-var hs-var hs-var hs-var">ToField</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">via</span><span> </span><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#ObjectId"><span class="hs-identifier hs-type">ObjectId</span></a></span><span>
 </span><span id="line-33"></span><span>
-</span><span id="line-34"></span><span class="hs-keyword">newtype</span><span> </span><span id="BranchObjectId"><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#BranchObjectId"><span class="hs-identifier hs-var">BranchObjectId</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="BranchObjectId"><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#BranchObjectId"><span class="hs-identifier hs-var">BranchObjectId</span></a></span></span><span> </span><span class="hs-special">{</span><span id="unBranchObjectId"><span class="annot"><span class="annottext">BranchObjectId -&gt; ObjectId
-</span><a href="U.Codebase.Sqlite.DbId.html#unBranchObjectId"><span class="hs-identifier hs-var hs-var">unBranchObjectId</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#ObjectId"><span class="hs-identifier hs-type">ObjectId</span></a></span><span class="hs-special">}</span><span>
-</span><span id="line-35"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679396232"><span id="local-6989586621679396234"><span class="annot"><span class="annottext">BranchObjectId -&gt; BranchObjectId -&gt; Bool
+</span><span id="line-34"></span><span class="hs-keyword">newtype</span><span> </span><span id="BranchObjectId"><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#BranchObjectId"><span class="hs-identifier hs-var">BranchObjectId</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="BranchObjectId"><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#BranchObjectId"><span class="hs-identifier hs-var">BranchObjectId</span></a></span></span><span> </span><span class="hs-special">{</span><span id="%24sel%3AunBranchObjectId%3ABranchObjectId"><span class="annot"><span class="annottext">BranchObjectId -&gt; ObjectId
+</span><a href="U.Codebase.Sqlite.DbId.html#%24sel%3AunBranchObjectId%3ABranchObjectId"><span class="hs-identifier hs-var hs-var">unBranchObjectId</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#ObjectId"><span class="hs-identifier hs-type">ObjectId</span></a></span><span class="hs-special">}</span><span>
+</span><span id="line-35"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679436752"><span id="local-6989586621679436754"><span class="annot"><span class="annottext">BranchObjectId -&gt; BranchObjectId -&gt; Bool
 (BranchObjectId -&gt; BranchObjectId -&gt; Bool)
 -&gt; (BranchObjectId -&gt; BranchObjectId -&gt; Bool) -&gt; Eq BranchObjectId
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -1534,7 +1534,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: BranchObjectId -&gt; BranchObjectId -&gt; Bool
 == :: BranchObjectId -&gt; BranchObjectId -&gt; Bool
 $c== :: BranchObjectId -&gt; BranchObjectId -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396217"><span id="local-6989586621679396219"><span id="local-6989586621679396221"><span id="local-6989586621679396223"><span id="local-6989586621679396225"><span id="local-6989586621679396227"><span id="local-6989586621679396229"><span class="annot"><span class="annottext">Eq BranchObjectId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436737"><span id="local-6989586621679436739"><span id="local-6989586621679436741"><span id="local-6989586621679436743"><span id="local-6989586621679436745"><span id="local-6989586621679436747"><span id="local-6989586621679436749"><span class="annot"><span class="annottext">Eq BranchObjectId
 Eq BranchObjectId
 -&gt; (BranchObjectId -&gt; BranchObjectId -&gt; Ordering)
 -&gt; (BranchObjectId -&gt; BranchObjectId -&gt; Bool)
@@ -1573,7 +1573,7 @@ compare :: BranchObjectId -&gt; BranchObjectId -&gt; Ordering
 $ccompare :: BranchObjectId -&gt; BranchObjectId -&gt; Ordering
 $cp1Ord :: Eq BranchObjectId
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-36"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679396203"><span id="local-6989586621679396205"><span id="local-6989586621679396207"><span id="local-6989586621679396209"><span id="local-6989586621679396211"><span id="local-6989586621679396213"><span id="local-6989586621679396215"><span class="annot"><span class="annottext">Integer -&gt; BranchObjectId
+</span><span id="line-36"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679436723"><span id="local-6989586621679436725"><span id="local-6989586621679436727"><span id="local-6989586621679436729"><span id="local-6989586621679436731"><span id="local-6989586621679436733"><span id="local-6989586621679436735"><span class="annot"><span class="annottext">Integer -&gt; BranchObjectId
 BranchObjectId -&gt; BranchObjectId
 BranchObjectId -&gt; BranchObjectId -&gt; BranchObjectId
 (BranchObjectId -&gt; BranchObjectId -&gt; BranchObjectId)
@@ -1607,7 +1607,7 @@ $c* :: BranchObjectId -&gt; BranchObjectId -&gt; BranchObjectId
 $c- :: BranchObjectId -&gt; BranchObjectId -&gt; BranchObjectId
 + :: BranchObjectId -&gt; BranchObjectId -&gt; BranchObjectId
 $c+ :: BranchObjectId -&gt; BranchObjectId -&gt; BranchObjectId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Num</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396199"><span class="annot"><span class="annottext">Num BranchObjectId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Num</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436719"><span class="annot"><span class="annottext">Num BranchObjectId
 Ord BranchObjectId
 Num BranchObjectId
 -&gt; Ord BranchObjectId
@@ -1619,7 +1619,7 @@ toRational :: BranchObjectId -&gt; Rational
 $ctoRational :: BranchObjectId -&gt; Rational
 $cp2Real :: Ord BranchObjectId
 $cp1Real :: Num BranchObjectId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Real</span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396183"><span id="local-6989586621679396185"><span id="local-6989586621679396187"><span id="local-6989586621679396189"><span id="local-6989586621679396191"><span id="local-6989586621679396193"><span id="local-6989586621679396195"><span id="local-6989586621679396197"><span class="annot"><span class="annottext">Int -&gt; BranchObjectId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Real</span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436703"><span id="local-6989586621679436705"><span id="local-6989586621679436707"><span id="local-6989586621679436709"><span id="local-6989586621679436711"><span id="local-6989586621679436713"><span id="local-6989586621679436715"><span id="local-6989586621679436717"><span class="annot"><span class="annottext">Int -&gt; BranchObjectId
 BranchObjectId -&gt; Int
 BranchObjectId -&gt; [BranchObjectId]
 BranchObjectId -&gt; BranchObjectId
@@ -1664,7 +1664,7 @@ pred :: BranchObjectId -&gt; BranchObjectId
 $cpred :: BranchObjectId -&gt; BranchObjectId
 succ :: BranchObjectId -&gt; BranchObjectId
 $csucc :: BranchObjectId -&gt; BranchObjectId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Enum</span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396167"><span id="local-6989586621679396169"><span id="local-6989586621679396171"><span id="local-6989586621679396173"><span id="local-6989586621679396175"><span id="local-6989586621679396177"><span id="local-6989586621679396179"><span class="annot"><span class="annottext">Enum BranchObjectId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Enum</span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436687"><span id="local-6989586621679436689"><span id="local-6989586621679436691"><span id="local-6989586621679436693"><span id="local-6989586621679436695"><span id="local-6989586621679436697"><span id="local-6989586621679436699"><span class="annot"><span class="annottext">Enum BranchObjectId
 Real BranchObjectId
 Real BranchObjectId
 -&gt; Enum BranchObjectId
@@ -1713,7 +1713,7 @@ quot :: BranchObjectId -&gt; BranchObjectId -&gt; BranchObjectId
 $cquot :: BranchObjectId -&gt; BranchObjectId -&gt; BranchObjectId
 $cp2Integral :: Enum BranchObjectId
 $cp1Integral :: Real BranchObjectId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Integral</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396122"><span id="local-6989586621679396124"><span id="local-6989586621679396126"><span id="local-6989586621679396128"><span id="local-6989586621679396130"><span id="local-6989586621679396132"><span id="local-6989586621679396134"><span id="local-6989586621679396136"><span id="local-6989586621679396138"><span id="local-6989586621679396140"><span id="local-6989586621679396142"><span id="local-6989586621679396144"><span id="local-6989586621679396146"><span id="local-6989586621679396148"><span id="local-6989586621679396150"><span id="local-6989586621679396152"><span id="local-6989586621679396154"><span id="local-6989586621679396156"><span id="local-6989586621679396158"><span id="local-6989586621679396160"><span id="local-6989586621679396162"><span id="local-6989586621679396164"><span class="annot"><span class="annottext">Eq BranchObjectId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Integral</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436642"><span id="local-6989586621679436644"><span id="local-6989586621679436646"><span id="local-6989586621679436648"><span id="local-6989586621679436650"><span id="local-6989586621679436652"><span id="local-6989586621679436654"><span id="local-6989586621679436656"><span id="local-6989586621679436658"><span id="local-6989586621679436660"><span id="local-6989586621679436662"><span id="local-6989586621679436664"><span id="local-6989586621679436666"><span id="local-6989586621679436668"><span id="local-6989586621679436670"><span id="local-6989586621679436672"><span id="local-6989586621679436674"><span id="local-6989586621679436676"><span id="local-6989586621679436678"><span id="local-6989586621679436680"><span id="local-6989586621679436682"><span id="local-6989586621679436684"><span class="annot"><span class="annottext">Eq BranchObjectId
 BranchObjectId
 Eq BranchObjectId
 -&gt; (BranchObjectId -&gt; BranchObjectId -&gt; BranchObjectId)
@@ -1817,21 +1817,21 @@ $c.|. :: BranchObjectId -&gt; BranchObjectId -&gt; BranchObjectId
 .&amp;. :: BranchObjectId -&gt; BranchObjectId -&gt; BranchObjectId
 $c.&amp;. :: BranchObjectId -&gt; BranchObjectId -&gt; BranchObjectId
 $cp1Bits :: Eq BranchObjectId
-</span><a href="#local-6989586621679396122"><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Bits</span></a></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396120"><span class="annot"><span class="annottext">FieldParser BranchObjectId
+</span><a href="#local-6989586621679436642"><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Bits</span></a></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436640"><span class="annot"><span class="annottext">FieldParser BranchObjectId
 FieldParser BranchObjectId -&gt; FromField BranchObjectId
 forall a. FieldParser a -&gt; FromField a
 fromField :: FieldParser BranchObjectId
 $cfromField :: FieldParser BranchObjectId
-</span><a href="#local-6989586621679396120"><span class="hs-identifier hs-var hs-var hs-var hs-var">FromField</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396118"><span class="annot"><span class="annottext">BranchObjectId -&gt; SQLData
+</span><a href="#local-6989586621679436640"><span class="hs-identifier hs-var hs-var hs-var hs-var">FromField</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436638"><span class="annot"><span class="annottext">BranchObjectId -&gt; SQLData
 (BranchObjectId -&gt; SQLData) -&gt; ToField BranchObjectId
 forall a. (a -&gt; SQLData) -&gt; ToField a
 toField :: BranchObjectId -&gt; SQLData
 $ctoField :: BranchObjectId -&gt; SQLData
-</span><a href="#local-6989586621679396118"><span class="hs-identifier hs-var hs-var hs-var hs-var">ToField</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">via</span><span> </span><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#ObjectId"><span class="hs-identifier hs-type">ObjectId</span></a></span><span>
+</span><a href="#local-6989586621679436638"><span class="hs-identifier hs-var hs-var hs-var hs-var">ToField</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">via</span><span> </span><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#ObjectId"><span class="hs-identifier hs-type">ObjectId</span></a></span><span>
 </span><span id="line-37"></span><span>
-</span><span id="line-38"></span><span class="hs-keyword">newtype</span><span> </span><span id="BranchHashId"><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#BranchHashId"><span class="hs-identifier hs-var">BranchHashId</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="BranchHashId"><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#BranchHashId"><span class="hs-identifier hs-var">BranchHashId</span></a></span></span><span> </span><span class="hs-special">{</span><span id="unBranchHashId"><span class="annot"><span class="annottext">BranchHashId -&gt; HashId
-</span><a href="U.Codebase.Sqlite.DbId.html#unBranchHashId"><span class="hs-identifier hs-var hs-var">unBranchHashId</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#HashId"><span class="hs-identifier hs-type">HashId</span></a></span><span class="hs-special">}</span><span>
-</span><span id="line-39"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679396112"><span id="local-6989586621679396114"><span class="annot"><span class="annottext">BranchHashId -&gt; BranchHashId -&gt; Bool
+</span><span id="line-38"></span><span class="hs-keyword">newtype</span><span> </span><span id="BranchHashId"><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#BranchHashId"><span class="hs-identifier hs-var">BranchHashId</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="BranchHashId"><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#BranchHashId"><span class="hs-identifier hs-var">BranchHashId</span></a></span></span><span> </span><span class="hs-special">{</span><span id="%24sel%3AunBranchHashId%3ABranchHashId"><span class="annot"><span class="annottext">BranchHashId -&gt; HashId
+</span><a href="U.Codebase.Sqlite.DbId.html#%24sel%3AunBranchHashId%3ABranchHashId"><span class="hs-identifier hs-var hs-var">unBranchHashId</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#HashId"><span class="hs-identifier hs-type">HashId</span></a></span><span class="hs-special">}</span><span>
+</span><span id="line-39"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679436632"><span id="local-6989586621679436634"><span class="annot"><span class="annottext">BranchHashId -&gt; BranchHashId -&gt; Bool
 (BranchHashId -&gt; BranchHashId -&gt; Bool)
 -&gt; (BranchHashId -&gt; BranchHashId -&gt; Bool) -&gt; Eq BranchHashId
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -1839,7 +1839,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: BranchHashId -&gt; BranchHashId -&gt; Bool
 == :: BranchHashId -&gt; BranchHashId -&gt; Bool
 $c== :: BranchHashId -&gt; BranchHashId -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396097"><span id="local-6989586621679396099"><span id="local-6989586621679396101"><span id="local-6989586621679396103"><span id="local-6989586621679396105"><span id="local-6989586621679396107"><span id="local-6989586621679396109"><span class="annot"><span class="annottext">Eq BranchHashId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436617"><span id="local-6989586621679436619"><span id="local-6989586621679436621"><span id="local-6989586621679436623"><span id="local-6989586621679436625"><span id="local-6989586621679436627"><span id="local-6989586621679436629"><span class="annot"><span class="annottext">Eq BranchHashId
 Eq BranchHashId
 -&gt; (BranchHashId -&gt; BranchHashId -&gt; Ordering)
 -&gt; (BranchHashId -&gt; BranchHashId -&gt; Bool)
@@ -1878,7 +1878,7 @@ compare :: BranchHashId -&gt; BranchHashId -&gt; Ordering
 $ccompare :: BranchHashId -&gt; BranchHashId -&gt; Ordering
 $cp1Ord :: Eq BranchHashId
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-40"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679396083"><span id="local-6989586621679396085"><span id="local-6989586621679396087"><span id="local-6989586621679396089"><span id="local-6989586621679396091"><span id="local-6989586621679396093"><span id="local-6989586621679396095"><span class="annot"><span class="annottext">Integer -&gt; BranchHashId
+</span><span id="line-40"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679436603"><span id="local-6989586621679436605"><span id="local-6989586621679436607"><span id="local-6989586621679436609"><span id="local-6989586621679436611"><span id="local-6989586621679436613"><span id="local-6989586621679436615"><span class="annot"><span class="annottext">Integer -&gt; BranchHashId
 BranchHashId -&gt; BranchHashId
 BranchHashId -&gt; BranchHashId -&gt; BranchHashId
 (BranchHashId -&gt; BranchHashId -&gt; BranchHashId)
@@ -1912,7 +1912,7 @@ $c* :: BranchHashId -&gt; BranchHashId -&gt; BranchHashId
 $c- :: BranchHashId -&gt; BranchHashId -&gt; BranchHashId
 + :: BranchHashId -&gt; BranchHashId -&gt; BranchHashId
 $c+ :: BranchHashId -&gt; BranchHashId -&gt; BranchHashId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Num</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396079"><span class="annot"><span class="annottext">Num BranchHashId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Num</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436599"><span class="annot"><span class="annottext">Num BranchHashId
 Ord BranchHashId
 Num BranchHashId
 -&gt; Ord BranchHashId
@@ -1924,7 +1924,7 @@ toRational :: BranchHashId -&gt; Rational
 $ctoRational :: BranchHashId -&gt; Rational
 $cp2Real :: Ord BranchHashId
 $cp1Real :: Num BranchHashId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Real</span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396063"><span id="local-6989586621679396065"><span id="local-6989586621679396067"><span id="local-6989586621679396069"><span id="local-6989586621679396071"><span id="local-6989586621679396073"><span id="local-6989586621679396075"><span id="local-6989586621679396077"><span class="annot"><span class="annottext">Int -&gt; BranchHashId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Real</span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436583"><span id="local-6989586621679436585"><span id="local-6989586621679436587"><span id="local-6989586621679436589"><span id="local-6989586621679436591"><span id="local-6989586621679436593"><span id="local-6989586621679436595"><span id="local-6989586621679436597"><span class="annot"><span class="annottext">Int -&gt; BranchHashId
 BranchHashId -&gt; Int
 BranchHashId -&gt; [BranchHashId]
 BranchHashId -&gt; BranchHashId
@@ -1965,7 +1965,7 @@ pred :: BranchHashId -&gt; BranchHashId
 $cpred :: BranchHashId -&gt; BranchHashId
 succ :: BranchHashId -&gt; BranchHashId
 $csucc :: BranchHashId -&gt; BranchHashId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Enum</span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396047"><span id="local-6989586621679396049"><span id="local-6989586621679396051"><span id="local-6989586621679396053"><span id="local-6989586621679396055"><span id="local-6989586621679396057"><span id="local-6989586621679396059"><span class="annot"><span class="annottext">Enum BranchHashId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Enum</span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436567"><span id="local-6989586621679436569"><span id="local-6989586621679436571"><span id="local-6989586621679436573"><span id="local-6989586621679436575"><span id="local-6989586621679436577"><span id="local-6989586621679436579"><span class="annot"><span class="annottext">Enum BranchHashId
 Real BranchHashId
 Real BranchHashId
 -&gt; Enum BranchHashId
@@ -2007,7 +2007,7 @@ quot :: BranchHashId -&gt; BranchHashId -&gt; BranchHashId
 $cquot :: BranchHashId -&gt; BranchHashId -&gt; BranchHashId
 $cp2Integral :: Enum BranchHashId
 $cp1Integral :: Real BranchHashId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Integral</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396002"><span id="local-6989586621679396004"><span id="local-6989586621679396006"><span id="local-6989586621679396008"><span id="local-6989586621679396010"><span id="local-6989586621679396012"><span id="local-6989586621679396014"><span id="local-6989586621679396016"><span id="local-6989586621679396018"><span id="local-6989586621679396020"><span id="local-6989586621679396022"><span id="local-6989586621679396024"><span id="local-6989586621679396026"><span id="local-6989586621679396028"><span id="local-6989586621679396030"><span id="local-6989586621679396032"><span id="local-6989586621679396034"><span id="local-6989586621679396036"><span id="local-6989586621679396038"><span id="local-6989586621679396040"><span id="local-6989586621679396042"><span id="local-6989586621679396044"><span class="annot"><span class="annottext">Eq BranchHashId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Integral</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436522"><span id="local-6989586621679436524"><span id="local-6989586621679436526"><span id="local-6989586621679436528"><span id="local-6989586621679436530"><span id="local-6989586621679436532"><span id="local-6989586621679436534"><span id="local-6989586621679436536"><span id="local-6989586621679436538"><span id="local-6989586621679436540"><span id="local-6989586621679436542"><span id="local-6989586621679436544"><span id="local-6989586621679436546"><span id="local-6989586621679436548"><span id="local-6989586621679436550"><span id="local-6989586621679436552"><span id="local-6989586621679436554"><span id="local-6989586621679436556"><span id="local-6989586621679436558"><span id="local-6989586621679436560"><span id="local-6989586621679436562"><span id="local-6989586621679436564"><span class="annot"><span class="annottext">Eq BranchHashId
 BranchHashId
 Eq BranchHashId
 -&gt; (BranchHashId -&gt; BranchHashId -&gt; BranchHashId)
@@ -2111,21 +2111,21 @@ $c.|. :: BranchHashId -&gt; BranchHashId -&gt; BranchHashId
 .&amp;. :: BranchHashId -&gt; BranchHashId -&gt; BranchHashId
 $c.&amp;. :: BranchHashId -&gt; BranchHashId -&gt; BranchHashId
 $cp1Bits :: Eq BranchHashId
-</span><a href="#local-6989586621679396002"><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Bits</span></a></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679396000"><span class="annot"><span class="annottext">FieldParser BranchHashId
+</span><a href="#local-6989586621679436522"><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Bits</span></a></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436520"><span class="annot"><span class="annottext">FieldParser BranchHashId
 FieldParser BranchHashId -&gt; FromField BranchHashId
 forall a. FieldParser a -&gt; FromField a
 fromField :: FieldParser BranchHashId
 $cfromField :: FieldParser BranchHashId
-</span><a href="#local-6989586621679396000"><span class="hs-identifier hs-var hs-var hs-var hs-var">FromField</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679395998"><span class="annot"><span class="annottext">BranchHashId -&gt; SQLData
+</span><a href="#local-6989586621679436520"><span class="hs-identifier hs-var hs-var hs-var hs-var">FromField</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436518"><span class="annot"><span class="annottext">BranchHashId -&gt; SQLData
 (BranchHashId -&gt; SQLData) -&gt; ToField BranchHashId
 forall a. (a -&gt; SQLData) -&gt; ToField a
 toField :: BranchHashId -&gt; SQLData
 $ctoField :: BranchHashId -&gt; SQLData
-</span><a href="#local-6989586621679395998"><span class="hs-identifier hs-var hs-var hs-var hs-var">ToField</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">via</span><span> </span><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#HashId"><span class="hs-identifier hs-type">HashId</span></a></span><span>
+</span><a href="#local-6989586621679436518"><span class="hs-identifier hs-var hs-var hs-var hs-var">ToField</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">via</span><span> </span><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#HashId"><span class="hs-identifier hs-type">HashId</span></a></span><span>
 </span><span id="line-41"></span><span>
-</span><span id="line-42"></span><span class="hs-keyword">newtype</span><span> </span><span id="CausalHashId"><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#CausalHashId"><span class="hs-identifier hs-var">CausalHashId</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="CausalHashId"><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#CausalHashId"><span class="hs-identifier hs-var">CausalHashId</span></a></span></span><span> </span><span class="hs-special">{</span><span id="unCausalHashId"><span class="annot"><span class="annottext">CausalHashId -&gt; HashId
-</span><a href="U.Codebase.Sqlite.DbId.html#unCausalHashId"><span class="hs-identifier hs-var hs-var">unCausalHashId</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#HashId"><span class="hs-identifier hs-type">HashId</span></a></span><span class="hs-special">}</span><span>
-</span><span id="line-43"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679395992"><span id="local-6989586621679395994"><span class="annot"><span class="annottext">CausalHashId -&gt; CausalHashId -&gt; Bool
+</span><span id="line-42"></span><span class="hs-keyword">newtype</span><span> </span><span id="CausalHashId"><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#CausalHashId"><span class="hs-identifier hs-var">CausalHashId</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="CausalHashId"><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#CausalHashId"><span class="hs-identifier hs-var">CausalHashId</span></a></span></span><span> </span><span class="hs-special">{</span><span id="%24sel%3AunCausalHashId%3ACausalHashId"><span class="annot"><span class="annottext">CausalHashId -&gt; HashId
+</span><a href="U.Codebase.Sqlite.DbId.html#%24sel%3AunCausalHashId%3ACausalHashId"><span class="hs-identifier hs-var hs-var">unCausalHashId</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#HashId"><span class="hs-identifier hs-type">HashId</span></a></span><span class="hs-special">}</span><span>
+</span><span id="line-43"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679436512"><span id="local-6989586621679436514"><span class="annot"><span class="annottext">CausalHashId -&gt; CausalHashId -&gt; Bool
 (CausalHashId -&gt; CausalHashId -&gt; Bool)
 -&gt; (CausalHashId -&gt; CausalHashId -&gt; Bool) -&gt; Eq CausalHashId
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -2133,7 +2133,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: CausalHashId -&gt; CausalHashId -&gt; Bool
 == :: CausalHashId -&gt; CausalHashId -&gt; Bool
 $c== :: CausalHashId -&gt; CausalHashId -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679395977"><span id="local-6989586621679395979"><span id="local-6989586621679395981"><span id="local-6989586621679395983"><span id="local-6989586621679395985"><span id="local-6989586621679395987"><span id="local-6989586621679395989"><span class="annot"><span class="annottext">Eq CausalHashId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436497"><span id="local-6989586621679436499"><span id="local-6989586621679436501"><span id="local-6989586621679436503"><span id="local-6989586621679436505"><span id="local-6989586621679436507"><span id="local-6989586621679436509"><span class="annot"><span class="annottext">Eq CausalHashId
 Eq CausalHashId
 -&gt; (CausalHashId -&gt; CausalHashId -&gt; Ordering)
 -&gt; (CausalHashId -&gt; CausalHashId -&gt; Bool)
@@ -2172,7 +2172,7 @@ compare :: CausalHashId -&gt; CausalHashId -&gt; Ordering
 $ccompare :: CausalHashId -&gt; CausalHashId -&gt; Ordering
 $cp1Ord :: Eq CausalHashId
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-44"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679395963"><span id="local-6989586621679395965"><span id="local-6989586621679395967"><span id="local-6989586621679395969"><span id="local-6989586621679395971"><span id="local-6989586621679395973"><span id="local-6989586621679395975"><span class="annot"><span class="annottext">Integer -&gt; CausalHashId
+</span><span id="line-44"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679436483"><span id="local-6989586621679436485"><span id="local-6989586621679436487"><span id="local-6989586621679436489"><span id="local-6989586621679436491"><span id="local-6989586621679436493"><span id="local-6989586621679436495"><span class="annot"><span class="annottext">Integer -&gt; CausalHashId
 CausalHashId -&gt; CausalHashId
 CausalHashId -&gt; CausalHashId -&gt; CausalHashId
 (CausalHashId -&gt; CausalHashId -&gt; CausalHashId)
@@ -2206,7 +2206,7 @@ $c* :: CausalHashId -&gt; CausalHashId -&gt; CausalHashId
 $c- :: CausalHashId -&gt; CausalHashId -&gt; CausalHashId
 + :: CausalHashId -&gt; CausalHashId -&gt; CausalHashId
 $c+ :: CausalHashId -&gt; CausalHashId -&gt; CausalHashId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Num</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679395959"><span class="annot"><span class="annottext">Num CausalHashId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Num</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436479"><span class="annot"><span class="annottext">Num CausalHashId
 Ord CausalHashId
 Num CausalHashId
 -&gt; Ord CausalHashId
@@ -2218,7 +2218,7 @@ toRational :: CausalHashId -&gt; Rational
 $ctoRational :: CausalHashId -&gt; Rational
 $cp2Real :: Ord CausalHashId
 $cp1Real :: Num CausalHashId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Real</span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679395943"><span id="local-6989586621679395945"><span id="local-6989586621679395947"><span id="local-6989586621679395949"><span id="local-6989586621679395951"><span id="local-6989586621679395953"><span id="local-6989586621679395955"><span id="local-6989586621679395957"><span class="annot"><span class="annottext">Int -&gt; CausalHashId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Real</span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436463"><span id="local-6989586621679436465"><span id="local-6989586621679436467"><span id="local-6989586621679436469"><span id="local-6989586621679436471"><span id="local-6989586621679436473"><span id="local-6989586621679436475"><span id="local-6989586621679436477"><span class="annot"><span class="annottext">Int -&gt; CausalHashId
 CausalHashId -&gt; Int
 CausalHashId -&gt; [CausalHashId]
 CausalHashId -&gt; CausalHashId
@@ -2259,7 +2259,7 @@ pred :: CausalHashId -&gt; CausalHashId
 $cpred :: CausalHashId -&gt; CausalHashId
 succ :: CausalHashId -&gt; CausalHashId
 $csucc :: CausalHashId -&gt; CausalHashId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Enum</span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679395927"><span id="local-6989586621679395929"><span id="local-6989586621679395931"><span id="local-6989586621679395933"><span id="local-6989586621679395935"><span id="local-6989586621679395937"><span id="local-6989586621679395939"><span class="annot"><span class="annottext">Enum CausalHashId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Enum</span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436447"><span id="local-6989586621679436449"><span id="local-6989586621679436451"><span id="local-6989586621679436453"><span id="local-6989586621679436455"><span id="local-6989586621679436457"><span id="local-6989586621679436459"><span class="annot"><span class="annottext">Enum CausalHashId
 Real CausalHashId
 Real CausalHashId
 -&gt; Enum CausalHashId
@@ -2301,7 +2301,7 @@ quot :: CausalHashId -&gt; CausalHashId -&gt; CausalHashId
 $cquot :: CausalHashId -&gt; CausalHashId -&gt; CausalHashId
 $cp2Integral :: Enum CausalHashId
 $cp1Integral :: Real CausalHashId
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Integral</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679395882"><span id="local-6989586621679395884"><span id="local-6989586621679395886"><span id="local-6989586621679395888"><span id="local-6989586621679395890"><span id="local-6989586621679395892"><span id="local-6989586621679395894"><span id="local-6989586621679395896"><span id="local-6989586621679395898"><span id="local-6989586621679395900"><span id="local-6989586621679395902"><span id="local-6989586621679395904"><span id="local-6989586621679395906"><span id="local-6989586621679395908"><span id="local-6989586621679395910"><span id="local-6989586621679395912"><span id="local-6989586621679395914"><span id="local-6989586621679395916"><span id="local-6989586621679395918"><span id="local-6989586621679395920"><span id="local-6989586621679395922"><span id="local-6989586621679395924"><span class="annot"><span class="annottext">Eq CausalHashId
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Integral</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436402"><span id="local-6989586621679436404"><span id="local-6989586621679436406"><span id="local-6989586621679436408"><span id="local-6989586621679436410"><span id="local-6989586621679436412"><span id="local-6989586621679436414"><span id="local-6989586621679436416"><span id="local-6989586621679436418"><span id="local-6989586621679436420"><span id="local-6989586621679436422"><span id="local-6989586621679436424"><span id="local-6989586621679436426"><span id="local-6989586621679436428"><span id="local-6989586621679436430"><span id="local-6989586621679436432"><span id="local-6989586621679436434"><span id="local-6989586621679436436"><span id="local-6989586621679436438"><span id="local-6989586621679436440"><span id="local-6989586621679436442"><span id="local-6989586621679436444"><span class="annot"><span class="annottext">Eq CausalHashId
 CausalHashId
 Eq CausalHashId
 -&gt; (CausalHashId -&gt; CausalHashId -&gt; CausalHashId)
@@ -2405,20 +2405,20 @@ $c.|. :: CausalHashId -&gt; CausalHashId -&gt; CausalHashId
 .&amp;. :: CausalHashId -&gt; CausalHashId -&gt; CausalHashId
 $c.&amp;. :: CausalHashId -&gt; CausalHashId -&gt; CausalHashId
 $cp1Bits :: Eq CausalHashId
-</span><a href="#local-6989586621679395882"><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Bits</span></a></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679395880"><span class="annot"><span class="annottext">FieldParser CausalHashId
+</span><a href="#local-6989586621679436402"><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Bits</span></a></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436400"><span class="annot"><span class="annottext">FieldParser CausalHashId
 FieldParser CausalHashId -&gt; FromField CausalHashId
 forall a. FieldParser a -&gt; FromField a
 fromField :: FieldParser CausalHashId
 $cfromField :: FieldParser CausalHashId
-</span><a href="#local-6989586621679395880"><span class="hs-identifier hs-var hs-var hs-var hs-var">FromField</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679395878"><span class="annot"><span class="annottext">CausalHashId -&gt; SQLData
+</span><a href="#local-6989586621679436400"><span class="hs-identifier hs-var hs-var hs-var hs-var">FromField</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436398"><span class="annot"><span class="annottext">CausalHashId -&gt; SQLData
 (CausalHashId -&gt; SQLData) -&gt; ToField CausalHashId
 forall a. (a -&gt; SQLData) -&gt; ToField a
 toField :: CausalHashId -&gt; SQLData
 $ctoField :: CausalHashId -&gt; SQLData
-</span><a href="#local-6989586621679395878"><span class="hs-identifier hs-var hs-var hs-var hs-var">ToField</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">via</span><span> </span><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#HashId"><span class="hs-identifier hs-type">HashId</span></a></span><span>
+</span><a href="#local-6989586621679436398"><span class="hs-identifier hs-var hs-var hs-var hs-var">ToField</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">via</span><span> </span><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#HashId"><span class="hs-identifier hs-type">HashId</span></a></span><span>
 </span><span id="line-45"></span><span>
 </span><span id="line-46"></span><span class="hs-keyword">newtype</span><span> </span><span id="SchemaVersion"><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#SchemaVersion"><span class="hs-identifier hs-var">SchemaVersion</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="SchemaVersion"><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#SchemaVersion"><span class="hs-identifier hs-var">SchemaVersion</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Word64</span></span><span>
-</span><span id="line-47"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679395873"><span id="local-6989586621679395875"><span class="annot"><span class="annottext">SchemaVersion -&gt; SchemaVersion -&gt; Bool
+</span><span id="line-47"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679436393"><span id="local-6989586621679436395"><span class="annot"><span class="annottext">SchemaVersion -&gt; SchemaVersion -&gt; Bool
 (SchemaVersion -&gt; SchemaVersion -&gt; Bool)
 -&gt; (SchemaVersion -&gt; SchemaVersion -&gt; Bool) -&gt; Eq SchemaVersion
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -2426,7 +2426,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: SchemaVersion -&gt; SchemaVersion -&gt; Bool
 == :: SchemaVersion -&gt; SchemaVersion -&gt; Bool
 $c== :: SchemaVersion -&gt; SchemaVersion -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679395858"><span id="local-6989586621679395860"><span id="local-6989586621679395862"><span id="local-6989586621679395864"><span id="local-6989586621679395866"><span id="local-6989586621679395868"><span id="local-6989586621679395870"><span class="annot"><span class="annottext">Eq SchemaVersion
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436378"><span id="local-6989586621679436380"><span id="local-6989586621679436382"><span id="local-6989586621679436384"><span id="local-6989586621679436386"><span id="local-6989586621679436388"><span id="local-6989586621679436390"><span class="annot"><span class="annottext">Eq SchemaVersion
 Eq SchemaVersion
 -&gt; (SchemaVersion -&gt; SchemaVersion -&gt; Ordering)
 -&gt; (SchemaVersion -&gt; SchemaVersion -&gt; Bool)
@@ -2464,7 +2464,7 @@ $c&lt; :: SchemaVersion -&gt; SchemaVersion -&gt; Bool
 compare :: SchemaVersion -&gt; SchemaVersion -&gt; Ordering
 $ccompare :: SchemaVersion -&gt; SchemaVersion -&gt; Ordering
 $cp1Ord :: Eq SchemaVersion
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679395852"><span id="local-6989586621679395854"><span id="local-6989586621679395856"><span class="annot"><span class="annottext">Int -&gt; SchemaVersion -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436372"><span id="local-6989586621679436374"><span id="local-6989586621679436376"><span class="annot"><span class="annottext">Int -&gt; SchemaVersion -&gt; ShowS
 [SchemaVersion] -&gt; ShowS
 SchemaVersion -&gt; String
 (Int -&gt; SchemaVersion -&gt; ShowS)
@@ -2480,7 +2480,7 @@ $cshow :: SchemaVersion -&gt; String
 showsPrec :: Int -&gt; SchemaVersion -&gt; ShowS
 $cshowsPrec :: Int -&gt; SchemaVersion -&gt; ShowS
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-48"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679395838"><span id="local-6989586621679395840"><span id="local-6989586621679395842"><span id="local-6989586621679395844"><span id="local-6989586621679395846"><span id="local-6989586621679395848"><span id="local-6989586621679395850"><span class="annot"><span class="annottext">Integer -&gt; SchemaVersion
+</span><span id="line-48"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679436358"><span id="local-6989586621679436360"><span id="local-6989586621679436362"><span id="local-6989586621679436364"><span id="local-6989586621679436366"><span id="local-6989586621679436368"><span id="local-6989586621679436370"><span class="annot"><span class="annottext">Integer -&gt; SchemaVersion
 SchemaVersion -&gt; SchemaVersion
 SchemaVersion -&gt; SchemaVersion -&gt; SchemaVersion
 (SchemaVersion -&gt; SchemaVersion -&gt; SchemaVersion)
@@ -2514,7 +2514,7 @@ $c* :: SchemaVersion -&gt; SchemaVersion -&gt; SchemaVersion
 $c- :: SchemaVersion -&gt; SchemaVersion -&gt; SchemaVersion
 + :: SchemaVersion -&gt; SchemaVersion -&gt; SchemaVersion
 $c+ :: SchemaVersion -&gt; SchemaVersion -&gt; SchemaVersion
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Num</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679395834"><span class="annot"><span class="annottext">Num SchemaVersion
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Num</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436354"><span class="annot"><span class="annottext">Num SchemaVersion
 Ord SchemaVersion
 Num SchemaVersion
 -&gt; Ord SchemaVersion
@@ -2526,7 +2526,7 @@ toRational :: SchemaVersion -&gt; Rational
 $ctoRational :: SchemaVersion -&gt; Rational
 $cp2Real :: Ord SchemaVersion
 $cp1Real :: Num SchemaVersion
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Real</span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679395818"><span id="local-6989586621679395820"><span id="local-6989586621679395822"><span id="local-6989586621679395824"><span id="local-6989586621679395826"><span id="local-6989586621679395828"><span id="local-6989586621679395830"><span id="local-6989586621679395832"><span class="annot"><span class="annottext">Int -&gt; SchemaVersion
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Real</span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436338"><span id="local-6989586621679436340"><span id="local-6989586621679436342"><span id="local-6989586621679436344"><span id="local-6989586621679436346"><span id="local-6989586621679436348"><span id="local-6989586621679436350"><span id="local-6989586621679436352"><span class="annot"><span class="annottext">Int -&gt; SchemaVersion
 SchemaVersion -&gt; Int
 SchemaVersion -&gt; [SchemaVersion]
 SchemaVersion -&gt; SchemaVersion
@@ -2568,7 +2568,7 @@ pred :: SchemaVersion -&gt; SchemaVersion
 $cpred :: SchemaVersion -&gt; SchemaVersion
 succ :: SchemaVersion -&gt; SchemaVersion
 $csucc :: SchemaVersion -&gt; SchemaVersion
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Enum</span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679395802"><span id="local-6989586621679395804"><span id="local-6989586621679395806"><span id="local-6989586621679395808"><span id="local-6989586621679395810"><span id="local-6989586621679395812"><span id="local-6989586621679395814"><span class="annot"><span class="annottext">Enum SchemaVersion
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Enum</span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436322"><span id="local-6989586621679436324"><span id="local-6989586621679436326"><span id="local-6989586621679436328"><span id="local-6989586621679436330"><span id="local-6989586621679436332"><span id="local-6989586621679436334"><span class="annot"><span class="annottext">Enum SchemaVersion
 Real SchemaVersion
 Real SchemaVersion
 -&gt; Enum SchemaVersion
@@ -2612,7 +2612,7 @@ quot :: SchemaVersion -&gt; SchemaVersion -&gt; SchemaVersion
 $cquot :: SchemaVersion -&gt; SchemaVersion -&gt; SchemaVersion
 $cp2Integral :: Enum SchemaVersion
 $cp1Integral :: Real SchemaVersion
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Integral</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679395757"><span id="local-6989586621679395759"><span id="local-6989586621679395761"><span id="local-6989586621679395763"><span id="local-6989586621679395765"><span id="local-6989586621679395767"><span id="local-6989586621679395769"><span id="local-6989586621679395771"><span id="local-6989586621679395773"><span id="local-6989586621679395775"><span id="local-6989586621679395777"><span id="local-6989586621679395779"><span id="local-6989586621679395781"><span id="local-6989586621679395783"><span id="local-6989586621679395785"><span id="local-6989586621679395787"><span id="local-6989586621679395789"><span id="local-6989586621679395791"><span id="local-6989586621679395793"><span id="local-6989586621679395795"><span id="local-6989586621679395797"><span id="local-6989586621679395799"><span class="annot"><span class="annottext">Eq SchemaVersion
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Integral</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436277"><span id="local-6989586621679436279"><span id="local-6989586621679436281"><span id="local-6989586621679436283"><span id="local-6989586621679436285"><span id="local-6989586621679436287"><span id="local-6989586621679436289"><span id="local-6989586621679436291"><span id="local-6989586621679436293"><span id="local-6989586621679436295"><span id="local-6989586621679436297"><span id="local-6989586621679436299"><span id="local-6989586621679436301"><span id="local-6989586621679436303"><span id="local-6989586621679436305"><span id="local-6989586621679436307"><span id="local-6989586621679436309"><span id="local-6989586621679436311"><span id="local-6989586621679436313"><span id="local-6989586621679436315"><span id="local-6989586621679436317"><span id="local-6989586621679436319"><span class="annot"><span class="annottext">Eq SchemaVersion
 SchemaVersion
 Eq SchemaVersion
 -&gt; (SchemaVersion -&gt; SchemaVersion -&gt; SchemaVersion)
@@ -2716,74 +2716,74 @@ $c.|. :: SchemaVersion -&gt; SchemaVersion -&gt; SchemaVersion
 .&amp;. :: SchemaVersion -&gt; SchemaVersion -&gt; SchemaVersion
 $c.&amp;. :: SchemaVersion -&gt; SchemaVersion -&gt; SchemaVersion
 $cp1Bits :: Eq SchemaVersion
-</span><a href="#local-6989586621679395757"><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Bits</span></a></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679395755"><span class="annot"><span class="annottext">FieldParser SchemaVersion
+</span><a href="#local-6989586621679436277"><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Bits</span></a></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436275"><span class="annot"><span class="annottext">FieldParser SchemaVersion
 FieldParser SchemaVersion -&gt; FromField SchemaVersion
 forall a. FieldParser a -&gt; FromField a
 fromField :: FieldParser SchemaVersion
 $cfromField :: FieldParser SchemaVersion
-</span><a href="#local-6989586621679395755"><span class="hs-identifier hs-var hs-var hs-var hs-var">FromField</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679395753"><span class="annot"><span class="annottext">SchemaVersion -&gt; SQLData
+</span><a href="#local-6989586621679436275"><span class="hs-identifier hs-var hs-var hs-var hs-var">FromField</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679436273"><span class="annot"><span class="annottext">SchemaVersion -&gt; SQLData
 (SchemaVersion -&gt; SQLData) -&gt; ToField SchemaVersion
 forall a. (a -&gt; SQLData) -&gt; ToField a
 toField :: SchemaVersion -&gt; SQLData
 $ctoField :: SchemaVersion -&gt; SQLData
-</span><a href="#local-6989586621679395753"><span class="hs-identifier hs-var hs-var hs-var hs-var">ToField</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">via</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Word64</span></span><span>
+</span><a href="#local-6989586621679436273"><span class="hs-identifier hs-var hs-var hs-var hs-var">ToField</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">via</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Word64</span></span><span>
 </span><span id="line-49"></span><span>
-</span><span id="line-50"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679395748"><span id="local-6989586621679395751"><span class="annot"><span class="hs-identifier hs-type">Show</span></span><span> </span><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#PatchObjectId"><span class="hs-identifier hs-type">PatchObjectId</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-51"></span><span>  </span><span id="local-6989586621679395747"><span class="annot"><span class="annottext">show :: PatchObjectId -&gt; String
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var">show</span></span></span><span> </span><span id="local-6989586621679395745"><span class="annot"><span class="annottext">PatchObjectId
-</span><a href="#local-6989586621679395745"><span class="hs-identifier hs-var">h</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span id="line-50"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679436268"><span id="local-6989586621679436271"><span class="annot"><span class="hs-identifier hs-type">Show</span></span><span> </span><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#PatchObjectId"><span class="hs-identifier hs-type">PatchObjectId</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-51"></span><span>  </span><span id="local-6989586621679436267"><span class="annot"><span class="annottext">show :: PatchObjectId -&gt; String
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">show</span></span></span><span> </span><span id="local-6989586621679436265"><span class="annot"><span class="annottext">PatchObjectId
+</span><a href="#local-6989586621679436265"><span class="hs-identifier hs-var">h</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;PatchObjectId (&quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">ObjectId -&gt; String
 forall a. Show a =&gt; a -&gt; String
 </span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">PatchObjectId -&gt; ObjectId
-</span><a href="U.Codebase.Sqlite.DbId.html#unPatchObjectId"><span class="hs-identifier hs-var hs-var">unPatchObjectId</span></a></span><span> </span><span class="annot"><span class="annottext">PatchObjectId
-</span><a href="#local-6989586621679395745"><span class="hs-identifier hs-var">h</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+</span><a href="U.Codebase.Sqlite.DbId.html#%24sel%3AunPatchObjectId%3APatchObjectId"><span class="hs-identifier hs-var hs-var">unPatchObjectId</span></a></span><span> </span><span class="annot"><span class="annottext">PatchObjectId
+</span><a href="#local-6989586621679436265"><span class="hs-identifier hs-var">h</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;)&quot;</span></span><span>
 </span><span id="line-52"></span><span>
-</span><span id="line-53"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679395740"><span id="local-6989586621679395743"><span class="annot"><span class="hs-identifier hs-type">Show</span></span><span> </span><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#BranchObjectId"><span class="hs-identifier hs-type">BranchObjectId</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-54"></span><span>  </span><span id="local-6989586621679395739"><span class="annot"><span class="annottext">show :: BranchObjectId -&gt; String
-</span><a href="#local-6989586621679395739"><span class="hs-identifier hs-var hs-var hs-var hs-var">show</span></a></span></span><span> </span><span id="local-6989586621679395738"><span class="annot"><span class="annottext">BranchObjectId
-</span><a href="#local-6989586621679395738"><span class="hs-identifier hs-var">h</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span id="line-53"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679436260"><span id="local-6989586621679436263"><span class="annot"><span class="hs-identifier hs-type">Show</span></span><span> </span><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#BranchObjectId"><span class="hs-identifier hs-type">BranchObjectId</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-54"></span><span>  </span><span id="local-6989586621679436259"><span class="annot"><span class="annottext">show :: BranchObjectId -&gt; String
+</span><a href="#local-6989586621679436259"><span class="hs-identifier hs-var hs-var hs-var hs-var">show</span></a></span></span><span> </span><span id="local-6989586621679436258"><span class="annot"><span class="annottext">BranchObjectId
+</span><a href="#local-6989586621679436258"><span class="hs-identifier hs-var">h</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;BranchObjectId (&quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">ObjectId -&gt; String
 forall a. Show a =&gt; a -&gt; String
 </span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">BranchObjectId -&gt; ObjectId
-</span><a href="U.Codebase.Sqlite.DbId.html#unBranchObjectId"><span class="hs-identifier hs-var hs-var">unBranchObjectId</span></a></span><span> </span><span class="annot"><span class="annottext">BranchObjectId
-</span><a href="#local-6989586621679395738"><span class="hs-identifier hs-var">h</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+</span><a href="U.Codebase.Sqlite.DbId.html#%24sel%3AunBranchObjectId%3ABranchObjectId"><span class="hs-identifier hs-var hs-var">unBranchObjectId</span></a></span><span> </span><span class="annot"><span class="annottext">BranchObjectId
+</span><a href="#local-6989586621679436258"><span class="hs-identifier hs-var">h</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;)&quot;</span></span><span>
 </span><span id="line-55"></span><span>
-</span><span id="line-56"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679395733"><span id="local-6989586621679395736"><span class="annot"><span class="hs-identifier hs-type">Show</span></span><span> </span><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#BranchHashId"><span class="hs-identifier hs-type">BranchHashId</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-57"></span><span>  </span><span id="local-6989586621679395732"><span class="annot"><span class="annottext">show :: BranchHashId -&gt; String
-</span><a href="#local-6989586621679395732"><span class="hs-identifier hs-var hs-var hs-var hs-var">show</span></a></span></span><span> </span><span id="local-6989586621679395731"><span class="annot"><span class="annottext">BranchHashId
-</span><a href="#local-6989586621679395731"><span class="hs-identifier hs-var">h</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span id="line-56"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679436253"><span id="local-6989586621679436256"><span class="annot"><span class="hs-identifier hs-type">Show</span></span><span> </span><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#BranchHashId"><span class="hs-identifier hs-type">BranchHashId</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-57"></span><span>  </span><span id="local-6989586621679436252"><span class="annot"><span class="annottext">show :: BranchHashId -&gt; String
+</span><a href="#local-6989586621679436252"><span class="hs-identifier hs-var hs-var hs-var hs-var">show</span></a></span></span><span> </span><span id="local-6989586621679436251"><span class="annot"><span class="annottext">BranchHashId
+</span><a href="#local-6989586621679436251"><span class="hs-identifier hs-var">h</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;BranchHashId (&quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">HashId -&gt; String
 forall a. Show a =&gt; a -&gt; String
 </span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">BranchHashId -&gt; HashId
-</span><a href="U.Codebase.Sqlite.DbId.html#unBranchHashId"><span class="hs-identifier hs-var hs-var">unBranchHashId</span></a></span><span> </span><span class="annot"><span class="annottext">BranchHashId
-</span><a href="#local-6989586621679395731"><span class="hs-identifier hs-var">h</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+</span><a href="U.Codebase.Sqlite.DbId.html#%24sel%3AunBranchHashId%3ABranchHashId"><span class="hs-identifier hs-var hs-var">unBranchHashId</span></a></span><span> </span><span class="annot"><span class="annottext">BranchHashId
+</span><a href="#local-6989586621679436251"><span class="hs-identifier hs-var">h</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;)&quot;</span></span><span>
 </span><span id="line-58"></span><span>
-</span><span id="line-59"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679395726"><span id="local-6989586621679395729"><span class="annot"><span class="hs-identifier hs-type">Show</span></span><span> </span><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#CausalHashId"><span class="hs-identifier hs-type">CausalHashId</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-60"></span><span>  </span><span id="local-6989586621679395725"><span class="annot"><span class="annottext">show :: CausalHashId -&gt; String
-</span><a href="#local-6989586621679395725"><span class="hs-identifier hs-var hs-var hs-var hs-var">show</span></a></span></span><span> </span><span id="local-6989586621679395724"><span class="annot"><span class="annottext">CausalHashId
-</span><a href="#local-6989586621679395724"><span class="hs-identifier hs-var">h</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span id="line-59"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679436246"><span id="local-6989586621679436249"><span class="annot"><span class="hs-identifier hs-type">Show</span></span><span> </span><span class="annot"><a href="U.Codebase.Sqlite.DbId.html#CausalHashId"><span class="hs-identifier hs-type">CausalHashId</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-60"></span><span>  </span><span id="local-6989586621679436245"><span class="annot"><span class="annottext">show :: CausalHashId -&gt; String
+</span><a href="#local-6989586621679436245"><span class="hs-identifier hs-var hs-var hs-var hs-var">show</span></a></span></span><span> </span><span id="local-6989586621679436244"><span class="annot"><span class="annottext">CausalHashId
+</span><a href="#local-6989586621679436244"><span class="hs-identifier hs-var">h</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;CausalHashId (&quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">HashId -&gt; String
 forall a. Show a =&gt; a -&gt; String
 </span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">CausalHashId -&gt; HashId
-</span><a href="U.Codebase.Sqlite.DbId.html#unCausalHashId"><span class="hs-identifier hs-var hs-var">unCausalHashId</span></a></span><span> </span><span class="annot"><span class="annottext">CausalHashId
-</span><a href="#local-6989586621679395724"><span class="hs-identifier hs-var">h</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+</span><a href="U.Codebase.Sqlite.DbId.html#%24sel%3AunCausalHashId%3ACausalHashId"><span class="hs-identifier hs-var hs-var">unCausalHashId</span></a></span><span> </span><span class="annot"><span class="annottext">CausalHashId
+</span><a href="#local-6989586621679436244"><span class="hs-identifier hs-var">h</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;)&quot;</span></span><span>

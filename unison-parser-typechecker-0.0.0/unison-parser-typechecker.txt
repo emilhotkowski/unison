@@ -8,24 +8,24 @@
 module Unison.Codebase.Causal.Type
 data Causal m e
 UnsafeOne :: CausalHash -> HashFor e -> e -> Causal m e
-[currentHash] :: Causal m e -> CausalHash
-[valueHash] :: Causal m e -> HashFor e
-[head] :: Causal m e -> e
+[$sel:currentHash:UnsafeOne] :: Causal m e -> CausalHash
+[$sel:valueHash:UnsafeOne] :: Causal m e -> HashFor e
+[$sel:head:UnsafeOne] :: Causal m e -> e
 UnsafeCons :: CausalHash -> HashFor e -> e -> (CausalHash, m (Causal m e)) -> Causal m e
-[currentHash] :: Causal m e -> CausalHash
-[valueHash] :: Causal m e -> HashFor e
-[head] :: Causal m e -> e
-[tail] :: Causal m e -> (CausalHash, m (Causal m e))
+[$sel:currentHash:UnsafeOne] :: Causal m e -> CausalHash
+[$sel:valueHash:UnsafeOne] :: Causal m e -> HashFor e
+[$sel:head:UnsafeOne] :: Causal m e -> e
+[$sel:tail:UnsafeOne] :: Causal m e -> (CausalHash, m (Causal m e))
 UnsafeMerge :: CausalHash -> HashFor e -> e -> Map CausalHash (m (Causal m e)) -> Causal m e
-[currentHash] :: Causal m e -> CausalHash
-[valueHash] :: Causal m e -> HashFor e
-[head] :: Causal m e -> e
-[tails] :: Causal m e -> Map CausalHash (m (Causal m e))
+[$sel:currentHash:UnsafeOne] :: Causal m e -> CausalHash
+[$sel:valueHash:UnsafeOne] :: Causal m e -> HashFor e
+[$sel:head:UnsafeOne] :: Causal m e -> e
+[$sel:tails:UnsafeOne] :: Causal m e -> Map CausalHash (m (Causal m e))
 
 -- | Represents a hash of a causal containing values of the provided type.
 newtype CausalHash
 CausalHash :: Hash -> CausalHash
-[unCausalHash] :: CausalHash -> Hash
+[$sel:unCausalHash:CausalHash] :: CausalHash -> Hash
 pattern One :: CausalHash -> HashFor e -> e -> Causal m e
 pattern Cons :: CausalHash -> HashFor e -> e -> (CausalHash, m (Causal m e)) -> Causal m e
 pattern Merge :: CausalHash -> HashFor e -> e -> Map CausalHash (m (Causal m e)) -> Causal m e
@@ -43,8 +43,8 @@ instance GHC.Classes.Ord (Unison.Codebase.Causal.Type.Causal m a)
 module Unison.Codebase.CodeLookup
 data CodeLookup v m a
 CodeLookup :: (Id -> m (Maybe (Term v a))) -> (Id -> m (Maybe (Decl v a))) -> CodeLookup v m a
-[getTerm] :: CodeLookup v m a -> Id -> m (Maybe (Term v a))
-[getTypeDeclaration] :: CodeLookup v m a -> Id -> m (Maybe (Decl v a))
+[$sel:getTerm:CodeLookup] :: CodeLookup v m a -> Id -> m (Maybe (Term v a))
+[$sel:getTypeDeclaration:CodeLookup] :: CodeLookup v m a -> Id -> m (Maybe (Decl v a))
 transitiveDependencies :: (Monad m, Var v) => CodeLookup v m a -> Set Id -> Id -> m (Set Id)
 instance Control.Monad.Morph.MFunctor (Unison.Codebase.CodeLookup.CodeLookup v)
 instance (GHC.Classes.Ord v, GHC.Base.Functor m) => GHC.Base.Functor (Unison.Codebase.CodeLookup.CodeLookup v m)
@@ -89,16 +89,16 @@ instance GHC.Show.Show Unison.Codebase.Init.OpenCodebaseError.OpenCodebaseError
 module Unison.Codebase.Path
 newtype Path
 Path :: Seq NameSegment -> Path
-[toSeq] :: Path -> Seq NameSegment
+[$sel:toSeq:Path] :: Path -> Seq NameSegment
 newtype Path'
 Path' :: Either Absolute Relative -> Path'
-[unPath'] :: Path' -> Either Absolute Relative
+[$sel:unPath':Path'] :: Path' -> Either Absolute Relative
 newtype Absolute
 Absolute :: Path -> Absolute
-[unabsolute] :: Absolute -> Path
+[$sel:unabsolute:Absolute] :: Absolute -> Path
 newtype Relative
 Relative :: Path -> Relative
-[unrelative] :: Relative -> Path
+[$sel:unrelative:Relative] :: Relative -> Path
 class Resolve l r o
 resolve :: Resolve l r o => l -> r -> o
 pattern Empty :: Path
@@ -195,6 +195,7 @@ instance GHC.Show.Show Unison.Codebase.Path.Absolute
 instance Control.Lens.Cons.Snoc Unison.Codebase.Path.Absolute Unison.Codebase.Path.Absolute Unison.NameSegment.NameSegment Unison.NameSegment.NameSegment
 instance Unison.Name.Convert Unison.Codebase.Path.Absolute Data.Text.Internal.Text
 instance Unison.Name.Convert Unison.Codebase.Path.Absolute GHC.Base.String
+instance GHC.Exts.IsList Unison.Codebase.Path.Path
 instance GHC.Show.Show Unison.Codebase.Path.Path
 instance Control.Lens.Cons.Cons Unison.Codebase.Path.Path Unison.Codebase.Path.Path Unison.NameSegment.NameSegment Unison.NameSegment.NameSegment
 instance Control.Lens.Cons.Snoc Unison.Codebase.Path.Path Unison.Codebase.Path.Path Unison.NameSegment.NameSegment Unison.NameSegment.NameSegment
@@ -220,9 +221,9 @@ instance GHC.Classes.Eq Unison.Codebase.PushBehavior.PushBehavior
 module Unison.Codebase.Reflog
 data Entry h
 Entry :: h -> h -> Text -> Entry h
-[from] :: Entry h -> h
-[to] :: Entry h -> h
-[reason] :: Entry h -> Text
+[$sel:from:Entry] :: Entry h -> h
+[$sel:to:Entry] :: Entry h -> h
+[$sel:reason:Entry] :: Entry h -> Text
 fromText :: Coercible h Hash => Text -> Maybe (Entry h)
 toText :: Coercible h Hash => Entry h -> Text
 
@@ -231,8 +232,8 @@ type Get a = forall m. MonadGet m => m a
 type Put a = forall m. MonadPut m => a -> m ()
 data Format a
 Format :: Get a -> Put a -> Format a
-[get] :: Format a -> Get a
-[put] :: Format a -> Put a
+[$sel:get:Format] :: Format a -> Get a
+[$sel:put:Format] :: Format a -> Put a
 getFromBytes :: Get a -> ByteString -> Maybe a
 getFromFile :: MonadIO m => Get a -> FilePath -> m (Maybe a)
 getFromFile' :: MonadIO m => Get a -> FilePath -> m (Either String a)
@@ -246,102 +247,11 @@ fromHash :: Coercible h Hash => Int -> h -> ShortBranchHash
 fromText :: Text -> Maybe ShortBranchHash
 newtype ShortBranchHash
 ShortBranchHash :: Text -> ShortBranchHash
-[toText] :: ShortBranchHash -> Text
+[$sel:toText:ShortBranchHash] :: ShortBranchHash -> Text
 instance GHC.Generics.Generic Unison.Codebase.ShortBranchHash.ShortBranchHash
 instance GHC.Classes.Ord Unison.Codebase.ShortBranchHash.ShortBranchHash
 instance GHC.Classes.Eq Unison.Codebase.ShortBranchHash.ShortBranchHash
 instance GHC.Show.Show Unison.Codebase.ShortBranchHash.ShortBranchHash
-
-module Unison.Codebase.Editor.RemoteRepo
-data ReadRepo
-ReadGitRepo :: Text -> Maybe Text -> ReadRepo
-[url] :: ReadRepo -> Text
-[ref] :: ReadRepo -> Maybe Text
-data WriteRepo
-WriteGitRepo :: Text -> Maybe Text -> WriteRepo
-[url'] :: WriteRepo -> Text
-[branch] :: WriteRepo -> Maybe Text
-writeToRead :: WriteRepo -> ReadRepo
-writePathToRead :: WriteRemotePath -> ReadRemoteNamespace
-printReadRepo :: ReadRepo -> Text
-printWriteRepo :: WriteRepo -> Text
-printNamespace :: ReadRepo -> Maybe ShortBranchHash -> Path -> Text
-printHead :: WriteRepo -> Path -> Text
-type ReadRemoteNamespace = (ReadRepo, Maybe ShortBranchHash, Path)
-type WriteRemotePath = (WriteRepo, Path)
-instance GHC.Show.Show Unison.Codebase.Editor.RemoteRepo.ReadRepo
-instance GHC.Classes.Ord Unison.Codebase.Editor.RemoteRepo.ReadRepo
-instance GHC.Classes.Eq Unison.Codebase.Editor.RemoteRepo.ReadRepo
-instance GHC.Show.Show Unison.Codebase.Editor.RemoteRepo.WriteRepo
-instance GHC.Classes.Ord Unison.Codebase.Editor.RemoteRepo.WriteRepo
-instance GHC.Classes.Eq Unison.Codebase.Editor.RemoteRepo.WriteRepo
-
-module Unison.Codebase.GitError
-type CodebasePath = FilePath
-data GitProtocolError
-NoGit :: GitProtocolError
-UnrecognizableCacheDir :: ReadRepo -> CodebasePath -> GitProtocolError
-UnrecognizableCheckoutDir :: ReadRepo -> CodebasePath -> GitProtocolError
-CopyException :: FilePath -> FilePath -> String -> GitProtocolError
-CloneException :: ReadRepo -> String -> GitProtocolError
-PushException :: WriteRepo -> String -> GitProtocolError
-PushNoOp :: WriteRepo -> GitProtocolError
-PushDestinationHasNewStuff :: WriteRepo -> GitProtocolError
-CleanupError :: SomeException -> GitProtocolError
-RemoteRefNotFound :: Text -> Text -> GitProtocolError
-data GitCodebaseError h
-NoRemoteNamespaceWithHash :: ReadRepo -> ShortBranchHash -> GitCodebaseError h
-RemoteNamespaceHashAmbiguous :: ReadRepo -> ShortBranchHash -> Set h -> GitCodebaseError h
-CouldntLoadRootBranch :: ReadRepo -> h -> GitCodebaseError h
-CouldntParseRemoteBranch :: ReadRepo -> String -> GitCodebaseError h
-CouldntLoadSyncedBranch :: ReadRemoteNamespace -> h -> GitCodebaseError h
-CouldntFindRemoteBranch :: ReadRepo -> Path -> GitCodebaseError h
-instance GHC.Exception.Type.Exception Unison.Codebase.GitError.GitProtocolError
-instance GHC.Show.Show Unison.Codebase.GitError.GitProtocolError
-instance GHC.Show.Show h => GHC.Show.Show (Unison.Codebase.GitError.GitCodebaseError h)
-
-module Unison.Codebase.Editor.Git
-
--- | Run a git command in the repository at localPath
-gitIn :: MonadIO m => GitRepo -> [Text] -> m ()
-
--- | Run a git command in the repository at localPath and capture stdout
-gitTextIn :: MonadIO m => GitRepo -> [Text] -> m Text
-
--- | like <a>gitIn</a>, but silences all output from the command and
---   returns whether the command succeeded.
-gitInCaptured :: MonadIO m => GitRepo -> [Text] -> m (Bool, Text, Text)
-
--- | Clone or fetch an updated copy of the provided repository and check
---   out the expected ref, then provide the action with a path to the
---   codebase in that repository. Note that the repository provided to the
---   action is temporary, it will be removed when the action completes or
---   fails.
-withRepo :: forall m a. MonadUnliftIO m => ReadRepo -> GitBranchBehavior -> (GitRepo -> m a) -> m (Either GitProtocolError a)
-
--- | Perform an IO action, passing any IO exception to <tt>handler</tt>
-withIOError :: MonadIO m => IO a -> (IOException -> m a) -> m a
-withStatus :: MonadIO m => String -> m a -> m a
-
--- | Run an action on an isolated copy of the provided repo. The repo is
---   deleted when the action exits or fails. A branch or tag to check out
---   from the source repo may be specified.
-withIsolatedRepo :: forall m r. MonadUnliftIO m => GitRepo -> Text -> Maybe Text -> (GitRepo -> m r) -> m (Either GitProtocolError r)
-debugGit :: Bool
-gitDirToPath :: GitRepo -> FilePath
-
--- | Define what to do if the repo we're pulling/pushing doesn't have the
---   specified branch.
-data GitBranchBehavior
-CreateBranchIfMissing :: GitBranchBehavior
-RequireExistingBranch :: GitBranchBehavior
-
--- | A path to a git repository.
-data GitRepo
-Bare :: FilePath -> GitRepo
-Worktree :: FilePath -> GitRepo
-gitCacheDir :: MonadIO m => Text -> m FilePath
-instance GHC.Show.Show Unison.Codebase.Editor.Git.GitRepo
 
 module Unison.Codebase.SqliteCodebase.Migrations.Helpers
 abortMigration :: String -> Transaction a
@@ -368,11 +278,17 @@ module Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema2To3
 --   since these hash objects weren't being used for anything anyways.
 migrateSchema2To3 :: Transaction ()
 
+module Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema4To5
+
+-- | The 4 to 5 migration adds initial support for out-of-order sync i.e.
+--   Unison Share
+migrateSchema4To5 :: Transaction ()
+
 module Unison.Codebase.SqliteCodebase.SyncEphemeral
 data Dependencies
 Dependencies :: Set Hash -> Set Hash -> Dependencies
-[definitions] :: Dependencies -> Set Hash
-[branches] :: Dependencies -> Set Hash
+[$sel:definitions:Dependencies] :: Dependencies -> Set Hash
+[$sel:branches:Dependencies] :: Dependencies -> Set Hash
 data Error
 Sync22Error :: Error -> Error
 SrcWrongSchema :: SchemaVersion -> Error
@@ -420,14 +336,14 @@ instance GHC.Classes.Eq Unison.Codebase.TypeEdit.TypeEdit
 module Unison.Codebase.Patch
 data Patch
 Patch :: Relation Reference TermEdit -> Relation Reference TypeEdit -> Patch
-[_termEdits] :: Patch -> Relation Reference TermEdit
-[_typeEdits] :: Patch -> Relation Reference TypeEdit
+[$sel:_termEdits:Patch] :: Patch -> Relation Reference TermEdit
+[$sel:_typeEdits:Patch] :: Patch -> Relation Reference TypeEdit
 data PatchDiff
 PatchDiff :: Relation Reference TermEdit -> Relation Reference TypeEdit -> Relation Reference TermEdit -> Relation Reference TypeEdit -> PatchDiff
-[_addedTermEdits] :: PatchDiff -> Relation Reference TermEdit
-[_addedTypeEdits] :: PatchDiff -> Relation Reference TypeEdit
-[_removedTermEdits] :: PatchDiff -> Relation Reference TermEdit
-[_removedTypeEdits] :: PatchDiff -> Relation Reference TypeEdit
+[$sel:_addedTermEdits:PatchDiff] :: PatchDiff -> Relation Reference TermEdit
+[$sel:_addedTypeEdits:PatchDiff] :: PatchDiff -> Relation Reference TypeEdit
+[$sel:_removedTermEdits:PatchDiff] :: PatchDiff -> Relation Reference TermEdit
+[$sel:_removedTypeEdits:PatchDiff] :: PatchDiff -> Relation Reference TypeEdit
 typeEdits :: Lens' Patch (Relation Reference TypeEdit)
 termEdits :: Lens' Patch (Relation Reference TermEdit)
 removedTypeEdits :: Lens' PatchDiff (Relation Reference TypeEdit)
@@ -471,13 +387,6 @@ module Unison.CodebasePath
 type CodebasePath = FilePath
 getCodebaseDir :: MonadIO m => Maybe CodebasePath -> m CodebasePath
 
-module Unison.Codebase.SqliteCodebase.GitError
-data GitSqliteCodebaseError
-GitCouldntParseRootBranchHash :: ReadRepo -> String -> GitSqliteCodebaseError
-NoDatabaseFile :: ReadRepo -> CodebasePath -> GitSqliteCodebaseError
-UnrecognizedSchemaVersion :: ReadRepo -> CodebasePath -> SchemaVersion -> GitSqliteCodebaseError
-instance GHC.Show.Show Unison.Codebase.SqliteCodebase.GitError.GitSqliteCodebaseError
-
 module Unison.NamePrinter
 type SyntaxText = SyntaxText' Reference
 prettyName :: IsString s => Name -> Pretty s
@@ -511,8 +420,8 @@ data Ann
 Intrinsic :: Ann
 External :: Ann
 Ann :: Pos -> Pos -> Ann
-[start] :: Ann -> Pos
-[end] :: Ann -> Pos
+[$sel:start:Intrinsic] :: Ann -> Pos
+[$sel:end:Intrinsic] :: Ann -> Pos
 startingLine :: Ann -> Maybe Line
 instance GHC.Show.Show Unison.Parser.Ann.Ann
 instance GHC.Classes.Ord Unison.Parser.Ann.Ann
@@ -528,8 +437,8 @@ instance Unison.Codebase.BuiltinAnnotation.BuiltinAnnotation Unison.Parser.Ann.A
 module Unison.PrettyPrintEnv
 data PrettyPrintEnv
 PrettyPrintEnv :: (Referent -> Maybe (HashQualified Name)) -> (Reference -> Maybe (HashQualified Name)) -> PrettyPrintEnv
-[terms] :: PrettyPrintEnv -> Referent -> Maybe (HashQualified Name)
-[types] :: PrettyPrintEnv -> Reference -> Maybe (HashQualified Name)
+[$sel:terms:PrettyPrintEnv] :: PrettyPrintEnv -> Referent -> Maybe (HashQualified Name)
+[$sel:types:PrettyPrintEnv] :: PrettyPrintEnv -> Reference -> Maybe (HashQualified Name)
 patterns :: PrettyPrintEnv -> ConstructorReference -> Maybe (HashQualified Name)
 patternName :: PrettyPrintEnv -> ConstructorReference -> HashQualified Name
 termName :: PrettyPrintEnv -> Referent -> HashQualified Name
@@ -555,8 +464,8 @@ fromSuffixNames :: Int -> NamesWithHistory -> PrettyPrintEnv
 module Unison.PrettyPrintEnvDecl
 data PrettyPrintEnvDecl
 PrettyPrintEnvDecl :: PrettyPrintEnv -> PrettyPrintEnv -> PrettyPrintEnvDecl
-[unsuffixifiedPPE] :: PrettyPrintEnvDecl -> PrettyPrintEnv
-[suffixifiedPPE] :: PrettyPrintEnvDecl -> PrettyPrintEnv
+[$sel:unsuffixifiedPPE:PrettyPrintEnvDecl] :: PrettyPrintEnvDecl -> PrettyPrintEnv
+[$sel:suffixifiedPPE:PrettyPrintEnvDecl] :: PrettyPrintEnvDecl -> PrettyPrintEnv
 instance GHC.Show.Show Unison.PrettyPrintEnvDecl.PrettyPrintEnvDecl
 
 module Unison.PrettyPrintEnv.Util
@@ -569,8 +478,8 @@ fromNamesDecl :: Int -> NamesWithHistory -> PrettyPrintEnvDecl
 module Unison.Runtime.SparseVector
 data SparseVector bits a
 SparseVector :: !bits -> !Vector a -> SparseVector bits a
-[indices] :: SparseVector bits a -> !bits
-[elements] :: SparseVector bits a -> !Vector a
+[$sel:indices:SparseVector] :: SparseVector bits a -> !bits
+[$sel:elements:SparseVector] :: SparseVector bits a -> !Vector a
 map :: (Unbox a, Unbox b) => (a -> b) -> SparseVector bits a -> SparseVector bits b
 mask :: forall a bits. (Unbox a, FiniteBits bits) => bits -> SparseVector bits a -> SparseVector bits a
 zipWith :: (Unbox a, Unbox b, Unbox c, FiniteBits bits) => (a -> b -> c) -> SparseVector bits a -> SparseVector bits b -> SparseVector bits c
@@ -593,6 +502,262 @@ mu :: Vec a -> Nat -> Maybe a
 bound :: Nat -> Vec a -> Nat
 toList :: Vec a -> [a]
 
+
+-- | Types related to Share and Codeservers.
+module Unison.Share.Types
+
+-- | This type is expanded out into all of its fields because we require
+--   certain pieces which are optional in a URI, and also to make it more
+--   typesafe to eventually convert into a BaseURL for servant clients.
+data CodeserverURI
+CodeserverURI :: Scheme -> String -> String -> Maybe Int -> [String] -> CodeserverURI
+[$sel:codeserverScheme:CodeserverURI] :: CodeserverURI -> Scheme
+[$sel:codeserverUserInfo:CodeserverURI] :: CodeserverURI -> String
+[$sel:codeserverRegName:CodeserverURI] :: CodeserverURI -> String
+[$sel:codeserverPort:CodeserverURI] :: CodeserverURI -> Maybe Int
+[$sel:codeserverPath:CodeserverURI] :: CodeserverURI -> [String]
+
+-- | This is distinct from the codeserver URI in that we store credentials
+--   by a normalized ID, since it's much easier to look up that way than
+--   from an arbitrary path. We may wish to use explicitly named
+--   configurations in the future. This currently uses a stringified
+--   uriAuthority.
+newtype CodeserverId
+CodeserverId :: Text -> CodeserverId
+[$sel:codeserverId:CodeserverId] :: CodeserverId -> Text
+data Scheme
+Http :: Scheme
+Https :: Scheme
+
+-- | <pre>
+--   &gt;&gt;&gt; import Data.Maybe (fromJust)
+--   
+--   &gt;&gt;&gt; codeserverFromURI . fromJust $ parseURI "http://localhost:8080"
+--   Just http://localhost:8080
+--   
+--   &gt;&gt;&gt; codeserverFromURI . fromJust $ parseURI "http://localhost:80"
+--   Just http://localhost:80
+--   
+--   &gt;&gt;&gt; codeserverFromURI . fromJust $ parseURI "https://share.unison-lang.org/api"
+--   Just https://share.unison-lang.org/api
+--   
+--   &gt;&gt;&gt; codeserverFromURI . fromJust $ parseURI "http://share.unison-lang.org/api"
+--   Just http://share.unison-lang.org/api
+--   </pre>
+codeserverFromURI :: URI -> Maybe CodeserverURI
+
+-- | Gets the part of the CodeserverURI that we use for identifying that
+--   codeserver in credentials files.
+--   
+--   <pre>
+--   &gt;&gt;&gt; import Data.Maybe (fromJust)
+--   
+--   &gt;&gt;&gt; import Network.URI (parseURI)
+--   
+--   &gt;&gt;&gt; codeserverIdFromURI (CodeserverURI . fromJust $ parseURI "http://localhost:5424/api")
+--   
+--   &gt;&gt;&gt; codeserverIdFromURI (CodeserverURI . fromJust $ parseURI "https://share.unison-lang.org/api")
+--   Right "localhost"
+--   Right "share.unison-lang.org"
+--   </pre>
+codeserverIdFromURI :: URI -> Either Text CodeserverId
+codeserverToURI :: CodeserverURI -> URI
+
+-- | Gets the CodeserverId for a given CodeserverURI
+codeserverIdFromCodeserverURI :: CodeserverURI -> CodeserverId
+
+-- | Builds a servant-compatible BaseUrl for a given CodeserverURI.
+codeserverBaseURL :: CodeserverURI -> BaseUrl
+instance GHC.Show.Show Unison.Share.Types.Scheme
+instance GHC.Classes.Ord Unison.Share.Types.Scheme
+instance GHC.Classes.Eq Unison.Share.Types.Scheme
+instance GHC.Classes.Ord Unison.Share.Types.CodeserverURI
+instance GHC.Classes.Eq Unison.Share.Types.CodeserverURI
+instance Data.Aeson.Types.FromJSON.FromJSONKey Unison.Share.Types.CodeserverId
+instance Data.Aeson.Types.ToJSON.ToJSONKey Unison.Share.Types.CodeserverId
+instance Data.Aeson.Types.FromJSON.FromJSON Unison.Share.Types.CodeserverId
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Share.Types.CodeserverId
+instance GHC.Classes.Ord Unison.Share.Types.CodeserverId
+instance GHC.Classes.Eq Unison.Share.Types.CodeserverId
+instance GHC.Show.Show Unison.Share.Types.CodeserverId
+instance GHC.Show.Show Unison.Share.Types.CodeserverURI
+
+module Unison.Codebase.Editor.RemoteRepo
+data ReadRepo
+ReadRepoGit :: ReadGitRepo -> ReadRepo
+ReadRepoShare :: ShareCodeserver -> ReadRepo
+data ShareCodeserver
+DefaultCodeserver :: ShareCodeserver
+CustomCodeserver :: CodeserverURI -> ShareCodeserver
+
+-- | <pre>
+--   &gt;&gt;&gt; :set -XOverloadedLists
+--   
+--   &gt;&gt;&gt; import Data.Maybe (fromJust)
+--   
+--   &gt;&gt;&gt; import Network.URI
+--   
+--   &gt;&gt;&gt; displayShareCodeserver DefaultCodeserver "share" ["base", "List"]
+--   "share.base.List"
+--   
+--   &gt;&gt;&gt; displayShareCodeserver DefaultCodeserver "share" []
+--   "share"
+--   
+--   &gt;&gt;&gt; displayShareCodeserver (CustomCodeserver . fromJust $ parseURI "https://share-next.unison-lang.org/api" &gt;&gt;= codeserverFromURI ) "unison" ["base", "List"]
+--   "share(https://share-next.unison-lang.org:443/api).unison.base.List"
+--   </pre>
+displayShareCodeserver :: ShareCodeserver -> Text -> Path -> Text
+data ReadGitRepo
+ReadGitRepo :: Text -> Maybe Text -> ReadGitRepo
+[$sel:url:ReadGitRepo] :: ReadGitRepo -> Text
+[$sel:ref:ReadGitRepo] :: ReadGitRepo -> Maybe Text
+data WriteRepo
+WriteRepoGit :: WriteGitRepo -> WriteRepo
+WriteRepoShare :: ShareCodeserver -> WriteRepo
+data WriteGitRepo
+WriteGitRepo :: Text -> Maybe Text -> WriteGitRepo
+[$sel:url:WriteGitRepo] :: WriteGitRepo -> Text
+[$sel:branch:WriteGitRepo] :: WriteGitRepo -> Maybe Text
+writeToRead :: WriteRepo -> ReadRepo
+writeToReadGit :: WriteGitRepo -> ReadGitRepo
+writePathToRead :: WriteRemotePath -> ReadRemoteNamespace
+printReadGitRepo :: ReadGitRepo -> Text
+printWriteGitRepo :: WriteGitRepo -> Text
+
+-- | print remote namespace
+printNamespace :: ReadRemoteNamespace -> Text
+
+-- | Render a <a>WriteRemotePath</a> as text.
+printWriteRemotePath :: WriteRemotePath -> Text
+maybePrintPath :: Path -> Text
+data ReadRemoteNamespace
+ReadRemoteNamespaceGit :: ReadGitRemoteNamespace -> ReadRemoteNamespace
+ReadRemoteNamespaceShare :: ReadShareRemoteNamespace -> ReadRemoteNamespace
+data ReadGitRemoteNamespace
+ReadGitRemoteNamespace :: ReadGitRepo -> Maybe ShortBranchHash -> Path -> ReadGitRemoteNamespace
+[$sel:repo:ReadGitRemoteNamespace] :: ReadGitRemoteNamespace -> ReadGitRepo
+[$sel:sbh:ReadGitRemoteNamespace] :: ReadGitRemoteNamespace -> Maybe ShortBranchHash
+[$sel:path:ReadGitRemoteNamespace] :: ReadGitRemoteNamespace -> Path
+data ReadShareRemoteNamespace
+ReadShareRemoteNamespace :: ShareCodeserver -> Text -> Path -> ReadShareRemoteNamespace
+[$sel:server:ReadShareRemoteNamespace] :: ReadShareRemoteNamespace -> ShareCodeserver
+[$sel:repo:ReadShareRemoteNamespace] :: ReadShareRemoteNamespace -> Text
+[$sel:path:ReadShareRemoteNamespace] :: ReadShareRemoteNamespace -> Path
+data WriteRemotePath
+WriteRemotePathGit :: WriteGitRemotePath -> WriteRemotePath
+WriteRemotePathShare :: WriteShareRemotePath -> WriteRemotePath
+data WriteGitRemotePath
+WriteGitRemotePath :: WriteGitRepo -> Path -> WriteGitRemotePath
+[$sel:repo:WriteGitRemotePath] :: WriteGitRemotePath -> WriteGitRepo
+[$sel:path:WriteGitRemotePath] :: WriteGitRemotePath -> Path
+data WriteShareRemotePath
+WriteShareRemotePath :: ShareCodeserver -> Text -> Path -> WriteShareRemotePath
+[$sel:server:WriteShareRemotePath] :: WriteShareRemotePath -> ShareCodeserver
+[$sel:repo:WriteShareRemotePath] :: WriteShareRemotePath -> Text
+[$sel:path:WriteShareRemotePath] :: WriteShareRemotePath -> Path
+instance GHC.Show.Show Unison.Codebase.Editor.RemoteRepo.ShareCodeserver
+instance GHC.Classes.Ord Unison.Codebase.Editor.RemoteRepo.ShareCodeserver
+instance GHC.Classes.Eq Unison.Codebase.Editor.RemoteRepo.ShareCodeserver
+instance GHC.Show.Show Unison.Codebase.Editor.RemoteRepo.ReadGitRepo
+instance GHC.Classes.Ord Unison.Codebase.Editor.RemoteRepo.ReadGitRepo
+instance GHC.Classes.Eq Unison.Codebase.Editor.RemoteRepo.ReadGitRepo
+instance GHC.Show.Show Unison.Codebase.Editor.RemoteRepo.ReadRepo
+instance GHC.Classes.Ord Unison.Codebase.Editor.RemoteRepo.ReadRepo
+instance GHC.Classes.Eq Unison.Codebase.Editor.RemoteRepo.ReadRepo
+instance GHC.Show.Show Unison.Codebase.Editor.RemoteRepo.WriteGitRepo
+instance GHC.Classes.Ord Unison.Codebase.Editor.RemoteRepo.WriteGitRepo
+instance GHC.Classes.Eq Unison.Codebase.Editor.RemoteRepo.WriteGitRepo
+instance GHC.Show.Show Unison.Codebase.Editor.RemoteRepo.WriteRepo
+instance GHC.Classes.Ord Unison.Codebase.Editor.RemoteRepo.WriteRepo
+instance GHC.Classes.Eq Unison.Codebase.Editor.RemoteRepo.WriteRepo
+instance GHC.Show.Show Unison.Codebase.Editor.RemoteRepo.ReadGitRemoteNamespace
+instance GHC.Classes.Eq Unison.Codebase.Editor.RemoteRepo.ReadGitRemoteNamespace
+instance GHC.Show.Show Unison.Codebase.Editor.RemoteRepo.ReadShareRemoteNamespace
+instance GHC.Classes.Eq Unison.Codebase.Editor.RemoteRepo.ReadShareRemoteNamespace
+instance GHC.Show.Show Unison.Codebase.Editor.RemoteRepo.ReadRemoteNamespace
+instance GHC.Classes.Eq Unison.Codebase.Editor.RemoteRepo.ReadRemoteNamespace
+instance GHC.Show.Show Unison.Codebase.Editor.RemoteRepo.WriteGitRemotePath
+instance GHC.Classes.Eq Unison.Codebase.Editor.RemoteRepo.WriteGitRemotePath
+instance GHC.Show.Show Unison.Codebase.Editor.RemoteRepo.WriteShareRemotePath
+instance GHC.Classes.Eq Unison.Codebase.Editor.RemoteRepo.WriteShareRemotePath
+instance GHC.Show.Show Unison.Codebase.Editor.RemoteRepo.WriteRemotePath
+instance GHC.Classes.Eq Unison.Codebase.Editor.RemoteRepo.WriteRemotePath
+
+module Unison.Codebase.SqliteCodebase.GitError
+data GitSqliteCodebaseError
+GitCouldntParseRootBranchHash :: ReadGitRepo -> String -> GitSqliteCodebaseError
+NoDatabaseFile :: ReadGitRepo -> CodebasePath -> GitSqliteCodebaseError
+UnrecognizedSchemaVersion :: ReadGitRepo -> CodebasePath -> SchemaVersion -> GitSqliteCodebaseError
+instance GHC.Show.Show Unison.Codebase.SqliteCodebase.GitError.GitSqliteCodebaseError
+
+module Unison.Codebase.GitError
+type CodebasePath = FilePath
+data GitProtocolError
+NoGit :: GitProtocolError
+UnrecognizableCacheDir :: ReadGitRepo -> CodebasePath -> GitProtocolError
+UnrecognizableCheckoutDir :: ReadGitRepo -> CodebasePath -> GitProtocolError
+CopyException :: FilePath -> FilePath -> String -> GitProtocolError
+CloneException :: ReadGitRepo -> String -> GitProtocolError
+PushException :: WriteGitRepo -> String -> GitProtocolError
+PushNoOp :: WriteGitRepo -> GitProtocolError
+PushDestinationHasNewStuff :: WriteGitRepo -> GitProtocolError
+CleanupError :: SomeException -> GitProtocolError
+RemoteRefNotFound :: Text -> Text -> GitProtocolError
+data GitCodebaseError h
+NoRemoteNamespaceWithHash :: ReadGitRepo -> ShortBranchHash -> GitCodebaseError h
+RemoteNamespaceHashAmbiguous :: ReadGitRepo -> ShortBranchHash -> Set h -> GitCodebaseError h
+CouldntLoadRootBranch :: ReadGitRepo -> h -> GitCodebaseError h
+CouldntParseRemoteBranch :: ReadGitRepo -> String -> GitCodebaseError h
+CouldntLoadSyncedBranch :: ReadGitRemoteNamespace -> h -> GitCodebaseError h
+CouldntFindRemoteBranch :: ReadGitRepo -> Path -> GitCodebaseError h
+instance GHC.Exception.Type.Exception Unison.Codebase.GitError.GitProtocolError
+instance GHC.Show.Show Unison.Codebase.GitError.GitProtocolError
+instance GHC.Show.Show h => GHC.Show.Show (Unison.Codebase.GitError.GitCodebaseError h)
+
+module Unison.Codebase.Editor.Git
+
+-- | Run a git command in the repository at localPath
+gitIn :: MonadIO m => GitRepo -> [Text] -> m ()
+
+-- | Run a git command in the repository at localPath and capture stdout
+gitTextIn :: MonadIO m => GitRepo -> [Text] -> m Text
+
+-- | like <a>gitIn</a>, but silences all output from the command and
+--   returns whether the command succeeded.
+gitInCaptured :: MonadIO m => GitRepo -> [Text] -> m (Bool, Text, Text)
+
+-- | Clone or fetch an updated copy of the provided repository and check
+--   out the expected ref, then provide the action with a path to the
+--   codebase in that repository. Note that the repository provided to the
+--   action is temporary, it will be removed when the action completes or
+--   fails.
+withRepo :: forall m a. MonadUnliftIO m => ReadGitRepo -> GitBranchBehavior -> (GitRepo -> m a) -> m (Either GitProtocolError a)
+
+-- | Perform an IO action, passing any IO exception to <tt>handler</tt>
+withIOError :: MonadIO m => IO a -> (IOException -> m a) -> m a
+withStatus :: MonadIO m => String -> m a -> m a
+
+-- | Run an action on an isolated copy of the provided repo. The repo is
+--   deleted when the action exits or fails. A branch or tag to check out
+--   from the source repo may be specified.
+withIsolatedRepo :: forall m r. MonadUnliftIO m => GitRepo -> Text -> Maybe Text -> (GitRepo -> m r) -> m (Either GitProtocolError r)
+debugGit :: Bool
+gitDirToPath :: GitRepo -> FilePath
+gitVerbosity :: [Text]
+
+-- | Define what to do if the repo we're pulling/pushing doesn't have the
+--   specified branch.
+data GitBranchBehavior
+CreateBranchIfMissing :: GitBranchBehavior
+RequireExistingBranch :: GitBranchBehavior
+
+-- | A path to a git repository.
+data GitRepo
+Bare :: FilePath -> GitRepo
+Worktree :: FilePath -> GitRepo
+gitCacheDir :: MonadIO m => Text -> m FilePath
+instance GHC.Show.Show Unison.Codebase.Editor.Git.GitRepo
+
 module Unison.Typechecker.Components
 
 -- | Algorithm for minimizing cycles of a `let rec`. This can improve
@@ -614,9 +779,9 @@ minimize' :: Var v => Term' vt v a -> Either (NonEmpty (v, [a])) (Term' vt v a)
 module Unison.Typechecker.TypeLookup
 data TypeLookup v a
 TypeLookup :: Map Reference (Type v a) -> Map Reference (DataDeclaration v a) -> Map Reference (EffectDeclaration v a) -> TypeLookup v a
-[typeOfTerms] :: TypeLookup v a -> Map Reference (Type v a)
-[dataDecls] :: TypeLookup v a -> Map Reference (DataDeclaration v a)
-[effectDecls] :: TypeLookup v a -> Map Reference (EffectDeclaration v a)
+[$sel:typeOfTerms:TypeLookup] :: TypeLookup v a -> Map Reference (Type v a)
+[$sel:dataDecls:TypeLookup] :: TypeLookup v a -> Map Reference (DataDeclaration v a)
+[$sel:effectDecls:TypeLookup] :: TypeLookup v a -> Map Reference (EffectDeclaration v a)
 typeOfReferent :: TypeLookup v a -> Referent -> Maybe (Type v a)
 unsafeConstructorType :: TypeLookup v a -> Reference -> ConstructorType
 constructorType :: TypeLookup v a -> Reference -> Maybe ConstructorType
@@ -648,9 +813,9 @@ instance Unison.Var.Var v => Unison.Var.Var (Unison.Typechecker.TypeVar.TypeVar 
 module Unison.UnisonFile.Env
 data Env v a
 Env :: Map v (Id, DataDeclaration v a) -> Map v (Id, EffectDeclaration v a) -> Names -> Env v a
-[datasId] :: Env v a -> Map v (Id, DataDeclaration v a)
-[effectsId] :: Env v a -> Map v (Id, EffectDeclaration v a)
-[names] :: Env v a -> Names
+[$sel:datasId:Env] :: Env v a -> Map v (Id, DataDeclaration v a)
+[$sel:effectsId:Env] :: Env v a -> Map v (Id, EffectDeclaration v a)
+[$sel:names:Env] :: Env v a -> Names
 datas :: Env v a -> Map v (Reference, DataDeclaration v a)
 
 module Unison.UnisonFile.Error
@@ -664,21 +829,21 @@ instance (GHC.Classes.Eq v, GHC.Classes.Eq a) => GHC.Classes.Eq (Unison.UnisonFi
 module Unison.UnisonFile.Type
 data UnisonFile v a
 UnisonFileId :: Map v (Id, DataDeclaration v a) -> Map v (Id, EffectDeclaration v a) -> [(v, Term v a)] -> Map WatchKind [(v, Term v a)] -> UnisonFile v a
-[dataDeclarationsId] :: UnisonFile v a -> Map v (Id, DataDeclaration v a)
-[effectDeclarationsId] :: UnisonFile v a -> Map v (Id, EffectDeclaration v a)
-[terms] :: UnisonFile v a -> [(v, Term v a)]
-[watches] :: UnisonFile v a -> Map WatchKind [(v, Term v a)]
+[$sel:dataDeclarationsId:UnisonFileId] :: UnisonFile v a -> Map v (Id, DataDeclaration v a)
+[$sel:effectDeclarationsId:UnisonFileId] :: UnisonFile v a -> Map v (Id, EffectDeclaration v a)
+[$sel:terms:UnisonFileId] :: UnisonFile v a -> [(v, Term v a)]
+[$sel:watches:UnisonFileId] :: UnisonFile v a -> Map WatchKind [(v, Term v a)]
 pattern UnisonFile :: Map v (Reference, DataDeclaration v a) -> Map v (Reference, EffectDeclaration v a) -> [(v, Term v a)] -> Map WatchKind [(v, Term v a)] -> UnisonFile v a
 
 -- | A UnisonFile after typechecking. Terms are split into groups by cycle
 --   and the type of each term is known.
 data TypecheckedUnisonFile v a
 TypecheckedUnisonFileId :: Map v (Id, DataDeclaration v a) -> Map v (Id, EffectDeclaration v a) -> [[(v, Term v a, Type v a)]] -> [(WatchKind, [(v, Term v a, Type v a)])] -> Map v (Id, Maybe WatchKind, Term v a, Type v a) -> TypecheckedUnisonFile v a
-[dataDeclarationsId'] :: TypecheckedUnisonFile v a -> Map v (Id, DataDeclaration v a)
-[effectDeclarationsId'] :: TypecheckedUnisonFile v a -> Map v (Id, EffectDeclaration v a)
-[topLevelComponents'] :: TypecheckedUnisonFile v a -> [[(v, Term v a, Type v a)]]
-[watchComponents] :: TypecheckedUnisonFile v a -> [(WatchKind, [(v, Term v a, Type v a)])]
-[hashTermsId] :: TypecheckedUnisonFile v a -> Map v (Id, Maybe WatchKind, Term v a, Type v a)
+[$sel:dataDeclarationsId':TypecheckedUnisonFileId] :: TypecheckedUnisonFile v a -> Map v (Id, DataDeclaration v a)
+[$sel:effectDeclarationsId':TypecheckedUnisonFileId] :: TypecheckedUnisonFile v a -> Map v (Id, EffectDeclaration v a)
+[$sel:topLevelComponents':TypecheckedUnisonFileId] :: TypecheckedUnisonFile v a -> [[(v, Term v a, Type v a)]]
+[$sel:watchComponents:TypecheckedUnisonFileId] :: TypecheckedUnisonFile v a -> [(WatchKind, [(v, Term v a, Type v a)])]
+[$sel:hashTermsId:TypecheckedUnisonFileId] :: TypecheckedUnisonFile v a -> Map v (Id, Maybe WatchKind, Term v a, Type v a)
 pattern TypecheckedUnisonFile :: Map v (Reference, DataDeclaration v a) -> Map v (Reference, EffectDeclaration v a) -> [[(v, Term v a, Type v a)]] -> [(WatchKind, [(v, Term v a, Type v a)])] -> Map v (Reference, Maybe WatchKind, Term (F v a a) v a, Term F v a) -> TypecheckedUnisonFile v a
 instance (GHC.Show.Show v, GHC.Show.Show a) => GHC.Show.Show (Unison.UnisonFile.Type.UnisonFile v a)
 instance (GHC.Show.Show v, GHC.Show.Show a) => GHC.Show.Show (Unison.UnisonFile.Type.TypecheckedUnisonFile v a)
@@ -694,8 +859,8 @@ instance (Unison.Util.Convert.Parse a a2, Unison.Util.Convert.Parse b b2) => Uni
 module Unison.Util.CycleTable
 data CycleTable k v
 CycleTable :: BasicHashTable k v -> IOPRef Int -> CycleTable k v
-[table] :: CycleTable k v -> BasicHashTable k v
-[sizeRef] :: CycleTable k v -> IOPRef Int
+[$sel:table:CycleTable] :: CycleTable k v -> BasicHashTable k v
+[$sel:sizeRef:CycleTable] :: CycleTable k v -> IOPRef Int
 new :: Int -> IO (CycleTable k v)
 lookup :: (Hashable k, Eq k) => k -> CycleTable k v -> IO (Maybe v)
 insert :: (Hashable k, Eq k) => k -> v -> CycleTable k v -> IO ()
@@ -798,10 +963,10 @@ type Level = Int
 type Scope = [String]
 data Logger
 Logger :: !Scope -> (String -> String) -> !Level -> (String -> IO ()) -> Logger
-[getScope] :: Logger -> !Scope
-[prefix] :: Logger -> String -> String
-[getLevel] :: Logger -> !Level
-[raw] :: Logger -> String -> IO ()
+[$sel:getScope:Logger] :: Logger -> !Scope
+[$sel:prefix:Logger] :: Logger -> String -> String
+[$sel:getLevel:Logger] :: Logger -> !Level
+[$sel:raw:Logger] :: Logger -> String -> IO ()
 
 -- | Ensure at most one message is logged at the same time
 atomic :: Logger -> IO Logger
@@ -928,7 +1093,7 @@ instance Control.DeepSeq.NFData a => Control.DeepSeq.NFData (Unison.Util.Rope.Ro
 module Unison.Util.Bytes
 newtype Bytes
 Bytes :: Rope Chunk -> Bytes
-[underlying] :: Bytes -> Rope Chunk
+[$sel:underlying:Bytes] :: Bytes -> Rope Chunk
 type Chunk = Vector Word8
 fromByteString :: ByteString -> Bytes
 toByteString :: Bytes -> ByteString
@@ -1000,9 +1165,9 @@ instance Unison.Util.Rope.Reverse Unison.Util.Bytes.Chunk
 module Unison.Lexer
 data Token a
 Token :: a -> !Pos -> !Pos -> Token a
-[payload] :: Token a -> a
-[start] :: Token a -> !Pos
-[end] :: Token a -> !Pos
+[$sel:payload:Token] :: Token a -> a
+[$sel:start:Token] :: Token a -> !Pos
+[$sel:end:Token] :: Token a -> !Pos
 type Line = Int
 type Column = Int
 data Err
@@ -1090,8 +1255,8 @@ type Token s = Token s
 type Err v = ParseError Input (Error v)
 data ParsingEnv
 ParsingEnv :: UniqueName -> NamesWithHistory -> ParsingEnv
-[uniqueNames] :: ParsingEnv -> UniqueName
-[names] :: ParsingEnv -> NamesWithHistory
+[$sel:uniqueNames:ParsingEnv] :: ParsingEnv -> UniqueName
+[$sel:names:ParsingEnv] :: ParsingEnv -> NamesWithHistory
 newtype UniqueName
 UniqueName :: (Pos -> Int -> Maybe Text) -> UniqueName
 uniqueBase32Namegen :: forall gen. DRG gen => gen -> UniqueName
@@ -1121,7 +1286,7 @@ FloatPattern :: Ann -> Error v
 tokenToPair :: Token a -> (Ann, a)
 newtype Input
 Input :: [Token Lexeme] -> Input
-[inputStream] :: Input -> [Token Lexeme]
+[$sel:inputStream:Input] :: Input -> [Token Lexeme]
 setPos :: SourcePos -> Pos -> SourcePos
 class Annotated a
 ann :: Annotated a => a -> Ann
@@ -1206,10 +1371,10 @@ wordyNameSegment :: String -> Either String NameSegment
 module Unison.Util.Star3
 data Star3 fact d1 d2 d3
 Star3 :: Set fact -> Relation fact d1 -> Relation fact d2 -> Relation fact d3 -> Star3 fact d1 d2 d3
-[fact] :: Star3 fact d1 d2 d3 -> Set fact
-[d1] :: Star3 fact d1 d2 d3 -> Relation fact d1
-[d2] :: Star3 fact d1 d2 d3 -> Relation fact d2
-[d3] :: Star3 fact d1 d2 d3 -> Relation fact d3
+[$sel:fact:Star3] :: Star3 fact d1 d2 d3 -> Set fact
+[$sel:d1:Star3] :: Star3 fact d1 d2 d3 -> Relation fact d1
+[$sel:d2:Star3] :: Star3 fact d1 d2 d3 -> Relation fact d2
+[$sel:d3:Star3] :: Star3 fact d1 d2 d3 -> Relation fact d3
 toList :: (Ord fact, Ord d1, Ord d2, Ord d3) => Star3 fact d1 d2 d3 -> [(fact, d1, d2, d3)]
 difference :: (Ord fact, Ord d1, Ord d2, Ord d3) => Star3 fact d1 d2 d3 -> Star3 fact d1 d2 d3 -> Star3 fact d1 d2 d3
 d23s :: (Ord fact, Ord d2, Ord d3) => Star3 fact d1 d2 d3 -> [(fact, d2, d3)]
@@ -1275,37 +1440,38 @@ type NamespaceHash m = HashFor (Branch0 m)
 -- | Represents a hash of a causal containing values of the provided type.
 newtype CausalHash
 CausalHash :: Hash -> CausalHash
-[unCausalHash] :: CausalHash -> Hash
+[$sel:unCausalHash:CausalHash] :: CausalHash -> Hash
 head :: Branch m -> Branch0 m
 headHash :: Branch m -> CausalHash
 
 -- | A node in the Unison namespace hierarchy along with its history.
 newtype Branch m
 Branch :: UnwrappedBranch m -> Branch m
-[_history] :: Branch m -> UnwrappedBranch m
+[$sel:_history:Branch] :: Branch m -> UnwrappedBranch m
 
 -- | A node in the Unison namespace hierarchy.
 --   
---   <a>_terms</a> and <a>_types</a> are the declarations at this level.
---   <a>_children</a> are the nodes one level below us. <a>_edits</a> are
---   the <a>Patch</a>s stored at this node in the code.
+--   <a>$sel:_terms:Branch0</a> and <a>$sel:_types:Branch0</a> are the
+--   declarations at this level. <a>$sel:_children:Branch0</a> are the
+--   nodes one level below us. <a>$sel:_edits:Branch0</a> are the
+--   <a>Patch</a>s stored at this node in the code.
 --   
 --   The <tt>deep*</tt> fields are derived from the four above.
 data Branch0 m
 Branch0 :: Star Referent NameSegment -> Star Reference NameSegment -> Map NameSegment (Branch m) -> Map NameSegment (EditHash, m Patch) -> Relation Referent Name -> Relation Reference Name -> R4 Referent Name -> R4 Reference Name -> Set Path -> Map Name EditHash -> Branch0 m
-[_terms] :: Branch0 m -> Star Referent NameSegment
-[_types] :: Branch0 m -> Star Reference NameSegment
+[$sel:_terms:Branch0] :: Branch0 m -> Star Referent NameSegment
+[$sel:_types:Branch0] :: Branch0 m -> Star Reference NameSegment
 
 -- | Note the <a>Branch</a> here, not <a>Branch0</a>. Every level in the
 --   tree has a history.
-[_children] :: Branch0 m -> Map NameSegment (Branch m)
-[_edits] :: Branch0 m -> Map NameSegment (EditHash, m Patch)
-[deepTerms] :: Branch0 m -> Relation Referent Name
-[deepTypes] :: Branch0 m -> Relation Reference Name
-[deepTermMetadata] :: Branch0 m -> R4 Referent Name
-[deepTypeMetadata] :: Branch0 m -> R4 Reference Name
-[deepPaths] :: Branch0 m -> Set Path
-[deepEdits] :: Branch0 m -> Map Name EditHash
+[$sel:_children:Branch0] :: Branch0 m -> Map NameSegment (Branch m)
+[$sel:_edits:Branch0] :: Branch0 m -> Map NameSegment (EditHash, m Patch)
+[$sel:deepTerms:Branch0] :: Branch0 m -> Relation Referent Name
+[$sel:deepTypes:Branch0] :: Branch0 m -> Relation Reference Name
+[$sel:deepTermMetadata:Branch0] :: Branch0 m -> R4 Referent Name
+[$sel:deepTypeMetadata:Branch0] :: Branch0 m -> R4 Reference Name
+[$sel:deepPaths:Branch0] :: Branch0 m -> Set Path
+[$sel:deepEdits:Branch0] :: Branch0 m -> Map Name EditHash
 history :: Iso' (Branch m) (UnwrappedBranch m)
 edits :: Lens' (Branch0 m) (Map NameSegment (EditHash, m Patch))
 type Star r n = Star r n
@@ -1314,6 +1480,7 @@ type UnwrappedBranch m = Causal m (Branch0 m)
 instance GHC.Classes.Ord (Unison.Codebase.Branch.Type.Branch m)
 instance GHC.Classes.Eq (Unison.Codebase.Branch.Type.Branch m)
 instance GHC.Classes.Eq (Unison.Codebase.Branch.Type.Branch0 m)
+
 
 module Unison.Hashing.V2.Convert
 type ResolutionResult v a r = Either Seq ResolutionFailure v a r
@@ -1342,7 +1509,7 @@ pattern Merge :: CausalHash -> HashFor e -> e -> Map CausalHash (m (Causal m e))
 -- | Represents a hash of a causal containing values of the provided type.
 newtype CausalHash
 CausalHash :: Hash -> CausalHash
-[unCausalHash] :: CausalHash -> Hash
+[$sel:unCausalHash:CausalHash] :: CausalHash -> Hash
 
 -- | Focus the current head, keeping the hash up to date.
 head_ :: Hashable e => Lens' (Causal m e) e
@@ -1494,10 +1661,10 @@ unOptionalRef :: Reference -> Bool
 module Unison.UnisonFile
 data UnisonFile v a
 UnisonFileId :: Map v (Id, DataDeclaration v a) -> Map v (Id, EffectDeclaration v a) -> [(v, Term v a)] -> Map WatchKind [(v, Term v a)] -> UnisonFile v a
-[dataDeclarationsId] :: UnisonFile v a -> Map v (Id, DataDeclaration v a)
-[effectDeclarationsId] :: UnisonFile v a -> Map v (Id, EffectDeclaration v a)
-[terms] :: UnisonFile v a -> [(v, Term v a)]
-[watches] :: UnisonFile v a -> Map WatchKind [(v, Term v a)]
+[$sel:dataDeclarationsId:UnisonFileId] :: UnisonFile v a -> Map v (Id, DataDeclaration v a)
+[$sel:effectDeclarationsId:UnisonFileId] :: UnisonFile v a -> Map v (Id, EffectDeclaration v a)
+[$sel:terms:UnisonFileId] :: UnisonFile v a -> [(v, Term v a)]
+[$sel:watches:UnisonFileId] :: UnisonFile v a -> Map WatchKind [(v, Term v a)]
 pattern UnisonFile :: Map v (Reference, DataDeclaration v a) -> Map v (Reference, EffectDeclaration v a) -> [(v, Term v a)] -> Map WatchKind [(v, Term v a)] -> UnisonFile v a
 allWatches :: UnisonFile v a -> [(v, Term v a)]
 dataDeclarations :: UnisonFile v a -> Map v (Reference, DataDeclaration v a)
@@ -1511,11 +1678,11 @@ watchesOfKind :: WatchKind -> UnisonFile v a -> [(v, Term v a)]
 --   and the type of each term is known.
 data TypecheckedUnisonFile v a
 TypecheckedUnisonFileId :: Map v (Id, DataDeclaration v a) -> Map v (Id, EffectDeclaration v a) -> [[(v, Term v a, Type v a)]] -> [(WatchKind, [(v, Term v a, Type v a)])] -> Map v (Id, Maybe WatchKind, Term v a, Type v a) -> TypecheckedUnisonFile v a
-[dataDeclarationsId'] :: TypecheckedUnisonFile v a -> Map v (Id, DataDeclaration v a)
-[effectDeclarationsId'] :: TypecheckedUnisonFile v a -> Map v (Id, EffectDeclaration v a)
-[topLevelComponents'] :: TypecheckedUnisonFile v a -> [[(v, Term v a, Type v a)]]
-[watchComponents] :: TypecheckedUnisonFile v a -> [(WatchKind, [(v, Term v a, Type v a)])]
-[hashTermsId] :: TypecheckedUnisonFile v a -> Map v (Id, Maybe WatchKind, Term v a, Type v a)
+[$sel:dataDeclarationsId':TypecheckedUnisonFileId] :: TypecheckedUnisonFile v a -> Map v (Id, DataDeclaration v a)
+[$sel:effectDeclarationsId':TypecheckedUnisonFileId] :: TypecheckedUnisonFile v a -> Map v (Id, EffectDeclaration v a)
+[$sel:topLevelComponents':TypecheckedUnisonFileId] :: TypecheckedUnisonFile v a -> [[(v, Term v a, Type v a)]]
+[$sel:watchComponents:TypecheckedUnisonFileId] :: TypecheckedUnisonFile v a -> [(WatchKind, [(v, Term v a, Type v a)])]
+[$sel:hashTermsId:TypecheckedUnisonFileId] :: TypecheckedUnisonFile v a -> Map v (Id, Maybe WatchKind, Term v a, Type v a)
 
 -- | A mapping of all terms in the file by their var name. The returned
 --   terms refer to other definitions in the file by their var, not by
@@ -1567,8 +1734,8 @@ module Unison.Typechecker.Context
 synthesizeClosed :: (Var v, Ord loc) => [Type v loc] -> TypeLookup v loc -> Term v loc -> Result v loc (Type v loc)
 data ErrorNote v loc
 ErrorNote :: Cause v loc -> Seq (PathElement v loc) -> ErrorNote v loc
-[cause] :: ErrorNote v loc -> Cause v loc
-[path] :: ErrorNote v loc -> Seq (PathElement v loc)
+[$sel:cause:ErrorNote] :: ErrorNote v loc -> Cause v loc
+[$sel:path:ErrorNote] :: ErrorNote v loc -> Seq (PathElement v loc)
 data CompilerBug v loc
 UnknownDecl :: Unknown -> Reference -> Map Reference (DataDeclaration v loc) -> CompilerBug v loc
 UnknownConstructor :: Unknown -> ConstructorReference -> DataDeclaration v loc -> CompilerBug v loc
@@ -1658,10 +1825,10 @@ isSubtype :: (Var v, Ord loc) => Type v loc -> Type v loc -> Either (CompilerBug
 isRedundant :: (Var v, Ord loc) => Type v loc -> Type v loc -> M v loc Bool
 data Suggestion v loc
 Suggestion :: Text -> Type v loc -> Either v Referent -> SuggestionMatch -> Suggestion v loc
-[suggestionName] :: Suggestion v loc -> Text
-[suggestionType] :: Suggestion v loc -> Type v loc
-[suggestionReplacement] :: Suggestion v loc -> Either v Referent
-[suggestionMatch] :: Suggestion v loc -> SuggestionMatch
+[$sel:suggestionName:Suggestion] :: Suggestion v loc -> Text
+[$sel:suggestionType:Suggestion] :: Suggestion v loc -> Type v loc
+[$sel:suggestionReplacement:Suggestion] :: Suggestion v loc -> Either v Referent
+[$sel:suggestionMatch:Suggestion] :: Suggestion v loc -> SuggestionMatch
 data SuggestionMatch
 Exact :: SuggestionMatch
 WrongType :: SuggestionMatch
@@ -1711,13 +1878,13 @@ traceNote :: Show a => String -> ErrorExtractor v loc a -> ErrorExtractor v loc 
 unique :: SubseqExtractor v loc a -> ErrorExtractor v loc a
 data SubseqExtractor' n a
 SubseqExtractor' :: (n -> [Ranged a]) -> SubseqExtractor' n a
-[runSubseq] :: SubseqExtractor' n a -> n -> [Ranged a]
+[$sel:runSubseq:SubseqExtractor'] :: SubseqExtractor' n a -> n -> [Ranged a]
 data Ranged a
 Pure :: a -> Ranged a
 Ranged :: a -> Int -> Int -> Ranged a
-[get] :: Ranged a -> a
-[start] :: Ranged a -> Int
-[end] :: Ranged a -> Int
+[$sel:get:Pure] :: Ranged a -> a
+[$sel:start:Pure] :: Ranged a -> Int
+[$sel:end:Pure] :: Ranged a -> Int
 
 -- | collects the regions where <tt>xa</tt> doesn't match / aka invert a
 --   set of intervals unused, but don't want to delete it yet - Aug 30,
@@ -1783,65 +1950,65 @@ VectorBody :: ExistentialMismatch
 CaseBody :: ExistentialMismatch
 data TypeError v loc
 Mismatch :: Type v loc -> Type v loc -> Type v loc -> Type v loc -> Term v loc -> ErrorNote v loc -> TypeError v loc
-[foundType] :: TypeError v loc -> Type v loc
-[expectedType] :: TypeError v loc -> Type v loc
-[foundLeaf] :: TypeError v loc -> Type v loc
-[expectedLeaf] :: TypeError v loc -> Type v loc
-[mismatchSite] :: TypeError v loc -> Term v loc
-[note] :: TypeError v loc -> ErrorNote v loc
+[$sel:foundType:Mismatch] :: TypeError v loc -> Type v loc
+[$sel:expectedType:Mismatch] :: TypeError v loc -> Type v loc
+[$sel:foundLeaf:Mismatch] :: TypeError v loc -> Type v loc
+[$sel:expectedLeaf:Mismatch] :: TypeError v loc -> Type v loc
+[$sel:mismatchSite:Mismatch] :: TypeError v loc -> Term v loc
+[$sel:note:Mismatch] :: TypeError v loc -> ErrorNote v loc
 BooleanMismatch :: BooleanMismatch -> Term v loc -> Type v loc -> ErrorNote v loc -> TypeError v loc
-[getBooleanMismatch] :: TypeError v loc -> BooleanMismatch
-[mismatchSite] :: TypeError v loc -> Term v loc
-[foundType] :: TypeError v loc -> Type v loc
-[note] :: TypeError v loc -> ErrorNote v loc
+[$sel:getBooleanMismatch:Mismatch] :: TypeError v loc -> BooleanMismatch
+[$sel:mismatchSite:Mismatch] :: TypeError v loc -> Term v loc
+[$sel:foundType:Mismatch] :: TypeError v loc -> Type v loc
+[$sel:note:Mismatch] :: TypeError v loc -> ErrorNote v loc
 ExistentialMismatch :: ExistentialMismatch -> Type v loc -> loc -> Type v loc -> Term v loc -> ErrorNote v loc -> TypeError v loc
-[getExistentialMismatch] :: TypeError v loc -> ExistentialMismatch
-[expectedType] :: TypeError v loc -> Type v loc
-[expectedLoc] :: TypeError v loc -> loc
-[foundType] :: TypeError v loc -> Type v loc
-[mismatchSite] :: TypeError v loc -> Term v loc
-[note] :: TypeError v loc -> ErrorNote v loc
+[$sel:getExistentialMismatch:Mismatch] :: TypeError v loc -> ExistentialMismatch
+[$sel:expectedType:Mismatch] :: TypeError v loc -> Type v loc
+[$sel:expectedLoc:Mismatch] :: TypeError v loc -> loc
+[$sel:foundType:Mismatch] :: TypeError v loc -> Type v loc
+[$sel:mismatchSite:Mismatch] :: TypeError v loc -> Term v loc
+[$sel:note:Mismatch] :: TypeError v loc -> ErrorNote v loc
 FunctionApplication :: Term v loc -> Type v loc -> Term v loc -> Int -> Type v loc -> Type v loc -> Maybe (Type v loc, Type v loc) -> [(v, Type v loc)] -> ErrorNote v loc -> TypeError v loc
-[f] :: TypeError v loc -> Term v loc
-[ft] :: TypeError v loc -> Type v loc
-[arg] :: TypeError v loc -> Term v loc
-[argNum] :: TypeError v loc -> Int
-[foundType] :: TypeError v loc -> Type v loc
-[expectedType] :: TypeError v loc -> Type v loc
-[leafs] :: TypeError v loc -> Maybe (Type v loc, Type v loc)
-[solvedVars] :: TypeError v loc -> [(v, Type v loc)]
-[note] :: TypeError v loc -> ErrorNote v loc
+[$sel:f:Mismatch] :: TypeError v loc -> Term v loc
+[$sel:ft:Mismatch] :: TypeError v loc -> Type v loc
+[$sel:arg:Mismatch] :: TypeError v loc -> Term v loc
+[$sel:argNum:Mismatch] :: TypeError v loc -> Int
+[$sel:foundType:Mismatch] :: TypeError v loc -> Type v loc
+[$sel:expectedType:Mismatch] :: TypeError v loc -> Type v loc
+[$sel:leafs:Mismatch] :: TypeError v loc -> Maybe (Type v loc, Type v loc)
+[$sel:solvedVars:Mismatch] :: TypeError v loc -> [(v, Type v loc)]
+[$sel:note:Mismatch] :: TypeError v loc -> ErrorNote v loc
 NotFunctionApplication :: Term v loc -> Type v loc -> ErrorNote v loc -> TypeError v loc
-[f] :: TypeError v loc -> Term v loc
-[ft] :: TypeError v loc -> Type v loc
-[note] :: TypeError v loc -> ErrorNote v loc
+[$sel:f:Mismatch] :: TypeError v loc -> Term v loc
+[$sel:ft:Mismatch] :: TypeError v loc -> Type v loc
+[$sel:note:Mismatch] :: TypeError v loc -> ErrorNote v loc
 AbilityCheckFailure :: [Type v loc] -> [Type v loc] -> loc -> ErrorNote v loc -> TypeError v loc
-[ambient] :: TypeError v loc -> [Type v loc]
-[requested] :: TypeError v loc -> [Type v loc]
-[abilityCheckFailureSite] :: TypeError v loc -> loc
-[note] :: TypeError v loc -> ErrorNote v loc
+[$sel:ambient:Mismatch] :: TypeError v loc -> [Type v loc]
+[$sel:requested:Mismatch] :: TypeError v loc -> [Type v loc]
+[$sel:abilityCheckFailureSite:Mismatch] :: TypeError v loc -> loc
+[$sel:note:Mismatch] :: TypeError v loc -> ErrorNote v loc
 UnguardedLetRecCycle :: [v] -> [loc] -> ErrorNote v loc -> TypeError v loc
-[cycle] :: TypeError v loc -> [v]
-[cycleLocs] :: TypeError v loc -> [loc]
-[note] :: TypeError v loc -> ErrorNote v loc
+[$sel:cycle:Mismatch] :: TypeError v loc -> [v]
+[$sel:cycleLocs:Mismatch] :: TypeError v loc -> [loc]
+[$sel:note:Mismatch] :: TypeError v loc -> ErrorNote v loc
 UnknownType :: v -> loc -> ErrorNote v loc -> TypeError v loc
-[unknownTypeV] :: TypeError v loc -> v
-[typeSite] :: TypeError v loc -> loc
-[note] :: TypeError v loc -> ErrorNote v loc
+[$sel:unknownTypeV:Mismatch] :: TypeError v loc -> v
+[$sel:typeSite:Mismatch] :: TypeError v loc -> loc
+[$sel:note:Mismatch] :: TypeError v loc -> ErrorNote v loc
 UnknownTerm :: v -> loc -> [Suggestion v loc] -> Type v loc -> ErrorNote v loc -> TypeError v loc
-[unknownTermV] :: TypeError v loc -> v
-[termSite] :: TypeError v loc -> loc
-[suggestions] :: TypeError v loc -> [Suggestion v loc]
-[expectedType] :: TypeError v loc -> Type v loc
-[note] :: TypeError v loc -> ErrorNote v loc
+[$sel:unknownTermV:Mismatch] :: TypeError v loc -> v
+[$sel:termSite:Mismatch] :: TypeError v loc -> loc
+[$sel:suggestions:Mismatch] :: TypeError v loc -> [Suggestion v loc]
+[$sel:expectedType:Mismatch] :: TypeError v loc -> Type v loc
+[$sel:note:Mismatch] :: TypeError v loc -> ErrorNote v loc
 DuplicateDefinitions :: NonEmpty (v, [loc]) -> ErrorNote v loc -> TypeError v loc
-[defns] :: TypeError v loc -> NonEmpty (v, [loc])
-[note] :: TypeError v loc -> ErrorNote v loc
+[$sel:defns:Mismatch] :: TypeError v loc -> NonEmpty (v, [loc])
+[$sel:note:Mismatch] :: TypeError v loc -> ErrorNote v loc
 Other :: ErrorNote v loc -> TypeError v loc
 type RedundantTypeAnnotation = Bool
 data TypeInfo v loc
 TopLevelComponent :: [(v, Type v loc, RedundantTypeAnnotation)] -> TypeInfo v loc
-[definitions] :: TypeInfo v loc -> [(v, Type v loc, RedundantTypeAnnotation)]
+[$sel:definitions:TopLevelComponent] :: TypeInfo v loc -> [(v, Type v loc, RedundantTypeAnnotation)]
 type TypeNote v loc = Either (TypeError v loc) (TypeInfo v loc)
 typeErrorFromNote :: (Ord loc, Show loc, Var v) => ErrorNote v loc -> TypeError v loc
 typeInfoFromNote :: (Ord loc, Show loc, Var v) => InfoNote v loc -> Maybe (TypeInfo v loc)
@@ -1866,14 +2033,15 @@ vectorBody :: (Var v, Ord loc) => ErrorExtractor v loc (TypeError v loc)
 matchBody :: (Var v, Ord loc) => ErrorExtractor v loc (TypeError v loc)
 applyingNonFunction :: Var v => ErrorExtractor v loc (TypeError v loc)
 
--- | Want to collect this info: The <tt>n</tt>th argument to <a>f</a> is
---   <a>foundType</a>, but I was expecting <a>expectedType</a>.
+-- | Want to collect this info: The <tt>n</tt>th argument to
+--   <a>$sel:f:Mismatch</a> is <a>$sel:foundType:Mismatch</a>, but I was
+--   expecting <a>$sel:expectedType:Mismatch</a>.
 --   
 --   30 | asdf asdf asdf
 --   
---   If you're curious <a>f</a> has type <tt>blah</tt>, where <tt>a</tt>
---   was chosen as <tt>A</tt> <tt>b</tt> was chosen as <tt>B</tt>
---   <tt>c</tt> was chosen as <tt>C</tt> (many colors / groups)
+--   If you're curious <a>$sel:f:Mismatch</a> has type <tt>blah</tt>, where
+--   <tt>a</tt> was chosen as <tt>A</tt> <tt>b</tt> was chosen as
+--   <tt>B</tt> <tt>c</tt> was chosen as <tt>C</tt> (many colors / groups)
 applyingFunction :: forall v loc. Var v => ErrorExtractor v loc (TypeError v loc)
 inSubtypes :: SubseqExtractor v loc (Type v loc, Type v loc, Maybe (Type v loc, Type v loc))
 instance GHC.Show.Show Unison.Typechecker.TypeError.BooleanMismatch
@@ -1920,23 +2088,23 @@ module Unison.Typechecker
 type Name = Text
 data Notes v loc
 Notes :: Seq (CompilerBug v loc) -> Seq (ErrorNote v loc) -> Seq (InfoNote v loc) -> Notes v loc
-[bugs] :: Notes v loc -> Seq (CompilerBug v loc)
-[errors] :: Notes v loc -> Seq (ErrorNote v loc)
-[infos] :: Notes v loc -> Seq (InfoNote v loc)
+[$sel:bugs:Notes] :: Notes v loc -> Seq (CompilerBug v loc)
+[$sel:errors:Notes] :: Notes v loc -> Seq (ErrorNote v loc)
+[$sel:infos:Notes] :: Notes v loc -> Seq (InfoNote v loc)
 convertResult :: Result v loc a -> Result (Notes v loc) a
 data NamedReference v loc
 NamedReference :: Name -> Type v loc -> Either v Referent -> NamedReference v loc
-[fqn] :: NamedReference v loc -> Name
-[fqnType] :: NamedReference v loc -> Type v loc
-[replacement] :: NamedReference v loc -> Either v Referent
+[$sel:fqn:NamedReference] :: NamedReference v loc -> Name
+[$sel:fqnType:NamedReference] :: NamedReference v loc -> Type v loc
+[$sel:replacement:NamedReference] :: NamedReference v loc -> Either v Referent
 data Env v loc
 Env :: [Type v loc] -> TypeLookup v loc -> Map Name [NamedReference v loc] -> Env v loc
-[_ambientAbilities] :: Env v loc -> [Type v loc]
-[_typeLookup] :: Env v loc -> TypeLookup v loc
-[_termsByShortname] :: Env v loc -> Map Name [NamedReference v loc]
-typeLookup :: forall v_a3dZT loc_a3dZU. Lens' (Env v_a3dZT loc_a3dZU) (TypeLookup v_a3dZT loc_a3dZU)
-termsByShortname :: forall v_a3dZT loc_a3dZU. Lens' (Env v_a3dZT loc_a3dZU) (Map Name [NamedReference v_a3dZT loc_a3dZU])
-ambientAbilities :: forall v_a3dZT loc_a3dZU. Lens' (Env v_a3dZT loc_a3dZU) [Type v_a3dZT loc_a3dZU]
+[$sel:_ambientAbilities:Env] :: Env v loc -> [Type v loc]
+[$sel:_typeLookup:Env] :: Env v loc -> TypeLookup v loc
+[$sel:_termsByShortname:Env] :: Env v loc -> Map Name [NamedReference v loc]
+typeLookup :: forall v_a3lNw loc_a3lNx. Lens' (Env v_a3lNw loc_a3lNx) (TypeLookup v_a3lNw loc_a3lNx)
+termsByShortname :: forall v_a3lNw loc_a3lNx. Lens' (Env v_a3lNw loc_a3lNx) (Map Name [NamedReference v_a3lNw loc_a3lNx])
+ambientAbilities :: forall v_a3lNw loc_a3lNx. Lens' (Env v_a3lNw loc_a3lNx) [Type v_a3lNw loc_a3lNx]
 
 -- | Infer the type of a <a>Term</a>, using a function to resolve the type
 --   of <tt>Ref</tt> constructors contained in that term.
@@ -1946,10 +2114,10 @@ isEqual :: Var v => Type v loc -> Type v loc -> Bool
 type TDNR f v loc a = StateT (Term v loc) (ResultT (Notes v loc) f) a
 data Resolution v loc
 Resolution :: Text -> Type v loc -> loc -> [Suggestion v loc] -> Resolution v loc
-[resolvedName] :: Resolution v loc -> Text
-[inferredType] :: Resolution v loc -> Type v loc
-[resolvedLoc] :: Resolution v loc -> loc
-[suggestions] :: Resolution v loc -> [Suggestion v loc]
+[$sel:resolvedName:Resolution] :: Resolution v loc -> Text
+[$sel:inferredType:Resolution] :: Resolution v loc -> Type v loc
+[$sel:resolvedLoc:Resolution] :: Resolution v loc -> loc
+[$sel:suggestions:Resolution] :: Resolution v loc -> [Suggestion v loc]
 
 -- | Infer the type of a <a>Term</a>, using type-directed name resolution
 --   to attempt to resolve unknown symbols.
@@ -2013,12 +2181,12 @@ prettyBlock' :: Var v => Bool -> PrettyPrintEnv -> Term v a -> Pretty SyntaxText
 pretty' :: Var v => Maybe Width -> PrettyPrintEnv -> Term v a -> ColorText
 data AmbientContext
 AmbientContext :: Int -> BlockContext -> InfixContext -> Imports -> DocLiteralContext -> Bool -> AmbientContext
-[precedence] :: AmbientContext -> Int
-[blockContext] :: AmbientContext -> BlockContext
-[infixContext] :: AmbientContext -> InfixContext
-[imports] :: AmbientContext -> Imports
-[docContext] :: AmbientContext -> DocLiteralContext
-[elideUnit] :: AmbientContext -> Bool
+[$sel:precedence:AmbientContext] :: AmbientContext -> Int
+[$sel:blockContext:AmbientContext] :: AmbientContext -> BlockContext
+[$sel:infixContext:AmbientContext] :: AmbientContext -> InfixContext
+[$sel:imports:AmbientContext] :: AmbientContext -> Imports
+[$sel:docContext:AmbientContext] :: AmbientContext -> DocLiteralContext
+[$sel:elideUnit:AmbientContext] :: AmbientContext -> Bool
 data BlockContext
 Block :: BlockContext
 Normal :: BlockContext
@@ -2051,7 +2219,7 @@ ac :: Int -> BlockContext -> Imports -> DocLiteralContext -> AmbientContext
 fmt :: Element r -> Pretty (SyntaxText' r) -> Pretty (SyntaxText' r)
 data PrintAnnotation
 PrintAnnotation :: Map Suffix (Map Prefix Int) -> PrintAnnotation
-[usages] :: PrintAnnotation -> Map Suffix (Map Prefix Int)
+[$sel:usages:PrintAnnotation] :: PrintAnnotation -> Map Suffix (Map Prefix Int)
 suffixCounterTerm :: Var v => PrettyPrintEnv -> Term2 v at ap v a -> PrintAnnotation
 suffixCounterType :: Var v => PrettyPrintEnv -> Type v a -> PrintAnnotation
 printAnnotate :: (Var v, Ord v) => PrettyPrintEnv -> Term2 v at ap v a -> Term3 v PrintAnnotation
@@ -2251,8 +2419,9 @@ renderTerm :: (IsString s, Var v) => Env -> Term v loc -> s
 -- | renders a type with no special styling
 renderType' :: (IsString s, Var v) => Env -> Type v loc -> s
 
--- | <a>f</a> may do some styling based on <tt>loc</tt>. | You can pass
---   `(const id)` if no styling is needed, or call <a>renderType</a>`.
+-- | <a>$sel:f:Mismatch</a> may do some styling based on <tt>loc</tt>. |
+--   You can pass `(const id)` if no styling is needed, or call
+--   <a>renderType</a>`.
 renderType :: Var v => Env -> (loc -> Pretty (AnnotatedText a) -> Pretty (AnnotatedText a)) -> Type v loc -> Pretty (AnnotatedText a)
 renderSuggestion :: (IsString s, Semigroup s, Var v) => Env -> Suggestion v loc -> s
 spaces :: (IsString a, Monoid a) => (b -> a) -> [b] -> a
@@ -2305,11 +2474,11 @@ type Error = Pretty ColorText
 type Term v = Term v ()
 data Runtime v
 Runtime :: IO () -> (CodeLookup v IO () -> PrettyPrintEnv -> Term v -> IO (Either Error (Term v))) -> (CodeLookup v IO () -> PrettyPrintEnv -> Reference -> FilePath -> IO (Maybe Error)) -> Type v Ann -> Type v Ann -> Runtime v
-[terminate] :: Runtime v -> IO ()
-[evaluate] :: Runtime v -> CodeLookup v IO () -> PrettyPrintEnv -> Term v -> IO (Either Error (Term v))
-[compileTo] :: Runtime v -> CodeLookup v IO () -> PrettyPrintEnv -> Reference -> FilePath -> IO (Maybe Error)
-[mainType] :: Runtime v -> Type v Ann
-[ioTestType] :: Runtime v -> Type v Ann
+[$sel:terminate:Runtime] :: Runtime v -> IO ()
+[$sel:evaluate:Runtime] :: Runtime v -> CodeLookup v IO () -> PrettyPrintEnv -> Term v -> IO (Either Error (Term v))
+[$sel:compileTo:Runtime] :: Runtime v -> CodeLookup v IO () -> PrettyPrintEnv -> Reference -> FilePath -> IO (Maybe Error)
+[$sel:mainType:Runtime] :: Runtime v -> Type v Ann
+[$sel:ioTestType:Runtime] :: Runtime v -> Type v Ann
 type IsCacheHit = Bool
 noCache :: Id -> IO (Maybe (Term v))
 type WatchResults v a = (Either Error ([(v, Term v)], Map v (a, WatchKind, Id, Term v, Term v, IsCacheHit)))
@@ -2564,14 +2733,14 @@ module Unison.Codebase.SqliteCodebase.Branch.Dependencies
 type Branches m = [(CausalHash, m (Branch m))]
 data Dependencies
 Dependencies :: Set EditHash -> Set Hash -> Set Hash -> Dependencies
-[patches] :: Dependencies -> Set EditHash
-[terms] :: Dependencies -> Set Hash
-[decls] :: Dependencies -> Set Hash
+[$sel:patches:Dependencies] :: Dependencies -> Set EditHash
+[$sel:terms:Dependencies] :: Dependencies -> Set Hash
+[$sel:decls:Dependencies] :: Dependencies -> Set Hash
 data Dependencies'
 Dependencies' :: [EditHash] -> [Hash] -> [Hash] -> Dependencies'
-[patches'] :: Dependencies' -> [EditHash]
-[terms'] :: Dependencies' -> [Hash]
-[decls'] :: Dependencies' -> [Hash]
+[$sel:patches':Dependencies'] :: Dependencies' -> [EditHash]
+[$sel:terms':Dependencies'] :: Dependencies' -> [Hash]
+[$sel:decls':Dependencies'] :: Dependencies' -> [Hash]
 to' :: Dependencies -> Dependencies'
 fromBranch :: Applicative m => Branch m -> (Branches m, Dependencies)
 fromBranch0 :: Applicative m => Branch0 m -> (Branches m, Dependencies)
@@ -2590,20 +2759,20 @@ type Star r n = Star r n
 type EditHash = Hash
 data Raw
 Raw :: Star Referent NameSegment -> Star Reference NameSegment -> Map NameSegment Hash -> Map NameSegment EditHash -> Raw
-[_termsR] :: Raw -> Star Referent NameSegment
-[_typesR] :: Raw -> Star Reference NameSegment
-[_childrenR] :: Raw -> Map NameSegment Hash
-[_editsR] :: Raw -> Map NameSegment EditHash
+[$sel:_termsR:Raw] :: Raw -> Star Referent NameSegment
+[$sel:_typesR:Raw] :: Raw -> Star Reference NameSegment
+[$sel:_childrenR:Raw] :: Raw -> Map NameSegment Hash
+[$sel:_editsR:Raw] :: Raw -> Map NameSegment EditHash
 
 module Unison.Codebase.Branch.BranchDiff
 type Star r n = Star r n
 data BranchDiff
 BranchDiff :: Star Referent NameSegment -> Star Referent NameSegment -> Star Reference NameSegment -> Star Reference NameSegment -> Map NameSegment PatchDiff -> BranchDiff
-[addedTerms] :: BranchDiff -> Star Referent NameSegment
-[removedTerms] :: BranchDiff -> Star Referent NameSegment
-[addedTypes] :: BranchDiff -> Star Reference NameSegment
-[removedTypes] :: BranchDiff -> Star Reference NameSegment
-[changedPatches] :: BranchDiff -> Map NameSegment PatchDiff
+[$sel:addedTerms:BranchDiff] :: BranchDiff -> Star Referent NameSegment
+[$sel:removedTerms:BranchDiff] :: BranchDiff -> Star Referent NameSegment
+[$sel:addedTypes:BranchDiff] :: BranchDiff -> Star Reference NameSegment
+[$sel:removedTypes:BranchDiff] :: BranchDiff -> Star Reference NameSegment
+[$sel:changedPatches:BranchDiff] :: BranchDiff -> Map NameSegment PatchDiff
 diff0 :: Monad m => Branch0 m -> Branch0 m -> m BranchDiff
 instance GHC.Show.Show Unison.Codebase.Branch.BranchDiff.BranchDiff
 instance GHC.Classes.Ord Unison.Codebase.Branch.BranchDiff.BranchDiff
@@ -2616,31 +2785,32 @@ module Unison.Codebase.Branch
 -- | A node in the Unison namespace hierarchy along with its history.
 newtype Branch m
 Branch :: UnwrappedBranch m -> Branch m
-[_history] :: Branch m -> UnwrappedBranch m
+[$sel:_history:Branch] :: Branch m -> UnwrappedBranch m
 type UnwrappedBranch m = Causal m (Branch0 m)
 
 -- | A node in the Unison namespace hierarchy.
 --   
---   <a>_terms</a> and <a>_types</a> are the declarations at this level.
---   <a>_children</a> are the nodes one level below us. <a>_edits</a> are
---   the <a>Patch</a>s stored at this node in the code.
+--   <a>$sel:_terms:Branch0</a> and <a>$sel:_types:Branch0</a> are the
+--   declarations at this level. <a>$sel:_children:Branch0</a> are the
+--   nodes one level below us. <a>$sel:_edits:Branch0</a> are the
+--   <a>Patch</a>s stored at this node in the code.
 --   
 --   The <tt>deep*</tt> fields are derived from the four above.
 data Branch0 m
 Branch0 :: Star Referent NameSegment -> Star Reference NameSegment -> Map NameSegment (Branch m) -> Map NameSegment (EditHash, m Patch) -> Relation Referent Name -> Relation Reference Name -> R4 Referent Name -> R4 Reference Name -> Set Path -> Map Name EditHash -> Branch0 m
-[_terms] :: Branch0 m -> Star Referent NameSegment
-[_types] :: Branch0 m -> Star Reference NameSegment
+[$sel:_terms:Branch0] :: Branch0 m -> Star Referent NameSegment
+[$sel:_types:Branch0] :: Branch0 m -> Star Reference NameSegment
 
 -- | Note the <a>Branch</a> here, not <a>Branch0</a>. Every level in the
 --   tree has a history.
-[_children] :: Branch0 m -> Map NameSegment (Branch m)
-[_edits] :: Branch0 m -> Map NameSegment (EditHash, m Patch)
-[deepTerms] :: Branch0 m -> Relation Referent Name
-[deepTypes] :: Branch0 m -> Relation Reference Name
-[deepTermMetadata] :: Branch0 m -> R4 Referent Name
-[deepTypeMetadata] :: Branch0 m -> R4 Reference Name
-[deepPaths] :: Branch0 m -> Set Path
-[deepEdits] :: Branch0 m -> Map Name EditHash
+[$sel:_children:Branch0] :: Branch0 m -> Map NameSegment (Branch m)
+[$sel:_edits:Branch0] :: Branch0 m -> Map NameSegment (EditHash, m Patch)
+[$sel:deepTerms:Branch0] :: Branch0 m -> Relation Referent Name
+[$sel:deepTypes:Branch0] :: Branch0 m -> Relation Reference Name
+[$sel:deepTermMetadata:Branch0] :: Branch0 m -> R4 Referent Name
+[$sel:deepTypeMetadata:Branch0] :: Branch0 m -> R4 Reference Name
+[$sel:deepPaths:Branch0] :: Branch0 m -> Set Path
+[$sel:deepEdits:Branch0] :: Branch0 m -> Map Name EditHash
 data Raw
 type Star r n = Star r n
 
@@ -2682,7 +2852,8 @@ headHash :: Branch m -> CausalHash
 children :: Lens' (Branch0 m) (Map NameSegment (Branch m))
 nonEmptyChildren :: Branch0 m -> Map NameSegment (Branch m)
 
--- | a version of <a>deepEdits</a> that returns the `m Patch` as well.
+-- | a version of <a>$sel:deepEdits:Branch0</a> that returns the `m Patch`
+--   as well.
 deepEdits' :: Branch0 m -> Map Name (EditHash, m Patch)
 
 -- | what does this do? —AI
@@ -2780,108 +2951,110 @@ module Unison.Codebase.Type
 
 -- | Abstract interface to a user's codebase.
 data Codebase m v a
-Codebase :: (Id -> m (Maybe (Term v a))) -> (Id -> m (Maybe (Type v a))) -> (Id -> m (Maybe (Decl v a))) -> (Reference -> m ConstructorType) -> (Id -> Term v a -> Type v a -> m ()) -> (Id -> Decl v a -> m ()) -> (Hash -> m (Maybe [(Term v a, Type v a)])) -> (Hash -> m (Maybe [Decl v a])) -> (Hash -> m (Maybe CycleSize)) -> m CausalHash -> m (Branch m) -> m Bool -> (Branch m -> m ()) -> m (IO (), IO (Set CausalHash)) -> (CausalHash -> m (CausalBranch m)) -> (CausalHash -> m (Maybe (Branch m))) -> (Branch m -> m ()) -> (CausalHash -> m Bool) -> (EditHash -> m (Maybe Patch)) -> (EditHash -> Patch -> m ()) -> (EditHash -> m Bool) -> (Reference -> m (Set Id)) -> (Hash -> m (Set Id)) -> (CodebasePath -> SyncMode -> Branch m -> m ()) -> (CodebasePath -> SyncMode -> Branch m -> m ()) -> (forall r. ReadRemoteNamespace -> GitBranchBehavior -> ((Branch m, CodebasePath) -> m r) -> m (Either GitError r)) -> (forall e. WriteRepo -> PushGitBranchOpts -> (Branch m -> m (Either e (Branch m))) -> m (Either GitError (Either e (Branch m)))) -> (WatchKind -> m [Id]) -> (WatchKind -> Id -> m (Maybe (Term v a))) -> (WatchKind -> Id -> Term v a -> m ()) -> m () -> m [Entry CausalHash] -> (Text -> Branch m -> Branch m -> m ()) -> (Reference -> m (Set Id)) -> (Reference -> m (Set Id)) -> m Int -> (ShortHash -> m (Set Id)) -> (ShortHash -> m (Set Id)) -> (ShortHash -> m (Set Id)) -> m Int -> (ShortBranchHash -> m (Set CausalHash)) -> Maybe (CausalHash -> CausalHash -> m (Maybe CausalHash)) -> Maybe (CausalHash -> CausalHash -> m Bool) -> (Path -> m ScopedNames) -> m () -> Connection -> Codebase m v a
+Codebase :: (Id -> m (Maybe (Term v a))) -> (Id -> m (Maybe (Type v a))) -> (Id -> m (Maybe (Decl v a))) -> (Reference -> m ConstructorType) -> (Id -> Term v a -> Type v a -> m ()) -> (Id -> Decl v a -> m ()) -> (Hash -> m (Maybe [(Term v a, Type v a)])) -> (Hash -> m (Maybe [Decl v a])) -> (Hash -> m (Maybe CycleSize)) -> m CausalHash -> m (Branch m) -> m Bool -> (Branch m -> m ()) -> m (IO (), IO (Set CausalHash)) -> (CausalHash -> m (CausalBranch m)) -> (CausalHash -> m (Maybe (Branch m))) -> (Branch m -> m ()) -> (CausalHash -> m Bool) -> (EditHash -> m (Maybe Patch)) -> (EditHash -> Patch -> m ()) -> (EditHash -> m Bool) -> (Reference -> m (Set Id)) -> (Hash -> m (Set Id)) -> (CodebasePath -> SyncMode -> Branch m -> m ()) -> (CodebasePath -> SyncMode -> Branch m -> m ()) -> (forall r. ReadGitRemoteNamespace -> GitBranchBehavior -> ((Branch m, CodebasePath) -> m r) -> m (Either GitError r)) -> (forall e. WriteGitRepo -> PushGitBranchOpts -> (Branch m -> m (Either e (Branch m))) -> m (Either GitError (Either e (Branch m)))) -> (WatchKind -> m [Id]) -> (WatchKind -> Id -> m (Maybe (Term v a))) -> (WatchKind -> Id -> Term v a -> m ()) -> m () -> m [Entry CausalHash] -> (Text -> Branch m -> Branch m -> m ()) -> (Reference -> m (Set Id)) -> (Reference -> m (Set Id)) -> m Int -> (ShortHash -> m (Set Id)) -> (ShortHash -> m (Set Id)) -> (ShortHash -> m (Set Id)) -> m Int -> (ShortBranchHash -> m (Set CausalHash)) -> Maybe (CausalHash -> CausalHash -> m (Maybe CausalHash)) -> Maybe (CausalHash -> CausalHash -> m Bool) -> (Path -> m ScopedNames) -> m () -> Connection -> Codebase m v a
 
 -- | Get a user-defined term from the codebase.
 --   
---   Note that it is possible to call <a>putTerm</a>, then <a>getTerm</a>,
---   and receive <tt>Nothing</tt>, per the semantics of <a>putTerm</a>.
-[getTerm] :: Codebase m v a -> Id -> m (Maybe (Term v a))
+--   Note that it is possible to call <a>$sel:putTerm:Codebase</a>, then
+--   <a>$sel:getTerm:Codebase</a>, and receive <tt>Nothing</tt>, per the
+--   semantics of <a>$sel:putTerm:Codebase</a>.
+[$sel:getTerm:Codebase] :: Codebase m v a -> Id -> m (Maybe (Term v a))
 
 -- | Get the type of a user-defined term.
 --   
---   Note that it is possible to call <a>putTerm</a>, then
---   <a>getTypeOfTermImpl</a>, and receive <tt>Nothing</tt>, per the
---   semantics of <a>putTerm</a>.
-[getTypeOfTermImpl] :: Codebase m v a -> Id -> m (Maybe (Type v a))
+--   Note that it is possible to call <a>$sel:putTerm:Codebase</a>, then
+--   <a>$sel:getTypeOfTermImpl:Codebase</a>, and receive <tt>Nothing</tt>,
+--   per the semantics of <a>$sel:putTerm:Codebase</a>.
+[$sel:getTypeOfTermImpl:Codebase] :: Codebase m v a -> Id -> m (Maybe (Type v a))
 
 -- | Get a type declaration.
 --   
---   Note that it is possible to call <a>putTypeDeclaration</a>, then
---   <a>getTypeDeclaration</a>, and receive <tt>Nothing</tt>, per the
---   semantics of <a>putTypeDeclaration</a>.
-[getTypeDeclaration] :: Codebase m v a -> Id -> m (Maybe (Decl v a))
+--   Note that it is possible to call
+--   <a>$sel:putTypeDeclaration:Codebase</a>, then
+--   <a>$sel:getTypeDeclaration:Codebase</a>, and receive <tt>Nothing</tt>,
+--   per the semantics of <a>$sel:putTypeDeclaration:Codebase</a>.
+[$sel:getTypeDeclaration:Codebase] :: Codebase m v a -> Id -> m (Maybe (Decl v a))
 
 -- | Get the type of a given decl.
-[getDeclType] :: Codebase m v a -> Reference -> m ConstructorType
+[$sel:getDeclType:Codebase] :: Codebase m v a -> Reference -> m ConstructorType
 
 -- | Enqueue the put of a user-defined term (with its type) into the
 --   codebase, if it doesn't already exist. The implementation may choose
 --   to delay the put until all of the term's (and its type's) references
 --   are stored as well.
-[putTerm] :: Codebase m v a -> Id -> Term v a -> Type v a -> m ()
+[$sel:putTerm:Codebase] :: Codebase m v a -> Id -> Term v a -> Type v a -> m ()
 
 -- | Enqueue the put of a type declaration into the codebase, if it doesn't
 --   already exist. The implementation may choose to delay the put until
 --   all of the type declaration's references are stored as well.
-[putTypeDeclaration] :: Codebase m v a -> Id -> Decl v a -> m ()
-[getTermComponentWithTypes] :: Codebase m v a -> Hash -> m (Maybe [(Term v a, Type v a)])
-[getDeclComponent] :: Codebase m v a -> Hash -> m (Maybe [Decl v a])
-[getComponentLength] :: Codebase m v a -> Hash -> m (Maybe CycleSize)
+[$sel:putTypeDeclaration:Codebase] :: Codebase m v a -> Id -> Decl v a -> m ()
+[$sel:getTermComponentWithTypes:Codebase] :: Codebase m v a -> Hash -> m (Maybe [(Term v a, Type v a)])
+[$sel:getDeclComponent:Codebase] :: Codebase m v a -> Hash -> m (Maybe [Decl v a])
+[$sel:getComponentLength:Codebase] :: Codebase m v a -> Hash -> m (Maybe CycleSize)
 
 -- | Get the root branch Hash.
-[getRootBranchHash] :: Codebase m v a -> m CausalHash
+[$sel:getRootBranchHash:Codebase] :: Codebase m v a -> m CausalHash
 
 -- | Get the root branch.
-[getRootBranch] :: Codebase m v a -> m (Branch m)
+[$sel:getRootBranch:Codebase] :: Codebase m v a -> m (Branch m)
 
 -- | Get whether the root branch exists.
-[getRootBranchExists] :: Codebase m v a -> m Bool
+[$sel:getRootBranchExists:Codebase] :: Codebase m v a -> m Bool
 
--- | Like <a>putBranch</a>, but also adjusts the root branch pointer
---   afterwards.
-[putRootBranch] :: Codebase m v a -> Branch m -> m ()
-[rootBranchUpdates] :: Codebase m v a -> m (IO (), IO (Set CausalHash))
-[getShallowBranchForHash] :: Codebase m v a -> CausalHash -> m (CausalBranch m)
-[getBranchForHashImpl] :: Codebase m v a -> CausalHash -> m (Maybe (Branch m))
+-- | Like <a>$sel:putBranch:Codebase</a>, but also adjusts the root branch
+--   pointer afterwards.
+[$sel:putRootBranch:Codebase] :: Codebase m v a -> Branch m -> m ()
+[$sel:rootBranchUpdates:Codebase] :: Codebase m v a -> m (IO (), IO (Set CausalHash))
+[$sel:getShallowBranchForHash:Codebase] :: Codebase m v a -> CausalHash -> m (CausalBranch m)
+[$sel:getBranchForHashImpl:Codebase] :: Codebase m v a -> CausalHash -> m (Maybe (Branch m))
 
 -- | Put a branch into the codebase, which includes its children, its
 --   patches, and the branch itself, if they don't already exist.
 --   
 --   The terms and type declarations that a branch references must already
 --   exist in the codebase.
-[putBranch] :: Codebase m v a -> Branch m -> m ()
+[$sel:putBranch:Codebase] :: Codebase m v a -> Branch m -> m ()
 
 -- | Check whether the given branch exists in the codebase.
-[branchExists] :: Codebase m v a -> CausalHash -> m Bool
+[$sel:branchExists:Codebase] :: Codebase m v a -> CausalHash -> m Bool
 
 -- | Get a patch from the codebase.
-[getPatch] :: Codebase m v a -> EditHash -> m (Maybe Patch)
+[$sel:getPatch:Codebase] :: Codebase m v a -> EditHash -> m (Maybe Patch)
 
 -- | Put a patch into the codebase.
 --   
---   Note that <a>putBranch</a> may also put patches.
-[putPatch] :: Codebase m v a -> EditHash -> Patch -> m ()
+--   Note that <a>$sel:putBranch:Codebase</a> may also put patches.
+[$sel:putPatch:Codebase] :: Codebase m v a -> EditHash -> Patch -> m ()
 
 -- | Check whether the given patch exists in the codebase.
-[patchExists] :: Codebase m v a -> EditHash -> m Bool
+[$sel:patchExists:Codebase] :: Codebase m v a -> EditHash -> m Bool
 
 -- | Get the set of user-defined terms and type declarations that depend on
 --   the given term, type declaration, or builtin type.
-[dependentsImpl] :: Codebase m v a -> Reference -> m (Set Id)
-[dependentsOfComponentImpl] :: Codebase m v a -> Hash -> m (Set Id)
+[$sel:dependentsImpl:Codebase] :: Codebase m v a -> Reference -> m (Set Id)
+[$sel:dependentsOfComponentImpl:Codebase] :: Codebase m v a -> Hash -> m (Set Id)
 
 -- | Copy a branch and all of its dependencies from the given codebase into
 --   this one.
-[syncFromDirectory] :: Codebase m v a -> CodebasePath -> SyncMode -> Branch m -> m ()
+[$sel:syncFromDirectory:Codebase] :: Codebase m v a -> CodebasePath -> SyncMode -> Branch m -> m ()
 
 -- | Copy a branch and all of its dependencies from this codebase into the
 --   given codebase.
-[syncToDirectory] :: Codebase m v a -> CodebasePath -> SyncMode -> Branch m -> m ()
-[viewRemoteBranch'] :: Codebase m v a -> forall r. ReadRemoteNamespace -> GitBranchBehavior -> ((Branch m, CodebasePath) -> m r) -> m (Either GitError r)
+[$sel:syncToDirectory:Codebase] :: Codebase m v a -> CodebasePath -> SyncMode -> Branch m -> m ()
+[$sel:viewRemoteBranch':Codebase] :: Codebase m v a -> forall r. ReadGitRemoteNamespace -> GitBranchBehavior -> ((Branch m, CodebasePath) -> m r) -> m (Either GitError r)
 
 -- | Push the given branch to the given repo, and optionally set it as the
 --   root branch.
-[pushGitBranch] :: Codebase m v a -> forall e. WriteRepo -> PushGitBranchOpts -> (Branch m -> m (Either e (Branch m))) -> m (Either GitError (Either e (Branch m)))
+[$sel:pushGitBranch:Codebase] :: Codebase m v a -> forall e. WriteGitRepo -> PushGitBranchOpts -> (Branch m -> m (Either e (Branch m))) -> m (Either GitError (Either e (Branch m)))
 
 -- | <tt>watches k</tt> returns all of the references <tt>r</tt> that were
 --   previously put by a <tt>putWatch k r t</tt>. <tt>t</tt> can be
 --   retrieved by <tt>getWatch k r</tt>.
-[watches] :: Codebase m v a -> WatchKind -> m [Id]
+[$sel:watches:Codebase] :: Codebase m v a -> WatchKind -> m [Id]
 
 -- | <tt>getWatch k r</tt> returns watch result <tt>t</tt> that was
 --   previously put by <tt>putWatch k r t</tt>.
-[getWatch] :: Codebase m v a -> WatchKind -> Id -> m (Maybe (Term v a))
+[$sel:getWatch:Codebase] :: Codebase m v a -> WatchKind -> Id -> m (Maybe (Term v a))
 
 -- | <tt>putWatch k r t</tt> puts a watch of kind <tt>k</tt>, with
 --   hash-of-expression <tt>r</tt> and decompiled result <tt>t</tt> into
@@ -2896,13 +3069,13 @@ Codebase :: (Id -> m (Maybe (Term v a))) -> (Id -> m (Maybe (Type v a))) -> (Id 
 --     ⧩
 --     7
 --   </pre>
-[putWatch] :: Codebase m v a -> WatchKind -> Id -> Term v a -> m ()
+[$sel:putWatch:Codebase] :: Codebase m v a -> WatchKind -> Id -> Term v a -> m ()
 
--- | Delete all watches that were put by <a>putWatch</a>.
-[clearWatches] :: Codebase m v a -> m ()
+-- | Delete all watches that were put by <a>$sel:putWatch:Codebase</a>.
+[$sel:clearWatches:Codebase] :: Codebase m v a -> m ()
 
 -- | Get the entire reflog.
-[getReflog] :: Codebase m v a -> m [Entry CausalHash]
+[$sel:getReflog:Codebase] :: Codebase m v a -> m [Entry CausalHash]
 
 -- | <tt>appendReflog reason before after</tt> appends a reflog entry.
 --   
@@ -2911,40 +3084,40 @@ Codebase :: (Id -> m (Maybe (Term v a))) -> (Id -> m (Maybe (Type v a))) -> (Id 
 --   <pre>
 --   appendReflog :: Reflog.Entry (Branch m) -&gt; m ()
 --   </pre>
-[appendReflog] :: Codebase m v a -> Text -> Branch m -> Branch m -> m ()
+[$sel:appendReflog:Codebase] :: Codebase m v a -> Text -> Branch m -> Branch m -> m ()
 
 -- | Get the set of user-defined terms-or-constructors that have the given
 --   type.
-[termsOfTypeImpl] :: Codebase m v a -> Reference -> m (Set Id)
+[$sel:termsOfTypeImpl:Codebase] :: Codebase m v a -> Reference -> m (Set Id)
 
 -- | Get the set of user-defined terms-or-constructors mention the given
 --   type anywhere in their signature.
-[termsMentioningTypeImpl] :: Codebase m v a -> Reference -> m (Set Id)
+[$sel:termsMentioningTypeImpl:Codebase] :: Codebase m v a -> Reference -> m (Set Id)
 
 -- | The number of base32 characters needed to distinguish any two
 --   references in the codebase.
-[hashLength] :: Codebase m v a -> m Int
+[$sel:hashLength:Codebase] :: Codebase m v a -> m Int
 
 -- | Get the set of user-defined terms whose hash matches the given prefix.
-[termReferencesByPrefix] :: Codebase m v a -> ShortHash -> m (Set Id)
+[$sel:termReferencesByPrefix:Codebase] :: Codebase m v a -> ShortHash -> m (Set Id)
 
 -- | Get the set of type declarations whose hash matches the given prefix.
-[typeReferencesByPrefix] :: Codebase m v a -> ShortHash -> m (Set Id)
+[$sel:typeReferencesByPrefix:Codebase] :: Codebase m v a -> ShortHash -> m (Set Id)
 
 -- | Get the set of user-defined terms-or-constructors whose hash matches
 --   the given prefix.
-[termReferentsByPrefix] :: Codebase m v a -> ShortHash -> m (Set Id)
+[$sel:termReferentsByPrefix:Codebase] :: Codebase m v a -> ShortHash -> m (Set Id)
 
 -- | The number of base32 characters needed to distinguish any two branch
 --   in the codebase.
-[branchHashLength] :: Codebase m v a -> m Int
+[$sel:branchHashLength:Codebase] :: Codebase m v a -> m Int
 
 -- | Get the set of branches whose hash matches the given prefix.
-[branchHashesByPrefix] :: Codebase m v a -> ShortBranchHash -> m (Set CausalHash)
-[lcaImpl] :: Codebase m v a -> Maybe (CausalHash -> CausalHash -> m (Maybe CausalHash))
-[beforeImpl] :: Codebase m v a -> Maybe (CausalHash -> CausalHash -> m Bool)
-[namesAtPath] :: Codebase m v a -> Path -> m ScopedNames
-[updateNameLookup] :: Codebase m v a -> m ()
+[$sel:branchHashesByPrefix:Codebase] :: Codebase m v a -> ShortBranchHash -> m (Set CausalHash)
+[$sel:lcaImpl:Codebase] :: Codebase m v a -> Maybe (CausalHash -> CausalHash -> m (Maybe CausalHash))
+[$sel:beforeImpl:Codebase] :: Codebase m v a -> Maybe (CausalHash -> CausalHash -> m Bool)
+[$sel:namesAtPath:Codebase] :: Codebase m v a -> Path -> m ScopedNames
+[$sel:updateNameLookup:Codebase] :: Codebase m v a -> m ()
 
 -- | The SQLite connection this codebase closes over.
 --   
@@ -2952,7 +3125,7 @@ Codebase :: (Id -> m (Maybe (Term v a))) -> (Id -> m (Maybe (Type v a))) -> (Id 
 --   but it has been cumbersome. Now we prefer to interact with SQLite
 --   directly, and so provide this temporary escape hatch, until we can
 --   eliminate this interface entirely.
-[connection] :: Codebase m v a -> Connection
+[$sel:connection:Codebase] :: Codebase m v a -> Connection
 
 -- | A directory that contains a codebase.
 type CodebasePath = FilePath
@@ -2960,8 +3133,8 @@ data PushGitBranchOpts
 PushGitBranchOpts :: Bool -> SyncMode -> PushGitBranchOpts
 
 -- | Set the branch as root?
-[setRoot] :: PushGitBranchOpts -> Bool
-[syncMode] :: PushGitBranchOpts -> SyncMode
+[$sel:setRoot:PushGitBranchOpts] :: PushGitBranchOpts -> Bool
+[$sel:syncMode:PushGitBranchOpts] :: PushGitBranchOpts -> SyncMode
 data GitError
 GitProtocolError :: GitProtocolError -> GitError
 GitCodebaseError :: GitCodebaseError CausalHash -> GitError
@@ -2972,7 +3145,7 @@ type SyncToDir m = CodebasePath -> SyncMode -> Branch m -> m ()
 data LocalOrRemote
 Local :: LocalOrRemote
 Remote :: LocalOrRemote
-gitErrorFromOpenCodebaseError :: CodebasePath -> ReadRepo -> OpenCodebaseError -> GitSqliteCodebaseError
+gitErrorFromOpenCodebaseError :: CodebasePath -> ReadGitRepo -> OpenCodebaseError -> GitSqliteCodebaseError
 instance GHC.Classes.Ord Unison.Codebase.Type.LocalOrRemote
 instance GHC.Classes.Eq Unison.Codebase.Type.LocalOrRemote
 instance GHC.Show.Show Unison.Codebase.Type.LocalOrRemote
@@ -3035,83 +3208,10 @@ namesegment2to1 :: NameSegment -> NameSegment
 namesegment1to2 :: NameSegment -> NameSegment
 branch2to1 :: Monad m => (Reference -> m ConstructorType) -> Branch m -> m (Branch0 m)
 
-
--- | This module contains sqlite-specific operations on high-level
---   "parser-typechecker" types all in the Transaction monad.
---   
---   The Codebase record-of-functions wraps this functionality, and runs
---   each transaction to IO, so that the operations' are unified with
---   non-sqlite operations in the Codebase interface, like
---   <tt>appendReflog</tt>.
-module Unison.Codebase.SqliteCodebase.Operations
-data BufferEntry a
-BufferEntry :: Maybe Word64 -> Map Pos a -> Set Hash -> Set Hash -> BufferEntry a
-[beComponentTargetSize] :: BufferEntry a -> Maybe Word64
-[beComponent] :: BufferEntry a -> Map Pos a
-[beMissingDependencies] :: BufferEntry a -> Set Hash
-[beWaitingDependents] :: BufferEntry a -> Set Hash
-prettyBufferEntry :: Show a => Hash -> BufferEntry a -> String
-type TermBufferEntry = BufferEntry (Term Symbol Ann, Type Symbol Ann)
-type DeclBufferEntry = BufferEntry (Decl Symbol Ann)
-getBuffer :: TVar (Map Hash (BufferEntry a)) -> Hash -> IO (BufferEntry a)
-putBuffer :: TVar (Map Hash (BufferEntry a)) -> Hash -> BufferEntry a -> IO ()
-removeBuffer :: TVar (Map Hash (BufferEntry a)) -> Hash -> IO ()
-addBufferDependent :: Hash -> TVar (Map Hash (BufferEntry a)) -> Hash -> IO ()
-tryFlushBuffer :: forall a. Show a => TVar (Map Hash (BufferEntry a)) -> (Hash -> [a] -> Transaction ()) -> (Hash -> Transaction ()) -> Hash -> Transaction ()
-getTerm :: (Reference -> Transaction ConstructorType) -> Id -> Transaction (Maybe (Term Symbol Ann))
-getDeclType :: Reference -> Transaction ConstructorType
-expectDeclTypeById :: Id -> Transaction ConstructorType
-getTypeOfTermImpl :: Id -> Transaction (Maybe (Type Symbol Ann))
-getTermComponentWithTypes :: (Reference -> Transaction ConstructorType) -> Hash -> Transaction (Maybe [(Term Symbol Ann, Type Symbol Ann)])
-getTypeDeclaration :: Id -> Transaction (Maybe (Decl Symbol Ann))
-getDeclComponent :: Hash -> Transaction (Maybe [Decl Symbol Ann])
-getCycleLength :: Hash -> Transaction (Maybe CycleSize)
-putTerm :: TVar (Map Hash TermBufferEntry) -> TVar (Map Hash DeclBufferEntry) -> Id -> Term Symbol Ann -> Type Symbol Ann -> Transaction ()
-tryFlushTermBuffer :: TVar (Map Hash TermBufferEntry) -> Hash -> Transaction ()
-addTermComponentTypeIndex :: ObjectId -> [Type Symbol Ann] -> Transaction ()
-addDeclComponentTypeIndex :: ObjectId -> [[Type Symbol Ann]] -> Transaction ()
-putTypeDeclaration :: TVar (Map Hash TermBufferEntry) -> TVar (Map Hash DeclBufferEntry) -> Id -> Decl Symbol Ann -> Transaction ()
-tryFlushDeclBuffer :: TVar (Map Hash TermBufferEntry) -> TVar (Map Hash DeclBufferEntry) -> Hash -> Transaction ()
-getRootBranch :: (Reference -> Transaction ConstructorType) -> TVar (Maybe (DataVersion, Branch Transaction)) -> Transaction (Branch Transaction)
-getRootBranchExists :: Transaction Bool
-putRootBranch :: TVar (Maybe (DataVersion, Branch Transaction)) -> Branch Transaction -> Transaction ()
-getBranchForHash :: (Reference -> Transaction ConstructorType) -> CausalHash -> Transaction (Maybe (Branch Transaction))
-putBranch :: Branch Transaction -> Transaction ()
-isCausalHash :: CausalHash -> Transaction Bool
-getPatch :: EditHash -> Transaction (Maybe Patch)
-putPatch :: EditHash -> Patch -> Transaction ()
-patchExists :: EditHash -> Transaction Bool
-dependentsImpl :: Reference -> Transaction (Set Id)
-dependentsOfComponentImpl :: Hash -> Transaction (Set Id)
-watches :: WatchKind -> Transaction [Id]
-getWatch :: (Reference -> Transaction ConstructorType) -> WatchKind -> Id -> Transaction (Maybe (Term Symbol Ann))
-putWatch :: WatchKind -> Id -> Term Symbol Ann -> Transaction ()
-standardWatchKinds :: [WatchKind]
-clearWatches :: Transaction ()
-termsOfTypeImpl :: (Reference -> Transaction ConstructorType) -> Reference -> Transaction (Set Id)
-termsMentioningTypeImpl :: (Reference -> Transaction ConstructorType) -> Reference -> Transaction (Set Id)
-hashLength :: Transaction Int
-branchHashLength :: Transaction Int
-defnReferencesByPrefix :: ObjectType -> ShortHash -> Transaction (Set Id)
-termReferencesByPrefix :: ShortHash -> Transaction (Set Id)
-declReferencesByPrefix :: ShortHash -> Transaction (Set Id)
-referentsByPrefix :: (Reference -> Transaction ConstructorType) -> ShortHash -> Transaction (Set Id)
-branchHashesByPrefix :: ShortBranchHash -> Transaction (Set CausalHash)
-sqlLca :: CausalHash -> CausalHash -> Transaction (Maybe CausalHash)
-termExists :: Hash -> Transaction Bool
-declExists :: Hash -> Transaction Bool
-before :: CausalHash -> CausalHash -> Transaction (Maybe Bool)
-
--- | Construct a <a>ScopedNames</a> which can produce names which are
---   relative to the provided Path.
-namesAtPath :: Path -> Transaction ScopedNames
-saveRootNamesIndex :: Names -> Transaction ()
-instance GHC.Show.Show a => GHC.Show.Show (Unison.Codebase.SqliteCodebase.Operations.BufferEntry a)
-instance GHC.Classes.Eq a => GHC.Classes.Eq (Unison.Codebase.SqliteCodebase.Operations.BufferEntry a)
-
 module Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.DbHelpers
-dbBranchHash :: DbBranch -> Transaction Hash
-dbPatchHash :: Patch -> Transaction Hash
+dbBranchHash :: DbBranch -> Transaction BranchHash
+dbPatchHash :: Patch -> Transaction PatchHash
+syncCausalHash :: SyncCausalFormat -> Transaction CausalHash
 
 module Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema3To4
 
@@ -3185,20 +3285,6 @@ instance GHC.Show.Show Unison.Codebase.IntegrityCheck.IntegrityResult
 instance GHC.Base.Semigroup Unison.Codebase.IntegrityCheck.IntegrityResult
 instance GHC.Base.Monoid Unison.Codebase.IntegrityCheck.IntegrityResult
 
-module Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2
-migrateSchema1To2 :: (Reference -> Transaction ConstructorType) -> TVar (Map Hash TermBufferEntry) -> TVar (Map Hash DeclBufferEntry) -> Transaction ()
-instance GHC.Show.Show Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.Entity
-instance GHC.Classes.Ord Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.Entity
-instance GHC.Classes.Eq Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.Entity
-instance Data.Traversable.Traversable Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.SomeReference
-instance Data.Foldable.Foldable Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.SomeReference
-instance GHC.Show.Show ref => GHC.Show.Show (Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.SomeReference ref)
-instance GHC.Classes.Ord ref => GHC.Classes.Ord (Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.SomeReference ref)
-instance GHC.Generics.Generic (Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.SomeReference ref)
-instance GHC.Base.Functor Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.SomeReference
-instance GHC.Classes.Eq ref => GHC.Classes.Eq (Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.SomeReference ref)
-instance GHC.Generics.Generic Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.MigrationState
-
 module Unison.Codebase.BranchUtil
 
 -- | Creates a branch containing all of the given names, with a single
@@ -3235,21 +3321,21 @@ Delete :: a -> DiffType a
 Modify :: a -> DiffType a
 data NamespaceSlice r
 NamespaceSlice :: Relation r Name -> Relation3 r Name Value -> NamespaceSlice r
-[names] :: NamespaceSlice r -> Relation r Name
-[metadata] :: NamespaceSlice r -> Relation3 r Name Value
+[$sel:names:NamespaceSlice] :: NamespaceSlice r -> Relation r Name
+[$sel:metadata:NamespaceSlice] :: NamespaceSlice r -> Relation3 r Name Value
 data DiffSlice r
 DiffSlice :: Map Name (Set r, Set r) -> Relation r Name -> Relation r Name -> Map r (Set Name, Set Name) -> Relation3 r Name Value -> Relation3 r Name Value -> DiffSlice r
-[tallnamespaceUpdates] :: DiffSlice r -> Map Name (Set r, Set r)
-[talladds] :: DiffSlice r -> Relation r Name
-[tallremoves] :: DiffSlice r -> Relation r Name
-[trenames] :: DiffSlice r -> Map r (Set Name, Set Name)
-[taddedMetadata] :: DiffSlice r -> Relation3 r Name Value
-[tremovedMetadata] :: DiffSlice r -> Relation3 r Name Value
+[$sel:tallnamespaceUpdates:DiffSlice] :: DiffSlice r -> Map Name (Set r, Set r)
+[$sel:talladds:DiffSlice] :: DiffSlice r -> Relation r Name
+[$sel:tallremoves:DiffSlice] :: DiffSlice r -> Relation r Name
+[$sel:trenames:DiffSlice] :: DiffSlice r -> Map r (Set Name, Set Name)
+[$sel:taddedMetadata:DiffSlice] :: DiffSlice r -> Relation3 r Name Value
+[$sel:tremovedMetadata:DiffSlice] :: DiffSlice r -> Relation3 r Name Value
 data BranchDiff
 BranchDiff :: DiffSlice Referent -> DiffSlice Reference -> Map Name (DiffType PatchDiff) -> BranchDiff
-[termsDiff] :: BranchDiff -> DiffSlice Referent
-[typesDiff] :: BranchDiff -> DiffSlice Reference
-[patchesDiff] :: BranchDiff -> Map Name (DiffType PatchDiff)
+[$sel:termsDiff:BranchDiff] :: BranchDiff -> DiffSlice Referent
+[$sel:typesDiff:BranchDiff] :: BranchDiff -> DiffSlice Reference
+[$sel:patchesDiff:BranchDiff] :: BranchDiff -> Map Name (DiffType PatchDiff)
 diff0 :: forall m. Monad m => Branch0 m -> Branch0 m -> m BranchDiff
 patchDiff :: forall m. Monad m => Branch0 m -> Branch0 m -> m (Map Name (DiffType PatchDiff))
 deepr4ToSlice :: Ord r => Relation r Name -> R4 r Name -> NamespaceSlice r
@@ -3268,6 +3354,110 @@ findHistoricalRefs' :: Monad m => Set Reference -> Branch m -> m (Set Reference,
 namesDiff :: Branch m -> Branch m -> Diff
 toNames :: Branch0 m -> Names
 
+
+-- | This module contains sqlite-specific operations on high-level
+--   "parser-typechecker" types all in the Transaction monad.
+--   
+--   The Codebase record-of-functions wraps this functionality, and runs
+--   each transaction to IO, so that the operations' are unified with
+--   non-sqlite operations in the Codebase interface, like
+--   <tt>appendReflog</tt>.
+module Unison.Codebase.SqliteCodebase.Operations
+data BufferEntry a
+BufferEntry :: Maybe Word64 -> Map Pos a -> Set Hash -> Set Hash -> BufferEntry a
+[$sel:beComponentTargetSize:BufferEntry] :: BufferEntry a -> Maybe Word64
+[$sel:beComponent:BufferEntry] :: BufferEntry a -> Map Pos a
+[$sel:beMissingDependencies:BufferEntry] :: BufferEntry a -> Set Hash
+[$sel:beWaitingDependents:BufferEntry] :: BufferEntry a -> Set Hash
+prettyBufferEntry :: Show a => Hash -> BufferEntry a -> String
+type TermBufferEntry = BufferEntry (Term Symbol Ann, Type Symbol Ann)
+type DeclBufferEntry = BufferEntry (Decl Symbol Ann)
+getBuffer :: TVar (Map Hash (BufferEntry a)) -> Hash -> IO (BufferEntry a)
+putBuffer :: TVar (Map Hash (BufferEntry a)) -> Hash -> BufferEntry a -> IO ()
+removeBuffer :: TVar (Map Hash (BufferEntry a)) -> Hash -> IO ()
+addBufferDependent :: Hash -> TVar (Map Hash (BufferEntry a)) -> Hash -> IO ()
+tryFlushBuffer :: forall a. Show a => TVar (Map Hash (BufferEntry a)) -> (Hash -> [a] -> Transaction ()) -> (Hash -> Transaction ()) -> Hash -> Transaction ()
+getTerm :: (Reference -> Transaction ConstructorType) -> Id -> Transaction (Maybe (Term Symbol Ann))
+getDeclType :: Reference -> Transaction ConstructorType
+expectDeclTypeById :: Id -> Transaction ConstructorType
+getTypeOfTermImpl :: Id -> Transaction (Maybe (Type Symbol Ann))
+getTermComponentWithTypes :: (Reference -> Transaction ConstructorType) -> Hash -> Transaction (Maybe [(Term Symbol Ann, Type Symbol Ann)])
+getTypeDeclaration :: Id -> Transaction (Maybe (Decl Symbol Ann))
+getDeclComponent :: Hash -> Transaction (Maybe [Decl Symbol Ann])
+getCycleLength :: Hash -> Transaction (Maybe CycleSize)
+putTerm :: TVar (Map Hash TermBufferEntry) -> TVar (Map Hash DeclBufferEntry) -> Id -> Term Symbol Ann -> Type Symbol Ann -> Transaction ()
+tryFlushTermBuffer :: TVar (Map Hash TermBufferEntry) -> Hash -> Transaction ()
+addDeclComponentTypeIndex :: ObjectId -> [[Type Symbol Ann]] -> Transaction ()
+putTypeDeclaration :: TVar (Map Hash TermBufferEntry) -> TVar (Map Hash DeclBufferEntry) -> Id -> Decl Symbol Ann -> Transaction ()
+tryFlushDeclBuffer :: TVar (Map Hash TermBufferEntry) -> TVar (Map Hash DeclBufferEntry) -> Hash -> Transaction ()
+getRootBranch :: (Reference -> Transaction ConstructorType) -> TVar (Maybe (DataVersion, Branch Transaction)) -> Transaction (Branch Transaction)
+uncachedLoadRootBranch :: (Reference -> Transaction ConstructorType) -> Transaction (Branch Transaction)
+getRootBranchExists :: Transaction Bool
+putRootBranch :: TVar (Maybe (DataVersion, Branch Transaction)) -> Branch Transaction -> Transaction ()
+getBranchForHash :: (Reference -> Transaction ConstructorType) -> CausalHash -> Transaction (Maybe (Branch Transaction))
+putBranch :: Branch Transaction -> Transaction ()
+isCausalHash :: CausalHash -> Transaction Bool
+getPatch :: EditHash -> Transaction (Maybe Patch)
+putPatch :: EditHash -> Patch -> Transaction ()
+patchExists :: EditHash -> Transaction Bool
+dependentsImpl :: Reference -> Transaction (Set Id)
+dependentsOfComponentImpl :: Hash -> Transaction (Set Id)
+watches :: WatchKind -> Transaction [Id]
+getWatch :: (Reference -> Transaction ConstructorType) -> WatchKind -> Id -> Transaction (Maybe (Term Symbol Ann))
+putWatch :: WatchKind -> Id -> Term Symbol Ann -> Transaction ()
+standardWatchKinds :: [WatchKind]
+clearWatches :: Transaction ()
+termsOfTypeImpl :: (Reference -> Transaction ConstructorType) -> Reference -> Transaction (Set Id)
+termsMentioningTypeImpl :: (Reference -> Transaction ConstructorType) -> Reference -> Transaction (Set Id)
+hashLength :: Transaction Int
+branchHashLength :: Transaction Int
+defnReferencesByPrefix :: ObjectType -> ShortHash -> Transaction (Set Id)
+termReferencesByPrefix :: ShortHash -> Transaction (Set Id)
+declReferencesByPrefix :: ShortHash -> Transaction (Set Id)
+referentsByPrefix :: (Reference -> Transaction ConstructorType) -> ShortHash -> Transaction (Set Id)
+branchHashesByPrefix :: ShortBranchHash -> Transaction (Set CausalHash)
+sqlLca :: CausalHash -> CausalHash -> Transaction (Maybe CausalHash)
+termExists :: Hash -> Transaction Bool
+declExists :: Hash -> Transaction Bool
+before :: CausalHash -> CausalHash -> Transaction (Maybe Bool)
+
+-- | Construct a <a>ScopedNames</a> which can produce names which are
+--   relative to the provided Path.
+namesAtPath :: Path -> Transaction ScopedNames
+
+-- | Update the root namespace names index which is used by the share
+--   server for serving api requests.
+--   
+--   This version should be used if you've already got the root Branch
+--   pre-loaded, otherwise it's faster to use
+--   <tt>updateNameLookupIndexFromV2Branch</tt>
+updateNameLookupIndexFromV1Branch :: Branch Transaction -> Transaction ()
+
+-- | Update the root namespace names index which is used by the share
+--   server for serving api requests.
+--   
+--   This version should be used if you don't already have the root Branch
+--   pre-loaded, If you do, use <tt>updateNameLookupIndexFromV2Branch</tt>
+--   instead.
+updateNameLookupIndexFromV2Root :: (Reference -> Transaction ConstructorType) -> Transaction ()
+mkGetDeclType :: MonadIO m => m (Reference -> Transaction ConstructorType)
+instance GHC.Show.Show a => GHC.Show.Show (Unison.Codebase.SqliteCodebase.Operations.BufferEntry a)
+instance GHC.Classes.Eq a => GHC.Classes.Eq (Unison.Codebase.SqliteCodebase.Operations.BufferEntry a)
+
+module Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2
+migrateSchema1To2 :: (Reference -> Transaction ConstructorType) -> TVar (Map Hash TermBufferEntry) -> TVar (Map Hash DeclBufferEntry) -> Transaction ()
+instance GHC.Show.Show Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.Entity
+instance GHC.Classes.Ord Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.Entity
+instance GHC.Classes.Eq Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.Entity
+instance Data.Traversable.Traversable Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.SomeReference
+instance Data.Foldable.Foldable Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.SomeReference
+instance GHC.Show.Show ref => GHC.Show.Show (Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.SomeReference ref)
+instance GHC.Classes.Ord ref => GHC.Classes.Ord (Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.SomeReference ref)
+instance GHC.Generics.Generic (Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.SomeReference ref)
+instance GHC.Base.Functor Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.SomeReference
+instance GHC.Classes.Eq ref => GHC.Classes.Eq (Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.SomeReference ref)
+instance GHC.Generics.Generic Unison.Codebase.SqliteCodebase.Migrations.MigrateSchema1To2.MigrationState
+
 module Unison.Codebase.Branch.Merge
 data MergeMode
 RegularMerge :: MergeMode
@@ -3284,27 +3474,28 @@ data Codebase m v a
 
 -- | Get a user-defined term from the codebase.
 --   
---   Note that it is possible to call <a>putTerm</a>, then <a>getTerm</a>,
---   and receive <tt>Nothing</tt>, per the semantics of <a>putTerm</a>.
-getTerm :: Codebase m v a -> Id -> m (Maybe (Term v a))
+--   Note that it is possible to call <a>$sel:putTerm:Codebase</a>, then
+--   <a>$sel:getTerm:Codebase</a>, and receive <tt>Nothing</tt>, per the
+--   semantics of <a>$sel:putTerm:Codebase</a>.
+($sel:getTerm:Codebase) :: Codebase m v a -> Id -> m (Maybe (Term v a))
 
--- | Like <a>getTerm</a>, for when the term is known to exist in the
---   codebase.
+-- | Like <a>$sel:getTerm:Codebase</a>, for when the term is known to exist
+--   in the codebase.
 unsafeGetTerm :: (HasCallStack, Monad m) => Codebase m v a -> Id -> m (Term v a)
 
 -- | Like <a>unsafeGetTerm</a>, but returns the type of the term, too.
 unsafeGetTermWithType :: (HasCallStack, Monad m) => Codebase m v a -> Id -> m (Term v a, Type v a)
-getTermComponentWithTypes :: Codebase m v a -> Hash -> m (Maybe [(Term v a, Type v a)])
+($sel:getTermComponentWithTypes:Codebase) :: Codebase m v a -> Hash -> m (Maybe [(Term v a, Type v a)])
 
 -- | Get the type of a term.
 --   
---   Note that it is possible to call <a>putTerm</a>, then
+--   Note that it is possible to call <a>$sel:putTerm:Codebase</a>, then
 --   <a>getTypeOfTerm</a>, and receive <tt>Nothing</tt>, per the semantics
---   of <a>putTerm</a>.
+--   of <a>$sel:putTerm:Codebase</a>.
 getTypeOfTerm :: (Applicative m, BuiltinAnnotation a) => Codebase m Symbol a -> Reference -> m (Maybe (Type Symbol a))
 
 -- | Get the type of a given decl.
-getDeclType :: Codebase m v a -> Reference -> m ConstructorType
+($sel:getDeclType:Codebase) :: Codebase m v a -> Reference -> m ConstructorType
 
 -- | Like <a>getTypeOfTerm</a>, but for when the term is known to exist in
 --   the codebase.
@@ -3317,7 +3508,7 @@ isTerm :: (Applicative m, BuiltinAnnotation a) => Codebase m Symbol a -> Referen
 --   codebase, if it doesn't already exist. The implementation may choose
 --   to delay the put until all of the term's (and its type's) references
 --   are stored as well.
-putTerm :: Codebase m v a -> Id -> Term v a -> Type v a -> m ()
+($sel:putTerm:Codebase) :: Codebase m v a -> Id -> Term v a -> Type v a -> m ()
 
 -- | Get the type of a referent.
 getTypeOfReferent :: (BuiltinAnnotation a, Monad m) => Codebase m Symbol a -> Referent -> m (Maybe (Type Symbol a))
@@ -3330,35 +3521,36 @@ termsOfType :: (Var v, Functor m) => Codebase m v a -> Type v a -> m (Set Refere
 termsMentioningType :: (Var v, Functor m) => Codebase m v a -> Type v a -> m (Set Referent)
 
 -- | Get the set of user-defined terms whose hash matches the given prefix.
-termReferencesByPrefix :: Codebase m v a -> ShortHash -> m (Set Id)
+($sel:termReferencesByPrefix:Codebase) :: Codebase m v a -> ShortHash -> m (Set Id)
 
 -- | Get the set of user-defined terms-or-constructors whose hash matches
 --   the given prefix.
-termReferentsByPrefix :: Codebase m v a -> ShortHash -> m (Set Id)
+($sel:termReferentsByPrefix:Codebase) :: Codebase m v a -> ShortHash -> m (Set Id)
 
 -- | Get a type declaration.
 --   
---   Note that it is possible to call <a>putTypeDeclaration</a>, then
---   <a>getTypeDeclaration</a>, and receive <tt>Nothing</tt>, per the
---   semantics of <a>putTypeDeclaration</a>.
-getTypeDeclaration :: Codebase m v a -> Id -> m (Maybe (Decl v a))
+--   Note that it is possible to call
+--   <a>$sel:putTypeDeclaration:Codebase</a>, then
+--   <a>$sel:getTypeDeclaration:Codebase</a>, and receive <tt>Nothing</tt>,
+--   per the semantics of <a>$sel:putTypeDeclaration:Codebase</a>.
+($sel:getTypeDeclaration:Codebase) :: Codebase m v a -> Id -> m (Maybe (Decl v a))
 
--- | Like <a>getTypeDeclaration</a>, for when the type declaration is known
---   to exist in the codebase.
+-- | Like <a>$sel:getTypeDeclaration:Codebase</a>, for when the type
+--   declaration is known to exist in the codebase.
 unsafeGetTypeDeclaration :: (HasCallStack, Monad m) => Codebase m v a -> Id -> m (Decl v a)
-getDeclComponent :: Codebase m v a -> Hash -> m (Maybe [Decl v a])
+($sel:getDeclComponent:Codebase) :: Codebase m v a -> Hash -> m (Maybe [Decl v a])
 
 -- | Enqueue the put of a type declaration into the codebase, if it doesn't
 --   already exist. The implementation may choose to delay the put until
 --   all of the type declaration's references are stored as well.
-putTypeDeclaration :: Codebase m v a -> Id -> Decl v a -> m ()
+($sel:putTypeDeclaration:Codebase) :: Codebase m v a -> Id -> Decl v a -> m ()
 
 -- | Get the set of type declarations whose hash matches the given prefix.
-typeReferencesByPrefix :: Codebase m v a -> ShortHash -> m (Set Id)
+($sel:typeReferencesByPrefix:Codebase) :: Codebase m v a -> ShortHash -> m (Set Id)
 isType :: Applicative m => Codebase m v a -> Reference -> m Bool
 
 -- | Check whether the given branch exists in the codebase.
-branchExists :: Codebase m v a -> CausalHash -> m Bool
+($sel:branchExists:Codebase) :: Codebase m v a -> CausalHash -> m Bool
 
 -- | Get a branch from the codebase.
 getBranchForHash :: Monad m => Codebase m v a -> CausalHash -> m (Maybe (Branch m))
@@ -3368,56 +3560,56 @@ getBranchForHash :: Monad m => Codebase m v a -> CausalHash -> m (Maybe (Branch 
 --   
 --   The terms and type declarations that a branch references must already
 --   exist in the codebase.
-putBranch :: Codebase m v a -> Branch m -> m ()
+($sel:putBranch:Codebase) :: Codebase m v a -> Branch m -> m ()
 
 -- | Get the set of branches whose hash matches the given prefix.
-branchHashesByPrefix :: Codebase m v a -> ShortBranchHash -> m (Set CausalHash)
+($sel:branchHashesByPrefix:Codebase) :: Codebase m v a -> ShortBranchHash -> m (Set CausalHash)
 
 -- | Get the lowest common ancestor of two branches, i.e. the most recent
 --   branch that is an ancestor of both branches.
 lca :: Monad m => Codebase m v a -> Branch m -> Branch m -> m (Maybe (Branch m))
-beforeImpl :: Codebase m v a -> Maybe (CausalHash -> CausalHash -> m Bool)
+($sel:beforeImpl:Codebase) :: Codebase m v a -> Maybe (CausalHash -> CausalHash -> m Bool)
 
 -- | Recursively descend into shallow branches following the given path.
 shallowBranchAtPath :: Monad m => Path -> CausalBranch m -> m (Maybe (CausalBranch m))
-getShallowBranchForHash :: Codebase m v a -> CausalHash -> m (CausalBranch m)
+($sel:getShallowBranchForHash:Codebase) :: Codebase m v a -> CausalHash -> m (CausalBranch m)
 
 -- | Get the shallow representation of the root branches without loading
 --   the children or history.
 getShallowRootBranch :: Monad m => Codebase m v a -> m (CausalBranch m)
 
 -- | Get the root branch.
-getRootBranch :: Codebase m v a -> m (Branch m)
+($sel:getRootBranch:Codebase) :: Codebase m v a -> m (Branch m)
 
 -- | Get whether the root branch exists.
-getRootBranchExists :: Codebase m v a -> m Bool
+($sel:getRootBranchExists:Codebase) :: Codebase m v a -> m Bool
 
 -- | Get the root branch Hash.
-getRootBranchHash :: Codebase m v a -> m CausalHash
+($sel:getRootBranchHash:Codebase) :: Codebase m v a -> m CausalHash
 
--- | Like <a>putBranch</a>, but also adjusts the root branch pointer
---   afterwards.
-putRootBranch :: Codebase m v a -> Branch m -> m ()
-rootBranchUpdates :: Codebase m v a -> m (IO (), IO (Set CausalHash))
-namesAtPath :: Codebase m v a -> Path -> m ScopedNames
+-- | Like <a>$sel:putBranch:Codebase</a>, but also adjusts the root branch
+--   pointer afterwards.
+($sel:putRootBranch:Codebase) :: Codebase m v a -> Branch m -> m ()
+($sel:rootBranchUpdates:Codebase) :: Codebase m v a -> m (IO (), IO (Set CausalHash))
+($sel:namesAtPath:Codebase) :: Codebase m v a -> Path -> m ScopedNames
 
 -- | Check whether the given patch exists in the codebase.
-patchExists :: Codebase m v a -> EditHash -> m Bool
+($sel:patchExists:Codebase) :: Codebase m v a -> EditHash -> m Bool
 
 -- | Get a patch from the codebase.
-getPatch :: Codebase m v a -> EditHash -> m (Maybe Patch)
+($sel:getPatch:Codebase) :: Codebase m v a -> EditHash -> m (Maybe Patch)
 
 -- | Put a patch into the codebase.
 --   
---   Note that <a>putBranch</a> may also put patches.
-putPatch :: Codebase m v a -> EditHash -> Patch -> m ()
+--   Note that <a>$sel:putBranch:Codebase</a> may also put patches.
+($sel:putPatch:Codebase) :: Codebase m v a -> EditHash -> Patch -> m ()
 
 -- | <tt>getWatch k r</tt> returns watch result <tt>t</tt> that was
 --   previously put by <tt>putWatch k r t</tt>.
-getWatch :: Codebase m v a -> WatchKind -> Id -> m (Maybe (Term v a))
+($sel:getWatch:Codebase) :: Codebase m v a -> WatchKind -> Id -> m (Maybe (Term v a))
 
--- | Like <a>getWatch</a>, but first looks up the given reference as a
---   regular watch, then as a test watch.
+-- | Like <a>$sel:getWatch:Codebase</a>, but first looks up the given
+--   reference as a regular watch, then as a test watch.
 --   
 --   <pre>
 --   lookupWatchCache codebase ref =
@@ -3430,7 +3622,7 @@ lookupWatchCache :: Monad m => Codebase m v a -> Id -> m (Maybe (Term v a))
 -- | <tt>watches k</tt> returns all of the references <tt>r</tt> that were
 --   previously put by a <tt>putWatch k r t</tt>. <tt>t</tt> can be
 --   retrieved by <tt>getWatch k r</tt>.
-watches :: Codebase m v a -> WatchKind -> m [Id]
+($sel:watches:Codebase) :: Codebase m v a -> WatchKind -> m [Id]
 
 -- | <tt>putWatch k r t</tt> puts a watch of kind <tt>k</tt>, with
 --   hash-of-expression <tt>r</tt> and decompiled result <tt>t</tt> into
@@ -3445,13 +3637,13 @@ watches :: Codebase m v a -> WatchKind -> m [Id]
 --     ⧩
 --     7
 --   </pre>
-putWatch :: Codebase m v a -> WatchKind -> Id -> Term v a -> m ()
+($sel:putWatch:Codebase) :: Codebase m v a -> WatchKind -> Id -> Term v a -> m ()
 
--- | Delete all watches that were put by <a>putWatch</a>.
-clearWatches :: Codebase m v a -> m ()
+-- | Delete all watches that were put by <a>$sel:putWatch:Codebase</a>.
+($sel:clearWatches:Codebase) :: Codebase m v a -> m ()
 
 -- | Get the entire reflog.
-getReflog :: Codebase m v a -> m [Entry CausalHash]
+($sel:getReflog:Codebase) :: Codebase m v a -> m [Entry CausalHash]
 
 -- | <tt>appendReflog reason before after</tt> appends a reflog entry.
 --   
@@ -3460,15 +3652,15 @@ getReflog :: Codebase m v a -> m [Entry CausalHash]
 --   <pre>
 --   appendReflog :: Reflog.Entry (Branch m) -&gt; m ()
 --   </pre>
-appendReflog :: Codebase m v a -> Text -> Branch m -> Branch m -> m ()
+($sel:appendReflog:Codebase) :: Codebase m v a -> Text -> Branch m -> Branch m -> m ()
 
 -- | The number of base32 characters needed to distinguish any two
 --   references in the codebase.
-hashLength :: Codebase m v a -> m Int
+($sel:hashLength:Codebase) :: Codebase m v a -> m Int
 
 -- | The number of base32 characters needed to distinguish any two branch
 --   in the codebase.
-branchHashLength :: Codebase m v a -> m Int
+($sel:branchHashLength:Codebase) :: Codebase m v a -> m Int
 
 -- | Get the set of terms, type declarations, and builtin types that depend
 --   on the given term, type declaration, or builtin type.
@@ -3477,20 +3669,20 @@ dependentsOfComponent :: Functor f => Codebase f v a -> Hash -> f (Set Reference
 
 -- | Copy a branch and all of its dependencies from the given codebase into
 --   this one.
-syncFromDirectory :: Codebase m v a -> CodebasePath -> SyncMode -> Branch m -> m ()
+($sel:syncFromDirectory:Codebase) :: Codebase m v a -> CodebasePath -> SyncMode -> Branch m -> m ()
 
 -- | Copy a branch and all of its dependencies from this codebase into the
 --   given codebase.
-syncToDirectory :: Codebase m v a -> CodebasePath -> SyncMode -> Branch m -> m ()
+($sel:syncToDirectory:Codebase) :: Codebase m v a -> CodebasePath -> SyncMode -> Branch m -> m ()
 
 -- | Pull a git branch and view it from the cache, without syncing into the
 --   local codebase.
-viewRemoteBranch :: MonadIO m => Codebase m v a -> ReadRemoteNamespace -> GitBranchBehavior -> (Branch m -> m r) -> m (Either GitError r)
+viewRemoteBranch :: MonadIO m => Codebase m v a -> ReadGitRemoteNamespace -> GitBranchBehavior -> (Branch m -> m r) -> m (Either GitError r)
 
--- | Sync elements as needed from a remote codebase into the local one. If
---   <tt>sbh</tt> is supplied, we try to load the specified branch hash;
+-- | Sync elements as needed from a remote git codebase into the local one.
+--   If <tt>sbh</tt> is supplied, we try to load the specified branch hash;
 --   otherwise we try to load the root branch.
-importRemoteBranch :: forall m v a. MonadUnliftIO m => Codebase m v a -> ReadRemoteNamespace -> SyncMode -> Preprocessing m -> m (Either GitError (Branch m))
+importRemoteBranch :: forall m v a. MonadUnliftIO m => Codebase m v a -> ReadGitRemoteNamespace -> SyncMode -> Preprocessing m -> m (Either GitError (Branch m))
 
 -- | An optional preprocessing step to run on branches before they're
 --   imported into the local codebase.
@@ -3500,13 +3692,13 @@ Preprocessed :: (Branch m -> m (Branch m)) -> Preprocessing m
 
 -- | Push the given branch to the given repo, and optionally set it as the
 --   root branch.
-pushGitBranch :: Codebase m v a -> forall e. WriteRepo -> PushGitBranchOpts -> (Branch m -> m (Either e (Branch m))) -> m (Either GitError (Either e (Branch m)))
+($sel:pushGitBranch:Codebase) :: Codebase m v a -> forall e. WriteGitRepo -> PushGitBranchOpts -> (Branch m -> m (Either e (Branch m))) -> m (Either GitError (Either e (Branch m)))
 data PushGitBranchOpts
 PushGitBranchOpts :: Bool -> SyncMode -> PushGitBranchOpts
 
 -- | Set the branch as root?
-[setRoot] :: PushGitBranchOpts -> Bool
-[syncMode] :: PushGitBranchOpts -> SyncMode
+[$sel:setRoot:PushGitBranchOpts] :: PushGitBranchOpts -> Bool
+[$sel:syncMode:PushGitBranchOpts] :: PushGitBranchOpts -> SyncMode
 getCodebaseDir :: MonadIO m => Maybe CodebasePath -> m CodebasePath
 
 -- | A directory that contains a codebase.
@@ -3519,7 +3711,7 @@ type SyncToDir m = CodebasePath -> SyncMode -> Branch m -> m ()
 --   but it has been cumbersome. Now we prefer to interact with SQLite
 --   directly, and so provide this temporary escape hatch, until we can
 --   eliminate this interface entirely.
-connection :: Codebase m v a -> Connection
+($sel:connection:Codebase) :: Codebase m v a -> Connection
 addDefsToCodebase :: forall m v a. (Monad m, Var v, Show a) => Codebase m v a -> TypecheckedUnisonFile v a -> m ()
 componentReferencesForReference :: Monad m => Codebase m v a -> Reference -> m (Set Reference)
 
@@ -3568,15 +3760,15 @@ data Init m v a
 Init :: (DebugName -> CodebasePath -> m (Either Pretty (m (), Codebase m v a))) -> (DebugName -> CodebasePath -> m (Either CreateCodebaseError (m (), Codebase m v a))) -> (CodebasePath -> CodebasePath) -> Init m v a
 
 -- | open an existing codebase
-[openCodebase] :: Init m v a -> DebugName -> CodebasePath -> m (Either Pretty (m (), Codebase m v a))
+[$sel:openCodebase:Init] :: Init m v a -> DebugName -> CodebasePath -> m (Either Pretty (m (), Codebase m v a))
 
 -- | create a new codebase
-[createCodebase'] :: Init m v a -> DebugName -> CodebasePath -> m (Either CreateCodebaseError (m (), Codebase m v a))
+[$sel:createCodebase':Init] :: Init m v a -> DebugName -> CodebasePath -> m (Either CreateCodebaseError (m (), Codebase m v a))
 
 -- | given a codebase root, and given that the codebase root may have other
 --   junk in it, give the path to the "actual" files; e.g. what a forked
 --   transcript should clone.
-[codebasePath] :: Init m v a -> CodebasePath -> CodebasePath
+[$sel:codebasePath:Init] :: Init m v a -> CodebasePath -> CodebasePath
 
 module Unison.Codebase.FileCodebase
 codebaseExists :: MonadIO m => CodebasePath -> m Bool
@@ -3586,15 +3778,15 @@ data Init m v a
 Init :: (forall r. DebugName -> CodebasePath -> (Codebase m v a -> m r) -> m (Either OpenCodebaseError r)) -> (forall r. DebugName -> CodebasePath -> (Codebase m v a -> m r) -> m (Either CreateCodebaseError r)) -> (CodebasePath -> CodebasePath) -> Init m v a
 
 -- | open an existing codebase
-[withOpenCodebase] :: Init m v a -> forall r. DebugName -> CodebasePath -> (Codebase m v a -> m r) -> m (Either OpenCodebaseError r)
+[$sel:withOpenCodebase:Init] :: Init m v a -> forall r. DebugName -> CodebasePath -> (Codebase m v a -> m r) -> m (Either OpenCodebaseError r)
 
 -- | create a new codebase
-[withCreatedCodebase] :: Init m v a -> forall r. DebugName -> CodebasePath -> (Codebase m v a -> m r) -> m (Either CreateCodebaseError r)
+[$sel:withCreatedCodebase:Init] :: Init m v a -> forall r. DebugName -> CodebasePath -> (Codebase m v a -> m r) -> m (Either CreateCodebaseError r)
 
 -- | given a codebase root, and given that the codebase root may have other
 --   junk in it, give the path to the "actual" files; e.g. what a forked
 --   transcript should clone.
-[codebasePath] :: Init m v a -> CodebasePath -> CodebasePath
+[$sel:codebasePath:Init] :: Init m v a -> CodebasePath -> CodebasePath
 type DebugName = String
 
 -- | An error that occurred while initializing a codebase.
@@ -3748,12 +3940,12 @@ Indirect :: a -> Direction a
 Direct :: Direction a
 data SuperNormal v
 Lambda :: [Mem] -> ANormal v -> SuperNormal v
-[conventions] :: SuperNormal v -> [Mem]
-[bound] :: SuperNormal v -> ANormal v
+[$sel:conventions:Lambda] :: SuperNormal v -> [Mem]
+[$sel:bound:Lambda] :: SuperNormal v -> ANormal v
 data SuperGroup v
 Rec :: [(v, SuperNormal v)] -> SuperNormal v -> SuperGroup v
-[group] :: SuperGroup v -> [(v, SuperNormal v)]
-[entry] :: SuperGroup v -> SuperNormal v
+[$sel:group:Rec] :: SuperGroup v -> [(v, SuperNormal v)]
+[$sel:entry:Rec] :: SuperGroup v -> SuperNormal v
 data POp
 ADDI :: POp
 SUBI :: POp
@@ -4042,8 +4234,8 @@ DArgN :: !PrimArray Int -> !PrimArray Int -> Args
 DArgV :: !Int -> !Int -> Args
 data RefNums
 RN :: (Reference -> Word64) -> (Reference -> Word64) -> RefNums
-[dnum] :: RefNums -> Reference -> Word64
-[cnum] :: RefNums -> Reference -> Word64
+[$sel:dnum:RN] :: RefNums -> Reference -> Word64
+[$sel:cnum:RN] :: RefNums -> Reference -> Word64
 data MLit
 MI :: !Int -> MLit
 MD :: !Double -> MLit
@@ -4647,17 +4839,17 @@ type Tag = Word64
 type DEnv = EnumMap Word64 Closure
 data CCache
 CCache :: EnumMap Word64 ForeignFunc -> (Text -> Closure -> IO ()) -> TVar (EnumMap Word64 Combs) -> TVar (EnumMap Word64 Reference) -> TVar (EnumMap Word64 Reference) -> TVar Word64 -> TVar Word64 -> TVar (Map Reference (SuperGroup Symbol)) -> TVar (Map Reference Word64) -> TVar (Map Reference Word64) -> TVar (Map Reference (Set Reference)) -> CCache
-[foreignFuncs] :: CCache -> EnumMap Word64 ForeignFunc
-[tracer] :: CCache -> Text -> Closure -> IO ()
-[combs] :: CCache -> TVar (EnumMap Word64 Combs)
-[combRefs] :: CCache -> TVar (EnumMap Word64 Reference)
-[tagRefs] :: CCache -> TVar (EnumMap Word64 Reference)
-[freshTm] :: CCache -> TVar Word64
-[freshTy] :: CCache -> TVar Word64
-[intermed] :: CCache -> TVar (Map Reference (SuperGroup Symbol))
-[refTm] :: CCache -> TVar (Map Reference Word64)
-[refTy] :: CCache -> TVar (Map Reference Word64)
-[sandbox] :: CCache -> TVar (Map Reference (Set Reference))
+[$sel:foreignFuncs:CCache] :: CCache -> EnumMap Word64 ForeignFunc
+[$sel:tracer:CCache] :: CCache -> Text -> Closure -> IO ()
+[$sel:combs:CCache] :: CCache -> TVar (EnumMap Word64 Combs)
+[$sel:combRefs:CCache] :: CCache -> TVar (EnumMap Word64 Reference)
+[$sel:tagRefs:CCache] :: CCache -> TVar (EnumMap Word64 Reference)
+[$sel:freshTm:CCache] :: CCache -> TVar Word64
+[$sel:freshTy:CCache] :: CCache -> TVar Word64
+[$sel:intermed:CCache] :: CCache -> TVar (Map Reference (SuperGroup Symbol))
+[$sel:refTm:CCache] :: CCache -> TVar (Map Reference Word64)
+[$sel:refTy:CCache] :: CCache -> TVar (Map Reference Word64)
+[$sel:sandbox:CCache] :: CCache -> TVar (Map Reference (Set Reference))
 refNumsTm :: CCache -> IO (Map Reference Word64)
 refNumsTy :: CCache -> IO (Map Reference Word64)
 refNumTm :: CCache -> Reference -> IO Word64

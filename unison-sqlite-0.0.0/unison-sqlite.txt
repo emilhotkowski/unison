@@ -61,6 +61,7 @@ queryMaybeRowCheck_ :: (FromRow a, SqliteExceptionReason e) => Connection -> Sql
 queryMaybeColCheck_ :: forall a e r. (FromField a, SqliteExceptionReason e) => Connection -> Sql -> (a -> Either e r) -> IO (Maybe r)
 queryOneRowCheck_ :: (FromRow a, SqliteExceptionReason e) => Connection -> Sql -> (a -> Either e r) -> IO r
 queryOneColCheck_ :: forall a e r. (FromField a, SqliteExceptionReason e) => Connection -> Sql -> (a -> Either e r) -> IO r
+rowsModified :: Connection -> IO Int
 
 -- | <pre>
 --   VACUUM
@@ -172,6 +173,7 @@ savepoint :: Transaction (Either a a) -> Transaction a
 --   <i>Warning</i>: attempting to run a transaction inside a transaction
 --   will cause an exception!
 unsafeIO :: IO a -> Transaction a
+unsafeGetConnection :: Transaction Connection
 execute :: ToRow a => Sql -> a -> Transaction ()
 executeMany :: ToRow a => Sql -> [a] -> Transaction ()
 execute_ :: Sql -> Transaction ()
@@ -201,6 +203,7 @@ queryMaybeRowCheck_ :: (FromRow a, SqliteExceptionReason e) => Sql -> (a -> Eith
 queryMaybeColCheck_ :: (FromField a, SqliteExceptionReason e) => Sql -> (a -> Either e r) -> Transaction (Maybe r)
 queryOneRowCheck_ :: (FromRow a, SqliteExceptionReason e) => Sql -> (a -> Either e r) -> Transaction r
 queryOneColCheck_ :: (FromField a, SqliteExceptionReason e) => Sql -> (a -> Either e r) -> Transaction r
+rowsModified :: Transaction Int
 instance GHC.Base.Monad Unison.Sqlite.Transaction.Transaction
 instance GHC.Base.Functor Unison.Sqlite.Transaction.Transaction
 instance GHC.Base.Applicative Unison.Sqlite.Transaction.Transaction
@@ -309,6 +312,7 @@ queryMaybeRowCheck_ :: (FromRow a, SqliteExceptionReason e) => Sql -> (a -> Eith
 queryMaybeColCheck_ :: (FromField a, SqliteExceptionReason e) => Sql -> (a -> Either e r) -> Transaction (Maybe r)
 queryOneRowCheck_ :: (FromRow a, SqliteExceptionReason e) => Sql -> (a -> Either e r) -> Transaction r
 queryOneColCheck_ :: (FromField a, SqliteExceptionReason e) => Sql -> (a -> Either e r) -> Transaction r
+rowsModified :: Transaction Int
 newtype DataVersion
 DataVersion :: Int64 -> DataVersion
 getDataVersion :: Transaction DataVersion
@@ -492,26 +496,6 @@ fromField :: FromField a => FieldParser a
 --   <a>fromRow</a>.
 class FromRow a
 fromRow :: FromRow a => RowParser a
-data RowParser a
-data SQLData
-SQLInteger :: !Int64 -> SQLData
-SQLFloat :: !Double -> SQLData
-SQLText :: !Text -> SQLData
-SQLBlob :: !ByteString -> SQLData
-SQLNull :: SQLData
-
--- | A type that may be used as a single parameter to a SQL query.
-class ToField a
-
--- | Prepare a value for substitution into a query string.
-toField :: ToField a => a -> SQLData
-
--- | A collection type that can be turned into a list of <a>SQLData</a>
---   elements.
-class ToRow a
-
--- | <a>ToField</a> a collection of values.
-toRow :: ToRow a => a -> [SQLData]
 
 -- | The 1-tuple type or single-value "collection".
 --   
@@ -534,3 +518,23 @@ toRow :: ToRow a => a -> [SQLData]
 newtype Only a
 Only :: a -> Only a
 [fromOnly] :: Only a -> a
+data RowParser a
+data SQLData
+SQLInteger :: !Int64 -> SQLData
+SQLFloat :: !Double -> SQLData
+SQLText :: !Text -> SQLData
+SQLBlob :: !ByteString -> SQLData
+SQLNull :: SQLData
+
+-- | A type that may be used as a single parameter to a SQL query.
+class ToField a
+
+-- | Prepare a value for substitution into a query string.
+toField :: ToField a => a -> SQLData
+
+-- | A collection type that can be turned into a list of <a>SQLData</a>
+--   elements.
+class ToRow a
+
+-- | <a>ToField</a> a collection of values.
+toRow :: ToRow a => a -> [SQLData]

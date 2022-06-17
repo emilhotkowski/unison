@@ -533,15 +533,6 @@ validate :: (Semigroup e, Foldable f) => (a -> Either e b) -> f a -> Either e [b
 intercalateMapWith :: (a -> a -> b) -> (a -> b) -> [a] -> [b]
 quenchRuns :: Eq a => a -> a -> [a] -> [a]
 
-module Unison.Util.Monoid
-intercalateMap :: (Foldable t, Monoid a) => a -> (b -> a) -> t b -> a
-fromMaybe :: Monoid a => Maybe a -> a
-whenM :: Monoid a => Bool -> a -> a
-unlessM :: Monoid a => Bool -> a -> a
-isEmpty :: (Eq a, Monoid a) => a -> Bool
-nonEmpty :: (Eq a, Monoid a) => a -> Bool
-foldMapM :: (Monad m, Foldable f, Monoid b) => (a -> m b) -> f a -> m b
-
 module Unison.WatchKind
 type WatchKind = String
 

@@ -822,121 +822,259 @@ newtype Base64Bytes
 Base64Bytes :: ByteString -> Base64Bytes
 newtype RepoName
 RepoName :: Text -> RepoName
+[$sel:unRepoName:RepoName] :: RepoName -> Text
+data Path
+Path :: NonEmpty Text -> Path
+[$sel:pathSegments:Path] :: Path -> NonEmpty Text
+pathRepoName :: Path -> RepoName
+pathCodebasePath :: Path -> [Text]
 newtype HashJWT
 HashJWT :: Text -> HashJWT
+[$sel:unHashJWT:HashJWT] :: HashJWT -> Text
+
+-- | Grab the hash out of a hash JWT.
+--   
+--   This decodes the whole JWT, then throws away the claims; use it if you
+--   really only need the hash!
+hashJWTHash :: HashJWT -> Hash32
 data HashJWTClaims
-HashJWTClaims :: Hash -> EntityType -> HashJWTClaims
-[$sel:hash:HashJWTClaims] :: HashJWTClaims -> Hash
-[$sel:entityType:HashJWTClaims] :: HashJWTClaims -> EntityType
-newtype Hash
-Hash :: Text -> Hash
-[$sel:toBase32Hex:Hash] :: Hash -> Text
-data TypedHash
-TypedHash :: Hash -> EntityType -> TypedHash
-[$sel:hash:TypedHash] :: TypedHash -> Hash
-[$sel:entityType:TypedHash] :: TypedHash -> EntityType
-data RepoPath
-RepoPath :: RepoName -> [Text] -> RepoPath
-[$sel:repoName:RepoPath] :: RepoPath -> RepoName
-[$sel:pathSegments:RepoPath] :: RepoPath -> [Text]
+HashJWTClaims :: Hash32 -> Text -> HashJWTClaims
+[$sel:hash:HashJWTClaims] :: HashJWTClaims -> Hash32
+[$sel:userId:HashJWTClaims] :: HashJWTClaims -> Text
+
+-- | A decoded hash JWT that retains the original encoded JWT.
+data DecodedHashJWT
+DecodedHashJWT :: HashJWTClaims -> HashJWT -> DecodedHashJWT
+[$sel:claims:DecodedHashJWT] :: DecodedHashJWT -> HashJWTClaims
+[$sel:hashJWT:DecodedHashJWT] :: DecodedHashJWT -> HashJWT
+
+-- | Decode a hash JWT.
+decodeHashJWT :: HashJWT -> DecodedHashJWT
+
+-- | Decode the claims out of a hash JWT.
+decodeHashJWTClaims :: HashJWT -> HashJWTClaims
+
+-- | Grab the hash out of a decoded hash JWT.
+decodedHashJWTHash :: DecodedHashJWT -> Hash32
+data Entity text noSyncHash hash
+TC :: TermComponent text hash -> Entity text noSyncHash hash
+DC :: DeclComponent text hash -> Entity text noSyncHash hash
+P :: Patch text noSyncHash hash -> Entity text noSyncHash hash
+PD :: PatchDiff text noSyncHash hash -> Entity text noSyncHash hash
+N :: Namespace text hash -> Entity text noSyncHash hash
+ND :: NamespaceDiff text hash -> Entity text noSyncHash hash
+C :: Causal hash -> Entity text noSyncHash hash
+data TermComponent text hash
+TermComponent :: [(LocalIds text hash, ByteString)] -> TermComponent text hash
+data DeclComponent text hash
+DeclComponent :: [(LocalIds text hash, ByteString)] -> DeclComponent text hash
+data Patch text oldHash newHash
+Patch :: [text] -> [oldHash] -> [newHash] -> ByteString -> Patch text oldHash newHash
+[$sel:textLookup:Patch] :: Patch text oldHash newHash -> [text]
+[$sel:oldHashLookup:Patch] :: Patch text oldHash newHash -> [oldHash]
+[$sel:newHashLookup:Patch] :: Patch text oldHash newHash -> [newHash]
+[$sel:bytes:Patch] :: Patch text oldHash newHash -> ByteString
+data PatchDiff text oldHash hash
+PatchDiff :: hash -> [text] -> [oldHash] -> [hash] -> ByteString -> PatchDiff text oldHash hash
+[$sel:parent:PatchDiff] :: PatchDiff text oldHash hash -> hash
+[$sel:textLookup:PatchDiff] :: PatchDiff text oldHash hash -> [text]
+[$sel:oldHashLookup:PatchDiff] :: PatchDiff text oldHash hash -> [oldHash]
+[$sel:newHashLookup:PatchDiff] :: PatchDiff text oldHash hash -> [hash]
+[$sel:bytes:PatchDiff] :: PatchDiff text oldHash hash -> ByteString
+data Namespace text hash
+Namespace :: [text] -> [hash] -> [hash] -> [(hash, hash)] -> ByteString -> Namespace text hash
+[$sel:textLookup:Namespace] :: Namespace text hash -> [text]
+[$sel:defnLookup:Namespace] :: Namespace text hash -> [hash]
+[$sel:patchLookup:Namespace] :: Namespace text hash -> [hash]
+[$sel:childLookup:Namespace] :: Namespace text hash -> [(hash, hash)]
+[$sel:bytes:Namespace] :: Namespace text hash -> ByteString
+data NamespaceDiff text hash
+NamespaceDiff :: hash -> [text] -> [hash] -> [hash] -> [(hash, hash)] -> ByteString -> NamespaceDiff text hash
+[$sel:parent:NamespaceDiff] :: NamespaceDiff text hash -> hash
+[$sel:textLookup:NamespaceDiff] :: NamespaceDiff text hash -> [text]
+[$sel:defnLookup:NamespaceDiff] :: NamespaceDiff text hash -> [hash]
+[$sel:patchLookup:NamespaceDiff] :: NamespaceDiff text hash -> [hash]
+[$sel:childLookup:NamespaceDiff] :: NamespaceDiff text hash -> [(hash, hash)]
+[$sel:bytes:NamespaceDiff] :: NamespaceDiff text hash -> ByteString
+data Causal hash
+Causal :: hash -> Set hash -> Causal hash
+[$sel:namespaceHash:Causal] :: Causal hash -> hash
+[$sel:parents:Causal] :: Causal hash -> Set hash
+data LocalIds text hash
+LocalIds :: [text] -> [hash] -> LocalIds text hash
+[$sel:texts:LocalIds] :: LocalIds text hash -> [text]
+[$sel:hashes:LocalIds] :: LocalIds text hash -> [hash]
+
+-- | Get the direct dependencies of an entity (which are actually sync'd).
+--   
+--   FIXME use generic-lens here? (typed @hash)
+entityDependencies :: Ord hash => Entity text noSyncHash hash -> Set hash
+data EntityType
+TermComponentType :: EntityType
+DeclComponentType :: EntityType
+PatchType :: EntityType
+PatchDiffType :: EntityType
+NamespaceType :: EntityType
+NamespaceDiffType :: EntityType
+CausalType :: EntityType
+entityHashes_ :: (Applicative m, Ord hash') => (hash -> m hash') -> Entity text noSyncHash hash -> m (Entity text noSyncHash hash')
+patchHashes_ :: Applicative m => (hash -> m hash') -> Patch text noSyncHash hash -> m (Patch text noSyncHash hash')
+patchDiffHashes_ :: Applicative m => (hash -> m hash') -> PatchDiff text noSyncHash hash -> m (PatchDiff text noSyncHash hash')
+namespaceDiffHashes_ :: Applicative m => (hash -> m hash') -> NamespaceDiff text hash -> m (NamespaceDiff text hash')
+causalHashes_ :: (Applicative m, Ord hash') => (hash -> m hash') -> Causal hash -> m (Causal hash')
 newtype GetCausalHashByPathRequest
-GetCausalHashByPathRequest :: RepoPath -> GetCausalHashByPathRequest
-[$sel:repoPath:GetCausalHashByPathRequest] :: GetCausalHashByPathRequest -> RepoPath
-newtype GetCausalHashByPathResponse
-GetCausalHashByPathResponse :: Maybe HashJWT -> GetCausalHashByPathResponse
-[$sel:causalHash:GetCausalHashByPathResponse] :: GetCausalHashByPathResponse -> Maybe HashJWT
+GetCausalHashByPathRequest :: Path -> GetCausalHashByPathRequest
+[$sel:path:GetCausalHashByPathRequest] :: GetCausalHashByPathRequest -> Path
+data GetCausalHashByPathResponse
+GetCausalHashByPathSuccess :: Maybe HashJWT -> GetCausalHashByPathResponse
+GetCausalHashByPathNoReadPermission :: Path -> GetCausalHashByPathResponse
 data DownloadEntitiesRequest
 DownloadEntitiesRequest :: RepoName -> NESet HashJWT -> DownloadEntitiesRequest
 [$sel:repoName:DownloadEntitiesRequest] :: DownloadEntitiesRequest -> RepoName
 [$sel:hashes:DownloadEntitiesRequest] :: DownloadEntitiesRequest -> NESet HashJWT
 data DownloadEntitiesResponse
-DownloadEntitiesResponse :: NEMap Hash (Entity HashJWT Hash Text) -> DownloadEntitiesResponse
-[$sel:entities:DownloadEntitiesResponse] :: DownloadEntitiesResponse -> NEMap Hash (Entity HashJWT Hash Text)
+DownloadEntitiesSuccess :: NEMap Hash32 (Entity Text Hash32 HashJWT) -> DownloadEntitiesResponse
+DownloadEntitiesNoReadPermission :: RepoName -> DownloadEntitiesResponse
+data UploadEntitiesRequest
+UploadEntitiesRequest :: RepoName -> NEMap Hash32 (Entity Text Hash32 Hash32) -> UploadEntitiesRequest
+[$sel:repoName:UploadEntitiesRequest] :: UploadEntitiesRequest -> RepoName
+[$sel:entities:UploadEntitiesRequest] :: UploadEntitiesRequest -> NEMap Hash32 (Entity Text Hash32 Hash32)
+data UploadEntitiesResponse
+UploadEntitiesSuccess :: UploadEntitiesResponse
+UploadEntitiesNeedDependencies :: NeedDependencies Hash32 -> UploadEntitiesResponse
+UploadEntitiesNoWritePermission :: RepoName -> UploadEntitiesResponse
+UploadEntitiesHashMismatchForEntity :: HashMismatchForEntity -> UploadEntitiesResponse
+
+-- | A non-empty list of causal hashes, latest first, that show the lineage
+--   from wherever the client wants to fast-forward to back to wherever the
+--   (client believes the) server is (including the server head, in a
+--   separate field).
+--   
+--   For example, if the client wants to update
+--   
+--   <pre>
+--   A -&gt; B -&gt; C
+--   </pre>
+--   
+--   to
+--   
+--   <pre>
+--   A -&gt; B -&gt; C -&gt; D -&gt; E -&gt; F
+--   </pre>
+--   
+--   then it would send hashes
+--   
+--   <pre>
+--   expectedHash = C
+--   hashes = [D, E, F]
+--   </pre>
+--   
+--   Note that if the client wants to begin a history at a new path on the
+--   server, it would use the "update path" endpoint instead.
+data FastForwardPathRequest
+FastForwardPathRequest :: Hash32 -> NonEmpty Hash32 -> Path -> FastForwardPathRequest
+
+-- | The causal that the client believes exists at
+--   <a>$sel:path:GetCausalHashByPathRequest</a>
+[$sel:expectedHash:FastForwardPathRequest] :: FastForwardPathRequest -> Hash32
+
+-- | The sequence of causals to fast-forward with, starting from the oldest
+--   new causal to the newest new causal
+[$sel:hashes:FastForwardPathRequest] :: FastForwardPathRequest -> NonEmpty Hash32
+
+-- | The path to fast-forward
+[$sel:path:FastForwardPathRequest] :: FastForwardPathRequest -> Path
+data FastForwardPathResponse
+FastForwardPathSuccess :: FastForwardPathResponse
+FastForwardPathMissingDependencies :: NeedDependencies Hash32 -> FastForwardPathResponse
+FastForwardPathNoWritePermission :: Path -> FastForwardPathResponse
+
+-- | This wasn't a fast-forward. Here's a JWT to download the causal head,
+--   if you want it.
+FastForwardPathNotFastForward :: HashJWT -> FastForwardPathResponse
+
+-- | There was no history at this path; the client should use the "update
+--   path" endpoint instead.
+FastForwardPathNoHistory :: FastForwardPathResponse
+
+-- | This wasn't a fast-forward. You said the first hash was a parent of
+--   the second hash, but I disagree.
+FastForwardPathInvalidParentage :: InvalidParentage -> FastForwardPathResponse
 data UpdatePathRequest
-UpdatePathRequest :: RepoPath -> Maybe TypedHash -> TypedHash -> UpdatePathRequest
-[$sel:path:UpdatePathRequest] :: UpdatePathRequest -> RepoPath
-[$sel:expectedHash:UpdatePathRequest] :: UpdatePathRequest -> Maybe TypedHash
-[$sel:newHash:UpdatePathRequest] :: UpdatePathRequest -> TypedHash
+UpdatePathRequest :: Path -> Maybe Hash32 -> Hash32 -> UpdatePathRequest
+[$sel:path:UpdatePathRequest] :: UpdatePathRequest -> Path
+[$sel:expectedHash:UpdatePathRequest] :: UpdatePathRequest -> Maybe Hash32
+[$sel:newHash:UpdatePathRequest] :: UpdatePathRequest -> Hash32
 data UpdatePathResponse
 UpdatePathSuccess :: UpdatePathResponse
 UpdatePathHashMismatch :: HashMismatch -> UpdatePathResponse
-UpdatePathMissingDependencies :: NeedDependencies Hash -> UpdatePathResponse
-jsonUnion :: ToJSON a => Text -> a -> Value
+UpdatePathMissingDependencies :: NeedDependencies Hash32 -> UpdatePathResponse
+UpdatePathNoWritePermission :: Path -> UpdatePathResponse
+data HashMismatch
+HashMismatch :: Path -> Maybe Hash32 -> Maybe Hash32 -> HashMismatch
+[$sel:path:HashMismatch] :: HashMismatch -> Path
+[$sel:expectedHash:HashMismatch] :: HashMismatch -> Maybe Hash32
+[$sel:actualHash:HashMismatch] :: HashMismatch -> Maybe Hash32
+data HashMismatchForEntity
+HashMismatchForEntity :: Hash32 -> Hash32 -> HashMismatchForEntity
+[$sel:supplied:HashMismatchForEntity] :: HashMismatchForEntity -> Hash32
+[$sel:computed:HashMismatchForEntity] :: HashMismatchForEntity -> Hash32
+data InvalidParentage
+InvalidParentage :: Hash32 -> Hash32 -> InvalidParentage
+[$sel:parent:InvalidParentage] :: InvalidParentage -> Hash32
+[$sel:child:InvalidParentage] :: InvalidParentage -> Hash32
 data NeedDependencies hash
 NeedDependencies :: NESet hash -> NeedDependencies hash
 [$sel:missingDependencies:NeedDependencies] :: NeedDependencies hash -> NESet hash
-data HashMismatch
-HashMismatch :: RepoPath -> Maybe TypedHash -> Maybe TypedHash -> HashMismatch
-[$sel:repoPath:HashMismatch] :: HashMismatch -> RepoPath
-[$sel:expectedHash:HashMismatch] :: HashMismatch -> Maybe TypedHash
-[$sel:actualHash:HashMismatch] :: HashMismatch -> Maybe TypedHash
-data UploadEntitiesRequest
-UploadEntitiesRequest :: RepoName -> NEMap Hash (Entity TypedHash TypedHash Text) -> UploadEntitiesRequest
-[$sel:repoName:UploadEntitiesRequest] :: UploadEntitiesRequest -> RepoName
-[$sel:entities:UploadEntitiesRequest] :: UploadEntitiesRequest -> NEMap Hash (Entity TypedHash TypedHash Text)
-data UploadEntitiesResponse
-UploadEntitiesSuccess :: UploadEntitiesResponse
-UploadEntitiesNeedDependencies :: NeedDependencies Hash -> UploadEntitiesResponse
-data Entity hash replacementHash text
-TC :: TermComponent hash text -> Entity hash replacementHash text
-DC :: DeclComponent hash text -> Entity hash replacementHash text
-P :: Patch hash replacementHash text -> Entity hash replacementHash text
-N :: Namespace hash text -> Entity hash replacementHash text
-C :: Causal hash -> Entity hash replacementHash text
-data TermComponent hash text
-TermComponent :: [(LocalIds hash text, ByteString)] -> TermComponent hash text
-bitraverseComponents :: Applicative f => (a -> f a') -> (b -> f b') -> [(LocalIds a b, ByteString)] -> f [(LocalIds a' b', ByteString)]
-encodeComponentPiece :: (ToJSON hash, ToJSON text) => (LocalIds hash text, ByteString) -> Value
-decodeComponentPiece :: (FromJSON hash, FromJSON text) => Value -> Parser (LocalIds hash text, ByteString)
-data DeclComponent hash text
-DeclComponent :: [(LocalIds hash text, ByteString)] -> DeclComponent hash text
-data LocalIds hash text
-LocalIds :: [hash] -> [text] -> LocalIds hash text
-[$sel:hashes:LocalIds] :: LocalIds hash text -> [hash]
-[$sel:texts:LocalIds] :: LocalIds hash text -> [text]
-data Patch hash replacementHash text
-Patch :: [text] -> [hash] -> [replacementHash] -> ByteString -> Patch hash replacementHash text
-[$sel:textLookup:Patch] :: Patch hash replacementHash text -> [text]
-[$sel:oldHashLookup:Patch] :: Patch hash replacementHash text -> [hash]
-[$sel:replacementHashLookup:Patch] :: Patch hash replacementHash text -> [replacementHash]
-[$sel:bytes:Patch] :: Patch hash replacementHash text -> ByteString
-data Namespace hash text
-Namespace :: [text] -> [hash] -> [hash] -> [hash] -> ByteString -> Namespace hash text
-[$sel:textLookup:Namespace] :: Namespace hash text -> [text]
-[$sel:defnLookup:Namespace] :: Namespace hash text -> [hash]
-[$sel:patchLookup:Namespace] :: Namespace hash text -> [hash]
-[$sel:childLookup:Namespace] :: Namespace hash text -> [hash]
-[$sel:bytes:Namespace] :: Namespace hash text -> ByteString
-data Causal hash
-Causal :: hash -> Set hash -> Causal hash
-[$sel:namespaceHash:Causal] :: Causal hash -> hash
-[$sel:parents:Causal] :: Causal hash -> Set hash
-data EntityType
-TermComponentType :: EntityType
-DeclComponentType :: EntityType
-PatchType :: EntityType
-NamespaceType :: EntityType
-CausalType :: EntityType
 instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.RepoName
 instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.RepoName
 instance GHC.Classes.Ord Unison.Sync.Types.RepoName
 instance GHC.Classes.Eq Unison.Sync.Types.RepoName
 instance GHC.Show.Show Unison.Sync.Types.RepoName
+instance GHC.Classes.Ord Unison.Sync.Types.Path
+instance GHC.Classes.Eq Unison.Sync.Types.Path
+instance GHC.Show.Show Unison.Sync.Types.Path
 instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.HashJWT
 instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.HashJWT
 instance GHC.Classes.Ord Unison.Sync.Types.HashJWT
 instance GHC.Classes.Eq Unison.Sync.Types.HashJWT
 instance GHC.Show.Show Unison.Sync.Types.HashJWT
-instance Data.Aeson.Types.FromJSON.FromJSONKey Unison.Sync.Types.Hash
-instance Data.Aeson.Types.ToJSON.ToJSONKey Unison.Sync.Types.Hash
-instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.Hash
-instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.Hash
-instance GHC.Classes.Ord Unison.Sync.Types.Hash
-instance GHC.Classes.Eq Unison.Sync.Types.Hash
-instance GHC.Show.Show Unison.Sync.Types.Hash
-instance GHC.Classes.Ord Unison.Sync.Types.RepoPath
-instance GHC.Classes.Eq Unison.Sync.Types.RepoPath
-instance GHC.Show.Show Unison.Sync.Types.RepoPath
+instance GHC.Classes.Ord Unison.Sync.Types.HashJWTClaims
+instance GHC.Classes.Eq Unison.Sync.Types.HashJWTClaims
+instance GHC.Show.Show Unison.Sync.Types.HashJWTClaims
+instance GHC.Show.Show Unison.Sync.Types.DecodedHashJWT
+instance GHC.Classes.Ord Unison.Sync.Types.DecodedHashJWT
+instance GHC.Classes.Eq Unison.Sync.Types.DecodedHashJWT
+instance (GHC.Classes.Ord text, GHC.Classes.Ord hash) => GHC.Classes.Ord (Unison.Sync.Types.LocalIds text hash)
+instance (GHC.Classes.Eq text, GHC.Classes.Eq hash) => GHC.Classes.Eq (Unison.Sync.Types.LocalIds text hash)
+instance (GHC.Show.Show text, GHC.Show.Show hash) => GHC.Show.Show (Unison.Sync.Types.LocalIds text hash)
+instance (GHC.Classes.Ord text, GHC.Classes.Ord hash) => GHC.Classes.Ord (Unison.Sync.Types.DeclComponent text hash)
+instance (GHC.Classes.Eq text, GHC.Classes.Eq hash) => GHC.Classes.Eq (Unison.Sync.Types.DeclComponent text hash)
+instance (GHC.Show.Show text, GHC.Show.Show hash) => GHC.Show.Show (Unison.Sync.Types.DeclComponent text hash)
+instance (GHC.Classes.Ord text, GHC.Classes.Ord hash) => GHC.Classes.Ord (Unison.Sync.Types.TermComponent text hash)
+instance (GHC.Classes.Eq text, GHC.Classes.Eq hash) => GHC.Classes.Eq (Unison.Sync.Types.TermComponent text hash)
+instance (GHC.Show.Show text, GHC.Show.Show hash) => GHC.Show.Show (Unison.Sync.Types.TermComponent text hash)
+instance (GHC.Classes.Ord text, GHC.Classes.Ord oldHash, GHC.Classes.Ord newHash) => GHC.Classes.Ord (Unison.Sync.Types.Patch text oldHash newHash)
+instance (GHC.Classes.Eq text, GHC.Classes.Eq oldHash, GHC.Classes.Eq newHash) => GHC.Classes.Eq (Unison.Sync.Types.Patch text oldHash newHash)
+instance (GHC.Show.Show text, GHC.Show.Show oldHash, GHC.Show.Show newHash) => GHC.Show.Show (Unison.Sync.Types.Patch text oldHash newHash)
+instance (GHC.Show.Show hash, GHC.Show.Show text, GHC.Show.Show oldHash) => GHC.Show.Show (Unison.Sync.Types.PatchDiff text oldHash hash)
+instance (GHC.Classes.Ord hash, GHC.Classes.Ord text, GHC.Classes.Ord oldHash) => GHC.Classes.Ord (Unison.Sync.Types.PatchDiff text oldHash hash)
+instance (GHC.Classes.Eq hash, GHC.Classes.Eq text, GHC.Classes.Eq oldHash) => GHC.Classes.Eq (Unison.Sync.Types.PatchDiff text oldHash hash)
+instance (GHC.Show.Show text, GHC.Show.Show hash) => GHC.Show.Show (Unison.Sync.Types.Namespace text hash)
+instance (GHC.Classes.Ord text, GHC.Classes.Ord hash) => GHC.Classes.Ord (Unison.Sync.Types.Namespace text hash)
+instance (GHC.Classes.Eq text, GHC.Classes.Eq hash) => GHC.Classes.Eq (Unison.Sync.Types.Namespace text hash)
+instance (GHC.Show.Show hash, GHC.Show.Show text) => GHC.Show.Show (Unison.Sync.Types.NamespaceDiff text hash)
+instance (GHC.Classes.Ord hash, GHC.Classes.Ord text) => GHC.Classes.Ord (Unison.Sync.Types.NamespaceDiff text hash)
+instance (GHC.Classes.Eq hash, GHC.Classes.Eq text) => GHC.Classes.Eq (Unison.Sync.Types.NamespaceDiff text hash)
+instance GHC.Show.Show hash => GHC.Show.Show (Unison.Sync.Types.Causal hash)
+instance GHC.Classes.Ord hash => GHC.Classes.Ord (Unison.Sync.Types.Causal hash)
+instance GHC.Classes.Eq hash => GHC.Classes.Eq (Unison.Sync.Types.Causal hash)
+instance (GHC.Classes.Ord text, GHC.Classes.Ord noSyncHash, GHC.Classes.Ord hash) => GHC.Classes.Ord (Unison.Sync.Types.Entity text noSyncHash hash)
+instance (GHC.Classes.Eq text, GHC.Classes.Eq noSyncHash, GHC.Classes.Eq hash) => GHC.Classes.Eq (Unison.Sync.Types.Entity text noSyncHash hash)
+instance (GHC.Show.Show text, GHC.Show.Show noSyncHash, GHC.Show.Show hash) => GHC.Show.Show (Unison.Sync.Types.Entity text noSyncHash hash)
+instance GHC.Show.Show Unison.Sync.Types.EntityType
+instance GHC.Classes.Ord Unison.Sync.Types.EntityType
+instance GHC.Classes.Eq Unison.Sync.Types.EntityType
 instance GHC.Classes.Ord Unison.Sync.Types.GetCausalHashByPathRequest
 instance GHC.Classes.Eq Unison.Sync.Types.GetCausalHashByPathRequest
 instance GHC.Show.Show Unison.Sync.Types.GetCausalHashByPathRequest
@@ -946,116 +1084,115 @@ instance GHC.Show.Show Unison.Sync.Types.GetCausalHashByPathResponse
 instance GHC.Classes.Ord Unison.Sync.Types.DownloadEntitiesRequest
 instance GHC.Classes.Eq Unison.Sync.Types.DownloadEntitiesRequest
 instance GHC.Show.Show Unison.Sync.Types.DownloadEntitiesRequest
-instance GHC.Classes.Ord hash => GHC.Classes.Ord (Unison.Sync.Types.NeedDependencies hash)
-instance GHC.Classes.Eq hash => GHC.Classes.Eq (Unison.Sync.Types.NeedDependencies hash)
-instance GHC.Show.Show hash => GHC.Show.Show (Unison.Sync.Types.NeedDependencies hash)
-instance GHC.Classes.Ord Unison.Sync.Types.UploadEntitiesResponse
-instance GHC.Classes.Eq Unison.Sync.Types.UploadEntitiesResponse
-instance GHC.Show.Show Unison.Sync.Types.UploadEntitiesResponse
-instance (GHC.Classes.Ord hash, GHC.Classes.Ord text) => GHC.Classes.Ord (Unison.Sync.Types.LocalIds hash text)
-instance (GHC.Classes.Eq hash, GHC.Classes.Eq text) => GHC.Classes.Eq (Unison.Sync.Types.LocalIds hash text)
-instance (GHC.Show.Show hash, GHC.Show.Show text) => GHC.Show.Show (Unison.Sync.Types.LocalIds hash text)
-instance (GHC.Classes.Ord hash, GHC.Classes.Ord text) => GHC.Classes.Ord (Unison.Sync.Types.DeclComponent hash text)
-instance (GHC.Classes.Eq hash, GHC.Classes.Eq text) => GHC.Classes.Eq (Unison.Sync.Types.DeclComponent hash text)
-instance (GHC.Show.Show hash, GHC.Show.Show text) => GHC.Show.Show (Unison.Sync.Types.DeclComponent hash text)
-instance (GHC.Classes.Ord hash, GHC.Classes.Ord text) => GHC.Classes.Ord (Unison.Sync.Types.TermComponent hash text)
-instance (GHC.Classes.Eq hash, GHC.Classes.Eq text) => GHC.Classes.Eq (Unison.Sync.Types.TermComponent hash text)
-instance (GHC.Show.Show hash, GHC.Show.Show text) => GHC.Show.Show (Unison.Sync.Types.TermComponent hash text)
-instance (GHC.Classes.Ord text, GHC.Classes.Ord hash, GHC.Classes.Ord replacementHash) => GHC.Classes.Ord (Unison.Sync.Types.Patch hash replacementHash text)
-instance (GHC.Classes.Eq text, GHC.Classes.Eq hash, GHC.Classes.Eq replacementHash) => GHC.Classes.Eq (Unison.Sync.Types.Patch hash replacementHash text)
-instance (GHC.Show.Show text, GHC.Show.Show hash, GHC.Show.Show replacementHash) => GHC.Show.Show (Unison.Sync.Types.Patch hash replacementHash text)
-instance (GHC.Show.Show text, GHC.Show.Show hash) => GHC.Show.Show (Unison.Sync.Types.Namespace hash text)
-instance (GHC.Classes.Ord text, GHC.Classes.Ord hash) => GHC.Classes.Ord (Unison.Sync.Types.Namespace hash text)
-instance (GHC.Classes.Eq text, GHC.Classes.Eq hash) => GHC.Classes.Eq (Unison.Sync.Types.Namespace hash text)
-instance GHC.Show.Show hash => GHC.Show.Show (Unison.Sync.Types.Causal hash)
-instance GHC.Classes.Ord hash => GHC.Classes.Ord (Unison.Sync.Types.Causal hash)
-instance GHC.Classes.Eq hash => GHC.Classes.Eq (Unison.Sync.Types.Causal hash)
-instance (GHC.Classes.Ord text, GHC.Classes.Ord hash, GHC.Classes.Ord replacementHash) => GHC.Classes.Ord (Unison.Sync.Types.Entity hash replacementHash text)
-instance (GHC.Classes.Eq text, GHC.Classes.Eq hash, GHC.Classes.Eq replacementHash) => GHC.Classes.Eq (Unison.Sync.Types.Entity hash replacementHash text)
-instance (GHC.Show.Show text, GHC.Show.Show hash, GHC.Show.Show replacementHash) => GHC.Show.Show (Unison.Sync.Types.Entity hash replacementHash text)
-instance GHC.Classes.Ord Unison.Sync.Types.DownloadEntitiesResponse
-instance GHC.Classes.Eq Unison.Sync.Types.DownloadEntitiesResponse
-instance GHC.Show.Show Unison.Sync.Types.DownloadEntitiesResponse
-instance GHC.Show.Show Unison.Sync.Types.EntityType
-instance GHC.Classes.Ord Unison.Sync.Types.EntityType
-instance GHC.Classes.Eq Unison.Sync.Types.EntityType
-instance GHC.Classes.Ord Unison.Sync.Types.TypedHash
-instance GHC.Classes.Eq Unison.Sync.Types.TypedHash
-instance GHC.Show.Show Unison.Sync.Types.TypedHash
 instance GHC.Classes.Ord Unison.Sync.Types.UploadEntitiesRequest
 instance GHC.Classes.Eq Unison.Sync.Types.UploadEntitiesRequest
 instance GHC.Show.Show Unison.Sync.Types.UploadEntitiesRequest
-instance GHC.Classes.Ord Unison.Sync.Types.HashMismatch
-instance GHC.Classes.Eq Unison.Sync.Types.HashMismatch
-instance GHC.Show.Show Unison.Sync.Types.HashMismatch
-instance GHC.Classes.Ord Unison.Sync.Types.UpdatePathResponse
-instance GHC.Classes.Eq Unison.Sync.Types.UpdatePathResponse
-instance GHC.Show.Show Unison.Sync.Types.UpdatePathResponse
+instance GHC.Classes.Ord Unison.Sync.Types.HashMismatchForEntity
+instance GHC.Classes.Eq Unison.Sync.Types.HashMismatchForEntity
+instance GHC.Show.Show Unison.Sync.Types.HashMismatchForEntity
+instance GHC.Show.Show Unison.Sync.Types.FastForwardPathRequest
+instance GHC.Show.Show Unison.Sync.Types.InvalidParentage
 instance GHC.Classes.Ord Unison.Sync.Types.UpdatePathRequest
 instance GHC.Classes.Eq Unison.Sync.Types.UpdatePathRequest
 instance GHC.Show.Show Unison.Sync.Types.UpdatePathRequest
-instance GHC.Classes.Ord Unison.Sync.Types.HashJWTClaims
-instance GHC.Classes.Eq Unison.Sync.Types.HashJWTClaims
-instance GHC.Show.Show Unison.Sync.Types.HashJWTClaims
-instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.HashJWTClaims
-instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.HashJWTClaims
-instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.UpdatePathRequest
-instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.UpdatePathRequest
-instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.UpdatePathResponse
-instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.UpdatePathResponse
-instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.HashMismatch
-instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.HashMismatch
-instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.UploadEntitiesRequest
-instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.UploadEntitiesRequest
-instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.TypedHash
-instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.TypedHash
-instance (Data.Aeson.Types.ToJSON.ToJSON hash, Data.Aeson.Types.ToJSON.ToJSON replacementHash, Data.Aeson.Types.ToJSON.ToJSON text) => Data.Aeson.Types.ToJSON.ToJSON (Unison.Sync.Types.Entity hash replacementHash text)
-instance (Data.Aeson.Types.FromJSON.FromJSON hash, Data.Aeson.Types.FromJSON.FromJSON replacementHash, Data.Aeson.Types.FromJSON.FromJSON text, GHC.Classes.Ord hash) => Data.Aeson.Types.FromJSON.FromJSON (Unison.Sync.Types.Entity hash replacementHash text)
-instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.EntityType
-instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.EntityType
-instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.DownloadEntitiesResponse
-instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.DownloadEntitiesResponse
-instance Data.Aeson.Types.ToJSON.ToJSON hash => Data.Aeson.Types.ToJSON.ToJSON (Unison.Sync.Types.Causal hash)
-instance (Data.Aeson.Types.FromJSON.FromJSON hash, GHC.Classes.Ord hash) => Data.Aeson.Types.FromJSON.FromJSON (Unison.Sync.Types.Causal hash)
-instance Data.Bifoldable.Bifoldable Unison.Sync.Types.Namespace
-instance Data.Bifunctor.Bifunctor Unison.Sync.Types.Namespace
-instance Data.Bitraversable.Bitraversable Unison.Sync.Types.Namespace
-instance (Data.Aeson.Types.ToJSON.ToJSON hash, Data.Aeson.Types.ToJSON.ToJSON text) => Data.Aeson.Types.ToJSON.ToJSON (Unison.Sync.Types.Namespace hash text)
-instance (Data.Aeson.Types.FromJSON.FromJSON hash, Data.Aeson.Types.FromJSON.FromJSON text) => Data.Aeson.Types.FromJSON.FromJSON (Unison.Sync.Types.Namespace hash text)
-instance (Data.Aeson.Types.ToJSON.ToJSON hash, Data.Aeson.Types.ToJSON.ToJSON replacementHash, Data.Aeson.Types.ToJSON.ToJSON text) => Data.Aeson.Types.ToJSON.ToJSON (Unison.Sync.Types.Patch hash replacementHash text)
-instance (Data.Aeson.Types.FromJSON.FromJSON hash, Data.Aeson.Types.FromJSON.FromJSON replacementHash, Data.Aeson.Types.FromJSON.FromJSON text) => Data.Aeson.Types.FromJSON.FromJSON (Unison.Sync.Types.Patch hash replacementHash text)
-instance Data.Bifoldable.Bifoldable Unison.Sync.Types.TermComponent
-instance Data.Bifunctor.Bifunctor Unison.Sync.Types.TermComponent
-instance Data.Bitraversable.Bitraversable Unison.Sync.Types.TermComponent
-instance (Data.Aeson.Types.ToJSON.ToJSON hash, Data.Aeson.Types.ToJSON.ToJSON text) => Data.Aeson.Types.ToJSON.ToJSON (Unison.Sync.Types.TermComponent hash text)
-instance (Data.Aeson.Types.FromJSON.FromJSON hash, Data.Aeson.Types.FromJSON.FromJSON text) => Data.Aeson.Types.FromJSON.FromJSON (Unison.Sync.Types.TermComponent hash text)
-instance Data.Bifoldable.Bifoldable Unison.Sync.Types.DeclComponent
-instance Data.Bifunctor.Bifunctor Unison.Sync.Types.DeclComponent
-instance Data.Bitraversable.Bitraversable Unison.Sync.Types.DeclComponent
-instance (Data.Aeson.Types.ToJSON.ToJSON hash, Data.Aeson.Types.ToJSON.ToJSON text) => Data.Aeson.Types.ToJSON.ToJSON (Unison.Sync.Types.DeclComponent hash text)
-instance (Data.Aeson.Types.FromJSON.FromJSON hash, Data.Aeson.Types.FromJSON.FromJSON text) => Data.Aeson.Types.FromJSON.FromJSON (Unison.Sync.Types.DeclComponent hash text)
-instance Data.Bifoldable.Bifoldable Unison.Sync.Types.LocalIds
-instance Data.Bifunctor.Bifunctor Unison.Sync.Types.LocalIds
-instance Data.Bitraversable.Bitraversable Unison.Sync.Types.LocalIds
-instance (Data.Aeson.Types.ToJSON.ToJSON hash, Data.Aeson.Types.ToJSON.ToJSON text) => Data.Aeson.Types.ToJSON.ToJSON (Unison.Sync.Types.LocalIds hash text)
-instance (Data.Aeson.Types.FromJSON.FromJSON hash, Data.Aeson.Types.FromJSON.FromJSON text) => Data.Aeson.Types.FromJSON.FromJSON (Unison.Sync.Types.LocalIds hash text)
+instance GHC.Classes.Ord Unison.Sync.Types.HashMismatch
+instance GHC.Classes.Eq Unison.Sync.Types.HashMismatch
+instance GHC.Show.Show Unison.Sync.Types.HashMismatch
+instance GHC.Classes.Ord hash => GHC.Classes.Ord (Unison.Sync.Types.NeedDependencies hash)
+instance GHC.Classes.Eq hash => GHC.Classes.Eq (Unison.Sync.Types.NeedDependencies hash)
+instance GHC.Show.Show hash => GHC.Show.Show (Unison.Sync.Types.NeedDependencies hash)
+instance GHC.Classes.Ord Unison.Sync.Types.UpdatePathResponse
+instance GHC.Classes.Eq Unison.Sync.Types.UpdatePathResponse
+instance GHC.Show.Show Unison.Sync.Types.UpdatePathResponse
+instance GHC.Show.Show Unison.Sync.Types.FastForwardPathResponse
+instance GHC.Classes.Ord Unison.Sync.Types.UploadEntitiesResponse
+instance GHC.Classes.Eq Unison.Sync.Types.UploadEntitiesResponse
+instance GHC.Show.Show Unison.Sync.Types.UploadEntitiesResponse
 instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.UploadEntitiesResponse
 instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.UploadEntitiesResponse
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.FastForwardPathResponse
+instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.FastForwardPathResponse
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.UpdatePathResponse
+instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.UpdatePathResponse
 instance Data.Aeson.Types.ToJSON.ToJSON hash => Data.Aeson.Types.ToJSON.ToJSON (Unison.Sync.Types.NeedDependencies hash)
 instance (Data.Aeson.Types.FromJSON.FromJSON hash, GHC.Classes.Ord hash) => Data.Aeson.Types.FromJSON.FromJSON (Unison.Sync.Types.NeedDependencies hash)
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.HashMismatch
+instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.HashMismatch
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.UpdatePathRequest
+instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.UpdatePathRequest
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.InvalidParentage
+instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.InvalidParentage
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.FastForwardPathRequest
+instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.FastForwardPathRequest
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.HashMismatchForEntity
+instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.HashMismatchForEntity
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.UploadEntitiesRequest
+instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.UploadEntitiesRequest
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.DownloadEntitiesResponse
+instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.DownloadEntitiesResponse
 instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.DownloadEntitiesRequest
 instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.DownloadEntitiesRequest
 instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.GetCausalHashByPathResponse
 instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.GetCausalHashByPathResponse
 instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.GetCausalHashByPathRequest
 instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.GetCausalHashByPathRequest
-instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.RepoPath
-instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.RepoPath
+instance (Data.Aeson.Types.ToJSON.ToJSON text, Data.Aeson.Types.ToJSON.ToJSON noSyncHash, Data.Aeson.Types.ToJSON.ToJSON hash) => Data.Aeson.Types.ToJSON.ToJSON (Unison.Sync.Types.Entity text noSyncHash hash)
+instance (Data.Aeson.Types.FromJSON.FromJSON text, Data.Aeson.Types.FromJSON.FromJSON noSyncHash, Data.Aeson.Types.FromJSON.FromJSON hash, GHC.Classes.Ord hash) => Data.Aeson.Types.FromJSON.FromJSON (Unison.Sync.Types.Entity text noSyncHash hash)
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.EntityType
+instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.EntityType
+instance Data.Aeson.Types.ToJSON.ToJSON hash => Data.Aeson.Types.ToJSON.ToJSON (Unison.Sync.Types.Causal hash)
+instance (Data.Aeson.Types.FromJSON.FromJSON hash, GHC.Classes.Ord hash) => Data.Aeson.Types.FromJSON.FromJSON (Unison.Sync.Types.Causal hash)
+instance (Data.Aeson.Types.ToJSON.ToJSON text, Data.Aeson.Types.ToJSON.ToJSON hash) => Data.Aeson.Types.ToJSON.ToJSON (Unison.Sync.Types.NamespaceDiff text hash)
+instance (Data.Aeson.Types.FromJSON.FromJSON text, Data.Aeson.Types.FromJSON.FromJSON hash) => Data.Aeson.Types.FromJSON.FromJSON (Unison.Sync.Types.NamespaceDiff text hash)
+instance Data.Bifoldable.Bifoldable Unison.Sync.Types.Namespace
+instance Data.Bifunctor.Bifunctor Unison.Sync.Types.Namespace
+instance Data.Bitraversable.Bitraversable Unison.Sync.Types.Namespace
+instance (Data.Aeson.Types.ToJSON.ToJSON text, Data.Aeson.Types.ToJSON.ToJSON hash) => Data.Aeson.Types.ToJSON.ToJSON (Unison.Sync.Types.Namespace text hash)
+instance (Data.Aeson.Types.FromJSON.FromJSON text, Data.Aeson.Types.FromJSON.FromJSON hash) => Data.Aeson.Types.FromJSON.FromJSON (Unison.Sync.Types.Namespace text hash)
+instance (Data.Aeson.Types.ToJSON.ToJSON text, Data.Aeson.Types.ToJSON.ToJSON oldHash, Data.Aeson.Types.ToJSON.ToJSON hash) => Data.Aeson.Types.ToJSON.ToJSON (Unison.Sync.Types.PatchDiff text oldHash hash)
+instance (Data.Aeson.Types.FromJSON.FromJSON text, Data.Aeson.Types.FromJSON.FromJSON oldHash, Data.Aeson.Types.FromJSON.FromJSON hash) => Data.Aeson.Types.FromJSON.FromJSON (Unison.Sync.Types.PatchDiff text oldHash hash)
+instance (Data.Aeson.Types.ToJSON.ToJSON text, Data.Aeson.Types.ToJSON.ToJSON oldHash, Data.Aeson.Types.ToJSON.ToJSON newHash) => Data.Aeson.Types.ToJSON.ToJSON (Unison.Sync.Types.Patch text oldHash newHash)
+instance (Data.Aeson.Types.FromJSON.FromJSON text, Data.Aeson.Types.FromJSON.FromJSON oldHash, Data.Aeson.Types.FromJSON.FromJSON newHash) => Data.Aeson.Types.FromJSON.FromJSON (Unison.Sync.Types.Patch text oldHash newHash)
+instance Data.Bifoldable.Bifoldable Unison.Sync.Types.TermComponent
+instance Data.Bifunctor.Bifunctor Unison.Sync.Types.TermComponent
+instance Data.Bitraversable.Bitraversable Unison.Sync.Types.TermComponent
+instance (Data.Aeson.Types.ToJSON.ToJSON text, Data.Aeson.Types.ToJSON.ToJSON hash) => Data.Aeson.Types.ToJSON.ToJSON (Unison.Sync.Types.TermComponent text hash)
+instance (Data.Aeson.Types.FromJSON.FromJSON text, Data.Aeson.Types.FromJSON.FromJSON hash) => Data.Aeson.Types.FromJSON.FromJSON (Unison.Sync.Types.TermComponent text hash)
+instance Data.Bifoldable.Bifoldable Unison.Sync.Types.DeclComponent
+instance Data.Bifunctor.Bifunctor Unison.Sync.Types.DeclComponent
+instance Data.Bitraversable.Bitraversable Unison.Sync.Types.DeclComponent
+instance (Data.Aeson.Types.ToJSON.ToJSON text, Data.Aeson.Types.ToJSON.ToJSON hash) => Data.Aeson.Types.ToJSON.ToJSON (Unison.Sync.Types.DeclComponent text hash)
+instance (Data.Aeson.Types.FromJSON.FromJSON text, Data.Aeson.Types.FromJSON.FromJSON hash) => Data.Aeson.Types.FromJSON.FromJSON (Unison.Sync.Types.DeclComponent text hash)
+instance Data.Bifoldable.Bifoldable Unison.Sync.Types.LocalIds
+instance Data.Bifunctor.Bifunctor Unison.Sync.Types.LocalIds
+instance Data.Bitraversable.Bitraversable Unison.Sync.Types.LocalIds
+instance (Data.Aeson.Types.ToJSON.ToJSON text, Data.Aeson.Types.ToJSON.ToJSON hash) => Data.Aeson.Types.ToJSON.ToJSON (Unison.Sync.Types.LocalIds text hash)
+instance (Data.Aeson.Types.FromJSON.FromJSON text, Data.Aeson.Types.FromJSON.FromJSON hash) => Data.Aeson.Types.FromJSON.FromJSON (Unison.Sync.Types.LocalIds text hash)
+instance Servant.Auth.JWT.ToJWT Unison.Sync.Types.HashJWTClaims
+instance Servant.Auth.JWT.FromJWT Unison.Sync.Types.HashJWTClaims
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.HashJWTClaims
+instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.HashJWTClaims
+instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.Path
+instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.Path
 instance Data.Aeson.Types.ToJSON.ToJSON Unison.Sync.Types.Base64Bytes
 instance Data.Aeson.Types.FromJSON.FromJSON Unison.Sync.Types.Base64Bytes
 
+
+-- | Combinators or utilities shared by sync server AND client
+module Unison.Sync.Common
+
+-- | Read an entity out of the database that we know is in main storage.
+expectEntity :: Hash32 -> Transaction (Entity Text Hash32 Hash32)
+causalHashToHash32 :: CausalHash -> Hash32
+hash32ToCausalHash :: Hash32 -> CausalHash
+
+-- | Convert an entity that came over the wire from Unison Share into an
+--   equivalent type that we can store in the <tt>temp_entity</tt> table.
+entityToTempEntity :: forall hash. (hash -> Hash32) -> Entity Text Hash32 hash -> TempEntity
+tempEntityToEntity :: TempEntity -> Entity Text Hash32 Hash32
+
 module Unison.Sync.API
-type API = "path" :> "get" :> GetCausalHashByPathEndpoint :<|> "path" :> "update" :> UpdatePathEndpoint :<|> "entities" :> "download" :> DownloadEntitiesEndpoint :<|> "entities" :> "upload" :> UploadEntitiesEndpoint
+type API = "path" :> "get" :> GetCausalHashByPathEndpoint :<|> "path" :> "fast-forward" :> FastForwardPathEndpoint :<|> "path" :> "update" :> UpdatePathEndpoint :<|> "entities" :> "download" :> DownloadEntitiesEndpoint :<|> "entities" :> "upload" :> UploadEntitiesEndpoint
 api :: Proxy API
 
 module Unison.Util.Find

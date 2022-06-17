@@ -1,29 +1,37 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Unison.Auth.Tokens</span><span> </span><span class="hs-keyword">where</span><span>
 </span><span id="line-2"></span><span>
-</span><span id="line-3"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Text</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Text</span></span><span>
-</span><span id="line-4"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Data.Time.Clock.POSIX</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">getPOSIXTime</span></span><span class="hs-special">)</span><span>
-</span><span id="line-5"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Unison.Auth.CredentialManager.html"><span class="hs-identifier">Unison.Auth.CredentialManager</span></a></span><span>
-</span><span id="line-6"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Unison.Auth.Types.html"><span class="hs-identifier">Unison.Auth.Types</span></a></span><span>
-</span><span id="line-7"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Unison.CommandLine.InputPattern.html"><span class="hs-identifier">Unison.CommandLine.InputPattern</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.CommandLine.InputPattern.html#patternName"><span class="hs-identifier">patternName</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-8"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.CommandLine.InputPatterns.html"><span class="hs-identifier">Unison.CommandLine.InputPatterns</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">IP</span></span><span>
-</span><span id="line-9"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Prelude</span></span><span>
-</span><span id="line-10"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Unison.Share.Types.html"><span class="hs-identifier">Unison.Share.Types</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Share.Types.html#CodeserverId"><span class="hs-identifier">CodeserverId</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-11"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">UnliftIO</span></span><span>
-</span><span id="line-12"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">UnliftIO.Exception</span></span><span>
-</span><span id="line-13"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Web.JWT</span></span><span>
-</span><span id="line-14"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Web.JWT</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">JWT</span></span><span>
-</span><span id="line-15"></span><span>
-</span><span id="line-16"></span><span class="hs-comment">-- | Checks whether a JWT access token is expired.</span><span>
-</span><span id="line-17"></span><span id="local-6989586621679972738"><span class="annot"><a href="Unison.Auth.Tokens.html#isExpired"><span class="hs-identifier hs-type">isExpired</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">MonadIO</span></span><span> </span><span class="annot"><a href="#local-6989586621679972738"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#AccessToken"><span class="hs-identifier hs-type">AccessToken</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679972738"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Bool</span></span></span><span>
-</span><span id="line-18"></span><span id="isExpired"><span class="annot"><span class="annottext">isExpired :: AccessToken -&gt; m Bool
-</span><a href="Unison.Auth.Tokens.html#isExpired"><span class="hs-identifier hs-var hs-var">isExpired</span></a></span></span><span> </span><span id="local-6989586621679972723"><span class="annot"><span class="annottext">AccessToken
-</span><a href="#local-6989586621679972723"><span class="hs-identifier hs-var">accessToken</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">IO Bool -&gt; m Bool
+</span><span id="line-3"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Control.Monad.Except</span></span><span>
+</span><span id="line-4"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Aeson</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Aeson</span></span><span>
+</span><span id="line-5"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.ByteString.Char8</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">BSC</span></span><span>
+</span><span id="line-6"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Text</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Text</span></span><span>
+</span><span id="line-7"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Data.Time.Clock.POSIX</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">getPOSIXTime</span></span><span class="hs-special">)</span><span>
+</span><span id="line-8"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Network.HTTP.Client</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">HTTP</span></span><span>
+</span><span id="line-9"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Network.HTTP.Client.TLS</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">HTTP</span></span><span>
+</span><span id="line-10"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Network.HTTP.Types</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Network</span></span><span>
+</span><span id="line-11"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Network.URI</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">URI</span></span><span class="hs-special">)</span><span>
+</span><span id="line-12"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Unison.Auth.CredentialManager.html"><span class="hs-identifier">Unison.Auth.CredentialManager</span></a></span><span>
+</span><span id="line-13"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Unison.Auth.Discovery.html"><span class="hs-identifier">Unison.Auth.Discovery</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Auth.Discovery.html#fetchDiscoveryDoc"><span class="hs-identifier">fetchDiscoveryDoc</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-14"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Unison.Auth.Types.html"><span class="hs-identifier">Unison.Auth.Types</span></a></span><span>
+</span><span id="line-15"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Unison.CommandLine.InputPattern.html"><span class="hs-identifier">Unison.CommandLine.InputPattern</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.CommandLine.InputPattern.html#%24sel%3ApatternName%3AInputPattern"><span class="hs-identifier">patternName</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-16"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Unison.CommandLine.InputPatterns.html"><span class="hs-identifier">Unison.CommandLine.InputPatterns</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">IP</span></span><span>
+</span><span id="line-17"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Prelude</span></span><span>
+</span><span id="line-18"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Share.Types</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">CodeserverId</span></span><span class="hs-special">)</span><span>
+</span><span id="line-19"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">UnliftIO</span></span><span>
+</span><span id="line-20"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">UnliftIO.Exception</span></span><span>
+</span><span id="line-21"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Web.JWT</span></span><span>
+</span><span id="line-22"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Web.JWT</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">JWT</span></span><span>
+</span><span id="line-23"></span><span>
+</span><span id="line-24"></span><span class="hs-comment">-- | Checks whether a JWT access token is expired.</span><span>
+</span><span id="line-25"></span><span id="local-6989586621680010451"><span class="annot"><a href="Unison.Auth.Tokens.html#isExpired"><span class="hs-identifier hs-type">isExpired</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">MonadIO</span></span><span> </span><span class="annot"><a href="#local-6989586621680010451"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#AccessToken"><span class="hs-identifier hs-type">AccessToken</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621680010451"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Bool</span></span></span><span>
+</span><span id="line-26"></span><span id="isExpired"><span class="annot"><span class="annottext">isExpired :: AccessToken -&gt; m Bool
+</span><a href="Unison.Auth.Tokens.html#isExpired"><span class="hs-identifier hs-var hs-var">isExpired</span></a></span></span><span> </span><span id="local-6989586621680010406"><span class="annot"><span class="annottext">AccessToken
+</span><a href="#local-6989586621680010406"><span class="hs-identifier hs-var">accessToken</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">IO Bool -&gt; m Bool
 forall (m :: * -&gt; *) a. MonadIO m =&gt; IO a -&gt; m a
 </span><span class="hs-identifier hs-var">liftIO</span></span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-19"></span><span>  </span><span id="local-6989586621679972721"><span class="annot"><span class="annottext">JWT UnverifiedJWT
-</span><a href="#local-6989586621679972721"><span class="hs-identifier hs-var">jwt</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">AccessToken -&gt; Maybe (JWT UnverifiedJWT)
+</span><span id="line-27"></span><span>  </span><span id="local-6989586621680010404"><span class="annot"><span class="annottext">JWT UnverifiedJWT
+</span><a href="#local-6989586621680010404"><span class="hs-identifier hs-var">jwt</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">AccessToken -&gt; Maybe (JWT UnverifiedJWT)
 </span><span class="hs-identifier hs-var">JWT.decode</span></span><span> </span><span class="annot"><span class="annottext">AccessToken
-</span><a href="#local-6989586621679972723"><span class="hs-identifier hs-var">accessToken</span></a></span><span> </span><span class="annot"><span class="annottext">Maybe (JWT UnverifiedJWT)
+</span><a href="#local-6989586621680010406"><span class="hs-identifier hs-var">accessToken</span></a></span><span> </span><span class="annot"><span class="annottext">Maybe (JWT UnverifiedJWT)
 -&gt; IO (JWT UnverifiedJWT) -&gt; IO (JWT UnverifiedJWT)
 forall (m :: * -&gt; *) a. Applicative m =&gt; Maybe a -&gt; m a -&gt; m a
 </span><span class="hs-operator hs-var">`whenNothing`</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">CredentialFailure -&gt; IO (JWT UnverifiedJWT)
@@ -34,15 +42,15 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">AccessToken -&gt; CredentialFailure
 </span><a href="Unison.Auth.Types.html#InvalidJWT"><span class="hs-identifier hs-var">InvalidJWT</span></a></span><span> </span><span class="annot"><span class="annottext">AccessToken
 </span><span class="hs-string">&quot;Failed to decode JWT&quot;</span></span><span class="hs-special">)</span><span>
-</span><span id="line-20"></span><span>  </span><span id="local-6989586621679972716"><span class="annot"><span class="annottext">POSIXTime
-</span><a href="#local-6989586621679972716"><span class="hs-identifier hs-var">now</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IO POSIXTime
+</span><span id="line-28"></span><span>  </span><span id="local-6989586621680010399"><span class="annot"><span class="annottext">POSIXTime
+</span><a href="#local-6989586621680010399"><span class="hs-identifier hs-var">now</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IO POSIXTime
 </span><span class="hs-identifier hs-var">getPOSIXTime</span></span><span>
-</span><span id="line-21"></span><span>  </span><span id="local-6989586621679972715"><span class="annot"><span class="annottext">IntDate
-</span><a href="#local-6989586621679972715"><span class="hs-identifier hs-var">expDate</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">JWTClaimsSet -&gt; Maybe IntDate
+</span><span id="line-29"></span><span>  </span><span id="local-6989586621680010398"><span class="annot"><span class="annottext">IntDate
+</span><a href="#local-6989586621680010398"><span class="hs-identifier hs-var">expDate</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">JWTClaimsSet -&gt; Maybe IntDate
 </span><span class="hs-identifier hs-var hs-var">JWT.exp</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">JWT UnverifiedJWT -&gt; JWTClaimsSet
 forall r. JWT r -&gt; JWTClaimsSet
 </span><span class="hs-identifier hs-var">claims</span></span><span> </span><span class="annot"><span class="annottext">JWT UnverifiedJWT
-</span><a href="#local-6989586621679972721"><span class="hs-identifier hs-var">jwt</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Maybe IntDate -&gt; IO IntDate -&gt; IO IntDate
+</span><a href="#local-6989586621680010404"><span class="hs-identifier hs-var">jwt</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Maybe IntDate -&gt; IO IntDate -&gt; IO IntDate
 forall (m :: * -&gt; *) a. Applicative m =&gt; Maybe a -&gt; m a -&gt; m a
 </span><span class="hs-operator hs-var">`whenNothing`</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">CredentialFailure -&gt; IO IntDate
 forall (m :: * -&gt; *) e a. (MonadIO m, Exception e) =&gt; e -&gt; m a
@@ -52,28 +60,28 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">AccessToken -&gt; CredentialFailure
 </span><a href="Unison.Auth.Types.html#InvalidJWT"><span class="hs-identifier hs-var">InvalidJWT</span></a></span><span> </span><span class="annot"><span class="annottext">AccessToken
 </span><span class="hs-string">&quot;Missing exp claim on JWT&quot;</span></span><span class="hs-special">)</span><span>
-</span><span id="line-22"></span><span>  </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679972712"><span class="annot"><span class="annottext">expiry :: POSIXTime
-</span><a href="#local-6989586621679972712"><span class="hs-identifier hs-var hs-var">expiry</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">IntDate -&gt; POSIXTime
+</span><span id="line-30"></span><span>  </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621680010395"><span class="annot"><span class="annottext">expiry :: POSIXTime
+</span><a href="#local-6989586621680010395"><span class="hs-identifier hs-var hs-var">expiry</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">IntDate -&gt; POSIXTime
 </span><span class="hs-identifier hs-var">JWT.secondsSinceEpoch</span></span><span> </span><span class="annot"><span class="annottext">IntDate
-</span><a href="#local-6989586621679972715"><span class="hs-identifier hs-var">expDate</span></a></span><span>
-</span><span id="line-23"></span><span>  </span><span class="annot"><span class="annottext">Bool -&gt; IO Bool
+</span><a href="#local-6989586621680010398"><span class="hs-identifier hs-var">expDate</span></a></span><span>
+</span><span id="line-31"></span><span>  </span><span class="annot"><span class="annottext">Bool -&gt; IO Bool
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">POSIXTime
-</span><a href="#local-6989586621679972716"><span class="hs-identifier hs-var">now</span></a></span><span> </span><span class="annot"><span class="annottext">POSIXTime -&gt; POSIXTime -&gt; Bool
+</span><a href="#local-6989586621680010399"><span class="hs-identifier hs-var">now</span></a></span><span> </span><span class="annot"><span class="annottext">POSIXTime -&gt; POSIXTime -&gt; Bool
 forall a. Ord a =&gt; a -&gt; a -&gt; Bool
 </span><span class="hs-operator hs-var">&gt;=</span></span><span> </span><span class="annot"><span class="annottext">POSIXTime
-</span><a href="#local-6989586621679972712"><span class="hs-identifier hs-var">expiry</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-24"></span><span>
-</span><span id="line-25"></span><span class="hs-comment">-- | Given a 'CodeserverId', provide a valid 'AccessToken' for the associated host.</span><span>
-</span><span id="line-26"></span><span class="hs-comment">-- The TokenProvider may automatically refresh access tokens if we have a refresh token.</span><span>
-</span><span id="line-27"></span><span class="hs-keyword">type</span><span> </span><span id="TokenProvider"><span class="annot"><a href="Unison.Auth.Tokens.html#TokenProvider"><span class="hs-identifier hs-var">TokenProvider</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><a href="Unison.Share.Types.html#CodeserverId"><span class="hs-identifier hs-type">CodeserverId</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#CredentialFailure"><span class="hs-identifier hs-type">CredentialFailure</span></a></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#AccessToken"><span class="hs-identifier hs-type">AccessToken</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-28"></span><span>
-</span><span id="line-29"></span><span class="hs-comment">-- | Creates a 'TokenProvider' using the given 'CredentialManager'</span><span>
-</span><span id="line-30"></span><span class="annot"><a href="Unison.Auth.Tokens.html#newTokenProvider"><span class="hs-identifier hs-type">newTokenProvider</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Auth.CredentialManager.html#CredentialManager"><span class="hs-identifier hs-type">CredentialManager</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Unison.Auth.Tokens.html#TokenProvider"><span class="hs-identifier hs-type">TokenProvider</span></a></span><span>
-</span><span id="line-31"></span><span id="newTokenProvider"><span class="annot"><span class="annottext">newTokenProvider :: CredentialManager -&gt; TokenProvider
-</span><a href="Unison.Auth.Tokens.html#newTokenProvider"><span class="hs-identifier hs-var hs-var">newTokenProvider</span></a></span></span><span> </span><span id="local-6989586621679972709"><span class="annot"><span class="annottext">CredentialManager
-</span><a href="#local-6989586621679972709"><span class="hs-identifier hs-var">manager</span></a></span></span><span> </span><span id="local-6989586621679972708"><span class="annot"><span class="annottext">CodeserverId
-</span><a href="#local-6989586621679972708"><span class="hs-identifier hs-var">host</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">forall a.
+</span><a href="#local-6989586621680010395"><span class="hs-identifier hs-var">expiry</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-32"></span><span>
+</span><span id="line-33"></span><span class="hs-comment">-- | Given a 'CodeserverId', provide a valid 'AccessToken' for the associated host.</span><span>
+</span><span id="line-34"></span><span class="hs-comment">-- The TokenProvider may automatically refresh access tokens if we have a refresh token.</span><span>
+</span><span id="line-35"></span><span class="hs-keyword">type</span><span> </span><span id="TokenProvider"><span class="annot"><a href="Unison.Auth.Tokens.html#TokenProvider"><span class="hs-identifier hs-var">TokenProvider</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">CodeserverId</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#CredentialFailure"><span class="hs-identifier hs-type">CredentialFailure</span></a></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#AccessToken"><span class="hs-identifier hs-type">AccessToken</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-36"></span><span>
+</span><span id="line-37"></span><span class="hs-comment">-- | Creates a 'TokenProvider' using the given 'CredentialManager'</span><span>
+</span><span id="line-38"></span><span class="annot"><a href="Unison.Auth.Tokens.html#newTokenProvider"><span class="hs-identifier hs-type">newTokenProvider</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Auth.CredentialManager.html#CredentialManager"><span class="hs-identifier hs-type">CredentialManager</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Unison.Auth.Tokens.html#TokenProvider"><span class="hs-identifier hs-type">TokenProvider</span></a></span><span>
+</span><span id="line-39"></span><span id="newTokenProvider"><span class="annot"><span class="annottext">newTokenProvider :: CredentialManager -&gt; TokenProvider
+</span><a href="Unison.Auth.Tokens.html#newTokenProvider"><span class="hs-identifier hs-var hs-var">newTokenProvider</span></a></span></span><span> </span><span id="local-6989586621680010392"><span class="annot"><span class="annottext">CredentialManager
+</span><a href="#local-6989586621680010392"><span class="hs-identifier hs-var">manager</span></a></span></span><span> </span><span id="local-6989586621680010391"><span class="annot"><span class="annottext">CodeserverId
+</span><a href="#local-6989586621680010391"><span class="hs-identifier hs-var">host</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">forall a.
 (MonadUnliftIO IO, Exception CredentialFailure) =&gt;
 IO a -&gt; IO (Either CredentialFailure a)
 forall (m :: * -&gt; *) e a.
@@ -83,84 +91,106 @@ m a -&gt; m (Either e a)
 -&gt; IO AccessToken -&gt; IO (Either CredentialFailure AccessToken)
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-32"></span><span>  </span><span id="local-6989586621679972706"><span class="annot"><span class="annottext">tokens :: Tokens
-</span><a href="#local-6989586621679972706"><span class="hs-identifier hs-var">tokens</span></a></span></span><span class="hs-glyph">@</span><span class="hs-special">(</span><span class="annot"><a href="Unison.Auth.Types.html#Tokens"><span class="hs-identifier hs-type">Tokens</span></a></span><span> </span><span class="hs-special">{</span><span id="local-6989586621679972704"><span class="annot"><span class="annottext">AccessToken
-accessToken :: Tokens -&gt; AccessToken
-accessToken :: AccessToken
-</span><a href="Unison.Auth.Types.html#accessToken"><span class="hs-identifier hs-var hs-var">accessToken</span></a></span></span><span class="hs-special">}</span><span class="hs-special">)</span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IO (Either CredentialFailure Tokens) -&gt; IO Tokens
+</span><span id="line-40"></span><span>  </span><span class="annot"><a href="Unison.Auth.Types.html#CodeserverCredentials"><span class="hs-identifier hs-type">CodeserverCredentials</span></a></span><span> </span><span class="hs-special">{</span><span id="local-6989586621680010388"><span class="annot"><span class="annottext">Tokens
+$sel:tokens:CodeserverCredentials :: CodeserverCredentials -&gt; Tokens
+tokens :: Tokens
+</span><a href="Unison.Auth.Types.html#%24sel%3Atokens%3ACodeserverCredentials"><span class="hs-identifier hs-var hs-var">tokens</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621680010386"><span class="annot"><span class="annottext">URI
+$sel:discoveryURI:CodeserverCredentials :: CodeserverCredentials -&gt; URI
+discoveryURI :: URI
+</span><a href="Unison.Auth.Types.html#%24sel%3AdiscoveryURI%3ACodeserverCredentials"><span class="hs-identifier hs-var hs-var">discoveryURI</span></a></span></span><span class="hs-special">}</span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IO (Either CredentialFailure CodeserverCredentials)
+-&gt; IO CodeserverCredentials
 forall e (m :: * -&gt; *) a.
 (MonadIO m, Exception e) =&gt;
 m (Either e a) -&gt; m a
-</span><span class="hs-identifier hs-var">throwEitherM</span></span><span> </span><span class="annot"><span class="annottext">(IO (Either CredentialFailure Tokens) -&gt; IO Tokens)
--&gt; IO (Either CredentialFailure Tokens) -&gt; IO Tokens
+</span><span class="hs-identifier hs-var">throwEitherM</span></span><span> </span><span class="annot"><span class="annottext">(IO (Either CredentialFailure CodeserverCredentials)
+ -&gt; IO CodeserverCredentials)
+-&gt; IO (Either CredentialFailure CodeserverCredentials)
+-&gt; IO CodeserverCredentials
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">CredentialManager
--&gt; CodeserverId -&gt; IO (Either CredentialFailure Tokens)
+-&gt; CodeserverId
+-&gt; IO (Either CredentialFailure CodeserverCredentials)
 forall (m :: * -&gt; *).
 MonadIO m =&gt;
 CredentialManager
--&gt; CodeserverId -&gt; m (Either CredentialFailure Tokens)
-</span><a href="Unison.Auth.CredentialManager.html#getTokens"><span class="hs-identifier hs-var">getTokens</span></a></span><span> </span><span class="annot"><span class="annottext">CredentialManager
-</span><a href="#local-6989586621679972709"><span class="hs-identifier hs-var">manager</span></a></span><span> </span><span class="annot"><span class="annottext">CodeserverId
-</span><a href="#local-6989586621679972708"><span class="hs-identifier hs-var">host</span></a></span><span>
-</span><span id="line-33"></span><span>  </span><span id="local-6989586621679972700"><span class="annot"><span class="annottext">Bool
-</span><a href="#local-6989586621679972700"><span class="hs-identifier hs-var">expired</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">AccessToken -&gt; IO Bool
+-&gt; CodeserverId
+-&gt; m (Either CredentialFailure CodeserverCredentials)
+</span><a href="Unison.Auth.CredentialManager.html#getCredentials"><span class="hs-identifier hs-var">getCredentials</span></a></span><span> </span><span class="annot"><span class="annottext">CredentialManager
+</span><a href="#local-6989586621680010392"><span class="hs-identifier hs-var">manager</span></a></span><span> </span><span class="annot"><span class="annottext">CodeserverId
+</span><a href="#local-6989586621680010391"><span class="hs-identifier hs-var">host</span></a></span><span>
+</span><span id="line-41"></span><span>  </span><span class="hs-keyword">let</span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Tokens"><span class="hs-identifier hs-type">Tokens</span></a></span><span> </span><span class="hs-special">{</span><span class="annot"><span class="annottext">$sel:accessToken:Tokens :: Tokens -&gt; AccessToken
+</span><a href="Unison.Auth.Types.html#%24sel%3AaccessToken%3ATokens"><span class="hs-identifier hs-var">accessToken</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="local-6989586621680010380"><span class="annot"><span class="annottext">AccessToken
+</span><a href="#local-6989586621680010380"><span class="hs-identifier hs-var">currentAccessToken</span></a></span></span><span class="hs-special">}</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Tokens
+</span><a href="#local-6989586621680010388"><span class="hs-identifier hs-var">tokens</span></a></span><span>
+</span><span id="line-42"></span><span>  </span><span id="local-6989586621680010379"><span class="annot"><span class="annottext">Bool
+</span><a href="#local-6989586621680010379"><span class="hs-identifier hs-var">expired</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">AccessToken -&gt; IO Bool
 forall (m :: * -&gt; *). MonadIO m =&gt; AccessToken -&gt; m Bool
 </span><a href="Unison.Auth.Tokens.html#isExpired"><span class="hs-identifier hs-var">isExpired</span></a></span><span> </span><span class="annot"><span class="annottext">AccessToken
-</span><a href="#local-6989586621679972704"><span class="hs-identifier hs-var">accessToken</span></a></span><span>
-</span><span id="line-34"></span><span>  </span><span class="hs-keyword">if</span><span> </span><span class="annot"><span class="annottext">Bool
-</span><a href="#local-6989586621679972700"><span class="hs-identifier hs-var">expired</span></a></span><span>
-</span><span id="line-35"></span><span>    </span><span class="hs-keyword">then</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-36"></span><span>      </span><span id="local-6989586621679972699"><span class="annot"><span class="annottext">newTokens :: Tokens
-</span><a href="#local-6989586621679972699"><span class="hs-identifier hs-var">newTokens</span></a></span></span><span class="hs-glyph">@</span><span class="hs-special">(</span><span class="annot"><a href="Unison.Auth.Types.html#Tokens"><span class="hs-identifier hs-type">Tokens</span></a></span><span> </span><span class="hs-special">{</span><span class="annot"><span class="annottext">accessToken :: Tokens -&gt; AccessToken
-</span><a href="Unison.Auth.Types.html#accessToken"><span class="hs-identifier hs-var">accessToken</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="local-6989586621679972698"><span class="annot"><span class="annottext">AccessToken
-</span><a href="#local-6989586621679972698"><span class="hs-identifier hs-var">newAccessToken</span></a></span></span><span class="hs-special">}</span><span class="hs-special">)</span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IO (Either CredentialFailure Tokens) -&gt; IO Tokens
+</span><a href="#local-6989586621680010380"><span class="hs-identifier hs-var">currentAccessToken</span></a></span><span>
+</span><span id="line-43"></span><span>  </span><span class="hs-keyword">if</span><span> </span><span class="annot"><span class="annottext">Bool
+</span><a href="#local-6989586621680010379"><span class="hs-identifier hs-var">expired</span></a></span><span>
+</span><span id="line-44"></span><span>    </span><span class="hs-keyword">then</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-45"></span><span>      </span><span id="local-6989586621680010378"><span class="annot"><span class="annottext">newTokens :: Tokens
+</span><a href="#local-6989586621680010378"><span class="hs-identifier hs-var">newTokens</span></a></span></span><span class="hs-glyph">@</span><span class="hs-special">(</span><span class="annot"><a href="Unison.Auth.Types.html#Tokens"><span class="hs-identifier hs-type">Tokens</span></a></span><span> </span><span class="hs-special">{</span><span class="annot"><span class="annottext">$sel:accessToken:Tokens :: Tokens -&gt; AccessToken
+</span><a href="Unison.Auth.Types.html#%24sel%3AaccessToken%3ATokens"><span class="hs-identifier hs-var">accessToken</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="local-6989586621680010377"><span class="annot"><span class="annottext">AccessToken
+</span><a href="#local-6989586621680010377"><span class="hs-identifier hs-var">newAccessToken</span></a></span></span><span class="hs-special">}</span><span class="hs-special">)</span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IO (Either CredentialFailure Tokens) -&gt; IO Tokens
 forall e (m :: * -&gt; *) a.
 (MonadIO m, Exception e) =&gt;
 m (Either e a) -&gt; m a
 </span><span class="hs-identifier hs-var">throwEitherM</span></span><span> </span><span class="annot"><span class="annottext">(IO (Either CredentialFailure Tokens) -&gt; IO Tokens)
 -&gt; IO (Either CredentialFailure Tokens) -&gt; IO Tokens
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">CredentialManager
--&gt; CodeserverId -&gt; Tokens -&gt; IO (Either CredentialFailure Tokens)
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">URI -&gt; Tokens -&gt; IO (Either CredentialFailure Tokens)
 forall (m :: * -&gt; *).
 MonadIO m =&gt;
-CredentialManager
--&gt; CodeserverId -&gt; Tokens -&gt; m (Either CredentialFailure Tokens)
-</span><a href="Unison.Auth.Tokens.html#refreshTokens"><span class="hs-identifier hs-var">refreshTokens</span></a></span><span> </span><span class="annot"><span class="annottext">CredentialManager
-</span><a href="#local-6989586621679972709"><span class="hs-identifier hs-var">manager</span></a></span><span> </span><span class="annot"><span class="annottext">CodeserverId
-</span><a href="#local-6989586621679972708"><span class="hs-identifier hs-var">host</span></a></span><span> </span><span class="annot"><span class="annottext">Tokens
-</span><a href="#local-6989586621679972706"><span class="hs-identifier hs-var">tokens</span></a></span><span>
-</span><span id="line-37"></span><span>      </span><span class="annot"><span class="annottext">CredentialManager -&gt; CodeserverId -&gt; Tokens -&gt; IO ()
+URI -&gt; Tokens -&gt; m (Either CredentialFailure Tokens)
+</span><a href="Unison.Auth.Tokens.html#performTokenRefresh"><span class="hs-identifier hs-var">performTokenRefresh</span></a></span><span> </span><span class="annot"><span class="annottext">URI
+</span><a href="#local-6989586621680010386"><span class="hs-identifier hs-var">discoveryURI</span></a></span><span> </span><span class="annot"><span class="annottext">Tokens
+</span><a href="#local-6989586621680010388"><span class="hs-identifier hs-var">tokens</span></a></span><span>
+</span><span id="line-46"></span><span>      </span><span class="annot"><span class="annottext">CredentialManager -&gt; CodeserverId -&gt; CodeserverCredentials -&gt; IO ()
 forall (m :: * -&gt; *).
 MonadUnliftIO m =&gt;
-CredentialManager -&gt; CodeserverId -&gt; Tokens -&gt; m ()
-</span><a href="Unison.Auth.CredentialManager.html#saveTokens"><span class="hs-identifier hs-var">saveTokens</span></a></span><span> </span><span class="annot"><span class="annottext">CredentialManager
-</span><a href="#local-6989586621679972709"><span class="hs-identifier hs-var">manager</span></a></span><span> </span><span class="annot"><span class="annottext">CodeserverId
-</span><a href="#local-6989586621679972708"><span class="hs-identifier hs-var">host</span></a></span><span> </span><span class="annot"><span class="annottext">Tokens
-</span><a href="#local-6989586621679972699"><span class="hs-identifier hs-var">newTokens</span></a></span><span>
-</span><span id="line-38"></span><span>      </span><span class="hs-identifier">pure</span><span> </span><span class="hs-operator">$</span><span> </span><span class="annot"><span class="annottext">AccessToken
-</span><a href="#local-6989586621679972698"><span class="hs-identifier hs-var">newAccessToken</span></a></span><span>
-</span><span id="line-39"></span><span>    </span><span class="hs-keyword">else</span><span> </span><span class="annot"><span class="annottext">AccessToken -&gt; IO AccessToken
+CredentialManager -&gt; CodeserverId -&gt; CodeserverCredentials -&gt; m ()
+</span><a href="Unison.Auth.CredentialManager.html#saveCredentials"><span class="hs-identifier hs-var">saveCredentials</span></a></span><span> </span><span class="annot"><span class="annottext">CredentialManager
+</span><a href="#local-6989586621680010392"><span class="hs-identifier hs-var">manager</span></a></span><span> </span><span class="annot"><span class="annottext">CodeserverId
+</span><a href="#local-6989586621680010391"><span class="hs-identifier hs-var">host</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">URI -&gt; Tokens -&gt; CodeserverCredentials
+</span><a href="Unison.Auth.Types.html#codeserverCredentials"><span class="hs-identifier hs-var">codeserverCredentials</span></a></span><span> </span><span class="annot"><span class="annottext">URI
+</span><a href="#local-6989586621680010386"><span class="hs-identifier hs-var">discoveryURI</span></a></span><span> </span><span class="annot"><span class="annottext">Tokens
+</span><a href="#local-6989586621680010378"><span class="hs-identifier hs-var">newTokens</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-47"></span><span>      </span><span class="hs-identifier">pure</span><span> </span><span class="hs-operator">$</span><span> </span><span class="annot"><span class="annottext">AccessToken
+</span><a href="#local-6989586621680010377"><span class="hs-identifier hs-var">newAccessToken</span></a></span><span>
+</span><span id="line-48"></span><span>    </span><span class="hs-keyword">else</span><span> </span><span class="annot"><span class="annottext">AccessToken -&gt; IO AccessToken
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">AccessToken
-</span><a href="#local-6989586621679972704"><span class="hs-identifier hs-var">accessToken</span></a></span><span>
-</span><span id="line-40"></span><span>
-</span><span id="line-41"></span><span class="hs-comment">-- | Don't yet support automatically refreshing tokens.</span><span>
-</span><span id="line-42"></span><span id="local-6989586621679972737"><span class="annot"><a href="Unison.Auth.Tokens.html#refreshTokens"><span class="hs-identifier hs-type">refreshTokens</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">MonadIO</span></span><span> </span><span class="annot"><a href="#local-6989586621679972737"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Unison.Auth.CredentialManager.html#CredentialManager"><span class="hs-identifier hs-type">CredentialManager</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Unison.Share.Types.html#CodeserverId"><span class="hs-identifier hs-type">CodeserverId</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Tokens"><span class="hs-identifier hs-type">Tokens</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679972737"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#CredentialFailure"><span class="hs-identifier hs-type">CredentialFailure</span></a></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Tokens"><span class="hs-identifier hs-type">Tokens</span></a></span><span class="hs-special">)</span></span><span>
-</span><span id="line-43"></span><span id="refreshTokens"><span class="annot"><span class="annottext">refreshTokens :: CredentialManager
--&gt; CodeserverId -&gt; Tokens -&gt; m (Either CredentialFailure Tokens)
-</span><a href="Unison.Auth.Tokens.html#refreshTokens"><span class="hs-identifier hs-var hs-var">refreshTokens</span></a></span></span><span> </span><span id="local-6989586621679972695"><span class="annot"><span class="annottext">CredentialManager
-</span><a href="#local-6989586621679972695"><span class="hs-identifier hs-var">_manager</span></a></span></span><span> </span><span id="local-6989586621679972694"><span class="annot"><span class="annottext">CodeserverId
-</span><a href="#local-6989586621679972694"><span class="hs-identifier hs-var">_host</span></a></span></span><span> </span><span id="local-6989586621679972693"><span class="annot"><span class="annottext">Tokens
-</span><a href="#local-6989586621679972693"><span class="hs-identifier hs-var">_tokens</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-44"></span><span>  </span><span class="hs-comment">-- Refreshing tokens is currently unsupported.</span><span>
-</span><span id="line-45"></span><span>  </span><span class="annot"><span class="annottext">Either CredentialFailure Tokens
+</span><a href="#local-6989586621680010380"><span class="hs-identifier hs-var">currentAccessToken</span></a></span><span>
+</span><span id="line-49"></span><span>
+</span><span id="line-50"></span><span class="hs-comment">-- | Don't yet support automatically refreshing tokens.</span><span>
+</span><span id="line-51"></span><span class="hs-comment">--</span><span>
+</span><span id="line-52"></span><span class="hs-comment">-- Specification: https://datatracker.ietf.org/doc/html/rfc6749#section-6</span><span>
+</span><span id="line-53"></span><span id="local-6989586621680010450"><span class="annot"><a href="Unison.Auth.Tokens.html#performTokenRefresh"><span class="hs-identifier hs-type">performTokenRefresh</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">MonadIO</span></span><span> </span><span class="annot"><a href="#local-6989586621680010450"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">URI</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Tokens"><span class="hs-identifier hs-type">Tokens</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621680010450"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#CredentialFailure"><span class="hs-identifier hs-type">CredentialFailure</span></a></span><span> </span><span class="annot"><a href="Unison.Auth.Types.html#Tokens"><span class="hs-identifier hs-type">Tokens</span></a></span><span class="hs-special">)</span></span><span>
+</span><span id="line-54"></span><span id="performTokenRefresh"><span class="annot"><span class="annottext">performTokenRefresh :: URI -&gt; Tokens -&gt; m (Either CredentialFailure Tokens)
+</span><a href="Unison.Auth.Tokens.html#performTokenRefresh"><span class="hs-identifier hs-var hs-var">performTokenRefresh</span></a></span></span><span> </span><span id="local-6989586621680010373"><span class="annot"><span class="annottext">URI
+</span><a href="#local-6989586621680010373"><span class="hs-identifier hs-var">discoveryURI</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Unison.Auth.Types.html#Tokens"><span class="hs-identifier hs-type">Tokens</span></a></span><span> </span><span class="hs-special">{</span><span class="annot"><span class="annottext">$sel:refreshToken:Tokens :: Tokens -&gt; Maybe AccessToken
+</span><a href="Unison.Auth.Types.html#%24sel%3ArefreshToken%3ATokens"><span class="hs-identifier hs-var">refreshToken</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="local-6989586621680010371"><span class="annot"><span class="annottext">Maybe AccessToken
+</span><a href="#local-6989586621680010371"><span class="hs-identifier hs-var">currentRefreshToken</span></a></span></span><span class="hs-special">}</span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ExceptT CredentialFailure m Tokens
 -&gt; m (Either CredentialFailure Tokens)
-forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
-</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">CredentialFailure -&gt; Either CredentialFailure Tokens
-forall a b. a -&gt; Either a b
-</span><span class="hs-identifier hs-var">Left</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">AccessToken -&gt; CredentialFailure
+forall e (m :: * -&gt; *) a. ExceptT e m a -&gt; m (Either e a)
+</span><span class="hs-identifier hs-var">runExceptT</span></span><span> </span><span class="annot"><span class="annottext">(ExceptT CredentialFailure m Tokens
+ -&gt; m (Either CredentialFailure Tokens))
+-&gt; ExceptT CredentialFailure m Tokens
+-&gt; m (Either CredentialFailure Tokens)
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span>
+</span><span id="line-55"></span><span>  </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">Maybe AccessToken
+</span><a href="#local-6989586621680010371"><span class="hs-identifier hs-var">currentRefreshToken</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-56"></span><span>    </span><span class="annot"><span class="annottext">Maybe AccessToken
+</span><span class="hs-identifier hs-var">Nothing</span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
+</span><span id="line-57"></span><span>      </span><span class="annot"><span class="annottext">CredentialFailure -&gt; ExceptT CredentialFailure m Tokens
+forall e (m :: * -&gt; *) a. MonadError e m =&gt; e -&gt; m a
+</span><span class="hs-identifier hs-var">throwError</span></span><span> </span><span class="annot"><span class="annottext">(CredentialFailure -&gt; ExceptT CredentialFailure m Tokens)
+-&gt; CredentialFailure -&gt; ExceptT CredentialFailure m Tokens
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">AccessToken -&gt; CredentialFailure
 </span><a href="Unison.Auth.Types.html#RefreshFailure"><span class="hs-identifier hs-var">RefreshFailure</span></a></span><span> </span><span class="annot"><span class="annottext">(AccessToken -&gt; CredentialFailure)
 -&gt; (String -&gt; AccessToken) -&gt; String -&gt; CredentialFailure
 forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
@@ -171,9 +201,153 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-string">&quot;Unable to refresh authentication, please run &quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">InputPattern -&gt; String
-</span><a href="Unison.CommandLine.InputPattern.html#patternName"><span class="hs-identifier hs-var hs-var">patternName</span></a></span><span> </span><span class="annot"><span class="annottext">InputPattern
+</span><a href="Unison.CommandLine.InputPattern.html#%24sel%3ApatternName%3AInputPattern"><span class="hs-identifier hs-var hs-var">patternName</span></a></span><span> </span><span class="annot"><span class="annottext">InputPattern
 </span><a href="Unison.CommandLine.InputPatterns.html#authLogin"><span class="hs-identifier hs-var">IP.authLogin</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><span class="hs-string">&quot; and try again.&quot;</span></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
-</span><span id="line-46"></span></pre></body></html>
+</span><span class="hs-string">&quot; and try again.&quot;</span></span><span class="hs-special">)</span><span>
+</span><span id="line-58"></span><span>    </span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621680010364"><span class="annot"><span class="annottext">AccessToken
+</span><a href="#local-6989586621680010364"><span class="hs-identifier hs-var">rt</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-59"></span><span>      </span><span class="annot"><a href="Unison.Auth.Types.html#DiscoveryDoc"><span class="hs-identifier hs-type">DiscoveryDoc</span></a></span><span> </span><span class="hs-special">{</span><span id="local-6989586621680010362"><span class="annot"><span class="annottext">URI
+$sel:tokenEndpoint:DiscoveryDoc :: DiscoveryDoc -&gt; URI
+tokenEndpoint :: URI
+</span><a href="Unison.Auth.Types.html#%24sel%3AtokenEndpoint%3ADiscoveryDoc"><span class="hs-identifier hs-var hs-var">tokenEndpoint</span></a></span></span><span class="hs-special">}</span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">m (Either CredentialFailure DiscoveryDoc)
+-&gt; ExceptT CredentialFailure m DiscoveryDoc
+forall e (m :: * -&gt; *) a. m (Either e a) -&gt; ExceptT e m a
+</span><span class="hs-identifier hs-var">ExceptT</span></span><span> </span><span class="annot"><span class="annottext">(m (Either CredentialFailure DiscoveryDoc)
+ -&gt; ExceptT CredentialFailure m DiscoveryDoc)
+-&gt; m (Either CredentialFailure DiscoveryDoc)
+-&gt; ExceptT CredentialFailure m DiscoveryDoc
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">URI -&gt; m (Either CredentialFailure DiscoveryDoc)
+forall (m :: * -&gt; *).
+MonadIO m =&gt;
+URI -&gt; m (Either CredentialFailure DiscoveryDoc)
+</span><a href="Unison.Auth.Discovery.html#fetchDiscoveryDoc"><span class="hs-identifier hs-var">fetchDiscoveryDoc</span></a></span><span> </span><span class="annot"><span class="annottext">URI
+</span><a href="#local-6989586621680010373"><span class="hs-identifier hs-var">discoveryURI</span></a></span><span>
+</span><span id="line-60"></span><span>      </span><span id="local-6989586621680010359"><span class="annot"><span class="annottext">Request
+</span><a href="#local-6989586621680010359"><span class="hs-identifier hs-var">req</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IO Request -&gt; ExceptT CredentialFailure m Request
+forall (m :: * -&gt; *) a. MonadIO m =&gt; IO a -&gt; m a
+</span><span class="hs-identifier hs-var">liftIO</span></span><span> </span><span class="annot"><span class="annottext">(IO Request -&gt; ExceptT CredentialFailure m Request)
+-&gt; IO Request -&gt; ExceptT CredentialFailure m Request
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">URI -&gt; IO Request
+forall (m :: * -&gt; *). MonadThrow m =&gt; URI -&gt; m Request
+</span><span class="hs-identifier hs-var">HTTP.requestFromURI</span></span><span> </span><span class="annot"><span class="annottext">URI
+</span><a href="#local-6989586621680010362"><span class="hs-identifier hs-var">tokenEndpoint</span></a></span><span>
+</span><span id="line-61"></span><span>      </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621680010357"><span class="annot"><span class="annottext">addFormData :: Request -&gt; Request
+</span><a href="#local-6989586621680010357"><span class="hs-identifier hs-var hs-var">addFormData</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-62"></span><span>            </span><span class="annot"><span class="annottext">[(ByteString, ByteString)] -&gt; Request -&gt; Request
+</span><span class="hs-identifier hs-var">HTTP.urlEncodedBody</span></span><span>
+</span><span id="line-63"></span><span>              </span><span class="hs-special">[</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ByteString
+</span><span class="hs-string">&quot;grant_type&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">ByteString
+</span><span class="hs-string">&quot;refresh_token&quot;</span></span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><span id="line-64"></span><span>                </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ByteString
+</span><span class="hs-string">&quot;refresh_token&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String -&gt; ByteString
+</span><span class="hs-identifier hs-var">BSC.pack</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; ByteString)
+-&gt; (AccessToken -&gt; String) -&gt; AccessToken -&gt; ByteString
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">AccessToken -&gt; String
+</span><span class="hs-identifier hs-var">Text.unpack</span></span><span> </span><span class="annot"><span class="annottext">(AccessToken -&gt; ByteString) -&gt; AccessToken -&gt; ByteString
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">AccessToken
+</span><a href="#local-6989586621680010364"><span class="hs-identifier hs-var">rt</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-65"></span><span>              </span><span class="hs-special">]</span><span>
+</span><span id="line-66"></span><span>      </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621680010353"><span class="annot"><span class="annottext">fullReq :: Request
+</span><a href="#local-6989586621680010353"><span class="hs-identifier hs-var hs-var">fullReq</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Request -&gt; Request
+</span><a href="#local-6989586621680010357"><span class="hs-identifier hs-var">addFormData</span></a></span><span> </span><span class="annot"><span class="annottext">(Request -&gt; Request) -&gt; Request -&gt; Request
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Request
+</span><a href="#local-6989586621680010359"><span class="hs-identifier hs-var">req</span></a></span><span> </span><span class="hs-special">{</span><span class="annot"><span class="annottext">method :: ByteString
+</span><span class="hs-identifier hs-var">HTTP.method</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ByteString
+</span><span class="hs-string">&quot;POST&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">requestHeaders :: RequestHeaders
+</span><span class="hs-identifier hs-var">HTTP.requestHeaders</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="hs-special">(</span><span class="annot"><span class="annottext">HeaderName
+</span><span class="hs-string">&quot;Accept&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">ByteString
+</span><span class="hs-string">&quot;application/json&quot;</span></span><span class="hs-special">)</span><span class="hs-special">]</span><span class="hs-special">}</span><span>
+</span><span id="line-67"></span><span>      </span><span id="local-6989586621680010350"><span class="annot"><span class="annottext">Manager
+</span><a href="#local-6989586621680010350"><span class="hs-identifier hs-var">unauthenticatedHttpClient</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IO Manager -&gt; ExceptT CredentialFailure m Manager
+forall (m :: * -&gt; *) a. MonadIO m =&gt; IO a -&gt; m a
+</span><span class="hs-identifier hs-var">liftIO</span></span><span> </span><span class="annot"><span class="annottext">(IO Manager -&gt; ExceptT CredentialFailure m Manager)
+-&gt; IO Manager -&gt; ExceptT CredentialFailure m Manager
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">IO Manager
+</span><span class="hs-identifier hs-var">HTTP.getGlobalManager</span></span><span>
+</span><span id="line-68"></span><span>      </span><span id="local-6989586621680010348"><span class="annot"><span class="annottext">Response ByteString
+</span><a href="#local-6989586621680010348"><span class="hs-identifier hs-var">resp</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IO (Response ByteString)
+-&gt; ExceptT CredentialFailure m (Response ByteString)
+forall (m :: * -&gt; *) a. MonadIO m =&gt; IO a -&gt; m a
+</span><span class="hs-identifier hs-var">liftIO</span></span><span> </span><span class="annot"><span class="annottext">(IO (Response ByteString)
+ -&gt; ExceptT CredentialFailure m (Response ByteString))
+-&gt; IO (Response ByteString)
+-&gt; ExceptT CredentialFailure m (Response ByteString)
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Request -&gt; Manager -&gt; IO (Response ByteString)
+</span><span class="hs-identifier hs-var">HTTP.httpLbs</span></span><span> </span><span class="annot"><span class="annottext">Request
+</span><a href="#local-6989586621680010353"><span class="hs-identifier hs-var">fullReq</span></a></span><span> </span><span class="annot"><span class="annottext">Manager
+</span><a href="#local-6989586621680010350"><span class="hs-identifier hs-var">unauthenticatedHttpClient</span></a></span><span>
+</span><span id="line-69"></span><span>      </span><span id="local-6989586621680010346"><span class="annot"><span class="annottext">Tokens
+</span><a href="#local-6989586621680010346"><span class="hs-identifier hs-var">newTokens</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">Response ByteString -&gt; Status
+forall body. Response body -&gt; Status
+</span><span class="hs-identifier hs-var hs-var">HTTP.responseStatus</span></span><span> </span><span class="annot"><span class="annottext">Response ByteString
+</span><a href="#local-6989586621680010348"><span class="hs-identifier hs-var">resp</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-70"></span><span>        </span><span id="local-6989586621680010344"><span class="annot"><span class="annottext">Status
+</span><a href="#local-6989586621680010344"><span class="hs-identifier hs-var">status</span></a></span></span><span>
+</span><span id="line-71"></span><span>          </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">Status
+</span><a href="#local-6989586621680010344"><span class="hs-identifier hs-var">status</span></a></span><span> </span><span class="annot"><span class="annottext">Status -&gt; Status -&gt; Bool
+forall a. Ord a =&gt; a -&gt; a -&gt; Bool
+</span><span class="hs-operator hs-var">&lt;</span></span><span> </span><span class="annot"><span class="annottext">Status
+</span><span class="hs-identifier hs-var">Network.status300</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-72"></span><span>            </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621680010341"><span class="annot"><span class="annottext">respBytes :: ByteString
+</span><a href="#local-6989586621680010341"><span class="hs-identifier hs-var hs-var">respBytes</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Response ByteString -&gt; ByteString
+forall body. Response body -&gt; body
+</span><span class="hs-identifier hs-var hs-var">HTTP.responseBody</span></span><span> </span><span class="annot"><span class="annottext">Response ByteString
+</span><a href="#local-6989586621680010348"><span class="hs-identifier hs-var">resp</span></a></span><span>
+</span><span id="line-73"></span><span>            </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">ByteString -&gt; Either String Tokens
+forall a. FromJSON a =&gt; ByteString -&gt; Either String a
+</span><span class="hs-identifier hs-var">Aeson.eitherDecode</span></span><span> </span><span class="hs-glyph">@</span><span class="annot"><a href="Unison.Auth.Types.html#Tokens"><span class="hs-identifier hs-type">Tokens</span></a></span><span> </span><span class="annot"><span class="annottext">ByteString
+</span><a href="#local-6989586621680010341"><span class="hs-identifier hs-var">respBytes</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-74"></span><span>              </span><span class="annot"><span class="hs-identifier hs-type">Left</span></span><span> </span><span id="local-6989586621680010338"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621680010338"><span class="hs-identifier hs-var">err</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">CredentialFailure -&gt; ExceptT CredentialFailure m Tokens
+forall e (m :: * -&gt; *) a. MonadError e m =&gt; e -&gt; m a
+</span><span class="hs-identifier hs-var">throwError</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">URI -&gt; AccessToken -&gt; CredentialFailure
+</span><a href="Unison.Auth.Types.html#InvalidTokenResponse"><span class="hs-identifier hs-var">InvalidTokenResponse</span></a></span><span> </span><span class="annot"><span class="annottext">URI
+</span><a href="#local-6989586621680010362"><span class="hs-identifier hs-var">tokenEndpoint</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; AccessToken
+</span><span class="hs-identifier hs-var">Text.pack</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621680010338"><span class="hs-identifier hs-var">err</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-75"></span><span>              </span><span class="annot"><span class="hs-identifier hs-type">Right</span></span><span> </span><span id="local-6989586621680010336"><span class="annot"><span class="annottext">Tokens
+</span><a href="#local-6989586621680010336"><span class="hs-identifier hs-var">a</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Tokens -&gt; ExceptT CredentialFailure m Tokens
+forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">Tokens
+</span><a href="#local-6989586621680010336"><span class="hs-identifier hs-var">a</span></a></span><span>
+</span><span id="line-76"></span><span>          </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">Bool
+</span><span class="hs-identifier hs-var">otherwise</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">CredentialFailure -&gt; ExceptT CredentialFailure m Tokens
+forall e (m :: * -&gt; *) a. MonadError e m =&gt; e -&gt; m a
+</span><span class="hs-identifier hs-var">throwError</span></span><span> </span><span class="annot"><span class="annottext">(CredentialFailure -&gt; ExceptT CredentialFailure m Tokens)
+-&gt; CredentialFailure -&gt; ExceptT CredentialFailure m Tokens
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">URI -&gt; AccessToken -&gt; CredentialFailure
+</span><a href="Unison.Auth.Types.html#InvalidTokenResponse"><span class="hs-identifier hs-var">InvalidTokenResponse</span></a></span><span> </span><span class="annot"><span class="annottext">URI
+</span><a href="#local-6989586621680010362"><span class="hs-identifier hs-var">tokenEndpoint</span></a></span><span> </span><span class="annot"><span class="annottext">(AccessToken -&gt; CredentialFailure)
+-&gt; AccessToken -&gt; CredentialFailure
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">AccessToken
+</span><span class="hs-string">&quot;Received &quot;</span></span><span> </span><span class="annot"><span class="annottext">AccessToken -&gt; AccessToken -&gt; AccessToken
+forall a. Semigroup a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Status -&gt; AccessToken
+forall a. Show a =&gt; a -&gt; AccessToken
+</span><span class="hs-identifier hs-var">tShow</span></span><span> </span><span class="annot"><span class="annottext">Status
+</span><a href="#local-6989586621680010344"><span class="hs-identifier hs-var">status</span></a></span><span> </span><span class="annot"><span class="annottext">AccessToken -&gt; AccessToken -&gt; AccessToken
+forall a. Semigroup a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">AccessToken
+</span><span class="hs-string">&quot; response from token endpoint&quot;</span></span><span class="hs-special">)</span><span>
+</span><span id="line-77"></span><span>      </span><span class="hs-comment">-- According to the spec, servers may or may not update the refresh token itself.</span><span>
+</span><span id="line-78"></span><span>      </span><span class="hs-comment">-- If updated we need to replace it, if not updated we keep the existing one.</span><span>
+</span><span id="line-79"></span><span>      </span><span class="hs-identifier">pure</span><span> </span><span class="hs-operator">$</span><span> </span><span class="annot"><span class="annottext">Tokens
+</span><a href="#local-6989586621680010346"><span class="hs-identifier hs-var">newTokens</span></a></span><span> </span><span class="hs-special">{</span><span class="annot"><span class="annottext">$sel:refreshToken:Tokens :: Maybe AccessToken
+</span><a href="Unison.Auth.Types.html#%24sel%3ArefreshToken%3ATokens"><span class="hs-identifier hs-var">refreshToken</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Tokens -&gt; Maybe AccessToken
+</span><a href="Unison.Auth.Types.html#%24sel%3ArefreshToken%3ATokens"><span class="hs-identifier hs-var hs-var">refreshToken</span></a></span><span> </span><span class="annot"><span class="annottext">Tokens
+</span><a href="#local-6989586621680010346"><span class="hs-identifier hs-var">newTokens</span></a></span><span> </span><span class="annot"><span class="annottext">Maybe AccessToken -&gt; Maybe AccessToken -&gt; Maybe AccessToken
+forall (f :: * -&gt; *) a. Alternative f =&gt; f a -&gt; f a -&gt; f a
+</span><span class="hs-operator hs-var">&lt;|&gt;</span></span><span> </span><span class="annot"><span class="annottext">Maybe AccessToken
+</span><a href="#local-6989586621680010371"><span class="hs-identifier hs-var">currentRefreshToken</span></a></span><span class="hs-special">}</span><span>
+</span><span id="line-80"></span></pre></body></html>

@@ -224,8 +224,8 @@ Forall :: a -> F a
 IntroOuter :: a -> F a
 bindExternal :: Var v => [(v, Reference)] -> Type v a -> Type v a
 bindReferences :: Var v => Set v -> Map Name Reference -> Type v a -> ResolutionResult v a (Type v a)
-toReference :: (Var v, Show v) => Type v a -> Reference
-toReferenceMentions :: (Var v, Show v) => Type v a -> Set Reference
+toReference :: (Ord v, Show v) => Type v a -> Reference
+toReferenceMentions :: (Ord v, Show v) => Type v a -> Set Reference
 booleanRef :: Reference
 charRef :: Reference
 effectRef :: Reference
@@ -305,8 +305,8 @@ If :: a -> a -> a -> F typeVar typeAnn patternAnn a
 And :: a -> a -> F typeVar typeAnn patternAnn a
 Or :: a -> a -> F typeVar typeAnn patternAnn a
 Lam :: a -> F typeVar typeAnn patternAnn a
-LetRec :: IsTop -> [a] -> a -> F typeVar typeAnn patternAnn a
-Let :: IsTop -> a -> a -> F typeVar typeAnn patternAnn a
+LetRec :: [a] -> a -> F typeVar typeAnn patternAnn a
+Let :: a -> a -> F typeVar typeAnn patternAnn a
 Match :: a -> [MatchCase patternAnn a] -> F typeVar typeAnn patternAnn a
 TermLink :: Referent -> F typeVar typeAnn patternAnn a
 TypeLink :: Reference -> F typeVar typeAnn patternAnn a
