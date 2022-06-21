@@ -28,22 +28,22 @@
 -&gt; Parsec Void Text ReadShareRemoteNamespace
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-identifier hs-var">fmap</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; ReadShareRemoteNamespace
-</span><a href="#local-6989586621680008612"><span class="hs-identifier hs-var">makeNS</span></a></span><span> </span><span class="annot"><span class="annottext">(ParsecT Void Text Identity Text
+</span><a href="#local-6989586621680009235"><span class="hs-identifier hs-var">makeNS</span></a></span><span> </span><span class="annot"><span class="annottext">(ParsecT Void Text Identity Text
  -&gt; Parsec Void Text ReadShareRemoteNamespace)
 -&gt; ParsecT Void Text Identity Text
 -&gt; Parsec Void Text ReadShareRemoteNamespace
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
-</span><a href="#local-6989586621680008611"><span class="hs-identifier hs-var">latest</span></a></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
+</span><a href="#local-6989586621680009234"><span class="hs-identifier hs-var">latest</span></a></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
 -&gt; ParsecT Void Text Identity Text
 -&gt; ParsecT Void Text Identity Text
 forall (f :: * -&gt; *) a. Alternative f =&gt; f a -&gt; f a -&gt; f a
 </span><span class="hs-operator hs-var">&lt;|&gt;</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
-</span><a href="#local-6989586621680008609"><span class="hs-identifier hs-var">release</span></a></span><span>
+</span><a href="#local-6989586621680009232"><span class="hs-identifier hs-var">release</span></a></span><span>
 </span><span id="line-26"></span><span>  </span><span class="hs-keyword">where</span><span>
-</span><span id="line-27"></span><span>    </span><span class="annot"><a href="#local-6989586621680008611"><span class="hs-identifier hs-type">latest</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="#local-6989586621680008609"><span class="hs-identifier hs-type">release</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="#local-6989586621680008608"><span class="hs-identifier hs-type">version</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Parsec</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Void</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span>
-</span><span id="line-28"></span><span>    </span><span id="local-6989586621680008611"><span class="annot"><span class="annottext">latest :: ParsecT Void Text Identity Text
-</span><a href="#local-6989586621680008611"><span class="hs-identifier hs-var hs-var">latest</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
+</span><span id="line-27"></span><span>    </span><span class="annot"><a href="#local-6989586621680009234"><span class="hs-identifier hs-type">latest</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="#local-6989586621680009232"><span class="hs-identifier hs-type">release</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="#local-6989586621680009231"><span class="hs-identifier hs-type">version</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Parsec</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Void</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span>
+</span><span id="line-28"></span><span>    </span><span id="local-6989586621680009234"><span class="annot"><span class="annottext">latest :: ParsecT Void Text Identity Text
+</span><a href="#local-6989586621680009234"><span class="hs-identifier hs-var hs-var">latest</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
 </span><span class="hs-string">&quot;latest-&quot;</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
 -&gt; ParsecT Void Text Identity [Char]
 -&gt; ParsecT Void Text Identity [Char]
@@ -63,8 +63,8 @@ forall e s (m :: * -&gt; *). MonadParsec e s m =&gt; m ()
 forall (f :: * -&gt; *) a b. Functor f =&gt; f a -&gt; b -&gt; f b
 </span><span class="hs-operator hs-var">$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Text
 </span><span class="hs-string">&quot;trunk&quot;</span></span><span>
-</span><span id="line-29"></span><span>    </span><span id="local-6989586621680008609"><span class="annot"><span class="annottext">release :: ParsecT Void Text Identity Text
-</span><a href="#local-6989586621680008609"><span class="hs-identifier hs-var hs-var">release</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Text -&gt; Text)
+</span><span id="line-29"></span><span>    </span><span id="local-6989586621680009232"><span class="annot"><span class="annottext">release :: ParsecT Void Text Identity Text
+</span><a href="#local-6989586621680009232"><span class="hs-identifier hs-var hs-var">release</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Text -&gt; Text)
 -&gt; ParsecT Void Text Identity Text
 -&gt; ParsecT Void Text Identity Text
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
@@ -82,14 +82,14 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 -&gt; ParsecT Void Text Identity Text
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f a -&gt; f b -&gt; f b
 </span><span class="hs-operator hs-var">*&gt;</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
-</span><a href="#local-6989586621680008608"><span class="hs-identifier hs-var">version</span></a></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
+</span><a href="#local-6989586621680009231"><span class="hs-identifier hs-var">version</span></a></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
 -&gt; ParsecT Void Text Identity () -&gt; ParsecT Void Text Identity Text
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f a -&gt; f b -&gt; f a
 </span><span class="hs-operator hs-var">&lt;*</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity ()
 forall e s (m :: * -&gt; *). MonadParsec e s m =&gt; m ()
 </span><span class="hs-identifier hs-var">eof</span></span><span>
-</span><span id="line-30"></span><span>    </span><span id="local-6989586621680008608"><span class="annot"><span class="annottext">version :: ParsecT Void Text Identity Text
-</span><a href="#local-6989586621680008608"><span class="hs-identifier hs-var hs-var">version</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-30"></span><span>    </span><span id="local-6989586621680009231"><span class="annot"><span class="annottext">version :: ParsecT Void Text Identity Text
+</span><a href="#local-6989586621680009231"><span class="hs-identifier hs-var hs-var">version</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
 </span><span id="line-31"></span><span>      </span><span class="annot"><span class="annottext">[Char] -&gt; Text
 </span><span class="hs-identifier hs-var">Text.pack</span></span><span> </span><span class="annot"><span class="annottext">([Char] -&gt; Text)
 -&gt; ParsecT Void Text Identity [Char]
@@ -119,10 +119,10 @@ f (Token s) -&gt; m (Token s)
 </span><span class="hs-char">'.'</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Char
 </span><span class="hs-char">'_'</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Char
 </span><span class="hs-char">'-'</span></span><span class="hs-special">]</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
-</span><span id="line-32"></span><span>    </span><span class="annot"><a href="#local-6989586621680008612"><span class="hs-identifier hs-type">makeNS</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ReadShareRemoteNamespace</span></span><span>
-</span><span id="line-33"></span><span>    </span><span id="local-6989586621680008612"><span class="annot"><span class="annottext">makeNS :: Text -&gt; ReadShareRemoteNamespace
-</span><a href="#local-6989586621680008612"><span class="hs-identifier hs-var hs-var">makeNS</span></a></span></span><span> </span><span id="local-6989586621680008597"><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621680008597"><span class="hs-identifier hs-var">t</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-32"></span><span>    </span><span class="annot"><a href="#local-6989586621680009235"><span class="hs-identifier hs-type">makeNS</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ReadShareRemoteNamespace</span></span><span>
+</span><span id="line-33"></span><span>    </span><span id="local-6989586621680009235"><span class="annot"><span class="annottext">makeNS :: Text -&gt; ReadShareRemoteNamespace
+</span><a href="#local-6989586621680009235"><span class="hs-identifier hs-var hs-var">makeNS</span></a></span></span><span> </span><span id="local-6989586621680009220"><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621680009220"><span class="hs-identifier hs-var">t</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-34"></span><span>      </span><span class="annot"><span class="annottext">ReadShareRemoteNamespace :: ShareCodeserver -&gt; Text -&gt; Path -&gt; ReadShareRemoteNamespace
 </span><span class="hs-identifier hs-type">ReadShareRemoteNamespace</span></span><span>
 </span><span id="line-35"></span><span>        </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">$sel:server:ReadShareRemoteNamespace :: ShareCodeserver
@@ -143,6 +143,6 @@ forall b a. Cons b b a a =&gt; a -&gt; b -&gt; b
 forall b a. Cons b b a a =&gt; a -&gt; b -&gt; b
 </span><span class="hs-operator hs-var">Path.:&lt;</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; Path
 </span><span class="hs-identifier hs-var">Path.fromText</span></span><span> </span><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621680008597"><span class="hs-identifier hs-var">t</span></a></span><span>
+</span><a href="#local-6989586621680009220"><span class="hs-identifier hs-var">t</span></a></span><span>
 </span><span id="line-38"></span><span>        </span><span class="hs-special">}</span><span>
 </span><span id="line-39"></span></pre></body></html>
