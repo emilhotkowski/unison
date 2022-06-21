@@ -838,9 +838,9 @@ HashJWT :: Text -> HashJWT
 --   really only need the hash!
 hashJWTHash :: HashJWT -> Hash32
 data HashJWTClaims
-HashJWTClaims :: Hash32 -> Text -> HashJWTClaims
+HashJWTClaims :: Hash32 -> Maybe Text -> HashJWTClaims
 [$sel:hash:HashJWTClaims] :: HashJWTClaims -> Hash32
-[$sel:userId:HashJWTClaims] :: HashJWTClaims -> Text
+[$sel:userId:HashJWTClaims] :: HashJWTClaims -> Maybe Text
 
 -- | A decoded hash JWT that retains the original encoded JWT.
 data DecodedHashJWT
