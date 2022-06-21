@@ -24,8 +24,8 @@
 </span><span id="line-24"></span><span>
 </span><span id="line-25"></span><span class="annot"><a href="Unison.Server.Errors.html#badHQN"><span class="hs-identifier hs-type">badHQN</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Server.Types.html#HashQualifiedName"><span class="hs-identifier hs-type">HashQualifiedName</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ServerError</span></span><span>
 </span><span id="line-26"></span><span id="badHQN"><span class="annot"><span class="annottext">badHQN :: HashQualifiedName -&gt; ServerError
-</span><a href="Unison.Server.Errors.html#badHQN"><span class="hs-identifier hs-var hs-var">badHQN</span></a></span></span><span> </span><span id="local-6989586621679289669"><span class="annot"><span class="annottext">HashQualifiedName
-</span><a href="#local-6989586621679289669"><span class="hs-identifier hs-var">hqn</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><a href="Unison.Server.Errors.html#badHQN"><span class="hs-identifier hs-var hs-var">badHQN</span></a></span></span><span> </span><span id="local-6989586621679289688"><span class="annot"><span class="annottext">HashQualifiedName
+</span><a href="#local-6989586621679289688"><span class="hs-identifier hs-var">hqn</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-27"></span><span>  </span><span class="annot"><span class="annottext">ServerError
 </span><span class="hs-identifier hs-var">err400</span></span><span>
 </span><span id="line-28"></span><span>    </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">errBody :: ByteString
@@ -33,7 +33,7 @@
 </span><span id="line-29"></span><span>        </span><span class="annot"><span class="annottext">Text -&gt; ByteString
 </span><span class="hs-identifier hs-var">Text.encodeUtf8</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">HashQualifiedName -&gt; Text
 </span><span class="hs-identifier hs-var">Text.fromStrict</span></span><span> </span><span class="annot"><span class="annottext">HashQualifiedName
-</span><a href="#local-6989586621679289669"><span class="hs-identifier hs-var">hqn</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679289688"><span class="hs-identifier hs-var">hqn</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-30"></span><span>          </span><span class="annot"><span class="annottext">ByteString -&gt; ByteString -&gt; ByteString
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">ByteString
@@ -47,8 +47,8 @@ forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span id="line-34"></span><span class="annot"><a href="Unison.Server.Errors.html#backendError"><span class="hs-identifier hs-type">backendError</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Server.Backend.html#BackendError"><span class="hs-identifier hs-type">Backend.BackendError</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ServerError</span></span><span>
 </span><span id="line-35"></span><span id="backendError"><span class="annot"><span class="annottext">backendError :: BackendError -&gt; ServerError
 </span><a href="Unison.Server.Errors.html#backendError"><span class="hs-identifier hs-var hs-var">backendError</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-glyph">\</span><span class="hs-glyph">case</span><span>
-</span><span id="line-36"></span><span>  </span><span class="annot"><a href="Unison.Server.Backend.html#NoSuchNamespace"><span class="hs-identifier hs-type">Backend.NoSuchNamespace</span></a></span><span> </span><span id="local-6989586621679289663"><span class="annot"><span class="annottext">Absolute
-</span><a href="#local-6989586621679289663"><span class="hs-identifier hs-var">n</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
+</span><span id="line-36"></span><span>  </span><span class="annot"><a href="Unison.Server.Backend.html#NoSuchNamespace"><span class="hs-identifier hs-type">Backend.NoSuchNamespace</span></a></span><span> </span><span id="local-6989586621679289682"><span class="annot"><span class="annottext">Absolute
+</span><a href="#local-6989586621679289682"><span class="hs-identifier hs-var">n</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
 </span><span id="line-37"></span><span>    </span><span class="annot"><span class="annottext">HashQualifiedName -&gt; ServerError
 </span><a href="Unison.Server.Errors.html#noSuchNamespace"><span class="hs-identifier hs-var">noSuchNamespace</span></a></span><span> </span><span class="annot"><span class="annottext">(HashQualifiedName -&gt; ServerError)
 -&gt; (Path -&gt; HashQualifiedName) -&gt; Path -&gt; ServerError
@@ -58,15 +58,15 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Absolute -&gt; Path
 </span><span class="hs-identifier hs-var hs-var">Path.unabsolute</span></span><span> </span><span class="annot"><span class="annottext">Absolute
-</span><a href="#local-6989586621679289663"><span class="hs-identifier hs-var">n</span></a></span><span>
-</span><span id="line-38"></span><span>  </span><span class="annot"><a href="Unison.Server.Backend.html#BadNamespace"><span class="hs-identifier hs-type">Backend.BadNamespace</span></a></span><span> </span><span id="local-6989586621679289657"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679289657"><span class="hs-identifier hs-var">err</span></a></span></span><span> </span><span id="local-6989586621679289656"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679289656"><span class="hs-identifier hs-var">namespace</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; ServerError
+</span><a href="#local-6989586621679289682"><span class="hs-identifier hs-var">n</span></a></span><span>
+</span><span id="line-38"></span><span>  </span><span class="annot"><a href="Unison.Server.Backend.html#BadNamespace"><span class="hs-identifier hs-type">Backend.BadNamespace</span></a></span><span> </span><span id="local-6989586621679289676"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679289676"><span class="hs-identifier hs-var">err</span></a></span></span><span> </span><span id="local-6989586621679289675"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679289675"><span class="hs-identifier hs-var">namespace</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; ServerError
 </span><a href="Unison.Server.Errors.html#badNamespace"><span class="hs-identifier hs-var">badNamespace</span></a></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679289657"><span class="hs-identifier hs-var">err</span></a></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679289656"><span class="hs-identifier hs-var">namespace</span></a></span><span>
-</span><span id="line-39"></span><span>  </span><span class="annot"><a href="Unison.Server.Backend.html#NoBranchForHash"><span class="hs-identifier hs-type">Backend.NoBranchForHash</span></a></span><span> </span><span id="local-6989586621679289653"><span class="annot"><span class="annottext">CausalHash
-</span><a href="#local-6989586621679289653"><span class="hs-identifier hs-var">h</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
+</span><a href="#local-6989586621679289676"><span class="hs-identifier hs-var">err</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679289675"><span class="hs-identifier hs-var">namespace</span></a></span><span>
+</span><span id="line-39"></span><span>  </span><span class="annot"><a href="Unison.Server.Backend.html#NoBranchForHash"><span class="hs-identifier hs-type">Backend.NoBranchForHash</span></a></span><span> </span><span id="local-6989586621679289672"><span class="annot"><span class="annottext">CausalHash
+</span><a href="#local-6989586621679289672"><span class="hs-identifier hs-var">h</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
 </span><span id="line-40"></span><span>    </span><span class="annot"><span class="annottext">HashQualifiedName -&gt; ServerError
 </span><a href="Unison.Server.Errors.html#noSuchNamespace"><span class="hs-identifier hs-var">noSuchNamespace</span></a></span><span> </span><span class="annot"><span class="annottext">(HashQualifiedName -&gt; ServerError)
 -&gt; (String -&gt; HashQualifiedName) -&gt; String -&gt; ServerError
@@ -81,14 +81,14 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">CausalHash -&gt; String
 forall a. Show a =&gt; a -&gt; String
 </span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="annot"><span class="annottext">CausalHash
-</span><a href="#local-6989586621679289653"><span class="hs-identifier hs-var">h</span></a></span><span>
-</span><span id="line-41"></span><span>  </span><span class="annot"><a href="Unison.Server.Backend.html#CouldntLoadBranch"><span class="hs-identifier hs-type">Backend.CouldntLoadBranch</span></a></span><span> </span><span id="local-6989586621679289648"><span class="annot"><span class="annottext">CausalHash
-</span><a href="#local-6989586621679289648"><span class="hs-identifier hs-var">h</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
+</span><a href="#local-6989586621679289672"><span class="hs-identifier hs-var">h</span></a></span><span>
+</span><span id="line-41"></span><span>  </span><span class="annot"><a href="Unison.Server.Backend.html#CouldntLoadBranch"><span class="hs-identifier hs-type">Backend.CouldntLoadBranch</span></a></span><span> </span><span id="local-6989586621679289667"><span class="annot"><span class="annottext">CausalHash
+</span><a href="#local-6989586621679289667"><span class="hs-identifier hs-var">h</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
 </span><span id="line-42"></span><span>    </span><span class="annot"><span class="annottext">CausalHash -&gt; ServerError
 </span><a href="Unison.Server.Errors.html#couldntLoadBranch"><span class="hs-identifier hs-var">couldntLoadBranch</span></a></span><span> </span><span class="annot"><span class="annottext">CausalHash
-</span><a href="#local-6989586621679289648"><span class="hs-identifier hs-var">h</span></a></span><span>
-</span><span id="line-43"></span><span>  </span><span class="annot"><a href="Unison.Server.Backend.html#CouldntExpandBranchHash"><span class="hs-identifier hs-type">Backend.CouldntExpandBranchHash</span></a></span><span> </span><span id="local-6989586621679289645"><span class="annot"><span class="annottext">ShortBranchHash
-</span><a href="#local-6989586621679289645"><span class="hs-identifier hs-var">h</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
+</span><a href="#local-6989586621679289667"><span class="hs-identifier hs-var">h</span></a></span><span>
+</span><span id="line-43"></span><span>  </span><span class="annot"><a href="Unison.Server.Backend.html#CouldntExpandBranchHash"><span class="hs-identifier hs-type">Backend.CouldntExpandBranchHash</span></a></span><span> </span><span id="local-6989586621679289664"><span class="annot"><span class="annottext">ShortBranchHash
+</span><a href="#local-6989586621679289664"><span class="hs-identifier hs-var">h</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
 </span><span id="line-44"></span><span>    </span><span class="annot"><span class="annottext">HashQualifiedName -&gt; ServerError
 </span><a href="Unison.Server.Errors.html#noSuchNamespace"><span class="hs-identifier hs-var">noSuchNamespace</span></a></span><span> </span><span class="annot"><span class="annottext">(HashQualifiedName -&gt; ServerError)
 -&gt; (String -&gt; HashQualifiedName) -&gt; String -&gt; ServerError
@@ -103,33 +103,33 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">ShortBranchHash -&gt; String
 forall a. Show a =&gt; a -&gt; String
 </span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="annot"><span class="annottext">ShortBranchHash
-</span><a href="#local-6989586621679289645"><span class="hs-identifier hs-var">h</span></a></span><span>
-</span><span id="line-45"></span><span>  </span><span class="annot"><a href="Unison.Server.Backend.html#AmbiguousBranchHash"><span class="hs-identifier hs-type">Backend.AmbiguousBranchHash</span></a></span><span> </span><span id="local-6989586621679289643"><span class="annot"><span class="annottext">ShortBranchHash
-</span><a href="#local-6989586621679289643"><span class="hs-identifier hs-var">sbh</span></a></span></span><span> </span><span id="local-6989586621679289642"><span class="annot"><span class="annottext">Set ShortBranchHash
-</span><a href="#local-6989586621679289642"><span class="hs-identifier hs-var">hashes</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
+</span><a href="#local-6989586621679289664"><span class="hs-identifier hs-var">h</span></a></span><span>
+</span><span id="line-45"></span><span>  </span><span class="annot"><a href="Unison.Server.Backend.html#AmbiguousBranchHash"><span class="hs-identifier hs-type">Backend.AmbiguousBranchHash</span></a></span><span> </span><span id="local-6989586621679289662"><span class="annot"><span class="annottext">ShortBranchHash
+</span><a href="#local-6989586621679289662"><span class="hs-identifier hs-var">sbh</span></a></span></span><span> </span><span id="local-6989586621679289661"><span class="annot"><span class="annottext">Set ShortBranchHash
+</span><a href="#local-6989586621679289661"><span class="hs-identifier hs-var">hashes</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
 </span><span id="line-46"></span><span>    </span><span class="annot"><span class="annottext">HashQualifiedName -&gt; Set HashQualifiedName -&gt; ServerError
 </span><a href="Unison.Server.Errors.html#ambiguousNamespace"><span class="hs-identifier hs-var">ambiguousNamespace</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ShortBranchHash -&gt; HashQualifiedName
 </span><span class="hs-identifier hs-var hs-var">SBH.toText</span></span><span> </span><span class="annot"><span class="annottext">ShortBranchHash
-</span><a href="#local-6989586621679289643"><span class="hs-identifier hs-var">sbh</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(ShortBranchHash -&gt; HashQualifiedName)
+</span><a href="#local-6989586621679289662"><span class="hs-identifier hs-var">sbh</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(ShortBranchHash -&gt; HashQualifiedName)
 -&gt; Set ShortBranchHash -&gt; Set HashQualifiedName
 forall b a. Ord b =&gt; (a -&gt; b) -&gt; Set a -&gt; Set b
 </span><span class="hs-identifier hs-var">Set.map</span></span><span> </span><span class="annot"><span class="annottext">ShortBranchHash -&gt; HashQualifiedName
 </span><span class="hs-identifier hs-var hs-var">SBH.toText</span></span><span> </span><span class="annot"><span class="annottext">Set ShortBranchHash
-</span><a href="#local-6989586621679289642"><span class="hs-identifier hs-var">hashes</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-47"></span><span>  </span><span class="annot"><a href="Unison.Server.Backend.html#MissingSignatureForTerm"><span class="hs-identifier hs-type">Backend.MissingSignatureForTerm</span></a></span><span> </span><span id="local-6989586621679289637"><span class="annot"><span class="annottext">Reference
-</span><a href="#local-6989586621679289637"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">HashQualifiedName -&gt; ServerError
+</span><a href="#local-6989586621679289661"><span class="hs-identifier hs-var">hashes</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-47"></span><span>  </span><span class="annot"><a href="Unison.Server.Backend.html#MissingSignatureForTerm"><span class="hs-identifier hs-type">Backend.MissingSignatureForTerm</span></a></span><span> </span><span id="local-6989586621679289656"><span class="annot"><span class="annottext">Reference
+</span><a href="#local-6989586621679289656"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">HashQualifiedName -&gt; ServerError
 </span><a href="Unison.Server.Errors.html#missingSigForTerm"><span class="hs-identifier hs-var">missingSigForTerm</span></a></span><span> </span><span class="annot"><span class="annottext">(HashQualifiedName -&gt; ServerError)
 -&gt; HashQualifiedName -&gt; ServerError
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Reference -&gt; HashQualifiedName
 </span><span class="hs-identifier hs-var">Reference.toText</span></span><span> </span><span class="annot"><span class="annottext">Reference
-</span><a href="#local-6989586621679289637"><span class="hs-identifier hs-var">r</span></a></span><span>
+</span><a href="#local-6989586621679289656"><span class="hs-identifier hs-var">r</span></a></span><span>
 </span><span id="line-48"></span><span>
 </span><span id="line-49"></span><span class="annot"><a href="Unison.Server.Errors.html#badNamespace"><span class="hs-identifier hs-type">badNamespace</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ServerError</span></span><span>
 </span><span id="line-50"></span><span id="badNamespace"><span class="annot"><span class="annottext">badNamespace :: String -&gt; String -&gt; ServerError
-</span><a href="Unison.Server.Errors.html#badNamespace"><span class="hs-identifier hs-var hs-var">badNamespace</span></a></span></span><span> </span><span id="local-6989586621679289634"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679289634"><span class="hs-identifier hs-var">err</span></a></span></span><span> </span><span id="local-6989586621679289633"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679289633"><span class="hs-identifier hs-var">namespace</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><a href="Unison.Server.Errors.html#badNamespace"><span class="hs-identifier hs-var hs-var">badNamespace</span></a></span></span><span> </span><span id="local-6989586621679289653"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679289653"><span class="hs-identifier hs-var">err</span></a></span></span><span> </span><span id="local-6989586621679289652"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679289652"><span class="hs-identifier hs-var">namespace</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-51"></span><span>  </span><span class="annot"><span class="annottext">ServerError
 </span><span class="hs-identifier hs-var">err400</span></span><span>
 </span><span id="line-52"></span><span>    </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">errBody :: ByteString
@@ -140,7 +140,7 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ByteString
 </span><a href="Unison.Server.Types.html#mungeString"><span class="hs-identifier hs-var">mungeString</span></a></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679289633"><span class="hs-identifier hs-var">namespace</span></a></span><span>
+</span><a href="#local-6989586621679289652"><span class="hs-identifier hs-var">namespace</span></a></span><span>
 </span><span id="line-55"></span><span>          </span><span class="annot"><span class="annottext">ByteString -&gt; ByteString -&gt; ByteString
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">ByteString
@@ -149,13 +149,13 @@ forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ByteString
 </span><a href="Unison.Server.Types.html#mungeString"><span class="hs-identifier hs-var">mungeString</span></a></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679289634"><span class="hs-identifier hs-var">err</span></a></span><span>
+</span><a href="#local-6989586621679289653"><span class="hs-identifier hs-var">err</span></a></span><span>
 </span><span id="line-57"></span><span>    </span><span class="hs-special">}</span><span>
 </span><span id="line-58"></span><span>
 </span><span id="line-59"></span><span class="annot"><a href="Unison.Server.Errors.html#noSuchNamespace"><span class="hs-identifier hs-type">noSuchNamespace</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Server.Types.html#HashQualifiedName"><span class="hs-identifier hs-type">HashQualifiedName</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ServerError</span></span><span>
 </span><span id="line-60"></span><span id="noSuchNamespace"><span class="annot"><span class="annottext">noSuchNamespace :: HashQualifiedName -&gt; ServerError
-</span><a href="Unison.Server.Errors.html#noSuchNamespace"><span class="hs-identifier hs-var hs-var">noSuchNamespace</span></a></span></span><span> </span><span id="local-6989586621679289632"><span class="annot"><span class="annottext">HashQualifiedName
-</span><a href="#local-6989586621679289632"><span class="hs-identifier hs-var">namespace</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><a href="Unison.Server.Errors.html#noSuchNamespace"><span class="hs-identifier hs-var hs-var">noSuchNamespace</span></a></span></span><span> </span><span id="local-6989586621679289651"><span class="annot"><span class="annottext">HashQualifiedName
+</span><a href="#local-6989586621679289651"><span class="hs-identifier hs-var">namespace</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-61"></span><span>  </span><span class="annot"><span class="annottext">ServerError
 </span><span class="hs-identifier hs-var">err404</span></span><span> </span><span class="hs-special">{</span><span class="annot"><span class="annottext">errBody :: ByteString
 </span><span class="hs-identifier hs-var">errBody</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ByteString
@@ -163,15 +163,15 @@ forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">HashQualifiedName -&gt; ByteString
 </span><a href="Unison.Server.Types.html#munge"><span class="hs-identifier hs-var">munge</span></a></span><span> </span><span class="annot"><span class="annottext">HashQualifiedName
-</span><a href="#local-6989586621679289632"><span class="hs-identifier hs-var">namespace</span></a></span><span> </span><span class="annot"><span class="annottext">ByteString -&gt; ByteString -&gt; ByteString
+</span><a href="#local-6989586621679289651"><span class="hs-identifier hs-var">namespace</span></a></span><span> </span><span class="annot"><span class="annottext">ByteString -&gt; ByteString -&gt; ByteString
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">ByteString
 </span><span class="hs-string">&quot; does not exist.&quot;</span></span><span class="hs-special">}</span><span>
 </span><span id="line-62"></span><span>
 </span><span id="line-63"></span><span class="annot"><a href="Unison.Server.Errors.html#couldntLoadBranch"><span class="hs-identifier hs-type">couldntLoadBranch</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Causal.CausalHash</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ServerError</span></span><span>
 </span><span id="line-64"></span><span id="couldntLoadBranch"><span class="annot"><span class="annottext">couldntLoadBranch :: CausalHash -&gt; ServerError
-</span><a href="Unison.Server.Errors.html#couldntLoadBranch"><span class="hs-identifier hs-var hs-var">couldntLoadBranch</span></a></span></span><span> </span><span id="local-6989586621679289631"><span class="annot"><span class="annottext">CausalHash
-</span><a href="#local-6989586621679289631"><span class="hs-identifier hs-var">h</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><a href="Unison.Server.Errors.html#couldntLoadBranch"><span class="hs-identifier hs-var hs-var">couldntLoadBranch</span></a></span></span><span> </span><span id="local-6989586621679289650"><span class="annot"><span class="annottext">CausalHash
+</span><a href="#local-6989586621679289650"><span class="hs-identifier hs-var">h</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-65"></span><span>  </span><span class="annot"><span class="annottext">ServerError
 </span><span class="hs-identifier hs-var">err404</span></span><span>
 </span><span id="line-66"></span><span>    </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">errBody :: ByteString
@@ -191,7 +191,7 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">CausalHash -&gt; String
 forall a. Show a =&gt; a -&gt; String
 </span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="annot"><span class="annottext">CausalHash
-</span><a href="#local-6989586621679289631"><span class="hs-identifier hs-var">h</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679289650"><span class="hs-identifier hs-var">h</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-69"></span><span>          </span><span class="annot"><span class="annottext">ByteString -&gt; ByteString -&gt; ByteString
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">ByteString
@@ -200,9 +200,9 @@ forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span id="line-71"></span><span>
 </span><span id="line-72"></span><span class="annot"><a href="Unison.Server.Errors.html#ambiguousNamespace"><span class="hs-identifier hs-type">ambiguousNamespace</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Server.Types.html#HashQualifiedName"><span class="hs-identifier hs-type">HashQualifiedName</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Set</span></span><span> </span><span class="annot"><a href="Unison.Server.Types.html#HashQualifiedName"><span class="hs-identifier hs-type">HashQualifiedName</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ServerError</span></span><span>
 </span><span id="line-73"></span><span id="ambiguousNamespace"><span class="annot"><span class="annottext">ambiguousNamespace :: HashQualifiedName -&gt; Set HashQualifiedName -&gt; ServerError
-</span><a href="Unison.Server.Errors.html#ambiguousNamespace"><span class="hs-identifier hs-var hs-var">ambiguousNamespace</span></a></span></span><span> </span><span id="local-6989586621679289630"><span class="annot"><span class="annottext">HashQualifiedName
-</span><a href="#local-6989586621679289630"><span class="hs-identifier hs-var">name</span></a></span></span><span> </span><span id="local-6989586621679289629"><span class="annot"><span class="annottext">Set HashQualifiedName
-</span><a href="#local-6989586621679289629"><span class="hs-identifier hs-var">namespaces</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><a href="Unison.Server.Errors.html#ambiguousNamespace"><span class="hs-identifier hs-var hs-var">ambiguousNamespace</span></a></span></span><span> </span><span id="local-6989586621679289649"><span class="annot"><span class="annottext">HashQualifiedName
+</span><a href="#local-6989586621679289649"><span class="hs-identifier hs-var">name</span></a></span></span><span> </span><span id="local-6989586621679289648"><span class="annot"><span class="annottext">Set HashQualifiedName
+</span><a href="#local-6989586621679289648"><span class="hs-identifier hs-var">namespaces</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-74"></span><span>  </span><span class="annot"><span class="annottext">ServerError
 </span><span class="hs-identifier hs-var">err409</span></span><span>
 </span><span id="line-75"></span><span>    </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">errBody :: ByteString
@@ -213,7 +213,7 @@ forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">HashQualifiedName -&gt; ByteString
 </span><a href="Unison.Server.Types.html#munge"><span class="hs-identifier hs-var">munge</span></a></span><span> </span><span class="annot"><span class="annottext">HashQualifiedName
-</span><a href="#local-6989586621679289630"><span class="hs-identifier hs-var">name</span></a></span><span>
+</span><a href="#local-6989586621679289649"><span class="hs-identifier hs-var">name</span></a></span><span>
 </span><span id="line-78"></span><span>          </span><span class="annot"><span class="annottext">ByteString -&gt; ByteString -&gt; ByteString
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">ByteString
@@ -225,13 +225,13 @@ forall s. Show s =&gt; s -&gt; ByteString
 </span><a href="Unison.Server.Types.html#mungeShow"><span class="hs-identifier hs-var">mungeShow</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Set HashQualifiedName -&gt; [HashQualifiedName]
 forall a. Set a -&gt; [a]
 </span><span class="hs-identifier hs-var">Set.toList</span></span><span> </span><span class="annot"><span class="annottext">Set HashQualifiedName
-</span><a href="#local-6989586621679289629"><span class="hs-identifier hs-var">namespaces</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679289648"><span class="hs-identifier hs-var">namespaces</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-80"></span><span>    </span><span class="hs-special">}</span><span>
 </span><span id="line-81"></span><span>
 </span><span id="line-82"></span><span class="annot"><a href="Unison.Server.Errors.html#missingSigForTerm"><span class="hs-identifier hs-type">missingSigForTerm</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Unison.Server.Types.html#HashQualifiedName"><span class="hs-identifier hs-type">HashQualifiedName</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ServerError</span></span><span>
 </span><span id="line-83"></span><span id="missingSigForTerm"><span class="annot"><span class="annottext">missingSigForTerm :: HashQualifiedName -&gt; ServerError
-</span><a href="Unison.Server.Errors.html#missingSigForTerm"><span class="hs-identifier hs-var hs-var">missingSigForTerm</span></a></span></span><span> </span><span id="local-6989586621679289627"><span class="annot"><span class="annottext">HashQualifiedName
-</span><a href="#local-6989586621679289627"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><a href="Unison.Server.Errors.html#missingSigForTerm"><span class="hs-identifier hs-var hs-var">missingSigForTerm</span></a></span></span><span> </span><span id="local-6989586621679289646"><span class="annot"><span class="annottext">HashQualifiedName
+</span><a href="#local-6989586621679289646"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-84"></span><span>  </span><span class="annot"><span class="annottext">ServerError
 </span><span class="hs-identifier hs-var">err500</span></span><span>
 </span><span id="line-85"></span><span>    </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">errBody :: ByteString
@@ -242,7 +242,7 @@ forall a. Set a -&gt; [a]
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">HashQualifiedName -&gt; ByteString
 </span><a href="Unison.Server.Types.html#munge"><span class="hs-identifier hs-var">munge</span></a></span><span> </span><span class="annot"><span class="annottext">HashQualifiedName
-</span><a href="#local-6989586621679289627"><span class="hs-identifier hs-var">r</span></a></span><span>
+</span><a href="#local-6989586621679289646"><span class="hs-identifier hs-var">r</span></a></span><span>
 </span><span id="line-88"></span><span>          </span><span class="annot"><span class="annottext">ByteString -&gt; ByteString -&gt; ByteString
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">ByteString

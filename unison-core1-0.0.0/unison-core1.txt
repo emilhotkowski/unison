@@ -1352,6 +1352,10 @@ threadIdRef :: Reference
 socketRef :: Reference
 scopeRef :: Reference
 refRef :: Reference
+iarrayRef :: Reference
+marrayRef :: Reference
+ibytearrayRef :: Reference
+mbytearrayRef :: Reference
 mvarRef :: Reference
 tvarRef :: Reference
 tlsRef :: Reference
@@ -1380,6 +1384,10 @@ threadId :: Ord v => a -> Type v a
 builtinIO :: Ord v => a -> Type v a
 scopeType :: Ord v => a -> Type v a
 refType :: Ord v => a -> Type v a
+iarrayType :: Ord v => a -> Type v a
+marrayType :: Ord v => a -> Type v a
+ibytearrayType :: Ord v => a -> Type v a
+mbytearrayType :: Ord v => a -> Type v a
 socket :: Ord v => a -> Type v a
 list :: Ord v => a -> Type v a
 bytes :: Ord v => a -> Type v a

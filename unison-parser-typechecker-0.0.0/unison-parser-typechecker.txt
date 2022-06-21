@@ -1556,6 +1556,7 @@ stdHandleRef :: Reference
 failureRef :: Reference
 ioFailureRef :: Reference
 tlsFailureRef :: Reference
+arrayFailureRef :: Reference
 exceptionRef :: Reference
 tlsSignedCertRef :: Reference
 tlsPrivateKeyRef :: Reference
@@ -2102,9 +2103,9 @@ Env :: [Type v loc] -> TypeLookup v loc -> Map Name [NamedReference v loc] -> En
 [$sel:_ambientAbilities:Env] :: Env v loc -> [Type v loc]
 [$sel:_typeLookup:Env] :: Env v loc -> TypeLookup v loc
 [$sel:_termsByShortname:Env] :: Env v loc -> Map Name [NamedReference v loc]
-typeLookup :: forall v_a3lNw loc_a3lNx. Lens' (Env v_a3lNw loc_a3lNx) (TypeLookup v_a3lNw loc_a3lNx)
-termsByShortname :: forall v_a3lNw loc_a3lNx. Lens' (Env v_a3lNw loc_a3lNx) (Map Name [NamedReference v_a3lNw loc_a3lNx])
-ambientAbilities :: forall v_a3lNw loc_a3lNx. Lens' (Env v_a3lNw loc_a3lNx) [Type v_a3lNw loc_a3lNx]
+typeLookup :: forall v_a3lSq loc_a3lSr. Lens' (Env v_a3lSq loc_a3lSr) (TypeLookup v_a3lSq loc_a3lSr)
+termsByShortname :: forall v_a3lSq loc_a3lSr. Lens' (Env v_a3lSq loc_a3lSr) (Map Name [NamedReference v_a3lSq loc_a3lSr])
+ambientAbilities :: forall v_a3lSq loc_a3lSr. Lens' (Env v_a3lSq loc_a3lSr) [Type v_a3lSq loc_a3lSr]
 
 -- | Infer the type of a <a>Term</a>, using a function to resolve the type
 --   of <tt>Ref</tt> constructors contained in that term.
@@ -4656,6 +4657,9 @@ writeForeign :: ForeignConvention a => Stack 'UN -> Stack 'BX -> a -> IO (Stack 
 mkForeign :: (ForeignConvention a, ForeignConvention r) => (a -> IO r) -> ForeignFunc
 instance Unison.Runtime.Foreign.Function.ForeignConvention GHC.Types.Int
 instance Unison.Runtime.Foreign.Function.ForeignConvention GHC.Word.Word64
+instance Unison.Runtime.Foreign.Function.ForeignConvention GHC.Word.Word8
+instance Unison.Runtime.Foreign.Function.ForeignConvention GHC.Word.Word16
+instance Unison.Runtime.Foreign.Function.ForeignConvention GHC.Word.Word32
 instance Unison.Runtime.Foreign.Function.ForeignConvention GHC.Types.Char
 instance Unison.Runtime.Foreign.Function.ForeignConvention Unison.Runtime.Stack.Closure
 instance Unison.Runtime.Foreign.Function.ForeignConvention Unison.Util.Text.Text
@@ -4676,6 +4680,7 @@ instance Unison.Runtime.Foreign.Function.ForeignConvention ()
 instance (Unison.Runtime.Foreign.Function.ForeignConvention a, Unison.Runtime.Foreign.Function.ForeignConvention b) => Unison.Runtime.Foreign.Function.ForeignConvention (a, b)
 instance Unison.Runtime.Foreign.Function.ForeignConvention a => Unison.Runtime.Foreign.Function.ForeignConvention (Unison.Runtime.Foreign.Failure a)
 instance (Unison.Runtime.Foreign.Function.ForeignConvention a, Unison.Runtime.Foreign.Function.ForeignConvention b, Unison.Runtime.Foreign.Function.ForeignConvention c) => Unison.Runtime.Foreign.Function.ForeignConvention (a, b, c)
+instance (Unison.Runtime.Foreign.Function.ForeignConvention a, Unison.Runtime.Foreign.Function.ForeignConvention b, Unison.Runtime.Foreign.Function.ForeignConvention c, Unison.Runtime.Foreign.Function.ForeignConvention d, Unison.Runtime.Foreign.Function.ForeignConvention e) => Unison.Runtime.Foreign.Function.ForeignConvention (a, b, c, d, e)
 instance Unison.Runtime.Foreign.Function.ForeignConvention GHC.IO.Handle.Types.BufferMode
 instance Unison.Runtime.Foreign.Function.ForeignConvention [Unison.Runtime.Stack.Closure]
 instance Unison.Runtime.Foreign.Function.ForeignConvention [Unison.Runtime.Foreign.Foreign]
@@ -4685,6 +4690,10 @@ instance Unison.Runtime.Foreign.Function.ForeignConvention (GHC.IORef.IORef Unis
 instance Unison.Runtime.Foreign.Function.ForeignConvention (Unison.Runtime.ANF.SuperGroup Unison.Symbol.Symbol)
 instance Unison.Runtime.Foreign.Function.ForeignConvention Unison.Runtime.ANF.Value
 instance Unison.Runtime.Foreign.Function.ForeignConvention Unison.Runtime.Foreign.Foreign
+instance Unison.Runtime.Foreign.Function.ForeignConvention (Data.Primitive.Array.MutableArray s Unison.Runtime.Stack.Closure)
+instance Unison.Runtime.Foreign.Function.ForeignConvention (Data.Primitive.ByteArray.MutableByteArray s)
+instance Unison.Runtime.Foreign.Function.ForeignConvention (Data.Primitive.Array.Array Unison.Runtime.Stack.Closure)
+instance Unison.Runtime.Foreign.Function.ForeignConvention Data.Primitive.ByteArray.ByteArray
 instance Unison.Runtime.Foreign.BuiltinForeign b => Unison.Runtime.Foreign.Function.ForeignConvention b
 instance Unison.Runtime.Foreign.BuiltinForeign b => Unison.Runtime.Foreign.Function.ForeignConvention [b]
 instance GHC.Show.Show Unison.Runtime.Foreign.Function.ForeignFunc
@@ -4907,6 +4916,7 @@ reifyValue :: CCache -> Value -> IO (Either [Reference] Closure)
 reifyValue0 :: (Map Reference Word64, Map Reference Word64) -> Value -> IO Closure
 closureNum :: Closure -> Int
 universalEq :: (Foreign -> Foreign -> Bool) -> Closure -> Closure -> Bool
+arrayEq :: (Closure -> Closure -> Bool) -> Array Closure -> Array Closure -> Bool
 compareAsFloat :: Int -> Int -> Ordering
 compareAsNat :: Int -> Int -> Ordering
 floatTag :: Word64
@@ -4914,6 +4924,7 @@ natTag :: Word64
 charTag :: Word64
 unitTag :: Word64
 universalCompare :: (Foreign -> Foreign -> Ordering) -> Closure -> Closure -> Ordering
+arrayCmp :: (Closure -> Closure -> Ordering) -> Array Closure -> Array Closure -> Ordering
 
 module Unison.Runtime.Interface
 startRuntime :: RuntimeHost -> Text -> IO (Runtime Symbol)

@@ -1318,13 +1318,13 @@ LoopState :: Branch m -> Branch m -> NonEmpty Absolute -> Maybe (FilePath, SkipN
 type Action' m v = Action m (Either Event Input) v
 type SkipNextUpdate = Bool
 type InputDescription = Text
-root :: forall m_a3aPP v_a3aPQ. Lens' (LoopState m_a3aPP v_a3aPQ) (Branch m_a3aPP)
-numberedArgs :: forall m_a3aPP v_a3aPQ. Lens' (LoopState m_a3aPP v_a3aPQ) NumberedArgs
-latestTypecheckedFile :: forall m_a3aPP v_a3aPQ v_a3bxP. Lens (LoopState m_a3aPP v_a3aPQ) (LoopState m_a3aPP v_a3bxP) (Maybe (TypecheckedUnisonFile v_a3aPQ Ann)) (Maybe (TypecheckedUnisonFile v_a3bxP Ann))
-latestFile :: forall m_a3aPP v_a3aPQ. Lens' (LoopState m_a3aPP v_a3aPQ) (Maybe (FilePath, SkipNextUpdate))
-lastSavedRoot :: forall m_a3aPP v_a3aPQ. Lens' (LoopState m_a3aPP v_a3aPQ) (Branch m_a3aPP)
-lastInput :: forall m_a3aPP v_a3aPQ. Lens' (LoopState m_a3aPP v_a3aPQ) (Maybe Input)
-currentPathStack :: forall m_a3aPP v_a3aPQ. Lens' (LoopState m_a3aPP v_a3aPQ) (NonEmpty Absolute)
+root :: forall m_a3aQ8 v_a3aQ9. Lens' (LoopState m_a3aQ8 v_a3aQ9) (Branch m_a3aQ8)
+numberedArgs :: forall m_a3aQ8 v_a3aQ9. Lens' (LoopState m_a3aQ8 v_a3aQ9) NumberedArgs
+latestTypecheckedFile :: forall m_a3aQ8 v_a3aQ9 v_a3by8. Lens (LoopState m_a3aQ8 v_a3aQ9) (LoopState m_a3aQ8 v_a3by8) (Maybe (TypecheckedUnisonFile v_a3aQ9 Ann)) (Maybe (TypecheckedUnisonFile v_a3by8 Ann))
+latestFile :: forall m_a3aQ8 v_a3aQ9. Lens' (LoopState m_a3aQ8 v_a3aQ9) (Maybe (FilePath, SkipNextUpdate))
+lastSavedRoot :: forall m_a3aQ8 v_a3aQ9. Lens' (LoopState m_a3aQ8 v_a3aQ9) (Branch m_a3aQ8)
+lastInput :: forall m_a3aQ8 v_a3aQ9. Lens' (LoopState m_a3aQ8 v_a3aQ9) (Maybe Input)
+currentPathStack :: forall m_a3aQ8 v_a3aQ9. Lens' (LoopState m_a3aQ8 v_a3aQ9) (NonEmpty Absolute)
 currentPath :: Getter (LoopState m v) Absolute
 loopState0 :: Branch m -> Absolute -> LoopState m v
 respond :: MonadCommand n m i v => Output v -> n ()
