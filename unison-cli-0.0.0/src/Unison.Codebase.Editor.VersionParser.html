@@ -12,32 +12,38 @@
 </span><span id="line-12"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Unison.Codebase.Path</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Path</span></span><span>
 </span><span id="line-13"></span><span>
 </span><span id="line-14"></span><span class="hs-comment">-- | Parse git version strings into valid unison namespaces.</span><span>
-</span><span id="line-15"></span><span class="hs-comment">--   &quot;release/M1j&quot; -&gt; &quot;releases._M1j&quot;</span><span>
-</span><span id="line-16"></span><span class="hs-comment">--   &quot;release/M1j.2&quot; -&gt; &quot;releases._M1j_2&quot;</span><span>
-</span><span id="line-17"></span><span class="hs-comment">--   &quot;latest-*&quot; -&gt; &quot;trunk&quot;</span><span>
-</span><span id="line-18"></span><span class="annot"><a href="Unison.Codebase.Editor.VersionParser.html#defaultBaseLib"><span class="hs-identifier hs-type">defaultBaseLib</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Parsec</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Void</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">ReadGitRemoteNamespace</span></span><span>
-</span><span id="line-19"></span><span id="defaultBaseLib"><span class="annot"><span class="annottext">defaultBaseLib :: Parsec Void Text ReadGitRemoteNamespace
-</span><a href="Unison.Codebase.Editor.VersionParser.html#defaultBaseLib"><span class="hs-identifier hs-var hs-var">defaultBaseLib</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Text -&gt; ReadGitRemoteNamespace)
+</span><span id="line-15"></span><span class="hs-comment">--</span><span>
+</span><span id="line-16"></span><span class="hs-comment">-- &gt;&gt;&gt; parseMaybe defaultBaseLib &quot;release/M1j&quot;</span><span>
+</span><span id="line-17"></span><span class="hs-comment">-- Just (ReadShareRemoteNamespace {server = DefaultCodeserver, repo = &quot;unison&quot;, path = public.dev.base.releases._M1j})</span><span>
+</span><span id="line-18"></span><span class="hs-comment">--</span><span>
+</span><span id="line-19"></span><span class="hs-comment">-- &gt;&gt;&gt; parseMaybe defaultBaseLib &quot;release/M1j.2&quot;</span><span>
+</span><span id="line-20"></span><span class="hs-comment">-- Just (ReadShareRemoteNamespace {server = DefaultCodeserver, repo = &quot;unison&quot;, path = public.dev.base.releases._M1j_2})</span><span>
+</span><span id="line-21"></span><span class="hs-comment">--</span><span>
+</span><span id="line-22"></span><span class="hs-comment">-- &gt;&gt;&gt; parseMaybe defaultBaseLib &quot;latest-1234&quot;</span><span>
+</span><span id="line-23"></span><span class="hs-comment">-- Just (ReadShareRemoteNamespace {server = DefaultCodeserver, repo = &quot;unison&quot;, path = public.dev.base.trunk})</span><span>
+</span><span id="line-24"></span><span class="annot"><a href="Unison.Codebase.Editor.VersionParser.html#defaultBaseLib"><span class="hs-identifier hs-type">defaultBaseLib</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Parsec</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Void</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">ReadShareRemoteNamespace</span></span><span>
+</span><span id="line-25"></span><span id="defaultBaseLib"><span class="annot"><span class="annottext">defaultBaseLib :: Parsec Void Text ReadShareRemoteNamespace
+</span><a href="Unison.Codebase.Editor.VersionParser.html#defaultBaseLib"><span class="hs-identifier hs-var hs-var">defaultBaseLib</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Text -&gt; ReadShareRemoteNamespace)
 -&gt; ParsecT Void Text Identity Text
--&gt; Parsec Void Text ReadGitRemoteNamespace
+-&gt; Parsec Void Text ReadShareRemoteNamespace
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
-</span><span class="hs-identifier hs-var">fmap</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; ReadGitRemoteNamespace
-</span><a href="#local-6989586621680008569"><span class="hs-identifier hs-var">makeNS</span></a></span><span> </span><span class="annot"><span class="annottext">(ParsecT Void Text Identity Text
- -&gt; Parsec Void Text ReadGitRemoteNamespace)
+</span><span class="hs-identifier hs-var">fmap</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; ReadShareRemoteNamespace
+</span><a href="#local-6989586621680008612"><span class="hs-identifier hs-var">makeNS</span></a></span><span> </span><span class="annot"><span class="annottext">(ParsecT Void Text Identity Text
+ -&gt; Parsec Void Text ReadShareRemoteNamespace)
 -&gt; ParsecT Void Text Identity Text
--&gt; Parsec Void Text ReadGitRemoteNamespace
+-&gt; Parsec Void Text ReadShareRemoteNamespace
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
-</span><a href="#local-6989586621680008568"><span class="hs-identifier hs-var">latest</span></a></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
+</span><a href="#local-6989586621680008611"><span class="hs-identifier hs-var">latest</span></a></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
 -&gt; ParsecT Void Text Identity Text
 -&gt; ParsecT Void Text Identity Text
 forall (f :: * -&gt; *) a. Alternative f =&gt; f a -&gt; f a -&gt; f a
 </span><span class="hs-operator hs-var">&lt;|&gt;</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
-</span><a href="#local-6989586621680008566"><span class="hs-identifier hs-var">release</span></a></span><span>
-</span><span id="line-20"></span><span>  </span><span class="hs-keyword">where</span><span>
-</span><span id="line-21"></span><span>    </span><span class="annot"><a href="#local-6989586621680008568"><span class="hs-identifier hs-type">latest</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="#local-6989586621680008566"><span class="hs-identifier hs-type">release</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="#local-6989586621680008565"><span class="hs-identifier hs-type">version</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Parsec</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Void</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span>
-</span><span id="line-22"></span><span>    </span><span id="local-6989586621680008568"><span class="annot"><span class="annottext">latest :: ParsecT Void Text Identity Text
-</span><a href="#local-6989586621680008568"><span class="hs-identifier hs-var hs-var">latest</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
+</span><a href="#local-6989586621680008609"><span class="hs-identifier hs-var">release</span></a></span><span>
+</span><span id="line-26"></span><span>  </span><span class="hs-keyword">where</span><span>
+</span><span id="line-27"></span><span>    </span><span class="annot"><a href="#local-6989586621680008611"><span class="hs-identifier hs-type">latest</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="#local-6989586621680008609"><span class="hs-identifier hs-type">release</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="#local-6989586621680008608"><span class="hs-identifier hs-type">version</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Parsec</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Void</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span>
+</span><span id="line-28"></span><span>    </span><span id="local-6989586621680008611"><span class="annot"><span class="annottext">latest :: ParsecT Void Text Identity Text
+</span><a href="#local-6989586621680008611"><span class="hs-identifier hs-var hs-var">latest</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
 </span><span class="hs-string">&quot;latest-&quot;</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
 -&gt; ParsecT Void Text Identity [Char]
 -&gt; ParsecT Void Text Identity [Char]
@@ -57,8 +63,8 @@ forall e s (m :: * -&gt; *). MonadParsec e s m =&gt; m ()
 forall (f :: * -&gt; *) a b. Functor f =&gt; f a -&gt; b -&gt; f b
 </span><span class="hs-operator hs-var">$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Text
 </span><span class="hs-string">&quot;trunk&quot;</span></span><span>
-</span><span id="line-23"></span><span>    </span><span id="local-6989586621680008566"><span class="annot"><span class="annottext">release :: ParsecT Void Text Identity Text
-</span><a href="#local-6989586621680008566"><span class="hs-identifier hs-var hs-var">release</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Text -&gt; Text)
+</span><span id="line-29"></span><span>    </span><span id="local-6989586621680008609"><span class="annot"><span class="annottext">release :: ParsecT Void Text Identity Text
+</span><a href="#local-6989586621680008609"><span class="hs-identifier hs-var hs-var">release</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Text -&gt; Text)
 -&gt; ParsecT Void Text Identity Text
 -&gt; ParsecT Void Text Identity Text
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
@@ -76,15 +82,15 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 -&gt; ParsecT Void Text Identity Text
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f a -&gt; f b -&gt; f b
 </span><span class="hs-operator hs-var">*&gt;</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
-</span><a href="#local-6989586621680008565"><span class="hs-identifier hs-var">version</span></a></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
+</span><a href="#local-6989586621680008608"><span class="hs-identifier hs-var">version</span></a></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
 -&gt; ParsecT Void Text Identity () -&gt; ParsecT Void Text Identity Text
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f a -&gt; f b -&gt; f a
 </span><span class="hs-operator hs-var">&lt;*</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity ()
 forall e s (m :: * -&gt; *). MonadParsec e s m =&gt; m ()
 </span><span class="hs-identifier hs-var">eof</span></span><span>
-</span><span id="line-24"></span><span>    </span><span id="local-6989586621680008565"><span class="annot"><span class="annottext">version :: ParsecT Void Text Identity Text
-</span><a href="#local-6989586621680008565"><span class="hs-identifier hs-var hs-var">version</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-25"></span><span>      </span><span class="annot"><span class="annottext">[Char] -&gt; Text
+</span><span id="line-30"></span><span>    </span><span id="local-6989586621680008608"><span class="annot"><span class="annottext">version :: ParsecT Void Text Identity Text
+</span><a href="#local-6989586621680008608"><span class="hs-identifier hs-var hs-var">version</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-31"></span><span>      </span><span class="annot"><span class="annottext">[Char] -&gt; Text
 </span><span class="hs-identifier hs-var">Text.pack</span></span><span> </span><span class="annot"><span class="annottext">([Char] -&gt; Text)
 -&gt; ParsecT Void Text Identity [Char]
 -&gt; ParsecT Void Text Identity Text
@@ -113,37 +119,30 @@ f (Token s) -&gt; m (Token s)
 </span><span class="hs-char">'.'</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Char
 </span><span class="hs-char">'_'</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Char
 </span><span class="hs-char">'-'</span></span><span class="hs-special">]</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
-</span><span id="line-26"></span><span>    </span><span class="annot"><a href="#local-6989586621680008569"><span class="hs-identifier hs-type">makeNS</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ReadGitRemoteNamespace</span></span><span>
-</span><span id="line-27"></span><span>    </span><span id="local-6989586621680008569"><span class="annot"><span class="annottext">makeNS :: Text -&gt; ReadGitRemoteNamespace
-</span><a href="#local-6989586621680008569"><span class="hs-identifier hs-var hs-var">makeNS</span></a></span></span><span> </span><span id="local-6989586621680008554"><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621680008554"><span class="hs-identifier hs-var">t</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-28"></span><span>      </span><span class="annot"><span class="annottext">ReadGitRemoteNamespace :: ReadGitRepo
--&gt; Maybe ShortBranchHash -&gt; Path -&gt; ReadGitRemoteNamespace
-</span><span class="hs-identifier hs-type">ReadGitRemoteNamespace</span></span><span>
-</span><span id="line-29"></span><span>        </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">$sel:repo:ReadGitRemoteNamespace :: ReadGitRepo
-</span><span class="hs-identifier hs-var">repo</span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-30"></span><span>            </span><span class="annot"><span class="annottext">ReadGitRepo :: Text -&gt; Maybe Text -&gt; ReadGitRepo
-</span><span class="hs-identifier hs-type">ReadGitRepo</span></span><span>
-</span><span id="line-31"></span><span>              </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">$sel:url:ReadGitRepo :: Text
-</span><span class="hs-identifier hs-var">url</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Text
-</span><span class="hs-string">&quot;https://github.com/unisonweb/base&quot;</span></span><span class="hs-special">,</span><span>
-</span><span id="line-32"></span><span>                </span><span class="hs-comment">-- Use the 'v4' branch of base for now.</span><span>
-</span><span id="line-33"></span><span>                </span><span class="hs-comment">-- We can revert back to the main branch once enough people have upgraded ucm and</span><span>
-</span><span id="line-34"></span><span>                </span><span class="hs-comment">-- we're okay with pushing the v3 base codebase to main (perhaps by the next ucm</span><span>
-</span><span id="line-35"></span><span>                </span><span class="hs-comment">-- release).</span><span>
-</span><span id="line-36"></span><span>                </span><span class="annot"><span class="annottext">$sel:ref:ReadGitRepo :: Maybe Text
-</span><span class="hs-identifier hs-var">ref</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Text -&gt; Maybe Text
-forall a. a -&gt; Maybe a
-</span><span class="hs-identifier hs-var">Just</span></span><span> </span><span class="annot"><span class="annottext">Text
-</span><span class="hs-string">&quot;v4&quot;</span></span><span>
-</span><span id="line-37"></span><span>              </span><span class="hs-special">}</span><span class="hs-special">,</span><span>
-</span><span id="line-38"></span><span>          </span><span class="annot"><span class="annottext">$sel:sbh:ReadGitRemoteNamespace :: Maybe ShortBranchHash
-</span><span class="hs-identifier hs-var">sbh</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Maybe ShortBranchHash
-forall a. Maybe a
-</span><span class="hs-identifier hs-var">Nothing</span></span><span class="hs-special">,</span><span>
-</span><span id="line-39"></span><span>          </span><span class="annot"><span class="annottext">$sel:path:ReadGitRemoteNamespace :: Path
-</span><span class="hs-identifier hs-var">path</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Text -&gt; Path
+</span><span id="line-32"></span><span>    </span><span class="annot"><a href="#local-6989586621680008612"><span class="hs-identifier hs-type">makeNS</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ReadShareRemoteNamespace</span></span><span>
+</span><span id="line-33"></span><span>    </span><span id="local-6989586621680008612"><span class="annot"><span class="annottext">makeNS :: Text -&gt; ReadShareRemoteNamespace
+</span><a href="#local-6989586621680008612"><span class="hs-identifier hs-var hs-var">makeNS</span></a></span></span><span> </span><span id="local-6989586621680008597"><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621680008597"><span class="hs-identifier hs-var">t</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-34"></span><span>      </span><span class="annot"><span class="annottext">ReadShareRemoteNamespace :: ShareCodeserver -&gt; Text -&gt; Path -&gt; ReadShareRemoteNamespace
+</span><span class="hs-identifier hs-type">ReadShareRemoteNamespace</span></span><span>
+</span><span id="line-35"></span><span>        </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">$sel:server:ReadShareRemoteNamespace :: ShareCodeserver
+</span><span class="hs-identifier hs-var">server</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ShareCodeserver
+</span><span class="hs-identifier hs-var">DefaultCodeserver</span></span><span class="hs-special">,</span><span>
+</span><span id="line-36"></span><span>          </span><span class="annot"><span class="annottext">$sel:repo:ReadShareRemoteNamespace :: Text
+</span><span class="hs-identifier hs-var">repo</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Text
+</span><span class="hs-string">&quot;unison&quot;</span></span><span class="hs-special">,</span><span>
+</span><span id="line-37"></span><span>          </span><span class="annot"><span class="annottext">$sel:path:ReadShareRemoteNamespace :: Path
+</span><span class="hs-identifier hs-var">path</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">NameSegment
+</span><span class="hs-string">&quot;public&quot;</span></span><span> </span><span class="annot"><span class="annottext">NameSegment -&gt; Path -&gt; Path
+forall b a. Cons b b a a =&gt; a -&gt; b -&gt; b
+</span><span class="hs-operator hs-var">Path.:&lt;</span></span><span> </span><span class="annot"><span class="annottext">NameSegment
+</span><span class="hs-string">&quot;dev&quot;</span></span><span> </span><span class="annot"><span class="annottext">NameSegment -&gt; Path -&gt; Path
+forall b a. Cons b b a a =&gt; a -&gt; b -&gt; b
+</span><span class="hs-operator hs-var">Path.:&lt;</span></span><span> </span><span class="annot"><span class="annottext">NameSegment
+</span><span class="hs-string">&quot;base&quot;</span></span><span> </span><span class="annot"><span class="annottext">NameSegment -&gt; Path -&gt; Path
+forall b a. Cons b b a a =&gt; a -&gt; b -&gt; b
+</span><span class="hs-operator hs-var">Path.:&lt;</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; Path
 </span><span class="hs-identifier hs-var">Path.fromText</span></span><span> </span><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621680008554"><span class="hs-identifier hs-var">t</span></a></span><span>
-</span><span id="line-40"></span><span>        </span><span class="hs-special">}</span><span>
-</span><span id="line-41"></span></pre></body></html>
+</span><a href="#local-6989586621680008597"><span class="hs-identifier hs-var">t</span></a></span><span>
+</span><span id="line-38"></span><span>        </span><span class="hs-special">}</span><span>
+</span><span id="line-39"></span></pre></body></html>

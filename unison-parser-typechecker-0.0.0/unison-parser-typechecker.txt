@@ -643,6 +643,7 @@ ReadShareRemoteNamespace :: ShareCodeserver -> Text -> Path -> ReadShareRemoteNa
 [$sel:server:ReadShareRemoteNamespace] :: ReadShareRemoteNamespace -> ShareCodeserver
 [$sel:repo:ReadShareRemoteNamespace] :: ReadShareRemoteNamespace -> Text
 [$sel:path:ReadShareRemoteNamespace] :: ReadShareRemoteNamespace -> Path
+isPublic :: ReadShareRemoteNamespace -> Bool
 data WriteRemotePath
 WriteRemotePathGit :: WriteGitRemotePath -> WriteRemotePath
 WriteRemotePathShare :: WriteShareRemotePath -> WriteRemotePath
@@ -2103,9 +2104,9 @@ Env :: [Type v loc] -> TypeLookup v loc -> Map Name [NamedReference v loc] -> En
 [$sel:_ambientAbilities:Env] :: Env v loc -> [Type v loc]
 [$sel:_typeLookup:Env] :: Env v loc -> TypeLookup v loc
 [$sel:_termsByShortname:Env] :: Env v loc -> Map Name [NamedReference v loc]
-typeLookup :: forall v_a3lRr loc_a3lRs. Lens' (Env v_a3lRr loc_a3lRs) (TypeLookup v_a3lRr loc_a3lRs)
-termsByShortname :: forall v_a3lRr loc_a3lRs. Lens' (Env v_a3lRr loc_a3lRs) (Map Name [NamedReference v_a3lRr loc_a3lRs])
-ambientAbilities :: forall v_a3lRr loc_a3lRs. Lens' (Env v_a3lRr loc_a3lRs) [Type v_a3lRr loc_a3lRs]
+typeLookup :: forall v_a3lUU loc_a3lUV. Lens' (Env v_a3lUU loc_a3lUV) (TypeLookup v_a3lUU loc_a3lUV)
+termsByShortname :: forall v_a3lUU loc_a3lUV. Lens' (Env v_a3lUU loc_a3lUV) (Map Name [NamedReference v_a3lUU loc_a3lUV])
+ambientAbilities :: forall v_a3lUU loc_a3lUV. Lens' (Env v_a3lUU loc_a3lUV) [Type v_a3lUU loc_a3lUV]
 
 -- | Infer the type of a <a>Term</a>, using a function to resolve the type
 --   of <tt>Ref</tt> constructors contained in that term.

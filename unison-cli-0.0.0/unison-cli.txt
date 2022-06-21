@@ -489,10 +489,23 @@ instance GHC.Classes.Eq Unison.Codebase.Editor.UriParser.GitProtocol
 
 module Unison.Codebase.Editor.VersionParser
 
--- | Parse git version strings into valid unison namespaces. "release/M1j"
---   -&gt; "releases._M1j" "release/M1j.2" -&gt; "releases._M1j_2"
---   "latest-*" -&gt; "trunk"
-defaultBaseLib :: Parsec Void Text ReadGitRemoteNamespace
+-- | Parse git version strings into valid unison namespaces.
+--   
+--   <pre>
+--   &gt;&gt;&gt; parseMaybe defaultBaseLib "release/M1j"
+--   Just (ReadShareRemoteNamespace {server = DefaultCodeserver, repo = "unison", path = public.dev.base.releases._M1j})
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; parseMaybe defaultBaseLib "release/M1j.2"
+--   Just (ReadShareRemoteNamespace {server = DefaultCodeserver, repo = "unison", path = public.dev.base.releases._M1j_2})
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; parseMaybe defaultBaseLib "latest-1234"
+--   Just (ReadShareRemoteNamespace {server = DefaultCodeserver, repo = "unison", path = public.dev.base.trunk})
+--   </pre>
+defaultBaseLib :: Parsec Void Text ReadShareRemoteNamespace
 
 
 -- | Command-line fuzzy selection of arbitrary values. Shells out to fzf
@@ -783,19 +796,19 @@ Welcome :: Onboarding -> DownloadBase -> FilePath -> Text -> Welcome
 [$sel:watchDir:Welcome] :: Welcome -> FilePath
 [$sel:unisonVersion:Welcome] :: Welcome -> Text
 data DownloadBase
-DownloadBase :: ReadGitRemoteNamespace -> DownloadBase
+DownloadBase :: ReadShareRemoteNamespace -> DownloadBase
 DontDownloadBase :: DownloadBase
 data CodebaseInitStatus
 NewlyCreatedCodebase :: CodebaseInitStatus
 PreviouslyCreatedCodebase :: CodebaseInitStatus
 data Onboarding
 Init :: CodebaseInitStatus -> Onboarding
-DownloadingBase :: ReadGitRemoteNamespace -> Onboarding
+DownloadingBase :: ReadShareRemoteNamespace -> Onboarding
 Author :: Onboarding
 Finished :: Onboarding
 PreviouslyOnboarded :: Onboarding
 welcome :: CodebaseInitStatus -> DownloadBase -> FilePath -> Text -> Welcome
-pullBase :: ReadGitRemoteNamespace -> Either Event Input
+pullBase :: ReadShareRemoteNamespace -> Either Event Input
 run :: Codebase IO v a -> Welcome -> IO [Either Event Input]
 toInput :: Pretty ColorText -> Either Event Input
 determineFirstStep :: DownloadBase -> Codebase IO v a -> IO Onboarding
@@ -1152,7 +1165,7 @@ module Unison.Auth.HTTPClient
 
 -- | Returns a new http manager which applies the appropriate Authorization
 --   header to any hosts our UCM is authenticated with.
-newAuthenticatedHTTPClient :: MonadIO m => (Output v -> IO ()) -> TokenProvider -> UCMVersion -> m AuthenticatedHttpClient
+newAuthenticatedHTTPClient :: MonadIO m => TokenProvider -> UCMVersion -> m AuthenticatedHttpClient
 
 -- | Newtype to delineate HTTP Managers with access-token logic.
 newtype AuthenticatedHttpClient
@@ -1318,13 +1331,13 @@ LoopState :: Branch m -> Branch m -> NonEmpty Absolute -> Maybe (FilePath, SkipN
 type Action' m v = Action m (Either Event Input) v
 type SkipNextUpdate = Bool
 type InputDescription = Text
-root :: forall m_a3aPq v_a3aPr. Lens' (LoopState m_a3aPq v_a3aPr) (Branch m_a3aPq)
-numberedArgs :: forall m_a3aPq v_a3aPr. Lens' (LoopState m_a3aPq v_a3aPr) NumberedArgs
-latestTypecheckedFile :: forall m_a3aPq v_a3aPr v_a3bxq. Lens (LoopState m_a3aPq v_a3aPr) (LoopState m_a3aPq v_a3bxq) (Maybe (TypecheckedUnisonFile v_a3aPr Ann)) (Maybe (TypecheckedUnisonFile v_a3bxq Ann))
-latestFile :: forall m_a3aPq v_a3aPr. Lens' (LoopState m_a3aPq v_a3aPr) (Maybe (FilePath, SkipNextUpdate))
-lastSavedRoot :: forall m_a3aPq v_a3aPr. Lens' (LoopState m_a3aPq v_a3aPr) (Branch m_a3aPq)
-lastInput :: forall m_a3aPq v_a3aPr. Lens' (LoopState m_a3aPq v_a3aPr) (Maybe Input)
-currentPathStack :: forall m_a3aPq v_a3aPr. Lens' (LoopState m_a3aPq v_a3aPr) (NonEmpty Absolute)
+root :: forall m_a3aOc v_a3aOd. Lens' (LoopState m_a3aOc v_a3aOd) (Branch m_a3aOc)
+numberedArgs :: forall m_a3aOc v_a3aOd. Lens' (LoopState m_a3aOc v_a3aOd) NumberedArgs
+latestTypecheckedFile :: forall m_a3aOc v_a3aOd v_a3bwc. Lens (LoopState m_a3aOc v_a3aOd) (LoopState m_a3aOc v_a3bwc) (Maybe (TypecheckedUnisonFile v_a3aOd Ann)) (Maybe (TypecheckedUnisonFile v_a3bwc Ann))
+latestFile :: forall m_a3aOc v_a3aOd. Lens' (LoopState m_a3aOc v_a3aOd) (Maybe (FilePath, SkipNextUpdate))
+lastSavedRoot :: forall m_a3aOc v_a3aOd. Lens' (LoopState m_a3aOc v_a3aOd) (Branch m_a3aOc)
+lastInput :: forall m_a3aOc v_a3aOd. Lens' (LoopState m_a3aOc v_a3aOd) (Maybe Input)
+currentPathStack :: forall m_a3aOc v_a3aOd. Lens' (LoopState m_a3aOc v_a3aOd) (NonEmpty Absolute)
 currentPath :: Getter (LoopState m v) Absolute
 loopState0 :: Branch m -> Absolute -> LoopState m v
 respond :: MonadCommand n m i v => Output v -> n ()
